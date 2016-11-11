@@ -1,17 +1,23 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $projects */
 
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+    <div class="">
+        <h1>Projects</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <ul>
+            <?php foreach ($projects as $project): ?>
+                <li>
+                    <?= $project->name ?>: <?= $project->suffix ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <p> Всего:<?= count($projects) ?></p>
     </div>
 
     <div class="body-content">

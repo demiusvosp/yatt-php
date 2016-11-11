@@ -2,16 +2,16 @@
 
 return [
     // authorization
-    'login' => 'authorization/login',
-    'logout' => 'authorization/logout',
-    'auth/error' => 'authorization/logout',
-    'auth/capthcha' => 'authorization/captcha',
+    'auth/login' => 'authorization/login',
+    'auth/logout' => 'authorization/logout',
+    'auth/captcha' => 'authorization/captcha',
 
     // admin
 
     // project
 
     // dashboard
+    'error' => 'dashboard/error',
     'about' => 'dashboard/about',
     '/' => 'dashboard/index',
 ];

@@ -7,6 +7,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     'defaultRoute' => 'main/index',
     'bootstrap' => ['log'],
+    'user.torenExpire' => 7200,
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation

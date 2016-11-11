@@ -13,7 +13,7 @@ use yii\web\Controller;
 use app\models\ContactForm;
 use app\models\Project;
 
-class DashboardController extends Controller
+class MainController extends Controller
 {
     /**
      * @inheritdoc
@@ -23,6 +23,10 @@ class DashboardController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
     }

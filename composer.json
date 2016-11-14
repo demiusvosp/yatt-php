@@ -2,15 +2,10 @@
     "name": "yatt/php",
     "description": "Yet Another Task Trackker",
     "keywords": ["bugtracker", "tasktracker", "yatt"],
-   // "homepage": "http://demius.ru",
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
         "issues": "http://tasks.demius.ru/index.php?project=7"
-//        "forum": "http://www.yiiframework.com/forum/",
-//        "wiki": "http://www.yiiframework.com/wiki/",
-//        "irc": "irc://irc.freenode.net/yii",
-//        "source": "https://github.com/yiisoft/yii2"
     },
     "minimum-stability": "alpha",
     "require": {

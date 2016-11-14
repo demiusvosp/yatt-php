@@ -9,7 +9,8 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 use app\models\forms\RegistrationForm;
-
+use app\models\forms\ChangeMainFieldsForm;
+use app\models\forms\ChangePasswordForm;
 
 class AuthorizationController extends Controller
 {
@@ -21,10 +22,10 @@ class AuthorizationController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['login, logout, registration, confirmEmail'],
+                'only' => ['login, logout, registration, confirmEmail, profile'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout, profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -132,5 +133,38 @@ class AuthorizationController extends Controller
         Yii::$app->user->login($user);
 
         return $this->goHome();
+    }
+
+    public function actionProfile()
+    {
+        // вобще это вроде должно было отсечься behavior'ом access, но что-то не вышло
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        /** @var User $user */
+        $user = Yii::$app->user->identity;
+
+        $changePasswordForm = new ChangePasswordForm(Yii::$app->user->identity);
+        if($changePasswordForm->load(Yii::$app->getRequest()->post()) && $changePasswordForm->validate()) {
+            // юзер меняет пароль
+            $changePasswordForm->save();
+            Yii::$app->getSession()->addFlash('warning', 'Вы успешно поменяли пароль. Войдите с новым паролем');
+            Yii::$app->user->logout();
+            return $this->goHome();
+        }
+        $changeMainFieldsForm = new ChangeMainFieldsForm(Yii::$app->user->identity);
+        $changeMainFieldsForm->username = $user->username;
+        $changeMainFieldsForm->email = $user->email;
+        if($changeMainFieldsForm->load(Yii::$app->getRequest()->post()) && $changeMainFieldsForm->validate()) {
+            $changeMainFieldsForm->save();
+            Yii::$app->user->logout();
+            return $this->goHome();
+        }
+
+        return $this->render('profile', [
+            'changePasswordForm' => $changePasswordForm,
+            'changeMainFieldsForm' => $changeMainFieldsForm,
+        ]);
     }
 }

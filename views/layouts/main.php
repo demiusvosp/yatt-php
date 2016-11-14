@@ -46,8 +46,10 @@ AppAsset::register($this);
         ]);
     } else {
         $items = array_merge($items, [
-            ['label' => 'Выйти (' . Yii::$app->user->identity->username . ')',
-                'url' => ['/user/default/logout'],
+            ['label' => 'Профиль (' . Yii::$app->user->identity->username . ')',
+                'url' => ['auth/profile']],
+            ['label' => 'Выйти',
+                'url' => ['auth/logout'],
                 'linkOptions' => ['data-method' => 'post']],
         ]);
     }

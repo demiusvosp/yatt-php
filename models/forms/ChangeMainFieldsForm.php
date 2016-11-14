@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: demius
  * Date: 14.11.16
- * Time: 17:05
+ * Time: 22:37
  */
 
 namespace app\models\forms;
@@ -12,12 +12,31 @@ use Yii;
 use yii\base\Model;
 use app\models\User;
 
-class RegistrationForm extends Model
+class ChangeMainFieldsForm extends Model
 {
+
     public $username;
     public $email;
-    public $password;
-    public $verifyCode;
+
+    /** @var User user */
+    protected $user;
+
+    public function __construct($user, array $config = [])
+    {
+        $this->user = $user;
+        parent::__construct($config);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Имя пользователя',
+            'email' => 'E-mail'
+        ];
+    }
 
     public function rules()
     {
@@ -25,27 +44,36 @@ class RegistrationForm extends Model
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
             ['username', 'match', 'pattern' => '#^[\w_-]+$#i'],
-            ['username', 'unique', 'targetClass' => User::className(), 'message' => 'Данное имя пользователя уже используется'],
             ['username', 'string', 'min' => 2, 'max' => 255],
+            ['username', 'validateUsername'],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-
-            ['password', 'required'],
-            ['password', 'string', 'min' => 3],
-
-            ['verifyCode', 'captcha', 'captchaAction' => '/main/captcha'],
         ];
     }
 
-    public function registration()
+
+    public function validateUsername($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $user = $this->user;
+
+            $checkUser = User::findByUsername($this->username);
+            if($checkUser && $checkUser->id != $user->id) {
+                // нашелся юзер с таким username, но это не этот пользователь
+                $this->addError($attribute, 'Пользователь с таким username уже существует');
+            }
+        }
+    }
+
+
+    public function save()
     {
         if ($this->validate()) {
-            $user = new User();
+            $user = $this->user;
             $user->username = $this->username;
             $user->email = $this->email;
-            $user->setPassword($this->password);
             $user->status = User::STATUS_WAIT;
             $user->generateUserToken();
 

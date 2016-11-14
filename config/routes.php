@@ -6,6 +6,7 @@ return [
     'auth/logout'        => 'authorization/logout',
     'auth/registration'  => 'authorization/registration',
     'auth/email-confirm' => 'authorization/confirm-email',
+    'auth/profile'       => 'authorization/profile',
 
     // admin
 

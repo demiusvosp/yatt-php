@@ -145,7 +145,7 @@ class AuthorizationController extends Controller
         /** @var User $user */
         $user = Yii::$app->user->identity;
 
-        $changePasswordForm = new ChangePasswordForm(Yii::$app->user->identity);
+        $changePasswordForm = new ChangePasswordForm($user);
         if($changePasswordForm->load(Yii::$app->getRequest()->post()) && $changePasswordForm->validate()) {
             // юзер меняет пароль
             $changePasswordForm->save();
@@ -153,7 +153,7 @@ class AuthorizationController extends Controller
             Yii::$app->user->logout();
             return $this->goHome();
         }
-        $changeMainFieldsForm = new ChangeMainFieldsForm(Yii::$app->user->identity);
+        $changeMainFieldsForm = new ChangeMainFieldsForm($user);
         $changeMainFieldsForm->username = $user->username;
         $changeMainFieldsForm->email = $user->email;
         if($changeMainFieldsForm->load(Yii::$app->getRequest()->post()) && $changeMainFieldsForm->validate()) {

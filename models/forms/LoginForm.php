@@ -1,9 +1,10 @@
 <?php
 
-namespace app\models;
+namespace app\models\forms;
 
 use Yii;
 use yii\base\Model;
+use app\models\User;
 
 /**
  * LoginForm is the model behind the login form.
@@ -15,7 +16,7 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
-    public $rememberMe = true;
+    public $rememberMe = false;
 
     private $_user = false;
 
@@ -48,7 +49,11 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Неверное имя пользователя или пароль');
+            } elseif ($user->status == User::STATUS_WAIT) {
+                $this->addError($attribute, 'Пользователь не подтвержден.');
+            } elseif ($user->status == User::STATUS_BLOCKED) {
+                $this->addError($attribute, 'Пользователь заблокированн');
             }
         }
     }
@@ -60,7 +65,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? Yii::$app->params['user.rememberMeExpire'] : 0);
         }
         return false;
     }

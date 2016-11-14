@@ -2,8 +2,10 @@
 
 return [
     // authorization
-    'auth/login' => 'authorization/login',
-    'auth/logout' => 'authorization/logout',
+    'auth/login'         => 'authorization/login',
+    'auth/logout'        => 'authorization/logout',
+    'auth/registration'  => 'authorization/registration',
+    'auth/email-confirm' => 'authorization/confirm-email',
 
     // admin
 
@@ -11,7 +13,8 @@ return [
 
     // main
     'captcha' => 'main/captcha',
-    'error' => 'main/error',
-    'about' => 'main/about',
+    'error'   => 'main/error',
+    'about'   => 'main/about',
+    'contact'   => 'main/contact',
     '/' => 'main/index',
 ];

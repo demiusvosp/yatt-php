@@ -10,7 +10,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
-use app\models\ContactForm;
+use app\models\forms\ContactForm;
 use app\models\Project;
 
 class MainController extends Controller
@@ -26,7 +26,7 @@ class MainController extends Controller
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+                'fixedVerifyCode' => YII_ENV_TEST ? 'test' : null,
             ],
         ];
     }

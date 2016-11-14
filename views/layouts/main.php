@@ -6,6 +6,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use app\widgets\Alert;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
@@ -33,30 +34,33 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    $items = [
+        ['label' => 'Home', 'url' => ['/main/index']],
+        ['label' => 'About', 'url' => ['/main/about']],
+        ['label' => 'Contact', 'url' => ['/main/contact']],
+    ];
+    if(Yii::$app->user->isGuest) {
+        $items = array_merge($items, [
+            ['label' => 'Вход', 'url' => ['auth/login']],
+            ['label' => 'Регистрация', 'url' => ['auth/registration']],
+        ]);
+    } else {
+        $items = array_merge($items, [
+            ['label' => 'Выйти (' . Yii::$app->user->identity->username . ')',
+                'url' => ['/user/default/logout'],
+                'linkOptions' => ['data-method' => 'post']],
+        ]);
+    }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/main/index']],
-            ['label' => 'About', 'url' => ['/main/about']],
-            ['label' => 'Contact', 'url' => ['/main/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/auth/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/auth/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
+        'items' => $items,
     ]);
     NavBar::end();
     ?>
 
     <div class="container">
+        <?= Alert::widget() ?>
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>

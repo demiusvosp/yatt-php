@@ -60,16 +60,16 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['username', 'required'],
             ['username', 'match', 'pattern' => '#^[\w\._-]+$#i'],
-            ['username', 'unique', 'targetClass' => self::className(), 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => self::className(), 'message' => 'Данное имя пользователя уже используется'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'required'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => self::className(), 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => self::className(), 'message' => 'Данный email уже используется'],
             ['email', 'string', 'max' => 255],
 
             ['status', 'integer'],
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'default', 'value' => self::STATUS_WAIT],
             ['status', 'in', 'range' => array_keys(self::getStatusesArray())],
         ];
     }
@@ -94,7 +94,7 @@ class User extends ActiveRecord implements IdentityInterface
             'auth_key' => 'Auth Key',
             'email_confirm_token' => 'Email Confirm Token',
             'password_hash' => 'Пароль',
-            'password_reset_token' => 'Password Reset Token',
+            'user_token' => 'Токен подтверждения',
             'email' => 'Email',
             'status' => 'Статус',
         ];
@@ -178,9 +178,29 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function generateUserToken()
     {
-        $this->user_token = Yii::$app->security->hashData(Yii::$app->security->generateRandomString());
+        $this->user_token = Yii::$app->security->generateRandomString() . '_' . time();
         $this->status = User::STATUS_WAIT;
     }
 
+
+    public static function isUserTokenValid($token)
+    {
+        if (empty($token) || !is_string($token)) {
+            return false;
+        }
+        $expire = Yii::$app->params['user.torenExpire'];
+        $parts = explode('_', $token);
+        $timestamp = (int) end($parts);
+        return $timestamp + $expire >= time();
+    }
+
+    /**
+     * Removes password reset token
+     */
+    public function confirmUser()
+    {
+        $this->user_token = null;
+        $this->status = User::STATUS_ACTIVE;
+    }
 
 }

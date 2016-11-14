@@ -1,6 +1,7 @@
 <?php
 
 use yii\db\Migration;
+use app\models\User;
 
 class m161111_113928_create_user extends Migration
 {
@@ -26,6 +27,15 @@ class m161111_113928_create_user extends Migration
         $this->createIndex('idx-user-username', '{{%user}}', 'username');
         $this->createIndex('idx-user-email', '{{%user}}', 'email');
         $this->createIndex('idx-user-status', '{{%user}}', 'status');
+
+        // создадим сразу суперадмина. Не факт, что это стоит делать здесь, но разберемся, когда займемся установщиком
+        $root = new User();
+        $root->username = 'admin';
+        $root->email = Yii::$app->params['adminEmail'];
+        $root->status = User::STATUS_ACTIVE;
+        $root->setPassword('admin');
+
+        $root->save();
     }
 
     public function down()

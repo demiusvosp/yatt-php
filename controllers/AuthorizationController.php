@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\User;
+use app\models\entities\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;

@@ -10,7 +10,7 @@ namespace app\models\forms;
 
 
 use yii\base\Model;
-use app\models\User;
+use app\models\entities\User;
 
 class ChangePasswordForm extends Model
 {

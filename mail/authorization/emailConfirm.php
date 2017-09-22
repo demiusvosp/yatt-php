@@ -9,7 +9,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $user app\models\User */
+/* @var $user app\models\entities\User */
 
 $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['auth/email-confirm', 'token' => $user->user_token]);
 ?>

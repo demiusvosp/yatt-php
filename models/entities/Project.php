@@ -3,7 +3,7 @@
 namespace app\models\entities;
 
 use yii\db\ActiveRecord;
-use app\models\User;
+use app\models\entities\User;
 use app\models\queries\ProjectQuery;
 
 /**

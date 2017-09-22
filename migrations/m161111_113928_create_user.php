@@ -1,7 +1,7 @@
 <?php
 
 use yii\db\Migration;
-use app\models\User;
+use app\models\entities\User;
 
 class m161111_113928_create_user extends Migration
 {

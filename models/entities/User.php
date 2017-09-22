@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\models\entities;
 
 use Yii;
 use yii\web\IdentityInterface;
@@ -100,7 +100,7 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    /* yii\web\IdentityInterface */
+    /* IdentityInterface */
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);

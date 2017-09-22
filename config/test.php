@@ -18,7 +18,7 @@ return [
             'showScriptName' => true,
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\entities\User',
         ],        
         'request' => [
             'cookieValidationKey' => 'test',

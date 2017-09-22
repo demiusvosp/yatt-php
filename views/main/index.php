@@ -7,18 +7,6 @@ $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
 
-    <div class="">
-        <h1>Projects</h1>
-
-        <ul>
-            <?php foreach ($projects as $project): ?>
-                <li>
-                    <?= $project->name ?>: <?= $project->suffix ?>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-        <p> Всего:<?= count($projects) ?></p>
-    </div>
 
     <div class="body-content">
 

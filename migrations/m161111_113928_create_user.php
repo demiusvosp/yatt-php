@@ -5,14 +5,14 @@ use app\models\User;
 
 class m161111_113928_create_user extends Migration
 {
-    public function up()
+    public function safeUp()
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%user}}', [
+        $this->createTable('user', [
             'id' => $this->primaryKey(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
@@ -24,9 +24,9 @@ class m161111_113928_create_user extends Migration
             'status' => $this->smallInteger()->notNull()->defaultValue(0),
         ], $tableOptions);
 
-        $this->createIndex('idx-user-username', '{{%user}}', 'username');
-        $this->createIndex('idx-user-email', '{{%user}}', 'email');
-        $this->createIndex('idx-user-status', '{{%user}}', 'status');
+        $this->createIndex('idx-user-username', 'user', 'username');
+        $this->createIndex('idx-user-email', 'user', 'email');
+        $this->createIndex('idx-user-status', 'user', 'status');
 
         // создадим сразу суперадмина. Не факт, что это стоит делать здесь, но разберемся, когда займемся установщиком
         $root = new User();
@@ -38,21 +38,11 @@ class m161111_113928_create_user extends Migration
         $root->save();
     }
 
-    public function down()
+    public function safeDown()
     {
-        $this->dropTable('{{%user}}');
+        $this->dropTable('user');
 
         return false;
     }
 
-    /*
-    // Use safeUp/safeDown to run migration code within a transaction
-    public function safeUp()
-    {
-    }
-
-    public function safeDown()
-    {
-    }
-    */
 }

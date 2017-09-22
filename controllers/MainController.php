@@ -11,7 +11,6 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use app\models\forms\ContactForm;
-use app\models\Project;
 
 class MainController extends Controller
 {
@@ -38,9 +37,8 @@ class MainController extends Controller
      */
     public function actionIndex()
     {
-        $projects = Project::find()->orderBy('suffix')->all();
 
-        return $this->render('index', [ 'projects'=>$projects ]);
+        return $this->render('index');
     }
 
 

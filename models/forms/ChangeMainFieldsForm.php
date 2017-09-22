@@ -19,13 +19,8 @@ class ChangeMainFieldsForm extends Model
     public $email;
 
     /** @var User user */
-    protected $user;
+    public $user;
 
-    public function __construct($user, array $config = [])
-    {
-        $this->user = $user;
-        parent::__construct($config);
-    }
 
     /**
      * @inheritdoc

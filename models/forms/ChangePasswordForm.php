@@ -24,14 +24,8 @@ class ChangePasswordForm extends Model
     public $new_password_repeat;
 
     /** @var User user */
-    protected $user;
+    public $user;
 
-    public function __construct($user, array $config = [])
-    {
-        $this->user = $user;
-        parent::__construct($config);
-    }
-        //$c = new \app\models\forms\ChangePasswordForm(Yii::$app->user->identity);
 
     /**
      * @inheritdoc

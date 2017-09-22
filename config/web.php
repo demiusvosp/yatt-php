@@ -4,6 +4,9 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'yatt',
+    'name' => 'Yatt',
+    'version' => '0.1a',
+
     'basePath' => dirname(__DIR__),
     'defaultRoute' => 'main/index',
     'bootstrap' => ['log'],

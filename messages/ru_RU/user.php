@@ -17,12 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Confirmation wait' => 'Ожидает подтверждения',
+    'User Manager' => 'Управление пользователями',
     'Active' => 'Активен',
     'Auth key' => 'Auth key',
     'Blocked' => 'Заблокирован',
     'Change password:' => 'Изменить пароль:',
     'Change username or email:' => 'Изменить имя или email',
+    'Confirmation wait' => 'Ожидает подтверждения',
     'Created at' => 'Создан',
     'Email' => 'Email',
     'Email Confirmation Token' => 'Токен подтверждения Email',

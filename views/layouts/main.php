@@ -44,6 +44,14 @@ AppAsset::register($this);
             ['label' => Yii::t('user', 'Registration'), 'url' => ['auth/registration']],
         ]);
     } else {
+        // позже здесь будут проверки прав и полномочий
+        $items = array_merge($items, [
+            ['label' => Yii::t('common', 'Administration'), 'items' => [
+                ['label' => Yii::t('user', 'User Manager'), 'items' => []],
+                ['label' => Yii::t('project', 'Project Manager'), 'url' => ['pm/list']]
+            ]],
+        ]);
+
         $items = array_merge($items, [
             ['label' => Yii::t('user', 'Profile ({user})', ['user' => Yii::$app->user->identity->username]),
                 'url' => ['auth/profile']],

@@ -10,7 +10,12 @@ return [
 
     // admin
 
-    // project
+    // project managment
+    'pm/list'     => 'project-manager/index',
+    'pm/create'   => 'project-manager/create',
+    'pm/<id:\d+>/edit'     => 'project-manager/update',// внутренний маршрут не стоит того, чтобы переопределять кнопку в gridview
+    'pm/<id:\d+>/view'     => 'project-manager/view',
+    'pm/<id:\d+>/delete'   => 'project-manager/delete',
 
     // main
     'captcha' => 'main/captcha',

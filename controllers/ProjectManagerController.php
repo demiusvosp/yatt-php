@@ -11,9 +11,9 @@ use yii\filters\VerbFilter;
 
 
 /**
- * ProjectController implements the CRUD actions for Project model.
+ * ProjectManagerController implements the CRUD actions for Project model.
  */
-class ProjectController extends Controller
+class ProjectManagerController extends Controller
 {
     /**
      * @inheritdoc
@@ -78,6 +78,9 @@ class ProjectController extends Controller
     /**
      * Updates an existing Project model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     * Снаружи роутер ивеет вид pm/<id>/edit, но здесь сохранено каноничное для yii названия, для работы виджетов из
+     * коробки
+     *
      * @param integer $id
      * @return mixed
      */
@@ -88,7 +91,7 @@ class ProjectController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('update', [
+            return $this->render('edit', [
                 'model' => $model,
             ]);
         }

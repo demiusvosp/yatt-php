@@ -8,7 +8,7 @@ use app\models\entities\Project;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('project', 'Projects');
+$this->title = Yii::t('project', 'Project Manager');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-index">

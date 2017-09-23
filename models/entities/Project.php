@@ -60,12 +60,22 @@ class Project extends ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'config'], 'string'],
-            [['public', 'admin_id'], 'integer'],
-            [['suffix'], 'string', 'max' => 8],
+            [['suffix', 'admin_id'], 'required'], // обязательные
+
             [['name'], 'string', 'max' => 255],
-            [['suffix'], 'unique'],
+            [['description'], 'string'],
+            [['public', 'admin_id'], 'integer'],
+
+            // ограничения суффикса
+            [['suffix'], 'string', 'min' => 1, 'max' => 8],
+            [['suffix'], 'match', 'pattern' => '/^[A-Z0-9]+$/i',
+                'message' => Yii::t('project', 'suffix must contain only A-Z or 0-9 chars')],
+            [['suffix'], 'unique',
+                'message' => Yii::t('project', 'suffix must be unique')],
+
+            // связь админ проекта
             [['admin_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['admin_id' => 'id']],
+            [['admin_id'], 'default', 'value' => Yii::$app->user->identity->getId()],
         ];
     }
 

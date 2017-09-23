@@ -17,10 +17,12 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'suffix must be unique' => 'суффикс уже используется',
+    'suffix must contain only A-Z or 0-9 chars' => 'суфикс может содержать только символы A-Z и цифры 0-9',
     'All' => 'Все',
-    'Empowered' => 'Уполномоченные',
-    'Registered' => 'Зарегистрированные',
     'Create Project' => 'Новый проект',
-    'Projects' => 'Проекты',
+    'Empowered' => 'Уполномоченные',
+    'Project Manager' => 'Управление проектами',
+    'Registered' => 'Зарегистрированные',
     'Update {modelClass}: ' => 'Изменить {modelClass}: ',
 ];

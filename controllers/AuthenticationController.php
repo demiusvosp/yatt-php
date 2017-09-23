@@ -12,7 +12,7 @@ use app\models\forms\RegistrationForm;
 use app\models\forms\ChangeMainFieldsForm;
 use app\models\forms\ChangePasswordForm;
 
-class AuthorizationController extends Controller
+class AuthenticationController extends Controller
 {
     /**
      * @inheritdoc

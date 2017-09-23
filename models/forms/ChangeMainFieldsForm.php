@@ -73,7 +73,7 @@ class ChangeMainFieldsForm extends Model
             $user->generateUserToken();
 
             if ($user->save()) {
-                Yii::$app->mailer->compose('@app/mail/authorization/emailConfirm', ['user' => $user])
+                Yii::$app->mailer->compose('@app/mail/authentication/emailConfirm', ['user' => $user])
                     ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])
                     ->setTo($this->email)
                     ->setSubject('Подтверждение email для ' . Yii::$app->name)

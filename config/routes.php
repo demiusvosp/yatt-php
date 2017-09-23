@@ -1,12 +1,12 @@
 <?php
 
 return [
-    // authorization
-    'auth/login'         => 'authorization/login',
-    'auth/logout'        => 'authorization/logout',
-    'auth/registration'  => 'authorization/registration',
-    'auth/email-confirm' => 'authorization/confirm-email',
-    'auth/profile'       => 'authorization/profile',
+    // authentication
+    'auth/login'         => 'authentication/login',
+    'auth/logout'        => 'authentication/logout',
+    'auth/registration'  => 'authentication/registration',
+    'auth/email-confirm' => 'authentication/confirm-email',
+    'auth/profile'       => 'authentication/profile',
 
     // admin
 
@@ -16,6 +16,5 @@ return [
     'captcha' => 'main/captcha',
     'error'   => 'main/error',
     'about'   => 'main/about',
-    'contact'   => 'main/contact',
     '/' => 'main/index',
 ];

@@ -10,7 +10,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     'defaultRoute' => 'main/index',
     'bootstrap' => ['log'],
-    'language' => 'ru-RU', // Это просится в параметры, но это будем делать, когда будем думать над инсталлятором
+    'language' => 'ru_RU', // Это просится в параметры, но это будем делать, когда будем думать над инсталлятором
 
     'components' => [
         'request' => [

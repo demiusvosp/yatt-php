@@ -72,6 +72,7 @@ return [
 ```bash
 $ php yii migrate/up
 ```
+
     </pre>
 
     <code><?= __FILE__ ?></code>

@@ -2,6 +2,7 @@
 
 namespace app\models\entities;
 
+use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
@@ -39,9 +40,9 @@ class Project extends ActiveRecord
     public static function getPublicStatusesArray()
     {
         return [
-            self::STATUS_PUBLIC_AUTHED => 'Уполномоченные',
-            self::STATUS_PUBLIC_REGISTED => 'Зарегистрированные',
-            self::STATUS_PUBLIC_ALL => 'Все',
+            self::STATUS_PUBLIC_AUTHED => Yii::t('project', 'Empowered'),// 'Уполномоченные',
+            self::STATUS_PUBLIC_REGISTED => Yii::t('project', 'Registered'),
+            self::STATUS_PUBLIC_ALL => Yii::t('project', 'All'),
         ];
     }
 

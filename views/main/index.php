@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $projects */
 
-$this->title = 'My Yii Application';
+$this->title = Yii::$app->name;
 ?>
 <div class="site-index">
 

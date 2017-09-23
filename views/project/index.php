@@ -8,7 +8,7 @@ use app\models\entities\Project;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Projects');
+$this->title = Yii::t('project', 'Projects');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Project'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('project', 'Create Project'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -32,8 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Администратор',
                 'value' => function($project) {
                     /** @var Project $project */
-                    return $project->admin ? $project->admin->username : Yii::t('app', 'Not set');
-                    //return $user ? $user instanceof User ? $user->username : Yii::t('app', 'Unknow') : Yii::t('app', 'Not set');
+                    return $project->admin ? $project->admin->username : Yii::t('common', 'Not set');
+                    //return $user ? $user instanceof User ? $user->username : Yii::t('common', 'Unknow') : Yii::t('common', 'Not set');
                 }
             ],
             [

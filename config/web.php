@@ -10,6 +10,8 @@ $config = [
     'basePath' => dirname(__DIR__),
     'defaultRoute' => 'main/index',
     'bootstrap' => ['log'],
+    'language' => 'ru-RU', // Это просится в параметры, но это будем делать, когда будем думать над инсталлятором
+
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -46,6 +48,14 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => require(__DIR__ . '/routes.php'),
+        ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    //'basePath' => '@app\translations', немного логично, но не факт, что настолько, чтобы уходить от унификации
+                ],
+            ],
         ],
     ],
     'params' => $params,

@@ -28,27 +28,26 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Yatt',
+        'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
     $items = [
-        ['label' => 'Home', 'url' => ['/main/index']],
-        ['label' => 'About', 'url' => ['/main/about']],
-        ['label' => 'Contact', 'url' => ['/main/contact']],
+        ['label' => Yii::t('common', 'Home'), 'url' => ['/main/index']],
+        ['label' => Yii::t('common', 'About'), 'url' => ['/main/about']],
     ];
     if(Yii::$app->user->isGuest) {
         $items = array_merge($items, [
-            ['label' => 'Вход', 'url' => ['auth/login']],
-            ['label' => 'Регистрация', 'url' => ['auth/registration']],
+            ['label' => Yii::t('user', 'Login'), 'url' => ['auth/login']],
+            ['label' => Yii::t('user', 'Registration'), 'url' => ['auth/registration']],
         ]);
     } else {
         $items = array_merge($items, [
-            ['label' => 'Профиль (' . Yii::$app->user->identity->username . ')',
+            ['label' => Yii::t('user', 'Profile ({user})', ['user' => Yii::$app->user->identity->username]),
                 'url' => ['auth/profile']],
-            ['label' => 'Выйти',
+            ['label' => Yii::t('user', 'Logout'),
                 'url' => ['auth/logout'],
                 'linkOptions' => ['data-method' => 'post']],
         ]);

@@ -16,17 +16,17 @@ use yii\bootstrap\ActiveForm;
 
 $username = Yii::$app->user->identity ? Yii::$app->user->identity->username : '(anonymous)';
 
-$this->title = 'Профиль пользователя ' .  $username;
+$this->title = Yii::t('user', '{user} profile', ['user' => $username]);
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-default-signup">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Профиль пользователя:</p>
+    <p><?= Yii::t('user', 'User profile') ?></p>
 
     <div class="row">
         <div class="col-lg-5 form-border">
-            <p>Сменить пароль:</p>
+            <p><?= Yii::t('user', 'Change password:') ?></p>
             <?php $form = ActiveForm::begin(['id' => 'form-changePassword']); ?>
             <div class="form-group">
                 <?= $form->field($changePasswordForm, 'old_password')->passwordInput() ?>
@@ -36,23 +36,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($changePasswordForm, 'new_password_repeat')->passwordInput() ?>
             </div>
             <div class="form-group">
-                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                <?= Html::submitButton(Yii::t('common', 'Save'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
             </div>
             <?php ActiveForm::end(); ?>
         </div>
         <div class="col-lg-5 form-border">
-            <p>Сменить имя пользователя или email:</p>
+            <p><?= Yii::t('user', 'Change username or email:') ?></p>
             <?php $form = ActiveForm::begin(['id' => 'form-changeMainFields']); ?>
                 <div class="form-group">
                     <?= $form->field($changeMainFieldsForm, 'username') ?>
-
                 </div>
                 <div class="form-group">
                     <?= $form->field($changeMainFieldsForm, 'email') ?>
-                    <span class="label label-warning">Потребуется заного подтвердить email</span>
+                    <span class="label label-warning"><?= Yii::t('user', 'You will need to confirm over email') ?></span>
                 </div>
                 <div class="form-group">
-                    <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                    <?= Html::submitButton(Yii::t('common', 'Save'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>

@@ -39,9 +39,9 @@ class User extends ActiveRecord implements IdentityInterface
     public static function getStatusesArray()
     {
         return [
-            self::STATUS_ACTIVE => 'Активен',
-            self::STATUS_WAIT => 'Ожидает подтверждения',
-            self::STATUS_BLOCKED => 'Заблокирован',
+            self::STATUS_ACTIVE  => Yii::t('user', 'Active'), //'Активен',
+            self::STATUS_WAIT    => Yii::t('user', 'Confirmation wait'), //'Ожидает подтверждения',
+            self::STATUS_BLOCKED => Yii::t('user', 'Blocked'), // 'Заблокирован',
         ];
     }
 
@@ -89,15 +89,15 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'created_at' => 'Создан',
-            'updated_at' => 'Обновлен',
-            'username' => 'Username',
-            'auth_key' => 'Auth Key',
-            'email_confirm_token' => 'Email Confirm Token',
-            'password_hash' => 'Пароль',
-            'user_token' => 'Токен подтверждения',
-            'email' => 'Email',
-            'status' => 'Статус',
+            'created_at' => Yii::t('user', 'Created at'), //'Создан',
+            'updated_at' => Yii::t('user', 'Updated at'), //'Обновлен',
+            'username' => Yii::t('user', 'Username'), //'Username',
+            'auth_key' => Yii::t('user', 'Auth key'), //'Auth Key',
+            'email_confirm_token' => Yii::t('user', 'Email Confirmation Token'), //'Email Confirm Token',
+            'password_hash' => Yii::t('user', 'Password hash'), //'Пароль',
+            'user_token' => Yii::t('user', 'User token'), //'Токен подтверждения',
+            'email' => Yii::t('user', 'Email'), //'Email',
+            'status' => Yii::t('user', 'Status'), //'Статус',
         ];
     }
 

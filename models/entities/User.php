@@ -4,6 +4,7 @@ namespace app\models\entities;
 
 use Yii;
 use yii\web\IdentityInterface;
+use app\models\queries\UserQuery;
 use yii\db\ActiveRecord;
 use yii\base\NotSupportedException;
 use yii\helpers\ArrayHelper;
@@ -98,6 +99,15 @@ class User extends ActiveRecord implements IdentityInterface
             'email' => 'Email',
             'status' => 'Статус',
         ];
+    }
+
+    /**
+     * @inheritdoc
+     * @return UserQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new UserQuery(get_called_class());
     }
 
     /* IdentityInterface */
@@ -203,4 +213,14 @@ class User extends ActiveRecord implements IdentityInterface
         $this->status = User::STATUS_ACTIVE;
     }
 
+
+    /**
+     * Список пользователей, которые могут создавать проекты.
+     * Вобще это очень специфическая функция, её может в хелпер или сервис какой.
+     */
+    public static function getUsersMayProjectList()
+    {
+        // пока не делаем ролей и различий юзеров
+        return User::find()->andStatus()->all();
+    }
 }

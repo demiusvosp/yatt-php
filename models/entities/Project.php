@@ -3,7 +3,8 @@
 namespace app\models\entities;
 
 use yii\db\ActiveRecord;
-use app\models\entities\User;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 use app\models\queries\ProjectQuery;
 
 /**
@@ -14,13 +15,36 @@ use app\models\queries\ProjectQuery;
  * @property string $name
  * @property string $description
  * @property integer $public
- * @property string $config
+ * @property array $config
  * @property integer $admin_id
  *
  * @property User $admin
  */
 class Project extends ActiveRecord
 {
+
+    /** Публичность проекта (в будущем наверно это будет тоже через назначение ролей групам пользователей (в том числе группе гости) */
+    /** Уполномоченные */
+    const STATUS_PUBLIC_AUTHED = 0;
+    /** Все зарегистрированные */
+    const STATUS_PUBLIC_REGISTED = 1;
+    /** Все. (в том числе гости) */
+    const STATUS_PUBLIC_ALL = 2;
+
+    public function getPublicStatusName()
+    {
+        return ArrayHelper::getValue(self::getPublicStatusesArray(), $this->public);
+    }
+
+    public static function getPublicStatusesArray()
+    {
+        return [
+            self::STATUS_PUBLIC_AUTHED => 'Уполномоченные',
+            self::STATUS_PUBLIC_REGISTED => 'Зарегистрированные',
+            self::STATUS_PUBLIC_ALL => 'Все',
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -54,9 +78,9 @@ class Project extends ActiveRecord
             'suffix' => 'суффикс',
             'name' => 'Имя',
             'description' => 'Описание',
-            'public' => '0-только уполномоченным, 1-только зарегистрированным, 2-всем',
-            'config' => 'прочий конфиг',
-            'admin_id' => 'основной админ проекта',
+            'public' => 'Опубликован для',
+            'config' => 'конфигурация',
+            'admin_id' => 'Администратор проекта',
         ];
     }
 
@@ -70,10 +94,35 @@ class Project extends ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \app\models\queries\ProjectQuery the active query used by this AR class.
+     * @return ProjectQuery the active query used by this AR class.
      */
     public static function find()
     {
         return new ProjectQuery(get_called_class());
+    }
+
+
+    /**
+     * Обработка данных после загрузки
+     */
+    public function afterFind()
+    {
+        $this->config = Json::decode($this->config);
+
+        parent::afterFind();
+    }
+
+
+    /**
+     *
+     * Обработка даных перед сохранением
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+        $this->config = Json::encode($this->config);
+
+        return parent::beforeSave($insert);
     }
 }

@@ -1,20 +1,21 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: demius
+ * Date: 23.09.17
+ * Time: 19:33
+ */
 
 namespace app\models\queries;
 
-use app\models\entities\Project;
+use app\models\entities\User;
 use yii\db\ActiveQuery;
 
-/**
- * This is the ActiveQuery class for [[\app\models\entities\Project]].
- *
- * @see \app\models\entities\Project
- */
-class ProjectQuery extends ActiveQuery
+class UserQuery extends ActiveQuery
 {
-    public function andPublic($publicStatus = Project::STATUS_PUBLIC_ALL)
+    public function andStatus($status = User::STATUS_ACTIVE)
     {
-        return $this->andWhere(['public' => $publicStatus]);
+        return $this->andWhere(['status' => $status]);
     }
 
     /**

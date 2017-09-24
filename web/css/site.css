@@ -114,9 +114,27 @@ a.desc:after {
     outline: none;
 }
 
+
+.nav.nav-tabs {
+    margin-bottom: 2em;
+}
+
+.nav.nav-list.horizontal {
+
+}
+
 .form-border {
     border: 1px solid lightgray;
     border-radius: 5px;
     padding: 5px;
     margin:10px;
 }
+
+.project-item-block {
+    width: 30em;
+    height: 10em;
+    border: grey solid 1px;
+    margin: 0.5em;
+    padding: 0 1em 1em;
+}
+

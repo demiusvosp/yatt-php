@@ -8,6 +8,7 @@
 
 namespace app\controllers;
 
+use app\models\queries\ProjectQuery;
 use Yii;
 use yii\web\Controller;
 use app\models\forms\ContactForm;
@@ -37,8 +38,9 @@ class MainController extends Controller
      */
     public function actionIndex()
     {
+        $projects = ProjectQuery::allowProjectsQuery()->all();
 
-        return $this->render('index');
+        return $this->render('index', ['projects' => $projects]);
     }
 
 

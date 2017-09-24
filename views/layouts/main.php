@@ -36,10 +36,7 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-
-    $items = [
-        ['label' => Yii::t('common', 'Home'), 'url' => ['main/index']],
-    ];
+    $items = [];
 
     // обще говоря все равно мы всегда вытащим список доступных проектов, так что отдельно делать count лишний скл.
     //   и в целом это глобальная важная часть, которой место в шаблоне при сервисе или хелпере при сервисе.
@@ -58,7 +55,7 @@ AppAsset::register($this);
 
             $items = array_merge($items, [
                 ['label' => $project->name,
-                    'url' => ['project-manager/view', 'id' => $project->id]
+                    'url' => ['project/overview', 'suffix' => strtolower($project->suffix)]
                 ],
             ]);
 
@@ -67,12 +64,14 @@ AppAsset::register($this);
             foreach ($projectList as $project) {
                 $projectItems[] = [
                     'label' => $project->name,
-                    'url' => ['project-manager/view', 'id' => $project->id]
+                    'url' => ['project/overview', 'suffix' => $project->suffix]
                 ];
             }
 
             $items = array_merge($items, [
-                ['label' => Yii::t('project', 'Projects'), 'items' => $projectItems],
+                ['label' => Yii::t('project', 'Projects'),
+                    'url' => ['main/index'],
+                    'items' => $projectItems],
             ]);
         }
     }

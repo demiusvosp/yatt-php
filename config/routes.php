@@ -17,6 +17,12 @@ return [
     'pm/<id:\d+>/view'     => 'project-manager/view',
     'pm/<id:\d+>/delete'   => 'project-manager/delete',
 
+    // project
+    'p/<suffix:\w+>'  => 'project/overview', // обзор проекта
+    // план проекта
+    // события проекта
+    // создать задачу  (может это уже task??
+
     // main
     'captcha' => 'main/captcha',
     'error'   => 'main/error',

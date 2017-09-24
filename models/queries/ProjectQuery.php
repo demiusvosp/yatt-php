@@ -58,7 +58,7 @@ class ProjectQuery extends ActiveQuery
      */
     static function allowProjectsList()
     {
-        $projects = static::allowProjectsQuery()->select(['id', 'name'])->all();
+        $projects = static::allowProjectsQuery()->select(['id', 'suffix', 'name'])->all();
         return $projects; // для меню хватит массива [ ['id'=><id>, 'name'=><name>], ... ]
 //        $list = []; // для дропдовн нужен массив вида [ <id> => <name> ] но сейчас это нигле не используется
 //        foreach ($projects as $project) {

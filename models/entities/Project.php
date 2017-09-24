@@ -105,12 +105,34 @@ class Project extends ActiveRecord
     }
 
     /**
+     * Получить бобъект Query
      * @inheritdoc
      * @return ProjectQuery the active query used by this AR class.
      */
     public static function find()
     {
         return new ProjectQuery(get_called_class());
+    }
+
+    /**
+     * Перегружаем findOne, чтобы быстро брать проект по id или по суффиксу
+     * @param mixed $value
+     * @return static
+     * @throws \InvalidArgumentException
+     */
+    public static function findOne($value)
+    {
+        if(is_int($value)) {
+            // поиск по id
+            $field = 'id';
+        } elseif (is_string($value)) {
+            // поиск по суффиксу
+            $field = 'suffix';
+        } else {
+            throw new \InvalidArgumentException('only for id or suffix');
+        }
+
+        return parent::findOne([$field => $value]);
     }
 
 

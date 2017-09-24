@@ -17,11 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Projects' => 'Проекты',
+    'Overview' => 'Обзор',
+    'Project not found' => 'Проект не найден',
     'All' => 'Все',
     'Create Project' => 'Новый проект',
     'Empowered' => 'Уполномоченные',
     'Project Manager' => 'Управление проектами',
+    'Projects' => 'Проекты',
     'Registered' => 'Зарегистрированные',
     'Update {modelClass}: ' => 'Изменить {modelClass}: ',
     'suffix must be unique' => 'суффикс уже используется',

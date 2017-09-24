@@ -10,6 +10,8 @@ use app\widgets\Alert;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
+use app\models\queries\ProjectQuery;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -34,10 +36,51 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+
     $items = [
-        ['label' => Yii::t('common', 'Home'), 'url' => ['/main/index']],
-        ['label' => Yii::t('common', 'About'), 'url' => ['/main/about']],
+        ['label' => Yii::t('common', 'Home'), 'url' => ['main/index']],
     ];
+
+    // обще говоря все равно мы всегда вытащим список доступных проектов, так что отдельно делать count лишний скл.
+    //   и в целом это глобальная важная часть, которой место в шаблоне при сервисе или хелпере при сервисе.
+    //   Но это к более позднему рефакторингу. Пока у нас рабочий прототип концепций.
+    $projectCount = ProjectQuery::countAllowProjects();
+    if($projectCount == 0) { // проектов еще нет, пока только домой
+        $items = array_merge($items, [
+            ['label' => Yii::t('common', 'Home'), 'url' => ['main/index']],
+        ]);
+
+    } else {
+        $projectList = ProjectQuery::allowProjectsList();
+
+        if($projectCount == 1) { // Проект только один, сразу его показываем
+            $project = $projectList[0];
+
+            $items = array_merge($items, [
+                ['label' => $project->name,
+                    'url' => ['project-manager/view', 'id' => $project->id]
+                ],
+            ]);
+
+        } else { // проектов много - делаем список
+            $projectItems = [];
+            foreach ($projectList as $project) {
+                $projectItems[] = [
+                    'label' => $project->name,
+                    'url' => ['project-manager/view', 'id' => $project->id]
+                ];
+            }
+
+            $items = array_merge($items, [
+                ['label' => Yii::t('project', 'Projects'), 'items' => $projectItems],
+            ]);
+        }
+    }
+
+    $items = array_merge($items, [
+        ['label' => Yii::t('common', 'About'), 'url' => ['main/about']],
+    ]);
+
     if(Yii::$app->user->isGuest) {
         $items = array_merge($items, [
             ['label' => Yii::t('user', 'Login'), 'url' => ['auth/login']],

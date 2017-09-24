@@ -25,12 +25,13 @@ class Project extends ActiveRecord
 {
 
     /** Публичность проекта (в будущем наверно это будет тоже через назначение ролей групам пользователей (в том числе группе гости) */
-    /** Уполномоченные */
-    const STATUS_PUBLIC_AUTHED = 0;
+
+    /** Все. (в том числе гости) */
+    const STATUS_PUBLIC_ALL = 0;
     /** Все зарегистрированные */
     const STATUS_PUBLIC_REGISTED = 1;
-    /** Все. (в том числе гости) */
-    const STATUS_PUBLIC_ALL = 2;
+    /** Уполномоченные */
+    const STATUS_PUBLIC_AUTHED = 2;
 
     public function getPublicStatusName()
     {

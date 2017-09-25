@@ -11,7 +11,7 @@ class m170922_210903_add_project extends Migration
             'suffix' => $this->string(8)->unique()->comment('суффикс'),
             'name'   => $this->string(255)->comment('Имя'),
             'description' => $this->text()->comment('Описание'),
-            'public'    => $this->integer(255)->comment('0-только уполномоченным, 1-только зарегистрированным, 2-всем'),
+            'public'    => $this->integer(255)->comment('0-всем, 1-только зарегистрированным, 2-только уполномоченным'),
             'created_at' => $this->dateTime()->comment('Создана'),
             'updated_at' => $this->dateTime()->comment('Оновленна'),
             'admin_id'     => $this->integer()->comment('основной админ проекта'),

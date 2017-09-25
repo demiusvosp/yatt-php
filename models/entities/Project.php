@@ -135,7 +135,7 @@ class Project extends ActiveRecord
     /**
      * Перегружаем findOne, чтобы быстро брать проект по id или по суффиксу
      * @param mixed $value
-     * @return static
+     * @return Project
      * @throws \InvalidArgumentException
      */
     public static function findOne($value)
@@ -150,6 +150,7 @@ class Project extends ActiveRecord
             throw new \InvalidArgumentException('only for id or suffix');
         }
 
+        // парент возвращает ActiveRecord, но мы уверенны что реально объект класса Project (а вот как это описать хз)
         return parent::findOne([$field => $value]);
     }
 

@@ -65,6 +65,7 @@ class ProjectManagerController extends Controller
     public function actionCreate()
     {
         $model = new Project();
+        $model->admin = Yii::$app->user->identity;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

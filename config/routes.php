@@ -21,7 +21,11 @@ return [
     'p/<suffix:\w+>'  => 'project/overview', // обзор проекта
     // план проекта
     // события проекта
-    // создать задачу  (может это уже task??
+
+    // task
+    'p/<suffix:\w+>/task/list' => 'task/list',
+    'p/<suffix:\w+>/task/create' => 'task/create',
+    'p/<suffix:\w+>/task/<no:\d+>' => 'task/view',
 
     // main
     'captcha' => 'main/captcha',

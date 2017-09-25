@@ -52,13 +52,13 @@ class Task extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'suffix' => Yii::t('task', 'суффикс'),
+            'suffix' => Yii::t('task', 'suffix'),
             'id' => Yii::t('task', 'ID'),
-            'caption' => Yii::t('task', 'Заголовок'),
-            'description' => Yii::t('task', 'Описание'),
-            'assigned_id' => Yii::t('task', 'Текущий пользователь'),
-            'created_at' => Yii::t('task', 'Создана'),
-            'updated_at' => Yii::t('task', 'Оновленна'),
+            'caption' => Yii::t('task', 'Caption'),
+            'description' => Yii::t('task', 'Description'),
+            'assigned_id' => Yii::t('task', 'Assigned'),
+            'created_at' => Yii::t('task', 'Created'),
+            'updated_at' => Yii::t('task', 'Updated'),
         ];
     }
 

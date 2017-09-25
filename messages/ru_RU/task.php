@@ -17,15 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'The requested {{object}} does not exist.' => 'Запрошенный {{object}} не найден.',
-    'About' => 'О программе',
-    'Administration' => 'Настройка',
-    'Are you sure you want to delete this item?' => 'Вы действительно готовы удалить?',
-    'Create' => 'Создать',
-    'Delete' => 'Удалить',
-    'Edit' => 'Редактировать',
-    'Home' => 'Домой',
-    'Not set' => 'Не установленно',
-    'Save' => 'Сохранить',
-    'Update' => 'Изменить',
+    'Assigned' => 'Назначена',
+    'Caption' => 'Заголовок',
+    'Created' => 'Создана',
+    'Description' => 'Описание',
+    'Tasks' => 'Задачи',
+    'Updated' => 'Обновлена',
+    'suffix' => 'суффикс',
+    'Create task' => 'Новая задача',
+    'ID' => 'ID',
 ];

@@ -15,7 +15,8 @@ use yii\web\NotFoundHttpException;
 
 class ProjectController extends Controller
 {
-    public $defaultAction = 'overView';
+    public $defaultAction = 'overview';
+    public $layout = 'project';
 
     public function actionOverview($suffix)
     {

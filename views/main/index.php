@@ -15,9 +15,9 @@ $this->title = Yii::$app->name;
 
     <div class="body-content">
 
-        <? foreach ($projects as $project) { ?>
-            <?= $this->render('//project/item', ['project' => $project]) ?>
-        <? } ?>
+        <? foreach ($projects as $project) {
+            print($this->render('//project/item', ['project' => $project]));
+        } ?>
 
     </div>
 </div>

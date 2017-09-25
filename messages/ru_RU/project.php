@@ -17,12 +17,20 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Overview' => 'Обзор',
-    'Project not found' => 'Проект не найден',
+    'Configuration' => 'Конфигурация',
+    'Created' => 'Создан',
+    'Description' => 'Описание',
+    'Name' => 'Имя',
+    'Project admin' => 'Администратор',
+    'Public' => 'Виден для',
+    'Suffix' => 'Суффикс',
+    'Updated' => 'Обновлен',
     'All' => 'Все',
     'Create Project' => 'Новый проект',
     'Empowered' => 'Уполномоченные',
+    'Overview' => 'Обзор',
     'Project Manager' => 'Управление проектами',
+    'Project not found' => 'Проект не найден',
     'Projects' => 'Проекты',
     'Registered' => 'Зарегистрированные',
     'Update {modelClass}: ' => 'Изменить {modelClass}: ',

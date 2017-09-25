@@ -4,6 +4,8 @@ namespace app\models\entities;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use app\models\queries\ProjectQuery;
@@ -87,12 +89,28 @@ class Project extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'suffix' => 'суффикс',
-            'name' => 'Имя',
-            'description' => 'Описание',
-            'public' => 'Опубликован для',
-            'config' => 'конфигурация',
-            'admin_id' => 'Администратор проекта',
+            'suffix' => Yii::t('project', 'Suffix'),
+            'name' => Yii::t('project', 'Name'),
+            'description' => Yii::t('project', 'Description'),
+            'public' => Yii::t('project', 'Public'),
+            'admin_id' => Yii::t('project', 'Project admin'),
+            'created_at' => Yii::t('project', 'Created'),
+            'updated_at' => Yii::t('project', 'Updated'),
+            'config' => Yii::t('project', 'Configuration'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
         ];
     }
 
@@ -122,7 +140,7 @@ class Project extends ActiveRecord
      */
     public static function findOne($value)
     {
-        if(is_int($value)) {
+        if(ctype_digit($value)) {// аналог regex:\d+
             // поиск по id
             $field = 'id';
         } elseif (is_string($value)) {

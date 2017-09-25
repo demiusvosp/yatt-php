@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
             [
                 'attribute' => 'admin',
-                'label' => 'Администратор',
+                'label' => Yii::t('project', 'Project admin'),// вобще хорошо бы это доставать из модели, чтобы все названия полей в одном месте
                 'value' => function($project) {
                     /** @var Project $project */
                     return $project->admin ? $project->admin->username : Yii::t('common', 'Not set');
@@ -38,13 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'public',
-                'label' => 'Виден',
                 'value' => function($project) {
                     /** @var Project $project */
                     return $project->getPublicStatusName();
                 }
             ],
-            // 'config:ntext',
+            'created_at:datetime',
+            'updated_at:datetime',
             // 'admin_id',
 
             ['class' => 'yii\grid\ActionColumn'],

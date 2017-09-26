@@ -11,8 +11,19 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 use app\models\queries\ProjectQuery;
+use app\components\ProjectService;
 
 AppAsset::register($this);
+/** @var ProjectService $projectService */
+$projectService = Yii::$app->projectService;
+
+$title = Yii::$app->name;
+if($projectService->project) {
+    $title .= ': ' . $projectService->project->name;
+    $brandLabel = $projectService->project->name;
+} else {
+    $brandLabel = Yii::$app->name;
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -21,7 +32,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= Html::encode($title) ?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -30,51 +41,14 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => $brandLabel,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $items = [];
 
-    // обще говоря все равно мы всегда вытащим список доступных проектов, так что отдельно делать count лишний скл.
-    //   и в целом это глобальная важная часть, которой место в шаблоне при сервисе или хелпере при сервисе.
-    //   Но это к более позднему рефакторингу. Пока у нас рабочий прототип концепций.
-    $projectCount = ProjectQuery::countAllowProjects();
-    if($projectCount == 0) { // проектов еще нет, пока только домой
-        $items = array_merge($items, [
-            ['label' => Yii::t('common', 'Home'), 'url' => ['main/index']],
-        ]);
-
-    } else {
-        $projectList = ProjectQuery::allowProjectsList();
-
-        if($projectCount == 1) { // Проект только один, сразу его показываем
-            $project = $projectList[0];
-
-            $items = array_merge($items, [
-                ['label' => $project->name,
-                    'url' => ['project/overview', 'suffix' => strtolower($project->suffix)]
-                ],
-            ]);
-
-        } else { // проектов много - делаем список
-            $projectItems = [];
-            foreach ($projectList as $project) {
-                $projectItems[] = [
-                    'label' => $project->name,
-                    'url' => ['project/overview', 'suffix' => $project->suffix]
-                ];
-            }
-
-            $items = array_merge($items, [
-                ['label' => Yii::t('project', 'Projects'),
-                    'url' => ['main/index'],
-                    'items' => $projectItems],
-            ]);
-        }
-    }
+    $items = Yii::$app->projectService->projectMenu;
 
     $items = array_merge($items, [
         ['label' => Yii::t('common', 'About'), 'url' => ['main/about']],

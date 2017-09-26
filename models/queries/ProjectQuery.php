@@ -37,7 +37,7 @@ class ProjectQuery extends ActiveQuery
             return $query->andPublic();
         } else {
             return $query->andPublic(Project::STATUS_PUBLIC_AUTHED);
-            // пользователю должны найтись и проекты в которых его лично пустили полномочиями.
+            //@TODO пользователю должны найтись и проекты в которых его лично пустили полномочиями.
         }
     }
 

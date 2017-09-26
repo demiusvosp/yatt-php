@@ -8,28 +8,29 @@
 
 use yii\helpers\Url;
 use app\models\entities\Project;
+use app\components\ProjectService;
 
 /* @var $this yii\web\View */
 /* @var $project Project */
 /* @var $content string */
-$project = $this->params['project'];
+
+$project = Yii::$app->projectService->project;
 
 $this->title = $project->name;
-$this->params['breadcrumbs'][] = $this->title;
+array_unshift($this->params['breadcrumbs'], $this->title);
 
 
 ?>
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
-    <h1><?=$project->name ?></h1>
-
+    <?php $active = 'class="active"'; ?>
     <ul class="nav nav-tabs">
-        <li class="active">
+        <li <?=$this->context->route == 'project/overview' ? $active : '' ?>>
             <a href="<?=Url::to(['project/overview', 'suffix' => $project->suffix]) ?>"><?=Yii::t('project', 'Overview')?></a>
         </li>
-        <li>
+        <li <?=$this->context->route == 'task/list' ? $active : '' ?>>
             <a href="<?=Url::to(['task/list', 'suffix' => $project->suffix]) ?>"><?=Yii::t('task', 'Tasks')?></a>
         </li>
-        <li>
+        <li <?=$this->context->route == 'task/create' ? $active : '' ?>>
             <a href="<?=Url::to(['task/create', 'suffix' => $project->suffix]) ?>"><?=Yii::t('task', 'Create task')?></a>
         </li>
     </ul>

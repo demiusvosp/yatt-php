@@ -13,30 +13,66 @@ use Yii;
 
 use app\models\entities\Project;
 use app\models\queries\ProjectQuery;
+use yii\web\NotFoundHttpException;
 
 class ProjectService extends Component
 {
     /** @var Project */
     public $project = null;
 
-// Наметки получения проекта сервисом. В даный момент необходимости сервиса нет,
-// как нет и четкого понимнаия получения сервисом проекта в каждом запросе, который им воспользуется.
-//    function __construct(array $config)
-//    {
-//        // получаем себе текущий проект
-//        if(isset($config['project_id'])) {
-//            $this->project = Project::findOne($config['project_id']);
-//        }
-//        if(Yii::$app->session && Yii::$app->session->has('project_id')) {// а кто будет класть его в сессию?
-//            $this->project = Project::findOne(Yii::$app->session['project_id']);
-//        }
-//        if($this->countAllowProjects() == 1) {
-//            $this->project = static::allowProjectsQuery()->one();
-//        }
-//
-//
-//        parent::__construct($config);
-//    }
+    public $projectMenu = [];
 
+    public function init()
+    {
+        parent::init();
+        $allProjects = ProjectQuery::allowProjectsList();
+
+        if(count($allProjects) == 0) {
+            $this->projectMenu[] = ['label' => Yii::t('common', 'Home'), 'url' => ['main/index']];
+
+        } elseif(count($allProjects) == 1) {
+            $this->project = ProjectQuery::allowProjectsQuery()->one();
+            $this->projectMenu[] = [
+                'label' => $this->project->name,
+                'url' => ['project/overview', 'suffix' => strtolower($this->project->suffix)]
+            ];
+
+        } else {
+           if( isset(Yii::$app->request->queryParams['suffix'])) {
+               $this->project = Project::findOne(Yii::$app->request->queryParams['suffix']);
+           }
+           if(!$this->project) {
+               // тут будут другие способы получения текущего проекта.
+           }
+
+            $projectItems = [];
+            foreach ($allProjects as $project) {
+                $projectItems[] = [
+                    'label' => $project->name,
+                    'url' => ['project/overview', 'suffix' => $project->suffix]
+                ];
+            }
+            $projectItems[] = '<li class="divider"></li>';
+            $projectItems[] = ['label' => Yii::t('common', 'Home'), 'url' => ['main/index']]; //вобще это скорее страница все проекты
+
+            $this->projectMenu = ['label' => Yii::t('project', 'Projects'),
+                'url' => ['main/index'],
+                'items' => $projectItems];
+        }
+    }
+
+
+    /**
+     * Получить проект. Если его нет в этом запросе, запрос выполнить невозможно
+     * @return Project
+     * @throws NotFoundHttpException
+     */
+    public function getProject()
+    {
+        if(!$this->project) {
+            throw new NotFoundHttpException(Yii::t('project', 'Project not found'));
+        }
+        return $this->project;
+    }
 
 }

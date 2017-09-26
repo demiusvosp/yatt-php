@@ -10,6 +10,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
 use app\models\entities\Project;
@@ -21,18 +22,24 @@ class TaskController extends Controller
     public $layout = 'project';
 
 
-    public function actionList($suffix)
+    public function actionList()
     {
-        return $this->render('list');
+        $dataProvider = new ActiveDataProvider([
+            'query' => Task::find(),
+        ]);
+
+        return $this->render('list', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
-    public function actionCreate($suffix)
+    public function actionCreate()
     {
         $model = new TaskForm();
         //$model = new Task();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['list', 'suffix' => Yii::$app->projectService->project->suffix]);
+            return $this->redirect(['view', 'index' => $model->index, 'suffix' => Yii::$app->projectService->project->suffix]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -40,9 +47,14 @@ class TaskController extends Controller
         }
     }
 
-    public function actionView($suffix, $no)
+    /**
+     * По факту просмотр будет не сильно отличаться от редактирования, через ajax
+     * @param $index
+     * @return string
+     */
+    public function actionView($index)
     {
-
+        return $this->render('view', ['index' => $index]);
     }
 
 

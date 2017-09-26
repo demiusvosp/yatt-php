@@ -23,6 +23,9 @@ use app\models\entities\Task;
 class TaskForm extends Model
 {
     // поля формы
+    public $index;
+    public $suffix;
+
     public $caption;
     public $description;
     public $assigned;
@@ -32,7 +35,7 @@ class TaskForm extends Model
     /** @var  Task $model */
     protected $_model;
 
-    /** @var ProjectService */
+    /** @var ProjectService Не уверен ,что это сильно ускоит, но даст мне подсказки в ide */
     protected $_projectService;
 
     function __construct(Task $task = null, array $config = [])
@@ -44,6 +47,7 @@ class TaskForm extends Model
             $this->_model = new Task();
             $this->isNewRecord = true;
         }
+        $this->attributes = $this->_model->attributes;
 
         $this->_projectService = Yii::$app->projectService;
         parent::__construct($config);

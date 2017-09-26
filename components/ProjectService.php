@@ -17,9 +17,11 @@ use yii\web\NotFoundHttpException;
 
 class ProjectService extends Component
 {
+    // Возможно закрыть от внешнего проект, и отдавтаь только нужные части.
     /** @var Project */
     public $project = null;
 
+    /** @var array  */
     public $projectMenu = [];
 
     public function init()
@@ -73,6 +75,15 @@ class ProjectService extends Component
             throw new NotFoundHttpException(Yii::t('project', 'Project not found'));
         }
         return $this->project;
+    }
+
+    /**
+     * вернуть суффикс проекта для урла
+     * @return string
+     */
+    public function getSuffixUrl()
+    {
+        return strtolower($this->project->suffix);
     }
 
     /**

@@ -4,6 +4,11 @@ namespace app\models\entities;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
+
+use app\models\VirtualAttributesTrait;
+use app\exceptions\ReadOnlyException;
 
 /**
  * This is the model class for table "task".
@@ -22,6 +27,12 @@ use yii\db\ActiveRecord;
  */
 class Task extends ActiveRecord
 {
+//    use VirtualAttributesTrait;
+//
+//    protected $_virtualAttributes = [
+//        'name',
+//    ];
+
     /**
      * @inheritdoc
      */
@@ -63,6 +74,21 @@ class Task extends ActiveRecord
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+        ];
+    }
+
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -79,6 +105,7 @@ class Task extends ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'assigned_id']);
     }
 
+
     /**
      * @inheritdoc
      * @return \app\models\queries\TaskQuery the active query used by this AR class.
@@ -87,4 +114,11 @@ class Task extends ActiveRecord
     {
         return new \app\models\queries\TaskQuery(get_called_class());
     }
+
+
+    public function getName()
+    {
+        return $this->suffix . '#' . $this->index;
+    }
+
 }

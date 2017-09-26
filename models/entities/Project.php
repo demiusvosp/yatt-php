@@ -175,6 +175,7 @@ class Project extends ActiveRecord
      */
     public function beforeSave($insert)
     {
+        $this->suffix = strtoupper($this->suffix);
         $this->config = Json::encode($this->config);
 
         return parent::beforeSave($insert);

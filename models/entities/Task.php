@@ -2,14 +2,15 @@
 
 namespace app\models\entities;
 
-use SebastianBergmann\CodeCoverage\RuntimeException;
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "task".
  *
- * @property string $suffix
  * @property integer $id
+ * @property string $suffix
+ * @property integer $index
  * @property string $caption
  * @property string $description
  * @property integer $assigned_id
@@ -19,7 +20,7 @@ use Yii;
  * @property Project $project
  * @property User $assigned
  */
-class Task extends \yii\db\ActiveRecord
+class Task extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -35,8 +36,7 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['suffix', 'id'], 'required'],
-            [['id', 'assigned_id'], 'integer'],
+            [['index', 'assigned_id'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['suffix'], 'string', 'max' => 8],
@@ -52,8 +52,9 @@ class Task extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'suffix' => Yii::t('task', 'suffix'),
             'id' => Yii::t('task', 'ID'),
+            'suffix' => Yii::t('task', 'Suffix'),
+            'index' => Yii::t('task', 'Index'),
             'caption' => Yii::t('task', 'Caption'),
             'description' => Yii::t('task', 'Description'),
             'assigned_id' => Yii::t('task', 'Assigned'),
@@ -68,18 +69,6 @@ class Task extends \yii\db\ActiveRecord
     public function getProject()
     {
         return $this->hasOne(Project::className(), ['suffix' => 'suffix']);
-    }
-
-    public function setProject(Project $project)
-    {
-        if($this->isNewRecord) {
-            $this->suffix = $project->suffix;
-        } else {
-            if(Task::find()->where(['id' => $this->id, 'suffix' => $project->suffix])->exists()) {
-                throw new RuntimeException('Task id collizion');
-            }
-            $this->suffix = $project->suffix;
-        }
     }
 
     /**

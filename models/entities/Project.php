@@ -20,6 +20,7 @@ use app\models\queries\ProjectQuery;
  * @property integer $public
  * @property array $config
  * @property integer $admin_id
+ * @property integer $last_task_id
  *
  * @property User $admin
  */

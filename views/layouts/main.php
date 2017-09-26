@@ -86,9 +86,9 @@ if($projectService->project) {
 
     <div class="container">
         <?= Alert::widget() ?>
-        <?= Breadcrumbs::widget([
+        <?= ''; /* пока не ясно как его адекватно выводить. см #156 Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+        ])*/ ?>
         <?= $content ?>
     </div>
 </div>

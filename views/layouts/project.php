@@ -22,18 +22,20 @@ array_unshift($this->params['breadcrumbs'], $this->title);
 
 ?>
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
-    <?php $active = 'class="active"'; ?>
-    <ul class="nav nav-tabs">
-        <li <?=$this->context->route == 'project/overview' ? $active : '' ?>>
-            <a href="<?=Url::to(['project/overview', 'suffix' => $project->suffix]) ?>"><?=Yii::t('project', 'Overview')?></a>
-        </li>
-        <li <?=$this->context->route == 'task/list' ? $active : '' ?>>
-            <a href="<?=Url::to(['task/list', 'suffix' => $project->suffix]) ?>"><?=Yii::t('task', 'Tasks')?></a>
-        </li>
-        <li <?=$this->context->route == 'task/create' ? $active : '' ?>>
-            <a href="<?=Url::to(['task/create', 'suffix' => $project->suffix]) ?>"><?=Yii::t('task', 'Create task')?></a>
-        </li>
-    </ul>
+    <div class="row">
+        <?php $active = 'class="active"'; ?>
+        <ul class="nav nav-tabs">
+            <li <?=$this->context->route == 'project/overview' ? $active : '' ?>>
+                <a href="<?=Url::to(['project/overview', 'suffix' => $project->suffix]) ?>"><?=Yii::t('project', 'Overview')?></a>
+            </li>
+            <li <?=$this->context->route == 'task/list' ? $active : '' ?>>
+                <a href="<?=Url::to(['task/list', 'suffix' => $project->suffix]) ?>"><?=Yii::t('task', 'Tasks')?></a>
+            </li>
+            <li <?=$this->context->route == 'task/create' ? $active : '' ?>>
+                <a href="<?=Url::to(['task/create', 'suffix' => $project->suffix]) ?>"><?=Yii::t('task', 'Create task')?></a>
+            </li>
+        </ul>
+    </div>
 
     <?= $content ?>
 

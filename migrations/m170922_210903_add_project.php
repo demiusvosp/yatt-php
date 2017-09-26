@@ -11,11 +11,13 @@ class m170922_210903_add_project extends Migration
             'suffix' => $this->string(8)->unique()->comment('суффикс'),
             'name'   => $this->string(255)->comment('Имя'),
             'description' => $this->text()->comment('Описание'),
-            'public'    => $this->integer(255)->comment('0-всем, 1-только зарегистрированным, 2-только уполномоченным'),
-            'created_at' => $this->dateTime()->comment('Создана'),
-            'updated_at' => $this->dateTime()->comment('Оновленна'),
-            'admin_id'     => $this->integer()->comment('основной админ проекта'),
-            'config'    => $this->text()->comment('прочий конфиг'),
+            'public'      => $this->integer(255)->comment('0-всем, 1-только зарегистрированным, 2-только уполномоченным'),
+            'created_at'  => $this->dateTime()->comment('Создана'),
+            'updated_at'  => $this->dateTime()->comment('Оновленна'),
+            'admin_id'    => $this->integer()->comment('основной админ проекта'),
+            'config'      => $this->text()->comment('прочий конфиг'),
+
+            'last_task_id' => $this->integer()->defaultValue(0)->comment('номер последней задачи'),
         ]);
 
         $this->addForeignKey('fk-project-user-ref', 'project', 'admin_id', 'user', 'id');

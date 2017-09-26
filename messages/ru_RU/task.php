@@ -17,13 +17,15 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Index' => '№ задачи',
+    'Suffix' => 'суффикс проекта',
+    'Task list' => 'Список задач',
     'Assigned' => 'Назначена',
     'Caption' => 'Заголовок',
+    'Create task' => 'Новая задача',
     'Created' => 'Создана',
     'Description' => 'Описание',
+    'ID' => 'ID',
     'Tasks' => 'Задачи',
     'Updated' => 'Обновлена',
-    'suffix' => 'суффикс',
-    'Create task' => 'Новая задача',
-    'ID' => 'ID',
 ];

@@ -75,4 +75,13 @@ class ProjectService extends Component
         return $this->project;
     }
 
+    /**
+     * Сгенерировать новый ид задачи, и запомнить состояние из проекта.
+     */
+    public function generateNewTaskId()
+    {
+        $last_id = $this->project->last_task_id;
+        $this->project->updateCounters(['last_task_id' => 1]);
+        return $last_id;
+    }
 }

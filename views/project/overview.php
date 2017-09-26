@@ -13,9 +13,10 @@ use app\models\entities\Project;
 /* @var $project Project */
 
 $this->title = $project->name;
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = Yii::t('project', 'Overview');
 $this->params['project'] = $project;
 
 ?>
-
-<div class="well"><?=$project->description?></div>
+<div class="row">
+    <div class="well"><?=$project->description?></div>
+</div>

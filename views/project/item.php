@@ -14,7 +14,15 @@ use app\models\entities\Project;
 /* @var $project Project */
 
 ?>
-<div class="project-item-block">
-    <a href="<?=Url::to(['project/overview', 'suffix' => $project->suffix])?>"><h3><?=$project->name ?></h3></a>
-    <p>Здесь будет задачи, статистика и проч...</p>
+<div class="box box-solid box-success project-item-block"><!-- box-solid box-default альтернатива-->
+    <div class="box-header">
+        <a href="<?=Url::to(['project/overview', 'suffix' => $project->suffix])?>">
+            <h3 class="box-title">
+                <?=$project->name ?>
+            </h3>
+        </a>
+    </div>
+    <div class="box-body">
+        <p>Здесь будет задачи, статистика и проч...</p>
+    </div>
 </div>

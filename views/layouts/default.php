@@ -13,9 +13,11 @@ use yii\widgets\Breadcrumbs;
 ?>
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
 <section class="content-header">
-    <?= Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
+    <div class="row-fluid">
+        <?= Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]) ?>
+    </div>
 </section>
 <section class="content">
     <?= $content ?>

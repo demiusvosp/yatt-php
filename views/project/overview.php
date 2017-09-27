@@ -17,6 +17,11 @@ $this->params['breadcrumbs'][] = Yii::t('project', 'Overview');
 $this->params['project'] = $project;
 
 ?>
-<div class="row">
-    <div class="well"><?=$project->description?></div>
+<div class="row-fluid">
+    <div class="box box-success"><!-- box-solid box-default альтернатива-->
+
+        <div class="box-body">
+            <?=$project->description?>
+        </div>
+    </div>
 </div>

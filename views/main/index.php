@@ -5,14 +5,10 @@
 
 $this->title = Yii::$app->name;
 ?>
-<div class="site-index">
+<div class="row-fluid">
 
+    <?php foreach ($projects as $project) { ?>
+        <?= $this->render('//project/item', ['project' => $project]); // когда логика вывода тайла станет сложнее, стоит переделать в виджет ?>
+    <?php } ?>
 
-    <div class="body-content">
-
-        <?php foreach ($projects as $project) { ?>
-            <?= $this->render('//project/item', ['project' => $project]); // когда логика вывода тайла станет сложнее, стоит переделать в виджет ?>
-        <?php } ?>
-
-    </div>
 </div>

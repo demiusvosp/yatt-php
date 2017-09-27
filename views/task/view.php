@@ -16,6 +16,6 @@ use app\models\entities\Task;
 $this->title = Yii::t('task', 'Task: ') . $task->getName();
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="row">
+<div class="row-fluid">
     Просмотр задачи <?=$task->getName() ?>
 </div>

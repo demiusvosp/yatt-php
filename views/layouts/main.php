@@ -5,8 +5,6 @@
 
 use yii\helpers\Html;
 
-
-use yii\widgets\Breadcrumbs;
 use dmstr\helpers\AdminLteHelper;
 use app\widgets\Alert;
 
@@ -41,31 +39,23 @@ if($projectService->project) {
 <div class="wrapper" style="height: auto; min-height: 100%;">
 
     <?= $this->render(
-        'topmenu.php',
+        'partial/topmenu.php',
         ['projectService' => $projectService ]
     ) ?>
 
     <?php /*= $this->render(
-        'leftmenu.php',
-        ['directoryAsset' => $directoryAsset, 'projectService' => $projectService]
+        'partial/leftmenu.php',
+        []
     ) нам несколько избыточно левое меню. Потом может быть добавим*/
     ?>
 
     <div class="content-wrapper">
-        <section class="content-header">
-            <?= Alert::widget() ?>
-            <?= ''; /* пока не ясно как его адекватно выводить. см #156 Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ])*/ ?>
-
-        </section>
-        <section class="content">
-            <?= $content ?>
-        </section>
+        <?= Alert::widget() ?>
+        <?= $content ?>
     </div>
 
     <?= $this->render(
-        'footer.php',
+        'partial/footer.php',
         []
     ) ?>
 </div>

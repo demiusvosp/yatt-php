@@ -16,6 +16,8 @@ use app\models\entities\Task;
 
 $this->title = Yii::t('task', 'Task list');
 $this->params['breadcrumbs'][] = $this->title;
+
+const COLUMN_MAX_LEN = 255;
 ?>
 <div class="row">
     здесь будут фильтры
@@ -26,12 +28,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'name',
-            'caption',
+            [
+                'attribute' => 'name',
+                'label'  => Yii::t('task', 'ID'),
+                'content' => function($task) {
+                    return Html::a($task->name, ['task/view', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index]);
+                },
+            ],
+            [
+                'attribute' => 'caption',
+                'label'  => Yii::t('task', 'Caption'),
+                'content' => function($task) {
+                    // вот эту еболу, как и создание ссылок надо завернуть в хелперы
+                    if(strlen($task->caption) > COLUMN_MAX_LEN) {
+                        $caption = substr($task->caption, 0, COLUMN_MAX_LEN - 3) . '...';
+                    } else {
+                        $caption = $task->caption;
+                    }
+                    return Html::a($caption, ['task/view', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index]);
+                },
+            ],
             [
                 'attribute' => 'assigned',
                 'label' => Yii::t('task', 'Assigned'),
-                'value' => function($task) {
+                'content' => function($task) {
                     /** @var Task $task */
                     return $task->assigned ? $task->assigned->username : Yii::t('common', 'Not set');
                     //return $user ? $user instanceof User ? $user->username : Yii::t('common', 'Unknow') : Yii::t('common', 'Not set');
@@ -43,7 +63,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_at:datetime',
             // 'admin_id',
 
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>

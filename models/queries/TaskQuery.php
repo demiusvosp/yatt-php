@@ -14,6 +14,7 @@ class TaskQuery extends \yii\db\ActiveQuery
         return $this->andWhere('[[status]]=1');
     }*/
 
+
     /**
      * @inheritdoc
      * @return \app\models\entities\Task[]|array

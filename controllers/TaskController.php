@@ -54,7 +54,8 @@ class TaskController extends Controller
      */
     public function actionView($index)
     {
-        return $this->render('view', ['index' => $index]);
+        $task = Task::findOne(['index' => $index, 'suffix' => Yii::$app->get('projectService')->getSuffixUrl()]);
+        return $this->render('view', ['task' => $task]);
     }
 
 

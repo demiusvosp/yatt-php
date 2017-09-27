@@ -79,7 +79,6 @@ class Project extends ActiveRecord
 
             // связь админ проекта
             [['admin_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['admin_id' => 'id']],
-            [['admin_id'], 'default', 'value' => Yii::$app->user->identity->getId()],
         ];
     }
 

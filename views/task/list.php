@@ -7,6 +7,7 @@
  */
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\StringHelper;
 
 use app\models\entities\Project;
 use app\models\entities\Task;
@@ -19,10 +20,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 const COLUMN_MAX_LEN = 255;
 ?>
-<div class="row">
+<div class="row-fluid">
     здесь будут фильтры
 </div>
-<div class="row">
+<div class="row-fluid">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -39,13 +40,7 @@ const COLUMN_MAX_LEN = 255;
                 'attribute' => 'caption',
                 'label'  => Yii::t('task', 'Caption'),
                 'content' => function($task) {
-                    // вот эту еболу, как и создание ссылок надо завернуть в хелперы
-                    if(strlen($task->caption) > COLUMN_MAX_LEN) {
-                        $caption = substr($task->caption, 0, COLUMN_MAX_LEN - 3) . '...';
-                    } else {
-                        $caption = $task->caption;
-                    }
-                    return Html::a($caption, ['task/view', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index]);
+                    return Html::a(StringHelper::truncate($task->caption, COLUMN_MAX_LEN), ['task/view', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index]);
                 },
             ],
             [

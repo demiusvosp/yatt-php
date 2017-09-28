@@ -12,6 +12,8 @@ $config = [
     'bootstrap' => ['log'],
     'language' => 'ru_RU', // Это просится в параметры, но это будем делать, когда будем думать над инсталлятором
 
+    'layout' => 'default',
+
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -54,6 +56,13 @@ $config = [
                 '*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     //'basePath' => '@app\translations', немного логично, но не факт, что настолько, чтобы уходить от унификации
+                ],
+            ],
+        ],
+        'assetManager' => [
+            'bundles' => [
+                'dmstr\web\AdminLteAsset' => [
+                    'skin' => 'skin-green',
                 ],
             ],
         ],

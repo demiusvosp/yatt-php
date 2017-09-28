@@ -4,15 +4,16 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
+
+use dmstr\helpers\AdminLteHelper;
 use app\widgets\Alert;
-use yii\widgets\Breadcrumbs;
+
 use app\assets\AppAsset;
 
 use app\models\queries\ProjectQuery;
 use app\components\ProjectService;
 
+dmstr\web\AdminLteAsset::register($this);
 AppAsset::register($this);
 /** @var ProjectService $projectService */
 $projectService = Yii::$app->projectService;
@@ -20,9 +21,6 @@ $projectService = Yii::$app->projectService;
 $title = Yii::$app->name;
 if($projectService->project) {
     $title .= ': ' . $projectService->project->name;
-    $brandLabel = $projectService->project->name;
-} else {
-    $brandLabel = Yii::$app->name;
 }
 ?>
 <?php $this->beginPage() ?>
@@ -35,71 +33,32 @@ if($projectService->project) {
     <title><?= Html::encode($title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body class="<?= AdminLteHelper::skinClass() ?> sidebar-mini layout-top-nav" >
 <?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => $brandLabel,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
+<div class="wrapper" style="height: auto; min-height: 100%;">
 
-    $items = Yii::$app->projectService->projectMenu;
+    <?= $this->render(
+        'partial/topmenu.php',
+        ['projectService' => $projectService ]
+    ) ?>
 
-    $items = array_merge($items, [
-        ['label' => Yii::t('common', 'About'), 'url' => ['main/about']],
-    ]);
-
-    if(Yii::$app->user->isGuest) {
-        $items = array_merge($items, [
-            ['label' => Yii::t('user', 'Login'), 'url' => ['auth/login']],
-            ['label' => Yii::t('user', 'Registration'), 'url' => ['auth/registration']],
-        ]);
-    } else {
-        // позже здесь будут проверки прав и полномочий
-        $items = array_merge($items, [
-            ['label' => Yii::t('common', 'Administration'), 'items' => [
-                ['label' => Yii::t('user', 'User Manager'), 'items' => []],
-                ['label' => Yii::t('project', 'Project Manager'), 'url' => ['pm/list']]
-            ]],
-        ]);
-
-        $items = array_merge($items, [
-            ['label' => Yii::t('user', 'Profile ({user})', ['user' => Yii::$app->user->identity->username]),
-                'url' => ['auth/profile']],
-            ['label' => Yii::t('user', 'Logout'),
-                'url' => ['auth/logout'],
-                'linkOptions' => ['data-method' => 'post']],
-        ]);
-    }
-
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $items,
-    ]);
-    NavBar::end();
+    <?php /*= $this->render(
+        'partial/leftmenu.php',
+        []
+    ) нам несколько избыточно левое меню. Потом может быть добавим*/
     ?>
 
-    <div class="container">
+    <div class="content-wrapper">
         <?= Alert::widget() ?>
-        <?= ''; /* пока не ясно как его адекватно выводить. см #156 Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ])*/ ?>
         <?= $content ?>
     </div>
+
+    <?= $this->render(
+        'partial/footer.php',
+        []
+    ) ?>
 </div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">Yatt/php <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
 
 <?php $this->endBody() ?>
 </body>

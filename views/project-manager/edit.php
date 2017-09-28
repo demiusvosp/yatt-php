@@ -12,12 +12,14 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('project', 'Project Manager'
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('common', 'Update');
 ?>
-<div class="project-update">
+<div class="box box-solid box-default"><!-- box-solid box-default альтернатива-->
+    <div class="box-header">
+        <h1 class="box-title"><?= Html::encode($this->title) ?></h1>
+    </div>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+    <div class="box-body">
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
+    </div>
 </div>

@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'The requested {{object}} does not exist.' => 'Запрошенный {{object}} не найден.',
+    'Design:' => 'Дизайн:',
     'About' => 'О программе',
     'Administration' => 'Настройка',
     'Are you sure you want to delete this item?' => 'Вы действительно готовы удалить?',
@@ -27,5 +27,6 @@ return [
     'Home' => 'Домой',
     'Not set' => 'Не установленно',
     'Save' => 'Сохранить',
+    'The requested {{object}} does not exist.' => 'Запрошенный {{object}} не найден.',
     'Update' => 'Изменить',
 ];

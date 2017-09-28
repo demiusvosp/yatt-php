@@ -6,6 +6,7 @@
  * Time: 0:46
  */
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 use app\models\entities\Project;
 use app\models\entities\Task;
@@ -16,6 +17,53 @@ use app\models\entities\Task;
 $this->title = Yii::t('task', 'Task: ') . $task->getName();
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="row">
-    Просмотр задачи <?=$task->getName() ?>
+<div class="row-fluid">
+    <div class="btn-group">
+        <?=Html::a(
+            Yii::t('task', 'Edit task'),// '<span class="fa fa-edit"></span>' слишком высокая, такую лучше перенести куда-то
+            ['task/edit', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index],// с этими строками в task надо что-то делать
+            ['class' => 'btn btn-primary']
+        );?>
+    </div>
+</div>
+<div class="row"><!--  row-flex row-flex-wrap не работают -->
+        <div class="col-md-4 task-dict-block">
+            <p>
+                Состояние
+            </p>
+            <p>
+                Прогресс
+            </p>
+            <p>
+                Тип задачи
+            </p>
+            <p>
+                Категория/подсистема
+            </p>
+            <p>
+                Назначена: <b><?=$task->assigned ? $task->assigned->username : Yii::t('common', 'Not set') ?></b><br>
+            </p>
+            <p>
+                Критичность
+            </p>
+            <p>
+                Приоритет
+            </p>
+            <p>
+                Обнаруженна в версии
+            </p>
+            <p>
+                Дата обнаружения: <b><?= Yii::$app->formatter->asDate($task->created_at) ?></b>
+            </p>
+            <p>
+                Ожидается в версии
+            </p>
+        </div>
+
+        <div class="col-md-8 task-text-block">
+            <h2><?=$task->getName()?> - <?=$task->caption?></h2>
+            <div class="well">
+                <?=$task->description ?>
+            </div>
+        </div>
 </div>

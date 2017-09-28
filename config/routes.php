@@ -23,9 +23,10 @@ return [
     // события проекта
 
     // task
-    'p/<suffix:\w+>/task/list' => 'task/list',
+    'p/<suffix:\w+>/task/list'   => 'task/list',
     'p/<suffix:\w+>/task/create' => 'task/create',
-    'p/<suffix:\w+>/task/<index:\d+>' => 'task/view',
+    'p/<suffix:\w+>/task/<index:\d+>/edit' => 'task/edit',
+    'p/<suffix:\w+>/task/<index:\d+>'      => 'task/view',
 
     // main
     'captcha' => 'main/captcha',

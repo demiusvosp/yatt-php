@@ -15,7 +15,6 @@ use yii\web\NotFoundHttpException;
 
 use app\models\entities\Project;
 use app\models\entities\Task;
-use app\models\forms\TaskForm;
 
 class TaskController extends Controller
 {
@@ -35,14 +34,27 @@ class TaskController extends Controller
 
     public function actionCreate()
     {
-        $model = new TaskForm();
-        //$model = new Task();
+        $task = new Task();
+        $task->assigned_id = Yii::$app->user->identity->getId();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'index' => $model->index, 'suffix' => Yii::$app->projectService->project->suffix]);
+        if ($task->load(Yii::$app->request->post()) && $task->save()) {
+            return $this->redirect(['view', 'index' => $task->index, 'suffix' => Yii::$app->projectService->project->suffix]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'model' => $task,
+            ]);
+        }
+    }
+
+    public function actionEdit($index)
+    {
+        $task = Task::findOne(['index' => $index, 'suffix' => Yii::$app->get('projectService')->getSuffixUrl()]);
+
+        if ($task->load(Yii::$app->request->post()) && $task->save()) {
+            return $this->redirect(['view', 'index' => $task->index, 'suffix' => Yii::$app->projectService->project->suffix]);
+        } else {
+            return $this->render('create', [
+                'model' => $task,
             ]);
         }
     }

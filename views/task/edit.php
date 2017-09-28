@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: demius
- * Date: 26.09.17
- * Time: 14:48
+ * Date: 28.09.17
+ * Time: 12:22
  */
 
 use yii\helpers\Html;
@@ -21,4 +21,3 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= $this->render('_form', [
     'model' => $model,
 ]) ?>
-

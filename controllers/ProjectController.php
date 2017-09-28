@@ -8,6 +8,7 @@
 
 namespace app\controllers;
 
+use app\models\forms\DictStatesForm;
 use Yii;
 use yii\web\Controller;
 
@@ -25,7 +26,16 @@ class ProjectController extends Controller
     public function actionSettings()
     {
         $project = Yii::$app->projectService->project;
+        $dictStatesForm = new DictStatesForm($project);
 
-        return $this->render('settings', ['project' => $project]);
+        if($dictStatesForm->load(Yii::$app->request->post()) && $dictStatesForm->validate()) {
+            $dictStatesForm->save();
+            return $this->refresh();
+        }
+
+        return $this->render('settings', [
+            'project' => $project,
+            'dictStatesForm' => $dictStatesForm,
+        ]);
     }
 }

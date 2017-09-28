@@ -34,6 +34,7 @@ class DictState extends \yii\db\ActiveRecord
             [['project_id'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255],
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
+            [['name'], 'required'],
         ];
     }
 

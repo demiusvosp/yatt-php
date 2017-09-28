@@ -9,11 +9,12 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+use app\models\entities\Task;
 use app\models\entities\User;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\entities\Task */
+/* @var $model Task */
 
 // врменное решение
 $adminsChoices = [];

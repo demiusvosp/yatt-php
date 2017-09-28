@@ -17,8 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Name' => 'Имя', // Вобще это скорее значение
-    'Project' => 'Проект',
+    'Update' => 'Обновить',
+    '#' => '#',
     'Description' => 'Описание',
     'ID' => 'ID',
+    'Name' => 'Имя',
+    'Project' => 'Проект',
 ];

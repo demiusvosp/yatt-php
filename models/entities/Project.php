@@ -21,6 +21,7 @@ use app\models\queries\ProjectQuery;
  * @property array $config
  * @property integer $admin_id
  * @property integer $last_task_id
+ * @property DictState[] $states
  *
  * @property User $admin
  */
@@ -178,5 +179,13 @@ class Project extends ActiveRecord
         $this->config = Json::encode($this->config);
 
         return parent::beforeSave($insert);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStates()
+    {
+        return $this->hasMany(DictState::className(), ['project_id' => 'id']);
     }
 }

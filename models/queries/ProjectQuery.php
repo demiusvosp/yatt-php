@@ -23,6 +23,19 @@ class ProjectQuery extends ActiveQuery
         return $this->andWhere(['<=', 'public', $publicStatus]);
     }
 
+    /**
+     * Жадно загрузить вместе со справочниками
+     * @param bool $dicts
+     * @return $this
+     */
+    public function withDicts($dicts = false)
+    {
+        if(!$dicts) {
+            $dicts = ['dict_state'];
+        }
+        return $this->with($dicts);
+    }
+
 
     /**
      * Query проектов доступных текущему пользователю
@@ -54,17 +67,18 @@ class ProjectQuery extends ActiveQuery
 
     /**
      * Список проектов доступных пользователю
+     * @param bool $forSelect false - [ ['id'=><id>, 'name'=><name>], ... ]; true - [ <id> => <name>, ... ]
      * @return array [<id> => <name>]
      */
-    static function allowProjectsList()
+    static function allowProjectsList($forSelect = false)
     {
-        $projects = static::allowProjectsQuery()->select(['id', 'suffix', 'name'])->all();
-        return $projects; // для меню хватит массива [ ['id'=><id>, 'name'=><name>], ... ]
-//        $list = []; // для дропдовн нужен массив вида [ <id> => <name> ] но сейчас это нигле не используется
-//        foreach ($projects as $project) {
-//            $list[$project['id']] = $project['name'];
-//        }
-//        return $list;
+        $query = static::allowProjectsQuery()->select(['id', 'suffix', 'name']);
+        if($forSelect) {
+            $query->indexBy('id');
+        }
+
+        $projects = $query->all();
+        return $projects;
     }
 
     /**

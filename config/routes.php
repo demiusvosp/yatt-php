@@ -18,7 +18,8 @@ return [
     'pm/<id:\d+>/delete'   => 'project-manager/delete',
 
     // project
-    'p/<suffix:\w+>'  => 'project/overview', // обзор проекта
+    'p/<suffix:\w+>'           => 'project/overview', // обзор проекта
+    'p/<suffix:\w+>/settings'  => 'project/settings', // настройки проекта
     // план проекта
     // события проекта
 

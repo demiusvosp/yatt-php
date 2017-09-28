@@ -10,7 +10,6 @@ use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 
 use app\models\entities\Project;
-use app\components\ProjectService;
 
 /* @var $this yii\web\View */
 /* @var $project Project */
@@ -30,8 +29,6 @@ array_unshift($this->params['breadcrumbs'], $this->title);
         ]) ?>
 
         <div class="row-fluid">
-
-
             <?php $active = 'class="active"'; ?>
             <ul class="nav nav-tabs">
                 <li <?=$this->context->route == 'project/overview' ? $active : '' ?>>
@@ -42,6 +39,9 @@ array_unshift($this->params['breadcrumbs'], $this->title);
                 </li>
                 <li <?=$this->context->route == 'task/create' ? $active : '' ?>>
                     <a href="<?=Url::to(['task/create', 'suffix' => $project->suffix]) ?>"><?=Yii::t('task', 'Create task')?></a>
+                </li>
+                <li <?=$this->context->route == 'project/settings' ? $active : '' ?>>
+                    <a href="<?=Url::to(['project/settings', 'suffix' => $project->suffix]) ?>"><?=Yii::t('project', 'Project settings')?></a>
                 </li>
             </ul>
         </div>

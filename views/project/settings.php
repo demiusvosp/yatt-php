@@ -12,7 +12,7 @@ use app\models\entities\Project;
 /* @var $project Project */
 
 $this->title = $project->name;
-$this->params['breadcrumbs'][] = Yii::t('project', 'Overview');
+$this->params['breadcrumbs'][] = Yii::t('project', 'Settings');
 $this->params['project'] = $project;
 
 ?>

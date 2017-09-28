@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Project settings' => 'Настройки проекта',
+    'Settings' => 'Настройки',
     'All' => 'Все',
     'Configuration' => 'Конфигурация',
     'Create Project' => 'Новый проект',
@@ -29,6 +29,7 @@ return [
     'Project Manager' => 'Управление проектами',
     'Project admin' => 'Администратор',
     'Project not found' => 'Проект не найден',
+    'Project settings' => 'Настройки проекта',
     'Projects' => 'Проекты',
     'Public' => 'Виден для',
     'Registered' => 'Зарегистрированные',

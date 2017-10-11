@@ -161,7 +161,7 @@ class Project extends ActiveRecord
      */
     public function afterFind()
     {
-        $this->config = Json::decode($this->config);
+        //$this->config = Json::decode($this->config);
 
         parent::afterFind();
     }

@@ -6,9 +6,9 @@
  * Time: 17:50
  */
 
-use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 
+use app\helpers\ProjectUrl;
 use app\models\entities\Project;
 
 /* @var $this yii\web\View */
@@ -32,16 +32,16 @@ array_unshift($this->params['breadcrumbs'], $this->title);
             <?php $active = 'class="active"'; ?>
             <ul class="nav nav-tabs">
                 <li <?=$this->context->route == 'project/overview' ? $active : '' ?>>
-                    <a href="<?=Url::to(['project/overview', 'suffix' => $project->suffix]) ?>"><?=Yii::t('project', 'Overview')?></a>
+                    <a href="<?=ProjectUrl::to(['project/overview', 'project' => $project]) ?>"><?=Yii::t('project', 'Overview')?></a>
                 </li>
                 <li <?=$this->context->route == 'task/list' ? $active : '' ?>>
-                    <a href="<?=Url::to(['task/list', 'suffix' => $project->suffix]) ?>"><?=Yii::t('task', 'Tasks')?></a>
+                    <a href="<?=ProjectUrl::to(['task/list', 'project' => $project]) ?>"><?=Yii::t('task', 'Tasks')?></a>
                 </li>
                 <li <?=$this->context->route == 'task/create' ? $active : '' ?>>
-                    <a href="<?=Url::to(['task/create', 'suffix' => $project->suffix]) ?>"><?=Yii::t('task', 'Create task')?></a>
+                    <a href="<?=ProjectUrl::to(['task/create', 'project' => $project]) ?>"><?=Yii::t('task', 'Create task')?></a>
                 </li>
                 <li <?=$this->context->route == 'project/settings' ? $active : '' ?>>
-                    <a href="<?=Url::to(['project/settings', 'suffix' => $project->suffix]) ?>"><?=Yii::t('project', 'Project settings')?></a>
+                    <a href="<?=ProjectUrl::to(['project/settings', 'project' => $project]) ?>"><?=Yii::t('project', 'Project settings')?></a>
                 </li>
             </ul>
         </div>

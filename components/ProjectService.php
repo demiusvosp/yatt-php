@@ -78,7 +78,7 @@ class ProjectService extends Component
     }
 
     /**
-     * вернуть суффикс проекта для урла
+     * вернуть суффикс проекта для урла. здесь не удобно
      * @return string
      */
     public function getSuffixUrl()

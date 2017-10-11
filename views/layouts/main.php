@@ -10,10 +10,8 @@ use app\widgets\Alert;
 
 use app\assets\AppAsset;
 
-use app\models\queries\ProjectQuery;
 use app\components\ProjectService;
 
-dmstr\web\AdminLteAsset::register($this);
 AppAsset::register($this);
 /** @var ProjectService $projectService */
 $projectService = Yii::$app->projectService;

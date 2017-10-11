@@ -8,9 +8,12 @@
 
 namespace app\controllers;
 
-use app\models\forms\DictStatesForm;
 use Yii;
 use yii\web\Controller;
+
+use app\models\entities\Project;
+use app\models\forms\DictForm;
+
 
 class ProjectController extends Controller
 {
@@ -25,17 +28,22 @@ class ProjectController extends Controller
 
     public function actionSettings()
     {
+        /** @var Project $project */
         $project = Yii::$app->projectService->project;
-        $dictStatesForm = new DictStatesForm($project);
+        $dictForm = new DictForm([
+            'project' => $project,
+            'items'     => $project->states,
+            'itemClass' => 'app\models\entities\DictState',
+        ]);
 
-        if($dictStatesForm->load(Yii::$app->request->post()) && $dictStatesForm->validate()) {
-            $dictStatesForm->save();
+        if($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
+            $dictForm->save();
             return $this->refresh();
         }
 
         return $this->render('settings', [
             'project' => $project,
-            'dictStatesForm' => $dictStatesForm,
+            'dictForm' => $dictForm,
         ]);
     }
 }

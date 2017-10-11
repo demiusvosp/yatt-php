@@ -17,11 +17,16 @@ class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
+    // пока оставим на месте, потом, в рамках #181, когда заюзаем лесс и минификатор будем их копировать и собирать на лету.
+    //public $sourcePath = '@app/assets/res';
+
     public $css = [
         'css/site.css',
     ];
     public $js = [
+        'js/dictedit.js'
     ];
+
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',

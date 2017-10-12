@@ -7,13 +7,24 @@
  */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
+use yii\db\ActiveRecord;
 use app\models\forms\DictForm;
+use app\models\entities\Project;
 
 /* @var $dictForm DictForm */
+/* @var $dict string */
+/* @var $project Project|null */
 ?>
 <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
-<table class="table dictForm ui-sortable">
+<table
+    id="dictForm"
+    class="table ui-sortable"
+    data-drop-url="<?= Url::to(['dict/delete-item']) ?>"
+    data-dict="<?= $dictForm->tableName()?>"
+    <?= $project ? ('data-project="'.$project->id.'"') : '' ?>
+>
     <thead class="ui-state-disabled">
     <tr>
         <th><?=Yii::t('dicts', '#')?></th>
@@ -25,11 +36,15 @@ use app\models\forms\DictForm;
     <tbody>
     <?php $fieldSettings = ['template' => '{input}{error}', 'options' => ['class' => '']]; ?>
     <?php foreach ($dictForm->items as $index => $item) { ?>
-        <tr>
+        <?php /* @var $item ActiveRecord */ ?>
+        <tr class="dict_item" data-id="<?= $item->id ?>">
             <td><?=$index?></td>
             <td><?= $form->field($item, "[$index]name", $fieldSettings)->textInput(); ?></td>
             <td><?= $form->field($item, "[$index]description", $fieldSettings)->textInput(); ?></td>
-            <td><span data-id="<?=$index?>" class="btn btn-flat drop-item"><i class="fa fa-close text-red"</span>
+            <td>
+                <span class="btn btn-flat drop-item">
+                    <i class="fa fa-close text-red"></i>
+                </span>
             </td>
         </tr>
     <?php } ?>

@@ -98,4 +98,15 @@ class ProjectQuery extends ActiveQuery
     {
         return parent::one($db);
     }
+
+    public function byId($id)
+    {
+        if(is_string($id)) {
+            return $this->where(['suffix' => $id])->one();
+        }
+        if(is_int($id)) {
+            return $this->where(['id' => $id])->one();
+        }
+    }
+
 }

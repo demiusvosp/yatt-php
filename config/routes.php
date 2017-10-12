@@ -22,6 +22,8 @@ return [
     'p/<suffix:\w+>/settings'  => 'project/settings', // настройки проекта
     // план проекта
     // события проекта
+    // Справочники
+    'DELETE p/<suffix:\w+>/dict/delete-item' => 'dict/delete-item',
 
     // task
     'p/<suffix:\w+>/task/list'   => 'task/list',

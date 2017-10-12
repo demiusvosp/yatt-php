@@ -22,3 +22,11 @@
     width: 50em;
 }
 
+.dict_item {
+    border: #f4f4f4 1px solid;
+}
+
+.dict_item_dropping {
+    border: red 1px solid;
+}
+

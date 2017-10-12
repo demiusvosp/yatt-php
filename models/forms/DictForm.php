@@ -56,6 +56,12 @@ class DictForm extends Model
     }
 
 
+    public function tableName()
+    {
+        return end($this->items)->tableName();
+    }
+
+
     public function load($data, $formName = null)
     {
         return Model::loadMultiple($this->items, $data, $formName);

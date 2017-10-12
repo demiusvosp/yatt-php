@@ -8,10 +8,12 @@
 
 namespace app\widgets;
 
+use app\models\forms\DictForm;
 use yii\base\Widget;
 
 class DictEdit extends Widget
 {
+    /** @var  DictForm */
     public $dictForm;
 
     public function init()
@@ -22,7 +24,10 @@ class DictEdit extends Widget
 
     public function run()
     {
-        return $this->render('dictEdit', ['dictForm' => $this->dictForm]);
+        return $this->render('dictEdit', [
+            'dictForm' => $this->dictForm,
+            'project' => $this->dictForm->project,
+        ]);
     }
 
 }

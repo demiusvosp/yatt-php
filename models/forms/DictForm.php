@@ -21,7 +21,7 @@ use app\models\entities\IRefProject;
  */
 class DictForm extends Model
 {
-    /** @var array коллекция справочника */
+    /** @var array[IRefProject] коллекция справочника */
     public $items;
 
     /** @var  string класс модели значения справочника */
@@ -34,7 +34,7 @@ class DictForm extends Model
     public function __construct(array $config = ['items' => null])
     {
         if(!$config['items']) {
-            throw new \DomainException('need items field');
+            $this->items = [];
         }
         if(!$config['itemClass']) {
             throw new \DomainException('need itemClass field');
@@ -50,7 +50,7 @@ class DictForm extends Model
         // и новая для создания нового занчения
         $newItem = Yii::createObject($this->itemClass, []);
         if($this->project && $newItem instanceof IRefProject) {
-            $newItem->project = $this->project;
+            $newItem->project_id = $this->project->id;
         }
         $this->items[] = $newItem;
     }
@@ -82,6 +82,13 @@ class DictForm extends Model
     public function save()
     {
         foreach ($this->items as $item) {
+            if($this->project) {
+                $item->project_id = $this->project->id;
+            }
+            if(empty($item->description)) {
+                $item->description = $item->name;
+            }
+
             $item->save(false);
         }
     }

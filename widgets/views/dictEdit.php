@@ -20,12 +20,12 @@ use app\models\entities\Project;
 <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
 <table
     id="dictForm"
-    class="table ui-sortable"
+    class="table"
     data-drop-url="<?= Url::to(['dict/delete-item']) ?>"
     data-dict="<?= $dictForm->tableName()?>"
     <?= $project ? ('data-project="'.$project->id.'"') : '' ?>
 >
-    <thead class="ui-state-disabled">
+    <thead>
     <tr>
         <th><?=Yii::t('dicts', '#')?></th>
         <th><?=Yii::t('dicts', 'Name')?></th>
@@ -33,7 +33,7 @@ use app\models\entities\Project;
         <th>&nbsp;</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="ui-sortable">
     <?php $fieldSettings = ['template' => '{input}{error}', 'options' => ['class' => '']]; ?>
     <?php foreach ($dictForm->items as $index => $item) { ?>
         <?php /* @var $item ActiveRecord */ ?>

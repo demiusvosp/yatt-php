@@ -25,4 +25,10 @@ jQuery(function(){
         });
     })
 
+    $(".ui-sortable").sortable({
+        update: function(event, ui) {
+            console.log(event);
+            console.log(ui);
+        }
+    });
 });

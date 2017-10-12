@@ -17,7 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Update' => 'Обновить',
+    'Closed' => 'Закрыта',
+    'Closed task' => 'Закрыта',
+    'New' => 'Новая',
+    'New task' => 'Новая задача',
+    'Save' => 'Сохранить',
     '#' => '#',
     'Description' => 'Описание',
     'ID' => 'ID',

@@ -35,7 +35,12 @@ class TaskController extends Controller
     public function actionCreate()
     {
         $task = new Task();
-        $task->assigned_id = Yii::$app->user->identity->getId();
+        if(Yii::$app->user->isGuest) {
+            // это возможное (хотя и плохое) состояние, но сервис должен ставить сюда юзера с ролью техподдержки
+            $task->assigned_id = null;
+        } else {
+            $task->assigned_id = Yii::$app->user->identity->getId();
+        }
 
         if ($task->load(Yii::$app->request->post()) && $task->save()) {
             return $this->redirect(['view', 'index' => $task->index, 'suffix' => Yii::$app->projectService->project->suffix]);

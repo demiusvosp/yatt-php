@@ -25,7 +25,6 @@ use yii\db\Expression;
  */
 class Task extends ActiveRecord
 {
-    use TWithProject;
 
     /**
      * @inheritdoc

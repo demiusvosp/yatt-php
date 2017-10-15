@@ -40,8 +40,8 @@ array_unshift($this->params['breadcrumbs'], $this->title);
                 <li <?=$this->context->route == 'task/create' ? $active : '' ?>>
                     <a href="<?=ProjectUrl::to(['task/create', 'project' => $project]) ?>"><?=Yii::t('task', 'Create task')?></a>
                 </li>
-                <li <?=$this->context->route == 'project/settings' ? $active : '' ?>>
-                    <a href="<?=ProjectUrl::to(['project/settings', 'project' => $project]) ?>"><?=Yii::t('project', 'Project settings')?></a>
+                <li <?=strpos($this->context->route, 'project-settings')!==false ? $active : '' ?>>
+                    <a href="<?=ProjectUrl::to(['project-settings/main', 'project' => $project]) ?>"><?=Yii::t('project', 'Project settings')?></a>
                 </li>
             </ul>
         </div>

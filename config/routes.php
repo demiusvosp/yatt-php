@@ -18,9 +18,13 @@ return [
     'admin/project/<id:\d+>/delete'   => 'admin/project/delete',
 
     // project
-    'p/<suffix:\w+>'           => 'project/overview', // обзор проекта
-    'p/<suffix:\w+>/settings'  => 'project/settings', // настройки проекта
-    // план проекта
+    'p/<suffix:\w+>' => 'project/overview',
+
+    // project setting
+    'p/<suffix:\w+>/setting/main'  =>  'project-settings/main',
+    'p/<suffix:\w+>/setting/states' => 'project-settings/states',
+    'p/<suffix:\w+>/setting/types'  => 'project-settings/types',
+
     // события проекта
     // Справочники
     'DELETE p/<suffix:\w+>/dict/delete-item' => 'dict/delete-item',

@@ -8,6 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+
 use app\models\queries\ProjectQuery;
 
 /**
@@ -187,5 +188,13 @@ class Project extends ActiveRecord
     public function getStates()
     {
         return $this->hasMany(DictState::className(), ['project_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTypes()
+    {
+        return $this->hasMany(DictType::className(), ['project_id' => 'id']);
     }
 }

@@ -17,12 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Position' => 'Позиция',
-    'Project ID' => 'ID',
-    '#' => '#',
-    'Description' => 'Описание',
-    'ID' => 'ID',
-    'Name' => 'Имя',
-    'Project' => 'Проект',
-    'Save' => 'Сохранить',
+    'Main' => 'Основные',
+    'States' => 'Этапы задачи',
+    'Types' => 'Типы задач',
 ];

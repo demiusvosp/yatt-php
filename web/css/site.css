@@ -6,6 +6,28 @@
     margin: 0.5em;
 }
 
+/* табы слева от контента */
+.nav-tabs.tabs-left {
+    border: none;
+    border-right: 1px solid #ddd;
+}
+.nav-tabs.tabs-left > li {
+    float: none;
+    margin-bottom: 0;
+    margin-right: -1px;
+}
+.nav-tabs.tabs-left > li > a {
+    margin-right: 0;
+    margin-bottom: 2px;
+    border: 1px solid transparent;
+    border-radius: 4px 0 0 4px;
+}
+.nav-tabs.tabs-left > li.active > a {
+    border: 1px solid #ddd;
+    border-right-color: transparent;
+}
+
+
 /* блок левый справочники задачи */
 .task-dict-block {
     padding-right: 1em;

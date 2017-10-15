@@ -34,6 +34,7 @@ return [
     'Public' => 'Виден для',
     'Registered' => 'Зарегистрированные',
     'Suffix' => 'Суффикс',
+    'Types' => 'Типы',
     'Update {modelClass}: ' => 'Изменить {modelClass}: ',
     'Updated' => 'Обновлен',
     'suffix must be unique' => 'суффикс уже используется',

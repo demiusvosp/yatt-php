@@ -17,11 +17,8 @@ use yii\db\ActiveRecord;
  * @property Project $project
  * @property Task[] $tasks
  */
-class DictState extends ActiveRecord
+class DictState extends ActiveRecord implements IWithProject, IWithPosition
 {
-//    use TWithProject;
-//    use TWithPosition;
-
 
     /**
      * @inheritdoc

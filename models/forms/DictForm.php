@@ -12,7 +12,7 @@ use Yii;
 use yii\base\Model;
 
 use app\models\entities\Project;
-use app\models\entities\IRefProject;
+use app\models\entities\IWithProject;
 
 /**
  * Class DictForm - Форма справочник. Содерит подборку значений справочника.
@@ -21,7 +21,7 @@ use app\models\entities\IRefProject;
  */
 class DictForm extends Model
 {
-    /** @var array[IRefProject] коллекция справочника */
+    /** @var array[IWithProject] коллекция справочника */
     public $items;
 
     /** @var  string класс модели значения справочника */
@@ -49,7 +49,7 @@ class DictForm extends Model
         parent::init();
         // и новая для создания нового занчения
         $newItem = Yii::createObject($this->itemClass, []);
-        if($this->project && $newItem instanceof IRefProject) {
+        if($this->project && $newItem instanceof IWithProject) {
             $newItem->project_id = $this->project->id;
         }
         $newItem->position = count($this->items);

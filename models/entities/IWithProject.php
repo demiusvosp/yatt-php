@@ -10,10 +10,10 @@ namespace app\models\entities;
 
 
 /**
- * Interface IRefProject - модель принадлежит проекту, т.е. имеет поле проект
+ * Interface IWithProject - модель принадлежит проекту, т.е. имеет поле проект
  * @package app\models\entities
  */
-interface IRefProject
+interface IWithProject
 {
     /**
      * @return \yii\db\ActiveQuery

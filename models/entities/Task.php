@@ -66,8 +66,8 @@ class Task extends ActiveRecord
             'assigned_id' => Yii::t('task', 'Assigned'),
             'created_at' => Yii::t('task', 'Created'),
             'updated_at' => Yii::t('task', 'Updated'),
-            'dict_stage_id' => Yii::t('dict', 'Stage'),
-            'dict_type_id' => Yii::t('dict', 'Type'),
+            'dict_stage_id' => Yii::t('dicts', 'Stage'),
+            'dict_type_id' => Yii::t('dicts', 'Type'),
         ];
     }
 

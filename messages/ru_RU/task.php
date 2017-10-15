@@ -21,7 +21,7 @@ return [
     'Task: ' => '',
     'Assigned' => 'Назначена',
     'Caption' => 'Заголовок',
-    'Create task' => 'Новая задача',
+    'Create task' => 'Новая',
     'Created' => 'Создана',
     'Description' => 'Описание',
     'Edit task' => 'Редактировать задачу',

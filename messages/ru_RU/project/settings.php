@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Stages' => 'Этапы',
     'Main' => 'Основные',
-    'States' => 'Этапы задачи',
     'Types' => 'Типы задач',
 ];

@@ -22,7 +22,7 @@ use app\models\queries\ProjectQuery;
  * @property array $config
  * @property integer $admin_id
  * @property integer $last_task_id
- * @property DictState[] $states
+ * @property DictStage[] $states
  * @property DictType[] $types
  *
  * @property User $admin
@@ -188,7 +188,7 @@ class Project extends ActiveRecord
      */
     public function getStates()
     {
-        return $this->hasMany(DictState::className(), ['project_id' => 'id']);
+        return $this->hasMany(DictStage::className(), ['project_id' => 'id']);
     }
 
     /**

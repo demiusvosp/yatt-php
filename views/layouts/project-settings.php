@@ -30,9 +30,9 @@ array_unshift($this->params['breadcrumbs'], $this->title);
                         <?=Yii::t('project/settings', 'Main')?>
                     </a>
                 </li>
-                <li <?=$this->context->route == 'project-settings/states' ? $active : '' ?>>
-                    <a href="<?=ProjectUrl::to(['project-settings/states', 'project' => $project]) ?>">
-                        <?=Yii::t('project/settings', 'States')?>
+                <li <?=$this->context->route == 'project-settings/stages' ? $active : '' ?>>
+                    <a href="<?=ProjectUrl::to(['project-settings/stages', 'project' => $project]) ?>">
+                        <?=Yii::t('project/settings', 'Stages')?>
                     </a>
                 </li>
                 <li <?=$this->context->route == 'project-settings/types' ? $active : '' ?>>

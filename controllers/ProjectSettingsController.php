@@ -37,14 +37,14 @@ class ProjectSettingsController extends Controller
         return $this->render('main', ['project' => $project]);
     }
 
-    public function actionStates()
+    public function actionStages()
     {
         /** @var Project $project */
         $project = Yii::$app->projectService->project;
         $dictForm = new DictForm([
             'project' => $project,
             'items'     => $project->states,
-            'itemClass' => 'app\models\entities\DictState',
+            'itemClass' => 'app\models\entities\DictStage',
         ]);
 
         if($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
@@ -52,7 +52,7 @@ class ProjectSettingsController extends Controller
             return $this->refresh();
         }
 
-        return $this->render('states', [
+        return $this->render('stages', [
             'project' => $project,
             'dictForm' => $dictForm,
         ]);

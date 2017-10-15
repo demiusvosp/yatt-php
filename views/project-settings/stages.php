@@ -17,14 +17,14 @@ use app\widgets\DictEdit;
 /* @var $dictForm DictForm */
 
 $this->title = $project->name;
-$this->params['breadcrumbs'][] = Yii::t('project/settings', 'States');
+$this->params['breadcrumbs'][] = Yii::t('project/settings', 'Stages');
 $this->params['project'] = $project;
 
 ?>
 <div class="row-fluid">
-    <div class="box box-default box-solid dict_states-block">
+    <div class="box box-default box-solid dict_setting_block">
         <div class="box-header">
-            <h3 class="box-title">Состояния задачи</h3>
+            <h3 class="box-title"><?=Yii::t('dicts', 'Tasks stages')?></h3>
         </div>
         <div class="box-body">
             <?= DictEdit::widget(['dictForm' => $dictForm]); ?>

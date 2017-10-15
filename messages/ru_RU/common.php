@@ -17,12 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Design:' => 'Дизайн:',
+    'Successful' => 'Успешно',
     'About' => 'О программе',
     'Administration' => 'Настройка',
     'Are you sure you want to delete this item?' => 'Вы действительно готовы удалить?',
     'Create' => 'Создать',
     'Delete' => 'Удалить',
+    'Design:' => 'Дизайн:',
     'Edit' => 'Редактировать',
     'Home' => 'Домой',
     'Not set' => 'Не установленно',

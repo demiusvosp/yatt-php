@@ -4,11 +4,11 @@ namespace app\models\queries;
 
 use \app\models\entities\Project;
 /**
- * This is the ActiveQuery class for [[\app\models\entities\DictState]].
+ * This is the ActiveQuery class for [[\app\models\entities\DictStage]].
  *
- * @see \app\models\entities\DictState
+ * @see \app\models\entities\DictStage
  */
-class DictStateQuery extends \yii\db\ActiveQuery
+class DictStageQuery extends \yii\db\ActiveQuery
 {
     public function __construct($modelClass, array $config = [])
     {
@@ -29,7 +29,7 @@ class DictStateQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return \app\models\entities\DictState[]|array
+     * @return \app\models\entities\DictStage[]|array
      */
     public function all($db = null)
     {
@@ -38,7 +38,7 @@ class DictStateQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return \app\models\entities\DictState|array|null
+     * @return \app\models\entities\DictStage|array|null
      */
     public function one($db = null)
     {

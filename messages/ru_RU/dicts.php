@@ -17,12 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Position' => 'Позиция',
-    'Project ID' => 'ID',
+    'Tasks types' => 'Типы задач',
     '#' => '#',
     'Description' => 'Описание',
     'ID' => 'ID',
     'Name' => 'Имя',
+    'Position' => 'Позиция',
     'Project' => 'Проект',
-    'Save' => 'Сохранить',
+    'Project ID' => 'ID',
+    'Tasks stages' => 'Этапы выполнения задачи',
 ];

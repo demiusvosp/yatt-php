@@ -51,5 +51,5 @@ use app\models\entities\Project;
     <?php } ?>
     </tbody>
 </table>
-<?= Html::submitButton(Yii::t('dicts', 'Save'), ['class' => 'btn btn-primary']) ?>
+<?= Html::submitButton(Yii::t('common', 'Save'), ['class' => 'btn btn-primary']) ?>
 <?php ActiveForm::end(); ?>

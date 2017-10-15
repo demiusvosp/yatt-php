@@ -2,10 +2,10 @@
 
 use app\migrations\DictMigration;
 
-class m170928_101310_add_dict_state extends DictMigration
+class m170928_101310_add_dict_stage extends DictMigration
 {
-    public $tableName = 'dict_state'; // не вижу смысла в {{%dict_type}}
-    public $refField = 'dict_state_id';
+    public $tableName = 'dict_stage'; // не вижу смысла в {{%dict_type}}
+    public $refField = 'dict_stage_id';
 
     public function safeUp()
     {

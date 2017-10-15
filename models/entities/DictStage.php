@@ -17,7 +17,7 @@ use yii\db\ActiveRecord;
  * @property Project $project
  * @property Task[] $tasks
  */
-class DictState extends ActiveRecord implements IWithProject, IWithPosition
+class DictStage extends ActiveRecord implements IWithProject, IWithPosition
 {
 
     /**
@@ -25,7 +25,7 @@ class DictState extends ActiveRecord implements IWithProject, IWithPosition
      */
     public static function tableName()
     {
-        return 'dict_state';
+        return 'dict_stage';
     }
 
     /**
@@ -75,10 +75,10 @@ class DictState extends ActiveRecord implements IWithProject, IWithPosition
 
     /**
      * @inheritdoc
-     * @return \app\models\queries\DictStateQuery the active query used by this AR class.
+     * @return \app\models\queries\DictStageQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \app\models\queries\DictStateQuery(get_called_class());
+        return new \app\models\queries\DictStageQuery(get_called_class());
     }
 }

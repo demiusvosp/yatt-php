@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Settings' => 'Настройки',
     'All' => 'Все',
     'Configuration' => 'Конфигурация',
     'Create Project' => 'Новый проект',
@@ -33,8 +32,8 @@ return [
     'Projects' => 'Проекты',
     'Public' => 'Виден для',
     'Registered' => 'Зарегистрированные',
+    'Settings' => 'Настройки',
     'Suffix' => 'Суффикс',
-    'Types' => 'Типы',
     'Update {modelClass}: ' => 'Изменить {modelClass}: ',
     'Updated' => 'Обновлен',
     'suffix must be unique' => 'суффикс уже используется',

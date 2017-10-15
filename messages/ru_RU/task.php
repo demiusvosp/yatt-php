@@ -17,13 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Edit task' => 'Редактировать задачу',
+    'Error in create new task' => '',
     'Task: ' => '',
     'Assigned' => 'Назначена',
     'Caption' => 'Заголовок',
     'Create task' => 'Новая задача',
     'Created' => 'Создана',
     'Description' => 'Описание',
+    'Edit task' => 'Редактировать задачу',
     'ID' => 'ID',
     'Index' => '№ задачи',
     'Suffix' => 'суффикс проекта',

@@ -11,9 +11,6 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
-use yii\web\NotFoundHttpException;
-
-use app\models\entities\Project;
 use app\models\entities\Task;
 use app\models\forms\TaskForm;
 
@@ -24,15 +21,37 @@ class TaskController extends Controller
 
     public function actionList()
     {
+        $query = Task::find()->andProject(Yii::$app->projectService->project);
+        $query->joinWith(['assigned' => function($query) { $query->from(['assigned' => 'user']); }]);
+        $query->joinWith(['stage' => function($query) { $query->from(['stage' => 'dict_stage']); }]);
+        $query->joinWith([ 'type' => function($query) { $query->from(['type' => 'dict_type']); }]);
+
         $dataProvider = new ActiveDataProvider([
-            'query' => Task::find(),
+            'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['assigned.username'] = [
+            'asc' => ['assigned.username' => SORT_ASC],
+            'desc' => ['assigned.username' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['stage.name'] = [
+            'asc'  => ['stage.position' => SORT_ASC],
+            'desc' => ['stage.position' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['type.name'] = [
+            'asc'  => ['type.position' => SORT_ASC],
+            'desc' => ['type.position' => SORT_DESC],
+        ];
 
         return $this->render('list', [
             'dataProvider' => $dataProvider,
         ]);
     }
 
+
+    /**
+     * @return string|\yii\web\Response
+     */
     public function actionCreate()
     {
         $task = new TaskForm();
@@ -40,13 +59,20 @@ class TaskController extends Controller
         if ($task->load(Yii::$app->request->post()) && $task->save()) {
             return $this->redirect(['view', 'index' => $task->index, 'suffix' => Yii::$app->projectService->project->suffix]);
         } else {
-            Yii::$app->session->addFlash('error', Yii::t('task', 'Error in create new task'));
+            if($task->hasErrors()) {
+                Yii::$app->session->addFlash('error', Yii::t('task', 'Error in create new task'));
+            }
             return $this->render('create', [
                 'model' => $task,
             ]);
         }
     }
 
+
+    /**
+     * @param $index
+     * @return string|\yii\web\Response
+     */
     public function actionEdit($index)
     {
         $task = Task::findOne(['index' => $index, 'suffix' => Yii::$app->get('projectService')->getSuffixUrl()]);
@@ -60,6 +86,7 @@ class TaskController extends Controller
         }
     }
 
+
     /**
      * По факту просмотр будет не сильно отличаться от редактирования, через ajax
      * @param $index
@@ -70,6 +97,5 @@ class TaskController extends Controller
         $task = Task::findOne(['index' => $index, 'suffix' => Yii::$app->get('projectService')->getSuffixUrl()]);
         return $this->render('view', ['task' => $task]);
     }
-
 
 }

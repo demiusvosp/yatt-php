@@ -17,7 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Tasks types' => 'Типы задач',
+    'Stage' => 'Этап',
+    'Type' => 'Тип',
     '#' => '#',
     'Description' => 'Описание',
     'ID' => 'ID',
@@ -26,4 +27,5 @@ return [
     'Project' => 'Проект',
     'Project ID' => 'ID',
     'Tasks stages' => 'Этапы выполнения задачи',
+    'Tasks types' => 'Типы задач',
 ];

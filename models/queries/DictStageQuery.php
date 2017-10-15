@@ -2,19 +2,23 @@
 
 namespace app\models\queries;
 
-use \app\models\entities\Project;
+use yii\db\ActiveQuery;
+use app\models\entities\DictStage;
+use app\models\entities\Project;
+
+
 /**
  * This is the ActiveQuery class for [[\app\models\entities\DictStage]].
  *
  * @see \app\models\entities\DictStage
  */
-class DictStageQuery extends \yii\db\ActiveQuery
+class DictStageQuery extends ActiveQuery
 {
+
     public function __construct($modelClass, array $config = [])
     {
         parent::__construct($modelClass, $config);
-
-        $this->orderBy(['position' => 'asc']);
+        $this->from(['stage' => DictStage::tableName()]);
     }
 
 
@@ -33,6 +37,7 @@ class DictStageQuery extends \yii\db\ActiveQuery
      */
     public function all($db = null)
     {
+        $this->orderBy(['position' => 'asc']);
         return parent::all($db);
     }
 

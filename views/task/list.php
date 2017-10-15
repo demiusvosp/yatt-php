@@ -9,9 +9,6 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\StringHelper;
 
-use app\models\entities\Project;
-use app\models\entities\Task;
-
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -37,6 +34,14 @@ const COLUMN_MAX_LEN = 255;
                 },
             ],
             [
+                'attribute' => 'stage.name',
+                'label'     => Yii::t('dicts', 'Stage')
+            ],
+            [
+                'attribute' => 'type.name',
+                'label'     => Yii::t('dicts', 'Type')
+            ],
+            [
                 'attribute' => 'caption',
                 'label'  => Yii::t('task', 'Caption'),
                 'content' => function($task) {
@@ -44,13 +49,8 @@ const COLUMN_MAX_LEN = 255;
                 },
             ],
             [
-                'attribute' => 'assigned',
+                'attribute' => 'assigned.username',
                 'label' => Yii::t('task', 'Assigned'),
-                'content' => function($task) {
-                    /** @var Task $task */
-                    return $task->assigned ? $task->assigned->username : Yii::t('common', 'Not set');
-                    //return $user ? $user instanceof User ? $user->username : Yii::t('common', 'Unknow') : Yii::t('common', 'Not set');
-                }
             ],
             'description:ntext',
 

@@ -2,17 +2,37 @@
 
 namespace app\models\queries;
 
+use yii\db\ActiveQuery;
+use app\models\entities\Task;
+use app\models\entities\Project;
+
+
 /**
  * This is the ActiveQuery class for [[\app\models\entities\Task]].
  *
  * @see \app\models\entities\Task
  */
-class TaskQuery extends \yii\db\ActiveQuery
+class TaskQuery extends ActiveQuery
 {
-    /*public function active()
+
+    public function __construct($modelClass, array $config = [])
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        parent::__construct($modelClass, $config);
+        $this->from(['task' => Task::tableName()]);
+    }
+
+    /**
+     * @param Project|string $project - или текстовый суффикс
+     * @return $this
+     */
+    public function andProject($project)
+    {
+        if($project instanceof Project) {
+            return $this->andWhere(['task.suffix' => $project->suffix]);
+        } else {
+            return $this->andWhere(['task.suffix' => $project]);
+        }
+    }
 
 
     /**

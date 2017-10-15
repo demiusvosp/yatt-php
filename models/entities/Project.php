@@ -23,6 +23,7 @@ use app\models\queries\ProjectQuery;
  * @property integer $admin_id
  * @property integer $last_task_id
  * @property DictState[] $states
+ * @property DictType[] $types
  *
  * @property User $admin
  */

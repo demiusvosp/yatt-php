@@ -33,6 +33,7 @@ class DictType extends \yii\db\ActiveRecord
     {
         return [
             [['project_id', 'position'], 'integer'],
+            [['name'], 'required'],
             [['name', 'description'], 'string', 'max' => 255],
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
             [['position'], 'integer'],

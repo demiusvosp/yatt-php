@@ -67,8 +67,8 @@ class ProjectSettingsController extends Controller
         $project = Yii::$app->projectService->project;
         $dictForm = new DictForm([
             'project' => $project,
-            'items'     => $project->states,
-            'itemClass' => 'app\models\entities\DictState',
+            'items'     => $project->types,
+            'itemClass' => 'app\models\entities\DictType',
         ]);
 
         if($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {

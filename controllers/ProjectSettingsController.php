@@ -24,6 +24,16 @@ class ProjectSettingsController extends Controller
     {
         /** @var Project $project */
         $project = Yii::$app->projectService->project;
+        /*
+         * Вобще нельзя этому контроллеру воттак давать вгружать в моель проекта post.
+         * но и вводить сенарии ради этого не хочется, модель проекта и так пухнет. Будем наследовать
+         */
+        if ($project->load(Yii::$app->request->post())) {
+            if($project->save()) {
+                Yii::$app->getSession()->addFlash('info', Yii::t('common', 'Successful'));
+            }
+        }
+
         return $this->render('main', ['project' => $project]);
     }
 

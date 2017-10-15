@@ -6,7 +6,6 @@
  * Time: 17:50
  */
 
-use yii\widgets\Breadcrumbs;
 
 use app\helpers\ProjectUrl;
 use app\models\entities\Project;
@@ -23,7 +22,7 @@ array_unshift($this->params['breadcrumbs'], $this->title);
 ?>
 <?php $this->beginContent('@app/views/layouts/project.php'); ?>
     <section class="content-submenu">
-        <div class="col-md-1">
+        <div class="col-md-2 col-sm-2">
             <?php $active = 'class="active"'; ?>
             <ul class="nav nav-tabs tabs-left">
                 <li <?=$this->context->route == 'project-settings/main' ? $active : '' ?>>
@@ -45,7 +44,7 @@ array_unshift($this->params['breadcrumbs'], $this->title);
         </div>
     </section>
     <section class="content">
-        <div class="col-md-11">
+        <div class="col-md-10 col-sm-10">
             <?= $content ?>
         </div>
     </section>

@@ -37,11 +37,12 @@ use app\models\entities\Project;
     <?php $fieldSettings = ['template' => '{input}{error}', 'options' => ['class' => '']]; ?>
     <?php foreach ($dictForm->items as $index => $item) { ?>
         <?php /* @var $item ActiveRecord */ ?>
-        <tr class="dict_item" data-id="<?= $item->id ?>">
+        <tr class="dict_item" id="<?= $index ?>" data-id="<?= $item->id ?>">
             <td><?=$index?></td>
             <td><?= $form->field($item, "[$index]name", $fieldSettings)->textInput(); ?></td>
             <td><?= $form->field($item, "[$index]description", $fieldSettings)->textInput(); ?></td>
             <td>
+                <?= Html::activeHiddenInput($item, "[$index]position"); ?>
                 <span class="btn btn-flat drop-item">
                     <i class="fa fa-close text-red"></i>
                 </span>

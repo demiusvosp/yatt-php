@@ -52,6 +52,7 @@ class DictForm extends Model
         if($this->project && $newItem instanceof IRefProject) {
             $newItem->project_id = $this->project->id;
         }
+        $newItem->position = count($this->items);
         $this->items[] = $newItem;
     }
 

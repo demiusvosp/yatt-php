@@ -10,7 +10,15 @@ use \app\models\entities\Project;
  */
 class DictStateQuery extends \yii\db\ActiveQuery
 {
-    public function active($project)
+    public function __construct($modelClass, array $config = [])
+    {
+        parent::__construct($modelClass, $config);
+
+        $this->orderBy(['position' => 'asc']);
+    }
+
+
+    public function andProject($project)
     {
         if($project instanceof Project) {
             return $this->andWhere(['project_id' => $project->id]);

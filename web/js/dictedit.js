@@ -1,5 +1,7 @@
 
 jQuery(function(){
+
+    // Удаление элемента
     $("#dictForm").on('click', '.drop-item', function(){
         var form = $('#dictForm');
         var item = $(this).parents("tr");
@@ -23,12 +25,17 @@ jQuery(function(){
                 }
             }
         });
-    })
+    });
 
+
+    // Порядок
     $(".ui-sortable").sortable({
         update: function(event, ui) {
-            console.log(event);
-            console.log(ui);
+            var newOrder = $(".ui-sortable").sortable("toArray");
+            console.log(newOrder);
+            for (var i = 0; i < newOrder.length; i++) {
+                $('#dictstate-'+newOrder[i]+'-position').val(i);
+            }
         }
     });
 });

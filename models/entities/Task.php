@@ -7,8 +7,6 @@ use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 
-use app\models\VirtualAttributesTrait;
-use app\exceptions\ReadOnlyException;
 
 /**
  * This is the model class for table "task".
@@ -27,11 +25,7 @@ use app\exceptions\ReadOnlyException;
  */
 class Task extends ActiveRecord
 {
-//    use VirtualAttributesTrait;
-//
-//    protected $_virtualAttributes = [
-//        'name',
-//    ];
+    use TWithProject;
 
     /**
      * @inheritdoc

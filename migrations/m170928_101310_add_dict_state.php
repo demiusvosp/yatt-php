@@ -11,7 +11,7 @@ class m170928_101310_add_dict_state extends Migration
             'project_id' => $this->integer(),
             'name' => $this->string(),
             'description' => $this->string(),
-            'position'  => $this->integer()
+            'position'  => $this->integer()->defaultValue(0)
         ]);
 
         $this->addForeignKey('fk-dict_state-project-ref', 'dict_state', 'project_id', 'project', 'id');

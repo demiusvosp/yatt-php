@@ -3,6 +3,7 @@
 namespace app\models\entities;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "dict_state".
@@ -11,12 +12,17 @@ use Yii;
  * @property integer $project_id
  * @property string $name
  * @property string $description
+ * @property integer $position
  *
  * @property Project $project
  * @property Task[] $tasks
  */
-class DictState extends \yii\db\ActiveRecord
+class DictState extends ActiveRecord
 {
+//    use TWithProject;
+//    use TWithPosition;
+
+
     /**
      * @inheritdoc
      */
@@ -31,10 +37,11 @@ class DictState extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['project_id'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255],
-            [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
             [['name'], 'required'],
+            [['project_id'], 'integer'],
+            [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
+            [['position'], 'integer'],
         ];
     }
 

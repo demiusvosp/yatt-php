@@ -7,7 +7,7 @@
  */
 
 $this->title = $project->name;
-$this->params['breadcrumbs'][] = Yii::t('project', 'Types');
+$this->params['breadcrumbs'][] = Yii::t('project/settings', 'Main');
 $this->params['project'] = $project;
 ?>
 Основные настройки

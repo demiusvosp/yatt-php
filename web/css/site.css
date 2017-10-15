@@ -21,6 +21,8 @@
     margin-bottom: 2px;
     border: 1px solid transparent;
     border-radius: 4px 0 0 4px;
+    text-align: right;
+    padding-right: 1em;
 }
 .nav-tabs.tabs-left > li.active > a {
     border: 1px solid #ddd;

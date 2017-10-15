@@ -23,7 +23,7 @@ array_unshift($this->params['breadcrumbs'], $this->title);
 ?>
 <?php $this->beginContent('@app/views/layouts/project.php'); ?>
     <section class="content-submenu">
-        <div class="col-md-2">
+        <div class="col-md-1">
             <?php $active = 'class="active"'; ?>
             <ul class="nav nav-tabs tabs-left">
                 <li <?=$this->context->route == 'project-settings/main' ? $active : '' ?>>
@@ -45,7 +45,7 @@ array_unshift($this->params['breadcrumbs'], $this->title);
         </div>
     </section>
     <section class="content">
-        <div class="col-md-10">
+        <div class="col-md-11">
             <?= $content ?>
         </div>
     </section>

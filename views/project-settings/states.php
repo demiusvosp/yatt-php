@@ -17,7 +17,7 @@ use app\widgets\DictEdit;
 /* @var $dictForm DictForm */
 
 $this->title = $project->name;
-$this->params['breadcrumbs'][] = Yii::t('project', 'Types');
+$this->params['breadcrumbs'][] = Yii::t('project/settings', 'States');
 $this->params['project'] = $project;
 
 ?>

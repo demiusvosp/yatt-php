@@ -32,16 +32,24 @@ array_unshift($this->params['breadcrumbs'], $this->title);
             <?php $active = 'class="active"'; ?>
             <ul class="nav nav-tabs">
                 <li <?=$this->context->route == 'project/overview' ? $active : '' ?>>
-                    <a href="<?=ProjectUrl::to(['project/overview', 'project' => $project]) ?>"><?=Yii::t('project', 'Overview')?></a>
+                    <a href="<?=ProjectUrl::to(['project/overview', 'project' => $project]) ?>">
+                        <?=Yii::t('project', 'Overview')?>
+                    </a>
                 </li>
                 <li <?=$this->context->route == 'task/list' ? $active : '' ?>>
-                    <a href="<?=ProjectUrl::to(['task/list', 'project' => $project]) ?>"><?=Yii::t('task', 'Tasks')?></a>
+                    <a href="<?=ProjectUrl::to(['task/list', 'project' => $project]) ?>">
+                        <?=Yii::t('task', 'Tasks')?>
+                    </a>
                 </li>
                 <li <?=$this->context->route == 'task/create' ? $active : '' ?>>
-                    <a href="<?=ProjectUrl::to(['task/create', 'project' => $project]) ?>"><?=Yii::t('task', 'Create task')?></a>
+                    <a href="<?=ProjectUrl::to(['task/create', 'project' => $project]) ?>">
+                        <?=Yii::t('task', 'Create task')?>
+                    </a>
                 </li>
                 <li <?=strpos($this->context->route, 'project-settings')!==false ? $active : '' ?>>
-                    <a href="<?=ProjectUrl::to(['project-settings/main', 'project' => $project]) ?>"><?=Yii::t('project', 'Project settings')?></a>
+                    <a href="<?=ProjectUrl::to(['project-settings/main', 'project' => $project]) ?>">
+                        <?=Yii::t('project', 'Project settings')?>
+                    </a>
                 </li>
             </ul>
         </div>

@@ -11,11 +11,11 @@ return [
     // admin
 
     // project managment
-    'pm/list'     => 'project-manager/index',
-    'pm/create'   => 'project-manager/create',
-    'pm/<id:\d+>/edit'     => 'project-manager/update',// внутренний маршрут не стоит того, чтобы переопределять кнопку в gridview
-    'pm/<id:\d+>/view'     => 'project-manager/view',
-    'pm/<id:\d+>/delete'   => 'project-manager/delete',
+    'pm/list'     => 'admin/project/index',
+    'pm/create'   => 'admin/project/create',
+    'pm/<id:\d+>/edit'     => 'admin/project/update',// внутренний маршрут не стоит того, чтобы переопределять кнопку в gridview
+    'pm/<id:\d+>/view'     => 'admin/project/view',
+    'pm/<id:\d+>/delete'   => 'admin/project/delete',
 
     // project
     'p/<suffix:\w+>'           => 'project/overview', // обзор проекта

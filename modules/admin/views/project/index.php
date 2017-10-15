@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'name',
                 [
                     'attribute' => 'description',
+                    'contentOptions' => ['class' => 'description-in-list'],
                     'value' => function($project) {
                         return StringHelper::truncate($project->description, DESCRIPTION_MAX_LEN);
                     }

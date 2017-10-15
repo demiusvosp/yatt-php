@@ -72,6 +72,11 @@ $config = [
             'class' => 'app\components\ProjectService',
         ],
     ],
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\AdminModule',
+        ],
+    ],
     'params' => $params,
 ];
 

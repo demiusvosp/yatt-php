@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\admin\controllers;
 
 use Yii;
 use app\models\entities\Project;
@@ -11,9 +11,9 @@ use yii\filters\VerbFilter;
 
 
 /**
- * ProjectManagerController implements the CRUD actions for Project model.
+ * ProjectController implements the CRUD actions for Project model.
  */
-class ProjectManagerController extends Controller
+class ProjectController extends Controller
 {
     /**
      * @inheritdoc

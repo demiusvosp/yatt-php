@@ -86,6 +86,14 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
     ];
+    // лог для отладки (пок ане получилось заставить работать, позе к ним вернемся)
+    $config['components']['log']['targets'][] = [
+        'class' => 'yii\log\FileTarget',
+        'levels' => ['error', 'warning', 'info', 'trace'],
+        'categories' => ['debug*'],
+        'logVars' => [],
+        'exportInterval' => 1,
+    ];
 }
 
 return $config;

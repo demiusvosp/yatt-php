@@ -44,7 +44,7 @@ if($projectService->project) {
         $items = array_merge($items, [
             ['label' => Yii::t('common', 'Administration'), 'items' => [
                 ['label' => Yii::t('user', 'User Manager'), 'items' => []],
-                ['label' => Yii::t('project', 'Project Manager'), 'url' => ['pm/list']]
+                ['label' => Yii::t('project', 'Project Manager'), 'url' => ['admin/project/list']]
             ]],
         ]);
 

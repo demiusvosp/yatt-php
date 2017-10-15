@@ -95,4 +95,36 @@ class ProjectService extends Component
         $this->project->updateCounters(['last_task_id' => 1]);
         return $last_id;
     }
+
+    /**
+     * Получить справочники этапов задачи
+     * @return array
+     */
+    public function getStagesList()
+    {
+        $list = [];
+        $stages = $this->project->getStages()->all();
+        foreach ($stages as $stage) {
+            if(!$stage) break;
+
+            $list[$stage->id] = $stage->name;
+        }
+        return $list;
+    }
+
+    /**
+     * Получить справочники типов задачи
+     * @return array
+     */
+    public function getTypesList()
+    {
+        $list = [];
+        $types = $this->project->getTypes()->all();
+        foreach ($types as $type) {
+            if(!$type) break;
+
+            $list[$type->id] = $type->name;
+        }
+        return $list;
+    }
 }

@@ -29,8 +29,11 @@
     border-right-color: transparent;
 }
 
+/* Страница задачи*/
+.task-toolbar {
+    margin: 0 1em 1em 1em;
+}
 
-/* блок левый справочники задачи */
 .task-dict-block {
     padding-right: 1em;
     border-right: #ddd 1px solid;

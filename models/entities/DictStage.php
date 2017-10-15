@@ -5,6 +5,8 @@ namespace app\models\entities;
 use Yii;
 use yii\db\ActiveRecord;
 
+use app\models\queries\DictStageQuery;
+
 /**
  * This is the model class for table "dict_state".
  *
@@ -56,6 +58,15 @@ class DictStage extends ActiveRecord implements IWithProject, IWithPosition
     }
 
     /**
+     * @inheritdoc
+     * @return DictStageQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new DictStageQuery(get_called_class());
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getProject()
@@ -73,12 +84,4 @@ class DictStage extends ActiveRecord implements IWithProject, IWithPosition
         return $this->hasMany(Task::className(), ['state' => 'id']);
     }
 
-    /**
-     * @inheritdoc
-     * @return \app\models\queries\DictStageQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new \app\models\queries\DictStageQuery(get_called_class());
-    }
 }

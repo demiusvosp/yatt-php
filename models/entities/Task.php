@@ -21,7 +21,9 @@ use yii\db\Expression;
  * @property string $updated_at
  *
  * @property Project $project
- * @property User $assigned
+ * @property User    $assigned
+ * @property DictStage $stage
+ * @property DictType  $type
  */
 class Task extends ActiveRecord
 {
@@ -40,7 +42,7 @@ class Task extends ActiveRecord
     public function rules()
     {
         return [
-            [['index', 'assigned_id'], 'integer'],
+            [['index', 'assigned_id', 'dict_stage_id', 'dict_type_id'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['suffix'], 'string', 'max' => 8],
@@ -64,6 +66,8 @@ class Task extends ActiveRecord
             'assigned_id' => Yii::t('task', 'Assigned'),
             'created_at' => Yii::t('task', 'Created'),
             'updated_at' => Yii::t('task', 'Updated'),
+            'dict_stage_id' => Yii::t('dict', 'Stage'),
+            'dict_type_id' => Yii::t('dict', 'Type'),
         ];
     }
 
@@ -90,12 +94,31 @@ class Task extends ActiveRecord
         return $this->hasOne(Project::className(), ['suffix' => 'suffix']);
     }
 
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getAssigned()
     {
         return $this->hasOne(User::className(), ['id' => 'assigned_id']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStage()
+    {
+        return $this->hasOne(DictStage::className(), ['id' => 'dict_stage_id']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getType()
+    {
+        return$this->hasOne(DictType::className(), ['id' => 'dict_type_id']);
     }
 
 

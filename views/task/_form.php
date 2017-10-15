@@ -11,6 +11,10 @@ use yii\bootstrap\ActiveForm;
 
 use app\models\entities\Task;
 use app\models\entities\User;
+use app\components\ProjectService;
+
+/** @var ProjectService $projectService */
+$projectService = Yii::$app->projectService;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -27,19 +31,19 @@ foreach (User::getUsersMayProjectList() as $user) {// вобще это не ш�
 <div class="row">
     <div class="col-md-4 task-dict-block">
         <p>
-            Состояние
+            <?= $form->field($model, 'dict_stage_id')->dropDownList($projectService->getStagesList()) ?>
         </p>
         <p>
             Прогресс
         </p>
         <p>
-            Тип задачи
+            <?= $form->field($model, 'dict_type_id')->dropDownList($projectService->getTypesList()) ?>
         </p>
         <p>
             Категория/подсистема
         </p>
         <p>
-            <?= $form->field($model, 'assigned_id')->listBox($adminsChoices) ?><br>
+            <?= $form->field($model, 'assigned_id')->listBox($adminsChoices) ?>
         </p>
         <p>
             Критичность

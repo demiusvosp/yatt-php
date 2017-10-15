@@ -22,7 +22,7 @@ use app\models\queries\ProjectQuery;
  * @property array $config
  * @property integer $admin_id
  * @property integer $last_task_id
- * @property DictStage[] $states
+ * @property DictStage[] $stages
  * @property DictType[] $types
  *
  * @property User $admin
@@ -186,7 +186,7 @@ class Project extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStates()
+    public function getStages()
     {
         return $this->hasMany(DictStage::className(), ['project_id' => 'id']);
     }

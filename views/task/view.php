@@ -17,7 +17,7 @@ use app\models\entities\Task;
 $this->title = Yii::t('task', 'Task: ') . $task->getName();
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="row-fluid">
+<div class="row-fluid task-toolbar">
     <div class="btn-group">
         <?=Html::a(
             Yii::t('task', 'Edit task'),// '<span class="fa fa-edit"></span>' слишком высокая, такую лучше перенести куда-то
@@ -26,44 +26,45 @@ $this->params['breadcrumbs'][] = $this->title;
         );?>
     </div>
 </div>
-<div class="row"><!--  row-flex row-flex-wrap не работают -->
-        <div class="col-md-4 task-dict-block">
-            <p>
-                Состояние
-            </p>
-            <p>
-                Прогресс
-            </p>
-            <p>
-                Тип задачи
-            </p>
-            <p>
-                Категория/подсистема
-            </p>
-            <p>
-                Назначена: <b><?=$task->assigned ? $task->assigned->username : Yii::t('common', 'Not set') ?></b><br>
-            </p>
-            <p>
-                Критичность
-            </p>
-            <p>
-                Приоритет
-            </p>
-            <p>
-                Обнаруженна в версии
-            </p>
-            <p>
-                Дата обнаружения: <b><?= Yii::$app->formatter->asDate($task->created_at) ?></b>
-            </p>
-            <p>
-                Ожидается в версии
-            </p>
-        </div>
+<div class="row-fluid">
+    <div class="col-md-3 task-dict-block">
+        <p>
+            Этап: <b><?=$task->stage->name ?></b>
+        </p>
+        <p>
+            Прогресс
+        </p>
+        <p>
+            Тип задачи: <b><?=$task->type->name ?></b>
+        </p>
+        <p>
+            Категория/подсистема
+        </p>
+        <p>
+            Назначена: <b><?=$task->assigned ? $task->assigned->username : Yii::t('common', 'Not set') ?></b><br>
+        </p>
+        <p>
+            Критичность
+        </p>
+        <p>
+            Приоритет
+        </p>
+        <p>
+            Обнаруженна в версии
+        </p>
+        <p>
+            Дата обнаружения: <b><?= Yii::$app->formatter->asDate($task->created_at) ?></b>
+        </p>
+        <p>
+            Ожидается в версии
+        </p>
+    </div>
 
-        <div class="col-md-8 task-text-block">
-            <h2><?=$task->getName()?> - <?=$task->caption?></h2>
-            <div class="well">
-                <?=$task->description ?>
-            </div>
+    <div class="col-md-9 task-text-block">
+        <h2><?=$task->getName()?> - <?=$task->caption?></h2>
+        <div class="well">
+            <?=$task->description ?>
         </div>
+    </div>
 </div>
+<div class="clearfix"></div>

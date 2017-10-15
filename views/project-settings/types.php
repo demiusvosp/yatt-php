@@ -22,7 +22,7 @@ $this->params['project'] = $project;
 
 ?>
 <div class="row-fluid">
-    <div class="box box-default box-solid dict_states-block">
+    <div class="box box-default box-solid dict_setting_block">
         <div class="box-header">
             <h3 class="box-title"><?=Yii::t('dicts', 'Tasks types')?></h3>
         </div>

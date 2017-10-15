@@ -43,7 +43,7 @@ class ProjectSettingsController extends Controller
         $project = Yii::$app->projectService->project;
         $dictForm = new DictForm([
             'project' => $project,
-            'items'     => $project->states,
+            'items'     => $project->stages,
             'itemClass' => 'app\models\entities\DictStage',
         ]);
 

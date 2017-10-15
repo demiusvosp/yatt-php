@@ -3,6 +3,9 @@
 namespace app\models\entities;
 
 use Yii;
+use yii\db\ActiveRecord;
+
+use app\models\queries\DictTypeQuery;
 
 /**
  * This is the model class for table "dict_type".
@@ -16,7 +19,7 @@ use Yii;
  * @property Project $project
  * @property Task[] $tasks
  */
-class DictType extends \yii\db\ActiveRecord
+class DictType extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -53,6 +56,17 @@ class DictType extends \yii\db\ActiveRecord
             'position' => Yii::t('dicts', 'Position'),
         ];
     }
+
+
+    /**
+     * @inheritdoc
+     * @return DictTypeQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new DictTypeQuery(get_called_class());
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery

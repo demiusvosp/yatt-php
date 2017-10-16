@@ -17,6 +17,7 @@ use yii\db\Expression;
  * @property string $caption
  * @property string $description
  * @property integer $assigned_id
+ * @property integer $priority
  * @property string $created_at
  * @property string $updated_at
  *
@@ -27,6 +28,14 @@ use yii\db\Expression;
  */
 class Task extends ActiveRecord
 {
+    const PRIORITY_UNKNOWN   = 0;
+    const PRIORITY_CRITICAL  = 1;
+    const PRIORITY_VERY_HIGH = 2;
+    const PRIORITY_HIGH      = 3;
+    const PRIORITY_MEDIUM    = 4;
+    const PRIORITY_LOW       = 5;
+    const PRIORITY_VERY_LOW  = 6;
+
 
     /**
      * @inheritdoc
@@ -36,13 +45,14 @@ class Task extends ActiveRecord
         return 'task';
     }
 
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['index', 'assigned_id', 'dict_stage_id', 'dict_type_id'], 'integer'],
+            [['index', 'assigned_id', 'priority', 'dict_stage_id', 'dict_type_id'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['suffix'], 'string', 'max' => 8],
@@ -51,6 +61,7 @@ class Task extends ActiveRecord
             [['assigned_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['assigned_id' => 'id']],
         ];
     }
+
 
     /**
      * @inheritdoc
@@ -64,12 +75,52 @@ class Task extends ActiveRecord
             'caption' => Yii::t('task', 'Caption'),
             'description' => Yii::t('task', 'Description'),
             'assigned_id' => Yii::t('task', 'Assigned'),
+            'priority' => Yii::t('task', 'Priority'),
             'created_at' => Yii::t('task', 'Created'),
             'updated_at' => Yii::t('task', 'Updated'),
             'dict_stage_id' => Yii::t('dicts', 'Stage'),
             'dict_type_id' => Yii::t('dicts', 'Type'),
         ];
     }
+
+
+    public static function priorityLabels()
+    {
+        return [
+            static::PRIORITY_CRITICAL  => Yii::t('task', 'Critical'),
+            static::PRIORITY_VERY_HIGH => Yii::t('task', 'Very high'),
+            static::PRIORITY_HIGH      => Yii::t('task', 'High'),
+            static::PRIORITY_MEDIUM    => Yii::t('task', 'Medium'),
+            static::PRIORITY_LOW       => Yii::t('task', 'Low'),
+            static::PRIORITY_VERY_LOW  => Yii::t('task', 'Very Low'),
+        ];
+    }
+
+
+    public static function priorityStyles()
+    {
+        return [
+            static::PRIORITY_UNKNOWN   => 'unknown',
+            static::PRIORITY_CRITICAL  => 'critical',
+            static::PRIORITY_VERY_HIGH => 'very_high',
+            static::PRIORITY_HIGH      => 'high',
+            static::PRIORITY_MEDIUM    => 'medium',
+            static::PRIORITY_LOW       => 'low',
+            static::PRIORITY_VERY_LOW  => 'very_low',
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriorityName()
+    {
+        if(!isset(static::priorityLabels()[$this->priority])) {
+            return Yii::t('common', 'Not set');
+        }
+        return static::priorityLabels()[$this->priority];
+    }
+
 
     public function behaviors()
     {

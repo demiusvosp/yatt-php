@@ -17,11 +17,14 @@ class m170924_220627_add_task extends Migration
 
             'assigned_id' => $this->integer()->comment('Текущий пользователь, работающий над задачей'),
 
+            'priority'  =>  $this->integer()->comment('Приоритет задачи'),
+
             'created_at' => $this->dateTime()->comment('Создана'),
             'updated_at' => $this->dateTime()->comment('Оновленна'),
         ]);
 
         $this->createIndex('index', 'task', ['suffix', 'index'], true);
+        $this->createIndex('priority', 'task', ['priority']);
         $this->addForeignKey('fk-task-project-ref', 'task', 'suffix', 'project', 'suffix', 'CASCADE', 'CASCADE');
         $this->addForeignKey('fk-task-user-ref', 'task', 'assigned_id', 'user', 'id');
     }

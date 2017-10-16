@@ -5,9 +5,11 @@
  * Date: 26.09.17
  * Time: 19:32
  */
+
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\StringHelper;
+use app\models\entities\Task;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -23,6 +25,7 @@ const COLUMN_MAX_LEN = 255;
 <div class="row-fluid">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'captionOptions' => ['class' => 'task_list_caption'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -45,8 +48,22 @@ const COLUMN_MAX_LEN = 255;
                 'attribute' => 'caption',
                 'label'  => Yii::t('task', 'Caption'),
                 'content' => function($task) {
+                    /** @var Task $task */
                     return Html::a(StringHelper::truncate($task->caption, COLUMN_MAX_LEN), ['task/view', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index]);
                 },
+            ],
+            [
+                'attribute' => 'priority',
+                'content' => function($task) {
+                    /** @var Task $task */
+                    return $task->getPriorityName();
+//                        '<div class="priority '.Task::priorityStyles()[$task->priority].'">' .
+//                            $task->getPriorityName() .
+//                        '</div>';
+                },
+                'contentOptions' => function ($task, $key, $index, $column) {
+                    return ['class' => 'priority ' . Task::priorityStyles()[$task->priority]];
+                }
             ],
             [
                 'attribute' => 'assigned.username',

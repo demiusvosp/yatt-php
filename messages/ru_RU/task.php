@@ -17,18 +17,25 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Error in create new task' => '',
-    'Task: ' => '',
+    'Priority' => 'Приоритет',
     'Assigned' => 'Назначена',
     'Caption' => 'Заголовок',
     'Create task' => 'Новая',
     'Created' => 'Создана',
+    'Critical' => 'Критический',
     'Description' => 'Описание',
     'Edit task' => 'Редактировать задачу',
+    'Error in create new task' => 'Ошибка при созданиии задачи',
+    'High' => 'Высокий',
     'ID' => 'ID',
     'Index' => '№ задачи',
+    'Low' => 'Низкий',
+    'Medium' => 'Обычный',
     'Suffix' => 'суффикс проекта',
     'Task list' => 'Список задач',
+    'Task: ' => 'Задача:',
     'Tasks' => 'Задачи',
     'Updated' => 'Обновлена',
+    'Very Low' => 'Очень низкий',
+    'Very high' => 'Очень высокий',
 ];

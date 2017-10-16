@@ -6,9 +6,7 @@
  * Time: 0:46
  */
 use yii\helpers\Html;
-use yii\helpers\Url;
 
-use app\models\entities\Project;
 use app\models\entities\Task;
 
 /* @var $this yii\web\View */
@@ -44,10 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             Назначена: <b><?=$task->assigned ? $task->assigned->username : Yii::t('common', 'Not set') ?></b><br>
         </p>
         <p>
-            Критичность
-        </p>
-        <p>
-            Приоритет
+            Приоритет: <b><?=$task->getPriorityName()?></b>
         </p>
         <p>
             Обнаруженна в версии

@@ -49,7 +49,7 @@ foreach (User::getUsersMayProjectList() as $user) {// вобще это не ш�
             Критичность
         </p>
         <p>
-            Приоритет
+            <?= $form->field($model, 'priority')->dropDownList(Task::priorityLabels()) ?>
         </p>
         <p>
             Обнаруженна в версии

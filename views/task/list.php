@@ -57,9 +57,6 @@ const COLUMN_MAX_LEN = 255;
                 'content' => function($task) {
                     /** @var Task $task */
                     return $task->getPriorityName();
-//                        '<div class="priority '.Task::priorityStyles()[$task->priority].'">' .
-//                            $task->getPriorityName() .
-//                        '</div>';
                 },
                 'contentOptions' => function ($task, $key, $index, $column) {
                     return ['class' => 'priority ' . Task::priorityStyles()[$task->priority]];

@@ -8,9 +8,9 @@ use app\models\entities\Project;
 
 
 /**
- * This is the ActiveQuery class for [[\app\models\entities\DictStage]].
+ * This is the ActiveQuery class for [[DictStage]].
  *
- * @see \app\models\entities\DictStage
+ * @see DictStage
  */
 class DictStageQuery extends ActiveQuery
 {
@@ -31,6 +31,7 @@ class DictStageQuery extends ActiveQuery
         }
     }
 
+
     /**
      * @inheritdoc
      * @return \app\models\entities\DictStage[]|array
@@ -41,6 +42,7 @@ class DictStageQuery extends ActiveQuery
         return parent::all($db);
     }
 
+
     /**
      * @inheritdoc
      * @return \app\models\entities\DictStage|array|null
@@ -49,4 +51,5 @@ class DictStageQuery extends ActiveQuery
     {
         return parent::one($db);
     }
+
 }

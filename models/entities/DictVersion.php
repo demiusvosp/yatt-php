@@ -5,10 +5,10 @@ namespace app\models\entities;
 use Yii;
 use yii\db\ActiveRecord;
 
-use app\models\queries\DictTypeQuery;
+use app\models\queries\DictVersionQuery;
 
 /**
- * This is the model class for table "dict_type".
+ * This is the model class for table "dict_version".
  *
  * @property integer $id
  * @property integer $project_id
@@ -19,14 +19,14 @@ use app\models\queries\DictTypeQuery;
  * @property Project $project
  * @property Task[] $tasks
  */
-class DictType extends ActiveRecord
+class DictVersion extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'dict_type';
+        return 'dict_version';
     }
 
     /**
@@ -57,13 +57,14 @@ class DictType extends ActiveRecord
     }
 
 
+
     /**
      * @inheritdoc
-     * @return DictTypeQuery the active query used by this AR class.
+     * @return DictVersionQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new DictTypeQuery(get_called_class());
+        return new DictVersionQuery(get_called_class());
     }
 
 
@@ -80,6 +81,7 @@ class DictType extends ActiveRecord
      */
     public function getTasks()
     {
-        return $this->hasMany(Task::className(), ['dict_type_id' => 'id']);
+        return $this->hasMany(Task::className(), ['dict_version_id' => 'id']);
     }
+
 }

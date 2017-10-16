@@ -3,37 +3,36 @@
 namespace app\models\queries;
 
 use yii\db\ActiveQuery;
-use app\models\entities\DictType;
-
+use app\models\entities\DictVersion;
 
 /**
- * This is the ActiveQuery class for [[DictType]].
+ * This is the ActiveQuery class for [[DictVersion]].
  *
- * @see DictType
+ * @see DictVersion
  */
-class DictTypeQuery extends ActiveQuery
+class DictVersionQuery extends ActiveQuery
 {
+
     public function __construct($modelClass, array $config = [])
     {
         parent::__construct($modelClass, $config);
-        $this->from(['type' => DictType::tableName()]);
+        $this->from(['version' => DictVersion::tableName()]);
     }
 
 
     /**
      * @inheritdoc
-     * @return \app\models\entities\DictType[]|array
+     * @return \app\models\entities\DictVersion[]|array
      */
     public function all($db = null)
     {
-        $this->orderBy(['position' => 'asc']);
         return parent::all($db);
     }
 
 
     /**
      * @inheritdoc
-     * @return \app\models\entities\DictType|array|null
+     * @return \app\models\entities\DictVersion|array|null
      */
     public function one($db = null)
     {

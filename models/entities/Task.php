@@ -23,8 +23,9 @@ use yii\db\Expression;
  *
  * @property Project $project
  * @property User    $assigned
- * @property DictStage $stage
- * @property DictType  $type
+ * @property DictStage   $stage
+ * @property DictType    $type
+ * @property DictVersion $version
  */
 class Task extends ActiveRecord
 {
@@ -80,6 +81,7 @@ class Task extends ActiveRecord
             'updated_at' => Yii::t('task', 'Updated'),
             'dict_stage_id' => Yii::t('dicts', 'Stage'),
             'dict_type_id' => Yii::t('dicts', 'Type'),
+            'dict_version_id' => Yii::t('dicts', 'Version'),
         ];
     }
 
@@ -170,6 +172,15 @@ class Task extends ActiveRecord
     public function getType()
     {
         return$this->hasOne(DictType::className(), ['id' => 'dict_type_id']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVersion()
+    {
+        return$this->hasOne(DictVersion::className(), ['id' => 'dict_version_id']);
     }
 
 

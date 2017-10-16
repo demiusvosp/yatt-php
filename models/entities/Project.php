@@ -24,6 +24,7 @@ use app\models\queries\ProjectQuery;
  * @property integer $last_task_id
  * @property DictStage[] $stages
  * @property DictType[] $types
+ * @property DictVersion[] $versions
  *
  * @property User $admin
  */
@@ -183,6 +184,7 @@ class Project extends ActiveRecord
         return parent::beforeSave($insert);
     }
 
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -191,11 +193,21 @@ class Project extends ActiveRecord
         return $this->hasMany(DictStage::className(), ['project_id' => 'id']);
     }
 
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getTypes()
     {
         return $this->hasMany(DictType::className(), ['project_id' => 'id']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVersions()
+    {
+        return $this->hasMany(DictVersion::className(), ['project_id' => 'id']);
     }
 }

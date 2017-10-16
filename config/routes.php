@@ -24,6 +24,7 @@ return [
     'p/<suffix:\w+>/setting/main'  =>  'project-settings/main',
     'p/<suffix:\w+>/setting/stages' => 'project-settings/stages',
     'p/<suffix:\w+>/setting/types'  => 'project-settings/types',
+    'p/<suffix:\w+>/setting/versions' => 'project-settings/versions',
 
     // события проекта
     // Справочники

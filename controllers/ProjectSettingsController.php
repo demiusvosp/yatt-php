@@ -81,4 +81,26 @@ class ProjectSettingsController extends Controller
             'dictForm' => $dictForm,
         ]);
     }
+
+
+    public function actionVersions()
+    {
+        /** @var Project $project */
+        $project = Yii::$app->projectService->project;
+        $dictForm = new DictForm([
+            'project' => $project,
+            'items'     => $project->versions,
+            'itemClass' => 'app\models\entities\DictVersion',
+        ]);
+
+        if($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
+            $dictForm->save();
+            return $this->refresh();
+        }
+
+        return $this->render('versions', [
+            'project' => $project,
+            'dictForm' => $dictForm,
+        ]);
+    }
 }

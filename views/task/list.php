@@ -33,7 +33,10 @@ const COLUMN_MAX_LEN = 255;
                 'attribute' => 'name',
                 'label'  => Yii::t('task', 'ID'),
                 'content' => function($task) {
-                    return Html::a($task->name, ['task/view', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index]);
+                    return Html::a(
+                        $task->name,
+                        ['task/view', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index]
+                    );
                 },
             ],
             [
@@ -49,7 +52,10 @@ const COLUMN_MAX_LEN = 255;
                 'label'  => Yii::t('task', 'Caption'),
                 'content' => function($task) {
                     /** @var Task $task */
-                    return Html::a(StringHelper::truncate($task->caption, COLUMN_MAX_LEN), ['task/view', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index]);
+                    return Html::a(
+                        StringHelper::truncate($task->caption, COLUMN_MAX_LEN),
+                        ['task/view', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index]
+                    );
                 },
             ],
             [

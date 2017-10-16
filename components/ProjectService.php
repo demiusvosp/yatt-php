@@ -8,6 +8,7 @@
 
 namespace app\components;
 
+use app\models\queries\DictVersionQuery;
 use yii\base\Component;
 use Yii;
 
@@ -127,4 +128,31 @@ class ProjectService extends Component
         }
         return $list;
     }
+
+
+    /**
+     * Список версий проекта.
+     * @param $open true - те в которых можно открывать задачи, false - в которых можно закрывать
+     * @return array
+     */
+    public function getVersionList($open)
+    {
+        $list = [];
+        /** @var DictVersionQuery $query */
+        $query = $this->project->getVersions();
+        if($open) {
+            $query->andForOpen();
+        } else {
+            $query->andForClose();
+        }
+        $types = $query->all();
+
+        foreach ($types as $type) {
+            if(!$type) break;
+
+            $list[$type->id] = $type->name;
+        }
+        return $list;
+    }
+
 }

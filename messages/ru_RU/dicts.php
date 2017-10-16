@@ -17,8 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Stage' => 'Этап',
-    'Type' => 'Тип',
+    'Current' => 'Текущая',
+    'Future' => 'Будущая',
+    'Open in version' => 'Обнаружен в версии',
+    'Past' => 'Прошедшая',
+    'Tasks versions' => 'Версии проекта',
+    'Version type' => 'Тип версии',
+    'Сoming in version' => 'Ожидается в версии',
     '#' => '#',
     'Description' => 'Описание',
     'ID' => 'ID',
@@ -26,6 +31,8 @@ return [
     'Position' => 'Позиция',
     'Project' => 'Проект',
     'Project ID' => 'ID',
+    'Stage' => 'Этап',
     'Tasks stages' => 'Этапы выполнения задачи',
     'Tasks types' => 'Типы задач',
+    'Type' => 'Тип',
 ];

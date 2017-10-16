@@ -16,6 +16,20 @@ class DictMigration extends Migration
 {
     public function safeUp()
     {
+        $this->upTable();
+        $this->upForeignKeys();
+    }
+
+
+    public function safeDown()
+    {
+        $this->downForeignKeys();
+        $this->downTable();
+    }
+
+
+    public function upTable()
+    {
         $this->createTable($this->tableName, [
             'id' => $this->primaryKey(),
             'project_id' => $this->integer(),
@@ -23,7 +37,17 @@ class DictMigration extends Migration
             'description' => $this->string(),
             'position'  => $this->integer()->defaultValue(0)
         ]);
+    }
 
+
+    public function downTable()
+    {
+        $this->dropTable($this->tableName);
+    }
+
+
+    public function upForeignKeys()
+    {
         $this->addForeignKey(
             'fk-'.$this->tableName.'-project-ref',
             $this->tableName,
@@ -43,10 +67,10 @@ class DictMigration extends Migration
     }
 
 
-    public function safeDown()
+    public function downForeignKeys()
     {
         $this->dropForeignKey('fk-task-'.$this->tableName.'-ref', 'task');
         $this->dropColumn('task', $this->refField);
-        $this->dropTable($this->tableName);
     }
+
 }

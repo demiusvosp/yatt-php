@@ -25,6 +25,8 @@ class TaskController extends Controller
         $query->joinWith(['assigned' => function($query) { $query->from(['assigned' => 'user']); }]);
         $query->joinWith(['stage' => function($query) { $query->from(['stage' => 'dict_stage']); }]);
         $query->joinWith([ 'type' => function($query) { $query->from(['type' => 'dict_type']); }]);
+        $query->joinWith([ 'versionOpen' => function($query) { $query->from(['versionOpen' => 'dict_version']); }]);
+        $query->joinWith([ 'versionClose' => function($query) { $query->from(['versionClose' => 'dict_version']); }]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -39,6 +41,14 @@ class TaskController extends Controller
             'desc' => ['stage.position' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['type.name'] = [
+            'asc'  => ['type.position' => SORT_ASC],
+            'desc' => ['type.position' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['versionOpen.name'] = [
+            'asc'  => ['type.position' => SORT_ASC],
+            'desc' => ['type.position' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['versionClose.name'] = [
             'asc'  => ['type.position' => SORT_ASC],
             'desc' => ['type.position' => SORT_DESC],
         ];

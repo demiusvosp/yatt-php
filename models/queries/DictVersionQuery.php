@@ -21,11 +21,32 @@ class DictVersionQuery extends ActiveQuery
 
 
     /**
+     * Версии в которых задача может быть обнаружена (прошлые и текущие)
+     * @return $this
+     */
+    public function andForOpen()
+    {
+        return $this->andWhere(['or', ['version.type' => DictVersion::PAST], ['version.type' => DictVersion::CURRENT]]);
+    }
+
+
+    /**
+     * Версии в которых задача может быть закрыта (текущие и будущие)
+     * @return $this
+     */
+    public function andForClose()
+    {
+        return $this->andWhere(['or', ['version.type' => DictVersion::CURRENT], ['version.type' => DictVersion::FUTURE]]);
+    }
+
+
+    /**
      * @inheritdoc
      * @return \app\models\entities\DictVersion[]|array
      */
     public function all($db = null)
     {
+        $this->orderBy(['position' => 'asc', 'type' => 'desc']);
         return parent::all($db);
     }
 

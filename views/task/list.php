@@ -75,7 +75,15 @@ const COLUMN_MAX_LEN = 255;
             'description:ntext',
 
             'created_at:datetime',
+            [
+                'attribute' => 'versionOpen.name',
+                'label'     => Yii::t('dicts', 'Open in version')
+            ],
             'updated_at:datetime',
+            [
+                'attribute' => 'versionClose.name',
+                'label'     => Yii::t('dicts', 'Сoming in version')
+            ],
             // 'admin_id',
 
         ],

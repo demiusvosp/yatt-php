@@ -46,16 +46,13 @@ foreach (User::getUsersMayProjectList() as $user) {// вобще это не ш�
             <?= $form->field($model, 'assigned_id')->listBox($adminsChoices) ?>
         </p>
         <p>
-            Критичность
-        </p>
-        <p>
             <?= $form->field($model, 'priority')->dropDownList(Task::priorityLabels()) ?>
         </p>
         <p>
-            Обнаруженна в версии
+            <?= $form->field($model, 'dict_version_open_id')->dropDownList($projectService->getVersionList(true)) ?>
         </p>
         <p>
-            Ожидается в версии
+            <?= $form->field($model, 'dict_version_close_id')->dropDownList($projectService->getVersionList(false)) ?>
         </p>
     </div>
 

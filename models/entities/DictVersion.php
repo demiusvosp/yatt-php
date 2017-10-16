@@ -21,6 +21,12 @@ use app\models\queries\DictVersionQuery;
  */
 class DictVersion extends ActiveRecord
 {
+    // типы версий
+    const FUTURE  = 0;// Планируемая (только ожидается к)
+    const CURRENT = 1;// Текущая (и ожидается к, и обнаружена в)
+    const PAST    = 2;// Прошедшая (только обнаружена в)
+
+
     /**
      * @inheritdoc
      */
@@ -29,18 +35,20 @@ class DictVersion extends ActiveRecord
         return 'dict_version';
     }
 
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['project_id', 'position'], 'integer'],
+            [['project_id', 'position', 'type'], 'integer'],
             [['name'], 'required'],
             [['name', 'description'], 'string', 'max' => 255],
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
         ];
     }
+
 
     /**
      * @inheritdoc
@@ -53,9 +61,19 @@ class DictVersion extends ActiveRecord
             'name' => Yii::t('dicts', 'Name'),
             'description' => Yii::t('dicts', 'Description'),
             'position' => Yii::t('dicts', 'Position'),
+            'type' => Yii::t('dicts', 'Version type'),
         ];
     }
 
+
+    public static function typesLabels()
+    {
+        return [
+            static::FUTURE  => Yii::t('dicts', 'Future'),
+            static::CURRENT => Yii::t('dicts', 'Current'),
+            static::PAST    => Yii::t('dicts', 'Past'),
+        ];
+    }
 
 
     /**
@@ -75,6 +93,7 @@ class DictVersion extends ActiveRecord
     {
         return $this->hasOne(Project::className(), ['id' => 'project_id']);
     }
+
 
     /**
      * @return \yii\db\ActiveQuery

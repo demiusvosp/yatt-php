@@ -41,6 +41,14 @@ use app\models\entities\Project;
             <td><?=$index?></td>
             <td><?= $form->field($item, "[$index]name", $fieldSettings)->textInput(); ?></td>
             <td><?= $form->field($item, "[$index]description", $fieldSettings)->textInput(); ?></td>
+            <?php // адский костыль, чтобы сделать эту задачу, и начать думать о вводе twig, без него просто она не решается ?>
+            <?php
+                if($item instanceof \app\models\entities\DictVersion) {
+                ?>
+                    <td><?= $form->field($item, "[$index]type", $fieldSettings)->dropDownList($item->typesLabels()); ?></td>
+                <?php
+                }
+            ?>
             <td>
                 <?= Html::activeHiddenInput($item, "[$index]position"); ?>
                 <span class="btn btn-flat drop-item">

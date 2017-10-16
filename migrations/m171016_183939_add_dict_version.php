@@ -5,15 +5,46 @@ use app\migrations\DictMigration;
 class m171016_183939_add_dict_version extends DictMigration
 {
     public $tableName = 'dict_version';
-    public $refField = 'dict_version_id';
+    public $refFieldOpen  = 'dict_version_open_id';
+    public $refFieldClose = 'dict_version_close_id';
 
     public function safeUp()
     {
-        parent::safeUp(); // TODO: особенные поля и поведение справочника Тип задачи
+        $this->upTable();
+        $this->addColumn($this->tableName, 'type', 'integer');
+
+        $this->addForeignKey(
+            'fk-'.$this->tableName.'-project-ref',
+            $this->tableName,
+            'project_id',
+            'project',
+            'id'
+        );
+
+        $this->addColumn('task', $this->refFieldOpen, $this->integer());
+        $this->addForeignKey(
+            'fk-task-'.$this->tableName.'-open-ref',
+            'task',
+            $this->refFieldOpen,
+            $this->tableName,
+            'id'
+        );
+
+        $this->addColumn('task', $this->refFieldClose, $this->integer());
+        $this->addForeignKey(
+            'fk-task-'.$this->tableName.'-close-ref',
+            'task',
+            $this->refFieldClose,
+            $this->tableName,
+            'id'
+        );
     }
 
     public function safeDown()
     {
-        parent::safeDown(); // TODO: особенные поля и поведение справочника Тип задачи
+        $this->dropForeignKey('fk-task-'.$this->tableName.'-ref', 'task');
+        $this->dropColumn('task', $this->refFieldOpen);
+        $this->dropColumn('task', $this->refFieldClose);
+        $this->downTable();
     }
 }

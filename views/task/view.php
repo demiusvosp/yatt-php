@@ -45,13 +45,13 @@ $this->params['breadcrumbs'][] = $this->title;
             Приоритет: <b><?=$task->getPriorityName()?></b>
         </p>
         <p>
-            Обнаруженна в версии
+            Обнаруженна в версии: <b><?=$task->versionOpen ? $task->versionOpen->name : Yii::t('common', 'Not set')  ?></b>
         </p>
         <p>
             Дата обнаружения: <b><?= Yii::$app->formatter->asDate($task->created_at) ?></b>
         </p>
         <p>
-            Ожидается в версии
+            Ожидается в версии: <b><?=$task->versionClose ? $task->versionClose->name : Yii::t('common', 'Not set') ?></b>
         </p>
     </div>
 

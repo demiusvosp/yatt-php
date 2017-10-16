@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use app\models\queries\TaskQuery;
 
 
 /**
@@ -18,6 +19,8 @@ use yii\db\Expression;
  * @property string $description
  * @property integer $assigned_id
  * @property integer $priority
+ * @property integer $dict_version_open_id
+ * @property integer $dict_version_close_id
  * @property string $created_at
  * @property string $updated_at
  *
@@ -25,7 +28,8 @@ use yii\db\Expression;
  * @property User    $assigned
  * @property DictStage   $stage
  * @property DictType    $type
- * @property DictVersion $version
+ * @property DictVersion $versionClose
+ * @property DictVersion $versionOpen
  */
 class Task extends ActiveRecord
 {
@@ -53,13 +57,26 @@ class Task extends ActiveRecord
     public function rules()
     {
         return [
-            [['index', 'assigned_id', 'priority', 'dict_stage_id', 'dict_type_id'], 'integer'],
+            [['index', 'assigned_id'], 'integer'],
+            [['priority', 'dict_stage_id', 'dict_type_id','dict_version_open_id', 'dict_version_close_id'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['suffix'], 'string', 'max' => 8],
             [['caption'], 'string', 'max' => 300],
-            [['suffix'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['suffix' => 'suffix']],
-            [['assigned_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['assigned_id' => 'id']],
+            [
+                ['suffix'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Project::className(),
+                'targetAttribute' => ['suffix' => 'suffix']
+            ],
+            [
+                ['assigned_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['assigned_id' => 'id']
+            ],
         ];
     }
 
@@ -81,7 +98,8 @@ class Task extends ActiveRecord
             'updated_at' => Yii::t('task', 'Updated'),
             'dict_stage_id' => Yii::t('dicts', 'Stage'),
             'dict_type_id' => Yii::t('dicts', 'Type'),
-            'dict_version_id' => Yii::t('dicts', 'Version'),
+            'dict_version_open_id' => Yii::t('dicts', 'Open in version'),
+            'dict_version_close_id' => Yii::t('dicts', 'Сoming in version'),
         ];
     }
 
@@ -171,16 +189,25 @@ class Task extends ActiveRecord
      */
     public function getType()
     {
-        return$this->hasOne(DictType::className(), ['id' => 'dict_type_id']);
+        return $this->hasOne(DictType::className(), ['id' => 'dict_type_id']);
     }
 
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getVersion()
+    public function getVersionOpen()
     {
-        return$this->hasOne(DictVersion::className(), ['id' => 'dict_version_id']);
+        return$this->hasOne(DictVersion::className(), ['id' => 'dict_version_open_id']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVersionClose()
+    {
+        return $this->hasOne(DictVersion::className(), ['id' => 'dict_version_close_id']);
     }
 
 
@@ -190,7 +217,7 @@ class Task extends ActiveRecord
      */
     public static function find()
     {
-        return new \app\models\queries\TaskQuery(get_called_class());
+        return new TaskQuery(get_called_class());
     }
 
 

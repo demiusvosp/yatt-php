@@ -23,6 +23,8 @@ class DictEdit extends Widget
     /** @var  DictForm */
     public $dictForm;
 
+    public $dictItemView = 'dictDefaultModel';
+
     public function init()
     {
         parent::init();
@@ -34,6 +36,7 @@ class DictEdit extends Widget
         return $this->render('dictEdit', [
             'dictForm' => $this->dictForm,
             'project' => $this->dictForm->project,
+            'dictItemView' => $this->dictItemView
         ]);
     }
 

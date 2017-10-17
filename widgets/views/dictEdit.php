@@ -16,6 +16,9 @@ use app\models\entities\Project;
 /* @var $dictForm DictForm */
 /* @var $dict string */
 /* @var $project Project|null */
+/* @var $dictItemView string */
+
+require_once ($dictItemView.'.php');
 ?>
 <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
 <table
@@ -28,8 +31,7 @@ use app\models\entities\Project;
     <thead>
     <tr>
         <th><?=Yii::t('dicts', '#')?></th>
-        <th><?=Yii::t('dicts', 'Name')?></th>
-        <th><?=Yii::t('dicts', 'Description')?></th>
+        <?= columnHeaders() ?>
         <th>&nbsp;</th>
     </tr>
     </thead>
@@ -39,16 +41,7 @@ use app\models\entities\Project;
         <?php /* @var $item ActiveRecord */ ?>
         <tr class="dict_item" id="<?= $index ?>" data-id="<?= $item->id ?>">
             <td><?=$index?></td>
-            <td><?= $form->field($item, "[$index]name", $fieldSettings)->textInput(); ?></td>
-            <td><?= $form->field($item, "[$index]description", $fieldSettings)->textInput(); ?></td>
-            <?php // адский костыль, чтобы сделать эту задачу, и начать думать о вводе twig, без него просто она не решается ?>
-            <?php
-                if($item instanceof \app\models\entities\DictVersion) {
-                ?>
-                    <td><?= $form->field($item, "[$index]type", $fieldSettings)->dropDownList($item->typesLabels()); ?></td>
-                <?php
-                }
-            ?>
+            <?= columnRow($form, $item, $index, $fieldSettings); ?>
             <td>
                 <?= Html::activeHiddenInput($item, "[$index]position"); ?>
                 <span class="btn btn-flat drop-item">

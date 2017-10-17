@@ -25,6 +25,7 @@ use app\models\queries\ProjectQuery;
  * @property DictStage[] $stages
  * @property DictType[] $types
  * @property DictVersion[] $versions
+ * @property DictDifficulty[] $difficulties
  *
  * @property User $admin
  */
@@ -210,4 +211,14 @@ class Project extends ActiveRecord
     {
         return $this->hasMany(DictVersion::className(), ['project_id' => 'id']);
     }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDifficulties()
+    {
+        return $this->hasMany(DictDifficulty::className(), ['project_id' => 'id']);
+    }
+
 }

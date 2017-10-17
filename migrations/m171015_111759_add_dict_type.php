@@ -9,11 +9,11 @@ class m171015_111759_add_dict_type extends DictMigration
 
     public function safeUp()
     {
-        parent::safeUp(); // TODO: особенные поля и поведение справочника Тип задачи
+        parent::safeUp();
     }
 
     public function safeDown()
     {
-        parent::safeDown(); // TODO: особенные поля и поведение справочника Тип задачи
+        parent::safeDown();
     }
 }

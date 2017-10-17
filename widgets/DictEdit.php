@@ -23,7 +23,7 @@ class DictEdit extends Widget
     /** @var  DictForm */
     public $dictForm;
 
-    public $template = 'dictEdit.twig';
+    public $dictItemView = 'dictEdit';
 
     public function init()
     {
@@ -32,7 +32,7 @@ class DictEdit extends Widget
 
     public function run()
     {
-        return $this->render($this->template, [
+        return $this->render($this->dictItemView.'.twig', [
             'dictForm' => $this->dictForm,
             'project' => $this->dictForm->project,
         ]);

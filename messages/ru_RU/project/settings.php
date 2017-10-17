@@ -17,8 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Versions' => 'Версии',
+    'Difficulty' => 'Сложность',
+    'Difficulty levels' => 'Уровни сложности',
     'Main' => 'Основные',
     'Stages' => 'Этапы',
     'Types' => 'Типы задач',
+    'Versions' => 'Версии',
 ];

@@ -10,7 +10,6 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
-use app\components\ProjectService;
 use app\models\entities\Project;
 use app\models\forms\DictForm;
 
@@ -99,6 +98,28 @@ class ProjectSettingsController extends Controller
         }
 
         return $this->render('versions', [
+            'project' => $project,
+            'dictForm' => $dictForm,
+        ]);
+    }
+
+
+    public function actionDifficulty()
+    {
+        /** @var Project $project */
+        $project = Yii::$app->projectService->project;
+        $dictForm = new DictForm([
+            'project' => $project,
+            'items'     => $project->difficulties,
+            'itemClass' => 'app\models\entities\DictDifficulty',
+        ]);
+
+        if($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
+            $dictForm->save();
+            return $this->refresh();
+        }
+
+        return $this->render('difficulties', [
             'project' => $project,
             'dictForm' => $dictForm,
         ]);

@@ -1,0 +1,6 @@
+{% extends '@app/widgets/views/dictEdit.twig' %}
+
+{% block dict_item_form %}
+    {{ parent() }}
+    <td>{{ form.field(item, "["~index~"]type", fieldSettings).dropDownList(item.typesLabels())|raw }}</td>
+{% endblock %}

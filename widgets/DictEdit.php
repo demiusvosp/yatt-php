@@ -23,15 +23,16 @@ class DictEdit extends Widget
     /** @var  DictForm */
     public $dictForm;
 
+    public $template = 'dictEdit.twig';
+
     public function init()
     {
         parent::init();
     }
 
-
     public function run()
     {
-        return $this->render('dictEdit', [
+        return $this->render($this->template, [
             'dictForm' => $this->dictForm,
             'project' => $this->dictForm->project,
         ]);

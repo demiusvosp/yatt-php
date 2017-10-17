@@ -1,0 +1,41 @@
+{{ use('yii/widgets/ActiveForm') }}
+
+{% set form = active_form_begin({'enableClientValidation' : false }) %}
+<table
+    id="dictForm"
+    class="table"
+    data-drop-url="{{ path(['dict/delete-item']) }}"
+    data-dict="{{ dictForm.tableName() }}"
+    {{ project ? ('data-project="'~project.id~'"') : '' }}
+>
+    <thead>
+    <tr>
+        <th>{{ t('dicts', '#') }}</th>
+        <th>{{ t('dicts', 'Name') }}</th>
+        <th>{{ t('dicts', 'Description') }}</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody class="ui-sortable">
+    {% set fieldSettings = {'template': '{input}{error}', 'options': {'class': ''}} %}
+    {% for index, item in dictForm.items %}
+        <tr class="dict_item" id="{{ index }}" data-id="{{ item.id }}">
+            <td>{{ index }}</td>
+            {% block dict_item_form %}
+                <td>{{ form.field(item, "["~index~"]name", fieldSettings).textInput()|raw }}</td>
+                <td>{{ form.field(item, "["~index~"]description", fieldSettings).textInput()|raw }}</td>
+                {#<td><?= $form->field($item, "[$index]type", $fieldSettings)->dropDownList($item->typesLabels()); ?></td>#}
+            {% endblock %}
+            <td>
+                {{ Html.activeHiddenInput(item, "["~index~"]position") }}
+                <span class="btn btn-flat drop-item">
+                    <i class="fa fa-close text-red"></i>
+                </span>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<input type="submit" value="{{ t('common', 'Save') }}" class="btn btn-primary" />
+{#}{ Html.submitButton(t('common', 'Save'), {'class': 'btn btn-primary'}) }#}
+{{ active_form_end() }}

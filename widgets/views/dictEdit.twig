@@ -11,8 +11,10 @@
     <thead>
     <tr>
         <th>{{ t('dicts', '#') }}</th>
-        <th>{{ t('dicts', 'Name') }}</th>
-        <th>{{ t('dicts', 'Description') }}</th>
+        {% block dict_item_caption %}
+            <th>{{ t('dicts', 'Name') }}</th>
+            <th>{{ t('dicts', 'Description') }}</th>
+        {% endblock %}
         <th>&nbsp;</th>
     </tr>
     </thead>

@@ -17,7 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Difficulty' => '',
+    'Categories' => 'Категории',
+    'Category' => 'Категория',
+    'Difficulty' => 'Трудоемкость',
     '#' => '#',
     'Current' => 'Текущая',
     'Description' => 'Описание',

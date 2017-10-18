@@ -24,8 +24,9 @@ return [
     'p/<suffix:\w+>/setting'  =>  'project-settings/main',
     'p/<suffix:\w+>/setting/stages' => 'project-settings/stages',
     'p/<suffix:\w+>/setting/types'  => 'project-settings/types',
-    'p/<suffix:\w+>/setting/versions' => 'project-settings/versions',
-    'p/<suffix:\w+>/setting/difficulty' => 'project-settings/difficulty',
+    'p/<suffix:\w+>/setting/categories' => 'project-settings/categories',
+    'p/<suffix:\w+>/setting/versions'   => 'project-settings/versions',
+    'p/<suffix:\w+>/setting/difficulty' => 'project-settings/difficulties',
 
     // события проекта
     // Справочники

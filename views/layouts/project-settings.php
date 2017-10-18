@@ -40,14 +40,19 @@ array_unshift($this->params['breadcrumbs'], $this->title);
                         <?=Yii::t('project/settings', 'Types')?>
                     </a>
                 </li>
+                <li <?=$this->context->route == 'project-settings/categories' ? $active : '' ?>>
+                    <a href="<?=ProjectUrl::to(['project-settings/categories', 'project' => $project]) ?>">
+                        <?=Yii::t('project/settings', 'Categories')?>
+                    </a>
+                </li>
                 <li <?=$this->context->route == 'project-settings/versions' ? $active : '' ?>>
                     <a href="<?=ProjectUrl::to(['project-settings/versions', 'project' => $project]) ?>">
                         <?=Yii::t('project/settings', 'Versions')?>
                     </a>
                 </li>
-                <li <?=$this->context->route == 'project-settings/difficulty' ? $active : '' ?>>
-                    <a href="<?=ProjectUrl::to(['project-settings/difficulty', 'project' => $project]) ?>">
-                        <?=Yii::t('project/settings', 'Difficulty')?>
+                <li <?=$this->context->route == 'project-settings/difficulties' ? $active : '' ?>>
+                    <a href="<?=ProjectUrl::to(['project-settings/difficulties', 'project' => $project]) ?>">
+                        <?=Yii::t('project/settings', 'Difficulty levels')?>
                     </a>
                 </li>
             </ul>

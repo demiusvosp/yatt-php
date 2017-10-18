@@ -31,6 +31,7 @@ use app\models\queries\TaskQuery;
  * @property DictVersion $versionClose
  * @property DictVersion $versionOpen
  * @property DictDifficulty $difficulty
+ * @property DictCategory   $category
  */
 class Task extends ActiveRecord
 {
@@ -58,8 +59,20 @@ class Task extends ActiveRecord
     public function rules()
     {
         return [
-            [['index', 'assigned_id'], 'integer'],
-            [['priority', 'dict_stage_id', 'dict_type_id','dict_version_open_id', 'dict_version_close_id', 'dict_difficulty_id'], 'integer'],
+            [
+                [
+                    'index',
+                    'assigned_id',
+                    'priority',
+                    'dict_stage_id',
+                    'dict_type_id',
+                    'dict_category_id',
+                    'dict_version_open_id',
+                    'dict_version_close_id',
+                    'dict_difficulty_id'
+                ],
+                'integer'
+            ],
             [['description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['suffix'], 'string', 'max' => 8],
@@ -102,6 +115,7 @@ class Task extends ActiveRecord
             'dict_version_open_id' => Yii::t('dicts', 'Open in version'),
             'dict_version_close_id' => Yii::t('dicts', 'Сoming in version'),
             'dict_difficulty_id' => Yii::t('dicts', 'Difficulty'),
+            'dict_category_id' => Yii::t('dicts', 'Category'),
         ];
     }
 
@@ -219,6 +233,15 @@ class Task extends ActiveRecord
     public function getDifficulty()
     {
         return $this->hasOne(DictDifficulty::className(), ['id' => 'dict_difficulty_id']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory()
+    {
+        return $this->hasOne(DictCategory::className(), ['id' => 'dict_category_id']);
     }
 
 

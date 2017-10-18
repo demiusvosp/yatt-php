@@ -3,26 +3,26 @@
 namespace app\models\queries;
 
 use yii\db\ActiveQuery;
-use app\models\entities\DictDifficulty;
+use app\models\entities\DictCategory;
 
 /**
- * This is the ActiveQuery class for [[DictDifficulty]].
+ * This is the ActiveQuery class for [[\app\models\entities\DictCategory]].
  *
- * @see DictDifficulty
+ * @see \app\models\entities\DictCategory
  */
-class DictDifficultyQuery extends ActiveQuery
+class DictCategoryQuery extends ActiveQuery
 {
 
     public function __construct($modelClass, array $config = [])
     {
         parent::__construct($modelClass, $config);
-        $this->from(['difficulty' => DictDifficulty::tableName()]);
+        $this->from(['category' => DictCategory::tableName()]);
     }
 
 
     /**
      * @inheritdoc
-     * @return \app\models\entities\DictDifficulty[]|array
+     * @return \app\models\entities\DictCategory[]|array
      */
     public function all($db = null)
     {
@@ -33,7 +33,7 @@ class DictDifficultyQuery extends ActiveQuery
 
     /**
      * @inheritdoc
-     * @return \app\models\entities\DictDifficulty|array|null
+     * @return \app\models\entities\DictCategory|array|null
      */
     public function one($db = null)
     {

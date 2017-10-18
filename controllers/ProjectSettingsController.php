@@ -104,7 +104,7 @@ class ProjectSettingsController extends Controller
     }
 
 
-    public function actionDifficulty()
+    public function actionDifficulties()
     {
         /** @var Project $project */
         $project = Yii::$app->projectService->project;
@@ -120,6 +120,28 @@ class ProjectSettingsController extends Controller
         }
 
         return $this->render('difficulties', [
+            'project' => $project,
+            'dictForm' => $dictForm,
+        ]);
+    }
+
+
+    public function actionCategories()
+    {
+        /** @var Project $project */
+        $project = Yii::$app->projectService->project;
+        $dictForm = new DictForm([
+            'project' => $project,
+            'items'     => $project->categories,
+            'itemClass' => 'app\models\entities\DictCategory',
+        ]);
+
+        if($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
+            $dictForm->save();
+            return $this->refresh();
+        }
+
+        return $this->render('categories', [
             'project' => $project,
             'dictForm' => $dictForm,
         ]);

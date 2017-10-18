@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Difficulty' => 'Сложность',
+    'Categories' => 'Категории',
     'Difficulty levels' => 'Уровни сложности',
     'Main' => 'Основные',
     'Stages' => 'Этапы',

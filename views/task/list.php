@@ -40,6 +40,10 @@ const COLUMN_MAX_LEN = 255;
                 },
             ],
             [
+                'attribute' => 'category.name',
+                'label'     => Yii::t('dicts', 'Category')
+            ],
+            [
                 'attribute' => 'stage.name',
                 'label'     => Yii::t('dicts', 'Stage')
             ],

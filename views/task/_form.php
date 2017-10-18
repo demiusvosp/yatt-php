@@ -40,7 +40,7 @@ foreach (User::getUsersMayProjectList() as $user) {// вобще это не ш�
             <?= $form->field($model, 'dict_type_id')->dropDownList($projectService->getTypesList()) ?>
         </p>
         <p>
-            Категория/подсистема
+            <?= $form->field($model, 'dict_category_id')->dropDownList($projectService->getCategoryList()) ?>
         </p>
         <p>
             <?= $form->field($model, 'assigned_id')->listBox($adminsChoices) ?>

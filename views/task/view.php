@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             Тип задачи: <b><?=$task->type->name ?></b>
         </p>
         <p>
-            Категория/подсистема
+            Категория: <b><?=$task->category->name ?></b>
         </p>
         <p>
             Назначена: <b><?=$task->assigned ? $task->assigned->username : Yii::t('common', 'Not set') ?></b><br>

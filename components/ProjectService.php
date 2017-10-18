@@ -158,7 +158,7 @@ class ProjectService extends Component
 
 
     /**
-     * Получить справочники типов задачи
+     * Получить справочники трудоемкости задачи
      * @return array
      */
     public function getDifficultyList()
@@ -169,6 +169,23 @@ class ProjectService extends Component
             if(!$level) break;
 
             $list[$level->id] = $level->name;
+        }
+        return $list;
+    }
+
+
+    /**
+     * Получить справочники категорий задачи
+     * @return array
+     */
+    public function getCategoryList()
+    {
+        $list = [];
+        $categories = $this->project->getCategories()->all();
+        foreach ($categories as $category) {
+            if(!$category) break;
+
+            $list[$category->id] = $category->name;
         }
         return $list;
     }

@@ -49,6 +49,9 @@ foreach (User::getUsersMayProjectList() as $user) {// вобще это не ш�
             <?= $form->field($model, 'priority')->dropDownList(Task::priorityLabels()) ?>
         </p>
         <p>
+            <?= $form->field($model, 'dict_difficulty_id')->dropDownList($projectService->getDifficultyList()) ?>
+        </p>
+        <p>
             <?= $form->field($model, 'dict_version_open_id')->dropDownList($projectService->getVersionList(true)) ?>
         </p>
         <p>

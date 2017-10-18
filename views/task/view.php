@@ -45,6 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
             Приоритет: <b><?=$task->getPriorityName()?></b>
         </p>
         <p>
+            Трудоемкость: <b><?=$task->difficulty->name ?></b>
+        </p>
+        <p>
             Обнаруженна в версии: <b><?=$task->versionOpen ? $task->versionOpen->name : Yii::t('common', 'Not set')  ?></b>
         </p>
         <p>

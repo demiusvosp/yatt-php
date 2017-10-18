@@ -17,11 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Difficulty levels' => 'Уровни сложности',
-    'Ratio' => 'Коэф. сложности',
+    'Difficulty' => '',
     '#' => '#',
     'Current' => 'Текущая',
     'Description' => 'Описание',
+    'Difficulty levels' => 'Уровни сложности',
     'Future' => 'Будущая',
     'ID' => 'ID',
     'Name' => 'Имя',
@@ -30,6 +30,7 @@ return [
     'Position' => 'Позиция',
     'Project' => 'Проект',
     'Project ID' => 'ID',
+    'Ratio' => 'Коэф. сложности',
     'Stage' => 'Этап',
     'Tasks stages' => 'Этапы выполнения задачи',
     'Tasks types' => 'Типы задач',

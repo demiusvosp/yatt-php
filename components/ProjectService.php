@@ -113,6 +113,7 @@ class ProjectService extends Component
         return $list;
     }
 
+
     /**
      * Получить справочники типов задачи
      * @return array
@@ -145,12 +146,29 @@ class ProjectService extends Component
         } else {
             $query->andForClose();
         }
-        $types = $query->all();
+        $versions = $query->all();
 
-        foreach ($types as $type) {
-            if(!$type) break;
+        foreach ($versions as $version) {
+            if(!$version) break;
 
-            $list[$type->id] = $type->name;
+            $list[$version->id] = $version->name;
+        }
+        return $list;
+    }
+
+
+    /**
+     * Получить справочники типов задачи
+     * @return array
+     */
+    public function getDifficultyList()
+    {
+        $list = [];
+        $levels = $this->project->getDifficulties()->all();
+        foreach ($levels as $level) {
+            if(!$level) break;
+
+            $list[$level->id] = $level->name;
         }
         return $list;
     }

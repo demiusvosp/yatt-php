@@ -19,6 +19,7 @@ use app\models\queries\TaskQuery;
  * @property string $description
  * @property integer $assigned_id
  * @property integer $priority
+ * @property integer $progress
  * @property integer $dict_version_open_id
  * @property integer $dict_version_close_id
  * @property string $created_at
@@ -64,6 +65,7 @@ class Task extends ActiveRecord
                     'index',
                     'assigned_id',
                     'priority',
+                    'progress',
                     'dict_stage_id',
                     'dict_type_id',
                     'dict_category_id',
@@ -108,6 +110,7 @@ class Task extends ActiveRecord
             'description' => Yii::t('task', 'Description'),
             'assigned_id' => Yii::t('task', 'Assigned'),
             'priority' => Yii::t('task', 'Priority'),
+            'progress' => Yii::t('task', 'Progress'),
             'created_at' => Yii::t('task', 'Created'),
             'updated_at' => Yii::t('task', 'Updated'),
             'dict_stage_id' => Yii::t('dicts', 'Stage'),

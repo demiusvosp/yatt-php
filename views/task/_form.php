@@ -18,7 +18,7 @@ $projectService = Yii::$app->projectService;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model Task */
+/* @var $task Task */
 
 // врменное решение
 $adminsChoices = [];
@@ -26,48 +26,53 @@ $adminsChoices = [];
 foreach (User::getUsersMayProjectList() as $user) {// вобще это не шаблонная логика
     $adminsChoices[$user->id] = $user->username;
 }
+// простое решение выбора прогресса (как в flyspray)
+$progressList = [];
+for($i = 0; $i <= 100; $i += 10) {
+    $progressList[$i] = $i . '%';
+}
 ?>
 <?php $form = ActiveForm::begin(); ?>
 <div class="row">
     <div class="col-md-4 task-dict-block">
-        <p>
-            <?= $form->field($model, 'dict_stage_id')->dropDownList($projectService->getStagesList()) ?>
-        </p>
-        <p>
-            Прогресс
-        </p>
-        <p>
-            <?= $form->field($model, 'dict_type_id')->dropDownList($projectService->getTypesList()) ?>
-        </p>
-        <p>
-            <?= $form->field($model, 'dict_category_id')->dropDownList($projectService->getCategoryList()) ?>
-        </p>
-        <p>
-            <?= $form->field($model, 'assigned_id')->listBox($adminsChoices) ?>
-        </p>
-        <p>
-            <?= $form->field($model, 'priority')->dropDownList(Task::priorityLabels()) ?>
-        </p>
-        <p>
-            <?= $form->field($model, 'dict_difficulty_id')->dropDownList($projectService->getDifficultyList()) ?>
-        </p>
-        <p>
-            <?= $form->field($model, 'dict_version_open_id')->dropDownList($projectService->getVersionList(true)) ?>
-        </p>
-        <p>
-            <?= $form->field($model, 'dict_version_close_id')->dropDownList($projectService->getVersionList(false)) ?>
-        </p>
+        <div class="row-fluid">
+            <?= $form->field($task, 'dict_stage_id')->dropDownList($projectService->getStagesList()) ?>
+        </div>
+        <div class="row-fluid">
+            <?= $form->field($task, 'progress')->dropDownList($progressList) ?>
+        </div>
+        <div class="row-fluid">
+            <?= $form->field($task, 'dict_type_id')->dropDownList($projectService->getTypesList()) ?>
+        </div>
+        <div class="row-fluid">
+            <?= $form->field($task, 'dict_category_id')->dropDownList($projectService->getCategoryList()) ?>
+        </div>
+        <div class="row-fluid">
+            <?= $form->field($task, 'assigned_id')->listBox($adminsChoices) ?>
+        </div>
+        <div class="row-fluid">
+            <?= $form->field($task, 'priority')->dropDownList(Task::priorityLabels()) ?>
+        </div>
+        <div class="row-fluid">
+            <?= $form->field($task, 'dict_difficulty_id')->dropDownList($projectService->getDifficultyList()) ?>
+        </div>
+        <div class="row-fluid">
+            <?= $form->field($task, 'dict_version_open_id')->dropDownList($projectService->getVersionList(true)) ?>
+        </div>
+        <div class="row-fluid">
+            <?= $form->field($task, 'dict_version_close_id')->dropDownList($projectService->getVersionList(false)) ?>
+        </div>
     </div>
 
     <div class="col-md-8 task-text-block">
-        <?php if(!$model->isNewRecord) { ?>
-            <h2><?=$model->getName()?></h2>
+        <?php if(!$task->isNewRecord) { ?>
+            <h2><?=$task->getName()?></h2>
         <?php } ?>
-        <?= $form->field($model, 'caption')->textInput() ?>
-        <?= $form->field($model, 'description')->textarea(['rows' => 10]) ?>
+        <?= $form->field($task, 'caption')->textInput() ?>
+        <?= $form->field($task, 'description')->textarea(['rows' => 10]) ?>
 
         <div class="form-group">
-            <?= Html::submitButton($model->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($task->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'), ['class' => $task->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     </div>
 </div>

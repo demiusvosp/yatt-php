@@ -6,19 +6,16 @@
  * Time: 14:48
  */
 
-use yii\helpers\Html;
-
-use app\models\entities\User;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\entities\Task */
+/* @var $task app\models\entities\Task */
 
 $this->title = Yii::t('task', 'Create task');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <?= $this->render('_form', [
-    'model' => $model,
+    'task' => $task,
 ]) ?>
 

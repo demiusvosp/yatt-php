@@ -78,7 +78,7 @@ class TaskController extends Controller
                 Yii::$app->session->addFlash('error', Yii::t('task', 'Error in create new task'));
             }
             return $this->render('create', [
-                'model' => $task,
+                'task' => $task,
             ]);
         }
     }
@@ -96,7 +96,7 @@ class TaskController extends Controller
             return $this->redirect(['view', 'index' => $task->index, 'suffix' => Yii::$app->projectService->project->suffix]);
         } else {
             return $this->render('create', [
-                'model' => $task,
+                'task' => $task,
             ]);
         }
     }

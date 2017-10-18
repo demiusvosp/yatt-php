@@ -26,6 +26,7 @@ const COLUMN_MAX_LEN = 255;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'captionOptions' => ['class' => 'task_list_caption'],
+        'options' => ['class' => 'task_list'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -42,10 +43,6 @@ const COLUMN_MAX_LEN = 255;
             [
                 'attribute' => 'category.name',
                 'label'     => Yii::t('dicts', 'Category')
-            ],
-            [
-                'attribute' => 'stage.name',
-                'label'     => Yii::t('dicts', 'Stage')
             ],
             [
                 'attribute' => 'type.name',
@@ -77,6 +74,21 @@ const COLUMN_MAX_LEN = 255;
                 'label' => Yii::t('task', 'Assigned'),
             ],
             'description:ntext',
+
+            [
+                'attribute' => 'stage.name',
+                'label'     => Yii::t('dicts', 'Stage')
+            ],
+            [
+                'attribute' => 'progress',
+                'content' => function($task) {
+                    return '<div class="progress">
+                    <div class="progress-bar progress-bar-green" role="progressbar"
+                        aria-valuenow="' . $task->progress .'" aria-valuemin="0" aria-valuemax="100" 
+                        style="width: ' . $task->progress . '%"></div>
+                    <div class="progress-value">'.$task->progress.'%</div>';
+                }
+            ],
 
             'created_at:datetime',
             [

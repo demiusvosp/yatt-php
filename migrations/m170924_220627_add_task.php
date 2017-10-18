@@ -18,6 +18,7 @@ class m170924_220627_add_task extends Migration
             'assigned_id' => $this->integer()->comment('Текущий пользователь, работающий над задачей'),
 
             'priority'  =>  $this->integer()->comment('Приоритет задачи'),
+            'progress'  =>  $this->integer()->comment('Прогресс выполнения'),
 
             'created_at' => $this->dateTime()->comment('Создана'),
             'updated_at' => $this->dateTime()->comment('Оновленна'),

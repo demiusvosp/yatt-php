@@ -26,36 +26,45 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <div class="row-fluid">
     <div class="col-md-3 task-dict-block">
-        <p>
+        <div class="row-fluid">
             Этап: <b><?=$task->stage->name ?></b>
-        </p>
-        <p>
-            Прогресс
-        </p>
-        <p>
+        </div>
+        <div class="row-fluid">
+            Прогресс:
+            <div class="progress">
+                <div
+                    class="progress-bar progress-bar-green" role="progressbar"
+                    aria-valuenow="<?=$task->progress?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$task->progress?>%"
+                >
+                    <span class="sr-only"><?=$task->progress?> Complete</span>
+                </div>
+                <div class="progress-value"><?=$task->progress?>%</div>
+            </div>
+        </div>
+        <div class="row-fluid">
             Тип задачи: <b><?=$task->type->name ?></b>
-        </p>
-        <p>
+        </div>
+        <div class="row-fluid">
             Категория: <b><?=$task->category->name ?></b>
-        </p>
-        <p>
+        </div>
+        <div class="row-fluid">
             Назначена: <b><?=$task->assigned ? $task->assigned->username : Yii::t('common', 'Not set') ?></b><br>
-        </p>
-        <p>
+        </div>
+        <div class="row-fluid">
             Приоритет: <b><?=$task->getPriorityName()?></b>
-        </p>
-        <p>
+        </div>
+        <div class="row-fluid">
             Трудоемкость: <b><?=$task->difficulty->name ?></b>
-        </p>
-        <p>
+        </div>
+        <div class="row-fluid">
             Обнаруженна в версии: <b><?=$task->versionOpen ? $task->versionOpen->name : Yii::t('common', 'Not set')  ?></b>
-        </p>
-        <p>
+        </div>
+        <div class="row-fluid">
             Дата обнаружения: <b><?= Yii::$app->formatter->asDate($task->created_at) ?></b>
-        </p>
-        <p>
+        </div>
+        <div class="row-fluid">
             Ожидается в версии: <b><?=$task->versionClose ? $task->versionClose->name : Yii::t('common', 'Not set') ?></b>
-        </p>
+        </div>
     </div>
 
     <div class="col-md-9 task-text-block">

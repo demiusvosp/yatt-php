@@ -3,23 +3,16 @@
 namespace app\models\entities;
 
 use Yii;
-use yii\db\ActiveRecord;
 
 use app\models\queries\DictVersionQuery;
 
 /**
  * This is the model class for table "dict_version".
  *
- * @property integer $id
- * @property integer $project_id
- * @property string $name
- * @property string $description
- * @property integer $position
- *
- * @property Project $project
- * @property Task[] $tasks
+ * @property $tasksOnOpen
+ * @property $tasksOnClose
  */
-class DictVersion extends ActiveRecord
+class DictVersion extends DictBase
 {
     // типы версий
     const FUTURE  = 0;// Планируемая (только ожидается к)
@@ -33,36 +26,6 @@ class DictVersion extends ActiveRecord
     public static function tableName()
     {
         return 'dict_version';
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['project_id', 'position', 'type'], 'integer'],
-            [['name'], 'required'],
-            [['name', 'description'], 'string', 'max' => 255],
-            [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
-        ];
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('dicts', 'ID'),
-            'project_id' => Yii::t('dicts', 'Project ID'),
-            'name' => Yii::t('dicts', 'Name'),
-            'description' => Yii::t('dicts', 'Description'),
-            'position' => Yii::t('dicts', 'Position'),
-            'type' => Yii::t('dicts', 'Version type'),
-        ];
     }
 
 
@@ -89,18 +52,18 @@ class DictVersion extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProject()
+    public function getTasksOnOpen()
     {
-        return $this->hasOne(Project::className(), ['id' => 'project_id']);
+        return $this->hasMany(Task::className(), ['$dict_version_open_id' => 'id']);
     }
 
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTasks()
+    public function getTasksOnClose()
     {
-        return $this->hasMany(Task::className(), ['dict_version_id' => 'id']);
+        return $this->hasMany(Task::className(), ['$dict_version_close_id' => 'id']);
     }
 
 }

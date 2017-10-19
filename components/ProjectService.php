@@ -8,6 +8,7 @@
 
 namespace app\components;
 
+use app\helpers\ProjectUrl;
 use app\models\queries\DictVersionQuery;
 use yii\base\Component;
 use Yii;
@@ -52,13 +53,14 @@ class ProjectService extends Component
             foreach ($allProjects as $project) {
                 $projectItems[] = [
                     'label' => $project->name,
-                    'url' => ['project/overview', 'suffix' => $project->suffix]
+                    'url' => ProjectUrl::to(['project/overview', 'project' => $project])
                 ];
             }
             $projectItems[] = '<li class="divider"></li>';
             $projectItems[] = ['label' => Yii::t('common', 'Home'), 'url' => ['main/index']]; //вобще это скорее страница все проекты
 
-            $this->projectMenu = ['label' => Yii::t('project', 'Projects'),
+            $this->projectMenu[] = [
+                'label' => Yii::t('project', 'Projects'),
                 'url' => ['main/index'],
                 'items' => $projectItems];
         }

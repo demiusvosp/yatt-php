@@ -9,6 +9,8 @@ use app\models\queries\DictVersionQuery;
 /**
  * This is the model class for table "dict_version".
  *
+ * @property integer $type
+ *
  * @property $tasksOnOpen
  * @property $tasksOnClose
  */
@@ -26,6 +28,28 @@ class DictVersion extends DictBase
     public static function tableName()
     {
         return 'dict_version';
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            [['type'], 'integer', 'min' => 0, 'max' => count(static::typesLabels())],
+        ]);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return array_merge(parent::attributeLabels(), [
+            'type' => Yii::t('dicts', 'Type'),
+        ]);
     }
 
 

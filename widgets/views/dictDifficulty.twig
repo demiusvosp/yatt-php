@@ -1,0 +1,11 @@
+{% extends '@app/widgets/views/dictEdit.twig' %}
+
+{% block dict_item_caption %}
+    {{ parent() }}
+    <th>{{ t('dicts', 'Difficulty') }}</th>
+{% endblock %}
+
+{% block dict_item_form %}
+    {{ parent() }}
+    <td>{{ form.field(item, "["~index~"]ratio", fieldSettings).textInput()|raw }}</td>
+{% endblock %}

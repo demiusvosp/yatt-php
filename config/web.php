@@ -51,6 +51,28 @@ $config = [
             'showScriptName' => false,
             'rules' => require(__DIR__ . '/routes.php'),
         ],
+        'view' => [
+            'class' => 'yii\web\View',
+            'renderers' => [
+                'twig' => [
+                    'class' => 'yii\twig\ViewRenderer',
+                    'cachePath' => '@runtime/Twig/cache',
+                    // Array of twig options:
+                    'options' => [
+                        'auto_reload' => true,
+                    ],
+                    'globals' => [
+                        'Yii'  => ['class' => '\Yii'],
+                        'html' => ['class' => '\yii\helpers\Html'],
+                        'url'  => ['class' => 'app\helpers\ProjectUrl'],
+                    ],
+                    'functions' => [
+                        't' => 'Yii::t',
+                    ],
+                    'uses' => ['yii\bootstrap'],
+                ],
+            ],
+        ],
         'i18n' => [
             'translations' => [
                 '*' => [

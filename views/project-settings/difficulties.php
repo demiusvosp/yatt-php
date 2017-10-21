@@ -27,7 +27,7 @@ $this->params['project'] = $project;
             <h3 class="box-title"><?=Yii::t('dicts', 'Difficulty levels')?></h3>
         </div>
         <div class="box-body">
-            <?= DictEdit::widget(['dictForm' => $dictForm]); ?>
+            <?= DictEdit::widget(['dictForm' => $dictForm, 'dictItemView' => 'dictDifficulty']); ?>
         </div>
     </div>
 </div>

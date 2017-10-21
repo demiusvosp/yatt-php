@@ -62,14 +62,6 @@ class DictForm extends Model
         return end($this->items)->tableName();
     }
 
-    /**
-     * Получить имя справочника без неймспейсов
-     * @return string
-     */
-    public function dictName()
-    {
-        return end(explode('/', $this->itemClass));
-    }
 
     public function load($data, $formName = null)
     {

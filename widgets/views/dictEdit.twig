@@ -6,6 +6,7 @@
     class="table"
     data-drop-url="{{ path(['dict/delete-item']) }}"
     data-dict="{{ dictForm.tableName() }}"
+    data-dict-name="{{ inputPrefix }}"
     {{ project ? ('data-project="'~project.id~'"') : '' }}
 >
     <thead>
@@ -26,10 +27,9 @@
             {% block dict_item_form %}
                 <td>{{ form.field(item, "["~index~"]name", fieldSettings).textInput()|raw }}</td>
                 <td>{{ form.field(item, "["~index~"]description", fieldSettings).textInput()|raw }}</td>
-                {#<td><?= $form->field($item, "[$index]type", $fieldSettings)->dropDownList($item->typesLabels()); ?></td>#}
             {% endblock %}
             <td>
-                {{ Html.activeHiddenInput(item, "["~index~"]position") }}
+                {{ html.activeHiddenInput(item, "["~index~"]position")|raw }}
                 <span class="btn btn-flat drop-item">
                     <i class="fa fa-close text-red"></i>
                 </span>

@@ -31,10 +31,11 @@ jQuery(function(){
     // Порядок
     $(".ui-sortable").sortable({
         update: function(event, ui) {
+            var form = $('#dictForm');
             var newOrder = $(".ui-sortable").sortable("toArray");
             console.log(newOrder);
             for (var i = 0; i < newOrder.length; i++) {
-                $('#dictstate-'+newOrder[i]+'-position').val(i);
+                $('#'+form.data('dict-name')+'-'+newOrder[i]+'-position').val(i);
             }
         }
     });

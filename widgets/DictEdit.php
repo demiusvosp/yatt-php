@@ -35,6 +35,7 @@ class DictEdit extends Widget
         return $this->render($this->dictItemView.'.twig', [
             'dictForm' => $this->dictForm,
             'project' => $this->dictForm->project,
+            'inputPrefix' => strtolower(end($this->dictForm->items)->formName()),
         ]);
     }
 

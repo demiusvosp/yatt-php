@@ -59,17 +59,21 @@ $config = [
                     'cachePath' => '@runtime/Twig/cache',
                     // Array of twig options:
                     'options' => [
-                        'auto_reload' => true,
+                        'debug' => YII_DEBUG,
+                        'auto_reload' => YII_DEBUG,
+                        'strict_variables' => YII_DEBUG,
                     ],
                     'globals' => [
-                        'Yii'  => ['class' => '\Yii'],
-                        'html' => ['class' => '\yii\helpers\Html'],
                         'url'  => ['class' => 'app\helpers\ProjectUrl'],
+                        'html' => ['class' => '\yii\helpers\Html']
                     ],
                     'functions' => [
                         't' => 'Yii::t',
                     ],
                     'uses' => ['yii\bootstrap'],
+//                    'extensions' => [
+//                        \yii\twig\html\HtmlHelperExtension::class,
+//                    ],
                 ],
             ],
         ],
@@ -112,6 +116,9 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
+    ];
+    $config['components']['view']['renderers']['twig']['extensions'][] = [
+        'class' => 'Twig\Extension\DebugExtension'
     ];
     // лог для отладки (пок ане получилось заставить работать, позе к ним вернемся)
     $config['components']['log']['targets'][] = [

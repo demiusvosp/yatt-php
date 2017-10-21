@@ -89,7 +89,12 @@ class DictStage extends DictBase
      * запрет смены позиции элемента справочника
      * @return bool
      */
-    public function disableRedepositing()
+    public function disableReposition()
+    {
+        return $this->type == static::TYPE_OPEN || $this->type == static::TYPE_CLOSED;
+    }
+
+    public function disableDelete()
     {
         return $this->type == static::TYPE_OPEN || $this->type == static::TYPE_CLOSED;
     }

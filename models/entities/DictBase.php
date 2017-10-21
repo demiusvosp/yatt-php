@@ -74,7 +74,16 @@ abstract class DictBase extends ActiveRecord
      * запрет смены позиции элемента справочника
      * @return bool
      */
-    public function disableRedepositing()
+    public function disableReposition()
+    {
+        return false;
+    }
+
+    /**
+     * запрет удаления элемента справочника
+     * @return bool
+     */
+    public function disableDelete()
     {
         return false;
     }

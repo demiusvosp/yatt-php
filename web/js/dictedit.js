@@ -30,6 +30,7 @@ jQuery(function(){
 
     // Порядок
     $(".ui-sortable").sortable({
+        items: 'tr:not(.disable-reposition)',
         update: function(event, ui) {
             var form = $('#dictForm');
             var newOrder = $(".ui-sortable").sortable("toArray");

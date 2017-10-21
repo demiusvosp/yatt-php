@@ -22,7 +22,7 @@
     <tbody class="ui-sortable">
     {% set fieldSettings = {'template': '{input}{error}', 'options': {'class': ''}} %}
     {% for index, item in dictForm.items %}
-        <tr class="dict_item" id="{{ index }}" data-id="{{ item.id }}">
+        <tr class="dict_item {{ item.disableRedepositing()?'disable-reposition':'' }}" id="{{ index }}" data-id="{{ item.id }}">
             <td>{{ index }}</td>
             {% block dict_item_form %}
                 <td>{{ form.field(item, "["~index~"]name", fieldSettings).textInput()|raw }}</td>

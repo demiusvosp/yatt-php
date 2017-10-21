@@ -25,6 +25,9 @@ class DictEdit extends Widget
 
     public $dictItemView = 'dictEdit';
 
+    /** @var null|callable - function(DictBase) return true is item fixed position  */
+    public $fixedItem = null;
+
     public function init()
     {
         parent::init();

@@ -7,14 +7,13 @@
  */
 
 use app\models\entities\Project;
-use app\models\forms\DictForm;
-
+use app\models\forms\DictStagesForm;
 use app\widgets\DictEdit;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $project Project */
-/* @var $dictForm DictForm */
+/* @var $dictForm DictStagesForm */
 
 $this->title = $project->name;
 $this->params['breadcrumbs'][] = Yii::t('project/settings', 'Stages');

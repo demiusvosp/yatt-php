@@ -70,4 +70,12 @@ abstract class DictBase extends ActiveRecord
         return $this->hasOne(Project::className(), ['id' => 'project_id']);
     }
 
+    /**
+     * запрет смены позиции элемента справочника
+     * @return bool
+     */
+    public function disableRedepositing()
+    {
+        return false;
+    }
 }

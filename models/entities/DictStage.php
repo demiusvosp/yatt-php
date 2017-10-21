@@ -18,6 +18,12 @@ class DictStage extends DictBase
     const TYPE_OPEN = 1; // Задача создана. Всегда первый и дефолтный для задачи
     const TYPE_CLOSED = 2; // Задача закрыта. Всегда последний.
 
+    /*
+     * Самая большая позиция элемента в справочнике. Вобще говоря это хардкоженное число с потолка, в ожидании, что
+     *   никто не создаст больше этого элементов справочника, ибо мы не можем узнать max int для текущей бд
+     *   текущей платформы
+     */
+    const POSITION_MAX = 9999;
 
     /**
      * @inheritdoc
@@ -73,9 +79,19 @@ class DictStage extends DictBase
             $this->position = 0;
         }
         if ($this->type == static::TYPE_CLOSED) {
-            $this->position = PHP_INT_MAX;
+            $this->position = static::POSITION_MAX;
         }
         return parent::beforeSave($insert);
+    }
+
+
+    /**
+     * запрет смены позиции элемента справочника
+     * @return bool
+     */
+    public function disableRedepositing()
+    {
+        return $this->type == static::TYPE_OPEN || $this->type == static::TYPE_CLOSED;
     }
 
 }

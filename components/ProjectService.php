@@ -8,14 +8,14 @@
 
 namespace app\components;
 
-use app\helpers\ProjectUrl;
-use app\models\queries\DictVersionQuery;
-use yii\base\Component;
 use Yii;
-
-use app\models\entities\Project;
-use app\models\queries\ProjectQuery;
+use yii\base\Component;
 use yii\web\NotFoundHttpException;
+use app\helpers\ProjectUrl;
+use app\models\entities\Project;
+use app\models\entities\DictStage;
+use app\models\queries\DictVersionQuery;
+use app\models\queries\ProjectQuery;
 
 class ProjectService extends Component
 {
@@ -23,7 +23,7 @@ class ProjectService extends Component
     /** @var Project */
     public $project = null;
 
-    /** @var array  */
+    /** @var array */
     public $projectMenu = [];
 
     public function init()
@@ -31,10 +31,10 @@ class ProjectService extends Component
         parent::init();
         $allProjects = ProjectQuery::allowProjectsList();
 
-        if(count($allProjects) == 0) {
+        if (count($allProjects) == 0) {
             $this->projectMenu[] = ['label' => Yii::t('common', 'Home'), 'url' => ['main/index']];
 
-        } elseif(count($allProjects) == 1) {
+        } elseif (count($allProjects) == 1) {
             $this->project = ProjectQuery::allowProjectsQuery()->one();
             $this->projectMenu[] = [
                 'label' => $this->project->name,
@@ -42,12 +42,9 @@ class ProjectService extends Component
             ];
 
         } else {
-           if( isset(Yii::$app->request->queryParams['suffix'])) {
-               $this->project = Project::findOne(Yii::$app->request->queryParams['suffix']);
-           }
-           if(!$this->project) {
-               // тут будут другие способы получения текущего проекта.
-           }
+            if (isset(Yii::$app->request->queryParams['suffix'])) {
+                $this->project = Project::findOne(Yii::$app->request->queryParams['suffix']);
+            }
 
             $projectItems = [];
             foreach ($allProjects as $project) {
@@ -74,7 +71,7 @@ class ProjectService extends Component
      */
     public function getProject()
     {
-        if(!$this->project) {
+        if (!$this->project) {
             throw new NotFoundHttpException(Yii::t('project', 'Project not found'));
         }
         return $this->project;
@@ -106,10 +103,11 @@ class ProjectService extends Component
     public function getStagesList()
     {
         $list = [];
-        $stages = $this->project->getStages()->all();
-        foreach ($stages as $stage) {
-            if(!$stage) break;
-
+        /** @var DictStage $stage */
+        foreach ($this->project->stages as $stage) {
+            if ($stage->isClose()) {// нельзя выбрать этап закрыта, надо закрывать кнопкой.
+                continue;
+            }
             $list[$stage->id] = $stage->name;
         }
         return $list;
@@ -123,9 +121,8 @@ class ProjectService extends Component
     public function getTypesList()
     {
         $list = [];
-        $types = $this->project->getTypes()->all();
-        foreach ($types as $type) {
-            if(!$type) break;
+        foreach ($this->project->types as $type) {
+            if (!$type) break;
 
             $list[$type->id] = $type->name;
         }
@@ -143,7 +140,7 @@ class ProjectService extends Component
         $list = [];
         /** @var DictVersionQuery $query */
         $query = $this->project->getVersions();
-        if($open) {
+        if ($open) {
             $query->andForOpen();
         } else {
             $query->andForClose();
@@ -151,7 +148,7 @@ class ProjectService extends Component
         $versions = $query->all();
 
         foreach ($versions as $version) {
-            if(!$version) break;
+            if (!$version) break;
 
             $list[$version->id] = $version->name;
         }
@@ -166,9 +163,8 @@ class ProjectService extends Component
     public function getDifficultyList()
     {
         $list = [];
-        $levels = $this->project->getDifficulties()->all();
-        foreach ($levels as $level) {
-            if(!$level) break;
+        foreach ($this->project->difficulties as $level) {
+            if (!$level) break;
 
             $list[$level->id] = $level->name;
         }
@@ -183,9 +179,8 @@ class ProjectService extends Component
     public function getCategoryList()
     {
         $list = [];
-        $categories = $this->project->getCategories()->all();
-        foreach ($categories as $category) {
-            if(!$category) break;
+        foreach ($this->project->categories as $category) {
+            if (!$category) break;
 
             $list[$category->id] = $category->name;
         }

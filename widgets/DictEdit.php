@@ -23,19 +23,15 @@ class DictEdit extends Widget
     /** @var  DictForm */
     public $dictForm;
 
-    public $dictItemView = 'dictEdit';
+    public $dictItemView = 'dict';
 
     /** @var null|callable - function(DictBase) return true is item fixed position  */
     public $fixedItem = null;
 
-    public function init()
-    {
-        parent::init();
-    }
 
     public function run()
     {
-        return $this->render($this->dictItemView.'.twig', [
+        return $this->render($this->dictItemView.'Edit.twig', [
             'dictForm' => $this->dictForm,
             'project' => $this->dictForm->project,
             'inputPrefix' => strtolower(end($this->dictForm->items)->formName()),

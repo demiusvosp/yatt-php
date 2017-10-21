@@ -94,9 +94,23 @@ class DictStage extends DictBase
         return $this->type == static::TYPE_OPEN || $this->type == static::TYPE_CLOSED;
     }
 
+    /**
+     * запрет удаления элемента
+     * @return bool
+     */
     public function disableDelete()
     {
         return $this->type == static::TYPE_OPEN || $this->type == static::TYPE_CLOSED;
+    }
+
+    public function isOpen()
+    {
+        return $this->type == static::TYPE_OPEN;
+    }
+
+    public function isClose()
+    {
+        return $this->type == static::TYPE_CLOSED;
     }
 
 }

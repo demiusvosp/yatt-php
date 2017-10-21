@@ -34,6 +34,11 @@ class TaskForm extends Task
     {
         $this->_projectService = Yii::$app->projectService;
         parent::init();
+
+        if($this->isNewRecord) {
+            $this->priority = Task::PRIORITY_MEDIUM;
+            $this->assigned_id = Yii::$app->user->identity->getId();
+        }
     }
 
 

@@ -1,0 +1,5 @@
+{% if choices|length > 1 %}
+    <div class="row-fluid">
+        {{ form.field(task, 'dict_type_id').dropDownList(choices) }}
+    </div>
+{% endif %}

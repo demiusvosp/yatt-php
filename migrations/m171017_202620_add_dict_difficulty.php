@@ -10,7 +10,7 @@ class m171017_202620_add_dict_difficulty extends DictMigration
     public function safeUp()
     {
         parent::safeUp();
-        $this->addColumn($this->tableName, 'ratio', 'float');
+        $this->addColumn($this->tableName, 'ratio', $this->float());
     }
 
     public function safeDown()

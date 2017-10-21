@@ -42,7 +42,8 @@ class m171016_183939_add_dict_version extends DictMigration
 
     public function safeDown()
     {
-        $this->dropForeignKey('fk-task-'.$this->tableName.'-ref', 'task');
+        $this->dropForeignKey('fk-task-'.$this->tableName.'-open-ref', 'task');
+        $this->dropForeignKey('fk-task-'.$this->tableName.'-close-ref', 'task');
         $this->dropColumn('task', $this->refFieldOpen);
         $this->dropColumn('task', $this->refFieldClose);
         $this->downTable();

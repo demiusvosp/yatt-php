@@ -10,6 +10,7 @@ class m170928_101310_add_dict_stage extends DictMigration
     public function safeUp()
     {
         parent::safeUp();
+        $this->addColumn($this->tableName, 'type', 'integer');
     }
 
     public function safeDown()

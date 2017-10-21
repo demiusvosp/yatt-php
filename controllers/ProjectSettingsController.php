@@ -12,6 +12,7 @@ use Yii;
 use yii\web\Controller;
 use app\models\entities\Project;
 use app\models\forms\DictForm;
+use app\models\forms\DictStagesForm;
 
 
 class ProjectSettingsController extends Controller
@@ -40,7 +41,7 @@ class ProjectSettingsController extends Controller
     {
         /** @var Project $project */
         $project = Yii::$app->projectService->project;
-        $dictForm = new DictForm([
+        $dictForm = new DictStagesForm([
             'project' => $project,
             'items'     => $project->stages,
             'itemClass' => 'app\models\entities\DictStage',

@@ -17,12 +17,16 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Close' => 'Закрыта',
+    'Close task' => 'Работа над задачей завершена',
+    'Open' => 'Открыта',
+    'Open task' => 'Новая задача',
+    '#' => '#',
     'Categories' => 'Категории',
     'Category' => 'Категория',
-    'Difficulty' => 'Трудоемкость',
-    '#' => '#',
     'Current' => 'Текущая',
     'Description' => 'Описание',
+    'Difficulty' => 'Трудоемкость',
     'Difficulty levels' => 'Уровни сложности',
     'Future' => 'Будущая',
     'ID' => 'ID',

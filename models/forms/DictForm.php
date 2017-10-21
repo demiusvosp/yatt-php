@@ -12,7 +12,7 @@ use Yii;
 use yii\base\Model;
 
 use app\models\entities\Project;
-use app\models\entities\IWithProject;
+use app\models\entities\DictBase;
 
 /**
  * Class DictForm - Форма справочник. Содерит подборку значений справочника.
@@ -21,7 +21,7 @@ use app\models\entities\IWithProject;
  */
 class DictForm extends Model
 {
-    /** @var array[IWithProject] коллекция справочника */
+    /** @var array[DictBase] коллекция справочника */
     public $items;
 
     /** @var  string класс модели значения справочника */
@@ -49,7 +49,7 @@ class DictForm extends Model
         parent::init();
         // и новая для создания нового занчения
         $newItem = Yii::createObject($this->itemClass, []);
-        if($this->project && $newItem instanceof IWithProject) {
+        if($this->project && $newItem instanceof DictBase) {
             $newItem->project_id = $this->project->id;
         }
         $newItem->position = count($this->items);
@@ -62,6 +62,14 @@ class DictForm extends Model
         return end($this->items)->tableName();
     }
 
+    /**
+     * Получить имя справочника без неймспейсов
+     * @return string
+     */
+    public function dictName()
+    {
+        return end(explode('/', $this->itemClass));
+    }
 
     public function load($data, $formName = null)
     {
@@ -71,10 +79,13 @@ class DictForm extends Model
 
     public function validate($attributeNames = null, $clearErrors = true)
     {
-        $newItem = end($this->items);
-        if( !$newItem->validate($attributeNames, $clearErrors)) {
-            // последний элемент это новая запись в словарь. Если она не прошла валидацию, значит не надо её добавлять
-            array_pop($this->items);
+        foreach ($this->items as $index => $item) {
+            if($item->isNewRecord) {
+                if(empty($item->name)) {
+                    // Если новая запись не имеет имени, значит её не заполняли - удаляем
+                    unset($this->items[$index]);
+                }
+            }
         }
         return Model::validateMultiple($this->items, $attributeNames);
     }

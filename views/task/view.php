@@ -27,16 +27,18 @@ $this->params['breadcrumbs'][] = $this->title;// как вот это превр
             <?=Yii::t('task', 'Edit task')?>
         </a>
 
-        <a data-action="<?= ProjectUrl::to(['task/close', 'suffix'=>$task->suffix, 'index'=>$task->index])?>"
-           data-toggle="modal" data-target="#closeTask"
-           class="btn btn-app"
-        >
-            <i class="glyphicon glyphicon-ok"></i>
-            <?=Yii::t('task', 'Close task')?>
-        </a>
+        <?php if(!$task->is_closed) { ?>
+            <a data-action="<?= ProjectUrl::to(['task/close', 'suffix'=>$task->suffix, 'index'=>$task->index])?>"
+               data-toggle="modal" data-target="#closeTask"
+               class="btn btn-app"
+            >
+                <i class="glyphicon glyphicon-ok"></i>
+                <?=Yii::t('task', 'Close task')?>
+            </a>
+        <?php } ?>
     </div>
 </div>
-<div class="row-fluid">
+<div class="row-fluid task-view">
     <div class="col-md-3 task-dict-block">
         <div class="row-fluid">
             Этап: <b><?=$task->stage->name ?></b>
@@ -86,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;// как вот это превр
     </div>
 
     <div class="col-md-9 task-text-block">
-        <h2><?=$task->getName()?> - <?=$task->caption?></h2>
+        <h2 class="task-header <?=$task->is_closed?'closed':''?>"><?=$task->getName()?> - <?=$task->caption?></h2>
         <div class="well">
             <?=$task->description ?>
         </div>

@@ -25,8 +25,15 @@ const COLUMN_MAX_LEN = 255;
 <div class="row-fluid">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'captionOptions' => ['class' => 'task_list_caption'],
         'options' => ['class' => 'task_list'],
+        'captionOptions' => ['class' => 'task_list_caption'],
+        'rowOptions' => function ($model, $key, $index, $grid) {
+            /** @var Task $model */
+            if($model->is_closed) {
+                return ['class' => 'closed'];
+            }
+            return '';
+        },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

@@ -53,6 +53,11 @@
     width: 30%;
 }
 
+/* Задачи */
+.progress-bar-green {
+    background-color: #00C170;
+}
+
 /* Список задач */
 .task_list_caption {
     text-align: center;
@@ -120,12 +125,19 @@
     left:0;
     font-weight: bold;
 }
+.task_list tr.closed {
+    text-decoration: line-through;
+}
 
 
 
 /* Страница задачи */
 .task-toolbar {
     margin: 0 1em 1em 1em;
+}
+
+.task-view .task-header.closed {
+    text-decoration: line-through;
 }
 
 .task-dict-block {

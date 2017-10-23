@@ -1,5 +1,10 @@
+/* общее */
+.btn.disabled {
+    opacity: 0.4;
+}
 
 
+/* тайл проекта */
 .project-item-block {
     width: 30em;
     height: 10em;

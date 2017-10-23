@@ -8,22 +8,18 @@
 
 namespace app\models\forms;
 
-use Yii;
 use yii\base\Model;
-
 use app\models\entities\DictStage;
 
 class DictStagesForm extends DictForm
 {
     public function init()
     {
-        if(count($this->items) == 0) {
-            // справочники еще не заданы, создаем вшитые
-            $this->items[] = $this->createOpenItem();
-            $this->items[] = $this->createCloseItem();
-        }
         parent::init();
-        // перемещаем статус закрыта под новый статус
+        /*
+         *  новый итем создается последним, но в данной форме последним идет "Закрыто", и новые этапы создаются до него,
+         *  поэтому меняем местами два последних элемента
+         */
         $count = count($this->items);
         $new = $this->items[$count-1];
         $this->items[$count-1] = $this->items[$count-2];
@@ -44,27 +40,4 @@ class DictStagesForm extends DictForm
         return Model::validateMultiple($this->items, $attributeNames);
     }
 
-
-    public function createOpenItem()
-    {
-        return new DictStage(
-            [
-                'name' => Yii::t('dicts', 'Open'),
-                'description' => Yii::t('dicts', 'Open task'),
-                'type' => DictStage::TYPE_OPEN
-            ]
-        );
-    }
-
-
-    public function createCloseItem()
-    {
-        return new DictStage(
-            [
-                'name' => Yii::t('dicts', 'Close'),
-                'description' => Yii::t('dicts', 'Close task'),
-                'type' => DictStage::TYPE_CLOSED
-            ]
-        );
-    }
 }

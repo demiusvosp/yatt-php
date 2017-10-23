@@ -32,6 +32,18 @@ class DictStageQuery extends ActiveQuery
     }
 
 
+    public function andOpen()
+    {
+        return $this->andWhere(['type' => DictStage::TYPE_OPEN]);
+    }
+
+
+    public function andClosed()
+    {
+        return $this->andWhere(['type' => DictStage::TYPE_CLOSED]);
+    }
+
+
     /**
      * @inheritdoc
      * @return \app\models\entities\DictStage[]|array
@@ -50,6 +62,28 @@ class DictStageQuery extends ActiveQuery
     public function one($db = null)
     {
         return parent::one($db);
+    }
+
+
+    /**
+     * Получить этап Открыт
+     * @param $project
+     * @return DictStage|array|null
+     */
+    public static function open($project)
+    {
+        return DictStage::find()->andProject($project)->andOpen()->one();
+    }
+
+
+    /**
+     * Получиь этап Закрыт
+     * @param $project
+     * @return DictStage|array|null
+     */
+    public static function closed($project)
+    {
+        return DictStage::find()->andProject($project)->andClosed()->one();
     }
 
 }

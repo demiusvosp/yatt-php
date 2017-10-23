@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use app\models\entities\User;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\entities\Project */
+/* @var $project app\models\entities\Project */
 /* @var $form yii\bootstrap\ActiveForm */
 
 $adminsChoices = [];
@@ -19,18 +19,18 @@ foreach (User::getUsersMayProjectList() as $user) {// вобще это не ш�
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'suffix')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($project, 'suffix')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($project, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($project, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'public')->dropDownList($model->getPublicStatusesArray()) ?>
+    <?= $form->field($project, 'public')->dropDownList($project->getPublicStatusesArray()) ?>
 
-    <?= $form->field($model, 'admin_id')->listBox($adminsChoices) ?>
+    <?= $form->field($project, 'admin_id')->listBox($adminsChoices) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($project->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'), ['class' => $project->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

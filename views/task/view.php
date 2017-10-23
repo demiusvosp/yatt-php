@@ -5,23 +5,35 @@
  * Date: 27.09.17
  * Time: 0:46
  */
-use yii\helpers\Html;
 
+use app\helpers\ProjectUrl;
 use app\models\entities\Task;
+use app\widgets\CloseTaskWidget;
 
 /* @var $this yii\web\View */
 /* @var $task Task */
 
 $this->title = Yii::t('task', 'Task: ') . $task->getName();
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;// как вот это превращать в твиг?
+/*
+ * полагают так, но я не очень понимаю как это будет работать. Как-нибудь надо будет проверить
+ * {{ set(this, 'params', { 'breadcrumbs' : { '' : this.title } }) }}
+ */
 ?>
 <div class="row-fluid task-toolbar">
     <div class="btn-group">
-        <?=Html::a(
-            Yii::t('task', 'Edit task'),// '<span class="fa fa-edit"></span>' слишком высокая, такую лучше перенести куда-то
-            ['task/edit', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index],// с этими строками в task надо что-то делать
-            ['class' => 'btn btn-primary']
-        );?>
+        <a href="<?= ProjectUrl::to(['task/edit', 'suffix'=>$task->suffix, 'index'=>$task->index])?>" class="btn btn-app">
+            <i class="fa fa-edit"></i>
+            <?=Yii::t('task', 'Edit task')?>
+        </a>
+
+        <a data-action="<?= ProjectUrl::to(['task/close', 'suffix'=>$task->suffix, 'index'=>$task->index])?>"
+           data-toggle="modal" data-target="#closeTask"
+           class="btn btn-app"
+        >
+            <i class="glyphicon glyphicon-ok"></i>
+            <?=Yii::t('task', 'Close task')?>
+        </a>
     </div>
 </div>
 <div class="row-fluid">
@@ -41,21 +53,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="progress-value"><?=$task->progress?>%</div>
             </div>
         </div>
-        <div class="row-fluid">
-            Тип задачи: <b><?=$task->type->name ?></b>
-        </div>
-        <div class="row-fluid">
-            Категория: <b><?=$task->category->name ?></b>
-        </div>
+        <?php if($task->type) { ?>
+            <div class="row-fluid">
+                Тип задачи: <b><?=$task->type->name ?></b>
+            </div>
+        <?php } ?>
+        <?php if($task->category) { ?>
+            <div class="row-fluid">
+                Категория: <b><?=$task->category->name ?></b>
+            </div>
+        <?php } ?>
         <div class="row-fluid">
             Назначена: <b><?=$task->assigned ? $task->assigned->username : Yii::t('common', 'Not set') ?></b><br>
         </div>
         <div class="row-fluid">
             Приоритет: <b><?=$task->getPriorityName()?></b>
         </div>
-        <div class="row-fluid">
-            Трудоемкость: <b><?=$task->difficulty->name ?></b>
-        </div>
+        <?php if($task->difficulty) { ?>
+            <div class="row-fluid">
+                Трудоемкость: <b><?=$task->difficulty->name ?></b>
+            </div>
+        <?php } ?>
         <div class="row-fluid">
             Обнаруженна в версии: <b><?=$task->versionOpen ? $task->versionOpen->name : Yii::t('common', 'Not set')  ?></b>
         </div>
@@ -75,3 +93,5 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <div class="clearfix"></div>
+<?= CloseTaskWidget::widget(['task'=>$task, 'modalId' => 'closeTask']);
+?>

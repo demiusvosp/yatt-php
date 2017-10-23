@@ -154,5 +154,6 @@
     font-weight: bold;
 }
 
-
-
+.close-task-dialog {
+    width: 30em;
+}

@@ -8,6 +8,8 @@
 
 namespace app\controllers;
 
+use app\models\forms\CloseTaskForm;
+use app\models\queries\TaskQuery;
 use Yii;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
@@ -22,12 +24,36 @@ class TaskController extends Controller
     public function actionList()
     {
         $query = Task::find()->andProject(Yii::$app->projectService->project);
-        $query->joinWith(['assigned' => function($query) { $query->from(['assigned' => 'user']); }]);
-        $query->joinWith(['stage' => function($query) { $query->from(['stage' => 'dict_stage']); }]);
-        $query->joinWith([ 'type' => function($query) { $query->from(['type' => 'dict_type']); }]);
-        $query->joinWith(['category' => function($query) { $query->from(['category' => 'dict_category']); }]);
-        $query->joinWith([ 'versionOpen' => function($query) { $query->from(['versionOpen' => 'dict_version']); }]);
-        $query->joinWith([ 'versionClose' => function($query) { $query->from(['versionClose' => 'dict_version']); }]);
+        $query->joinWith([
+            'assigned' => function ($query) {
+                $query->from(['assigned' => 'user']);
+            }
+        ]);
+        $query->joinWith([
+            'stage' => function ($query) {
+                $query->from(['stage' => 'dict_stage']);
+            }
+        ]);
+        $query->joinWith([
+            'type' => function ($query) {
+                $query->from(['type' => 'dict_type']);
+            }
+        ]);
+        $query->joinWith([
+            'category' => function ($query) {
+                $query->from(['category' => 'dict_category']);
+            }
+        ]);
+        $query->joinWith([
+            'versionOpen' => function ($query) {
+                $query->from(['versionOpen' => 'dict_version']);
+            }
+        ]);
+        $query->joinWith([
+            'versionClose' => function ($query) {
+                $query->from(['versionClose' => 'dict_version']);
+            }
+        ]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -38,23 +64,23 @@ class TaskController extends Controller
             'desc' => ['assigned.username' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['stage.name'] = [
-            'asc'  => ['stage.position' => SORT_ASC],
+            'asc' => ['stage.position' => SORT_ASC],
             'desc' => ['stage.position' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['type.name'] = [
-            'asc'  => ['type.position' => SORT_ASC],
+            'asc' => ['type.position' => SORT_ASC],
             'desc' => ['type.position' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['category.name'] = [
-            'asc'  => ['category.position' => SORT_ASC],
+            'asc' => ['category.position' => SORT_ASC],
             'desc' => ['category.position' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['versionOpen.name'] = [
-            'asc'  => ['type.position' => SORT_ASC],
+            'asc' => ['type.position' => SORT_ASC],
             'desc' => ['type.position' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['versionClose.name'] = [
-            'asc'  => ['type.position' => SORT_ASC],
+            'asc' => ['type.position' => SORT_ASC],
             'desc' => ['type.position' => SORT_DESC],
         ];
 
@@ -72,11 +98,16 @@ class TaskController extends Controller
         $task = new TaskForm();
 
         if ($task->load(Yii::$app->request->post()) && $task->save()) {
-            return $this->redirect(['view', 'index' => $task->index, 'suffix' => Yii::$app->projectService->project->suffix]);
+            return $this->redirect([
+                'view',
+                'index' => $task->index,
+                'suffix' => Yii::$app->projectService->project->suffix
+            ]);
         } else {
-            if($task->hasErrors()) {
+            if ($task->hasErrors()) {
                 Yii::$app->session->addFlash('error', Yii::t('task', 'Error in create new task'));
             }
+
             return $this->render('create', [
                 'task' => $task,
             ]);
@@ -85,15 +116,16 @@ class TaskController extends Controller
 
 
     /**
+     * @param $suffix
      * @param $index
      * @return string|\yii\web\Response
      */
-    public function actionEdit($index)
+    public function actionEdit($suffix, $index)
     {
-        $task = Task::findOne(['index' => $index, 'suffix' => Yii::$app->get('projectService')->getSuffixUrl()]);
+        $task = TaskQuery::getByIndex($suffix, $index);
 
         if ($task->load(Yii::$app->request->post()) && $task->save()) {
-            return $this->redirect(['view', 'index' => $task->index, 'suffix' => Yii::$app->projectService->project->suffix]);
+            return $this->redirect(['view', 'index' => $index, 'suffix' => $suffix]);
         } else {
             return $this->render('create', [
                 'task' => $task,
@@ -103,14 +135,43 @@ class TaskController extends Controller
 
 
     /**
-     * По факту просмотр будет не сильно отличаться от редактирования, через ajax
+     * По будущем просмотр будет не сильно отличаться от редактирования, через ajax
+     *
+     * @param $suffix
      * @param $index
      * @return string
      */
-    public function actionView($index)
+    public function actionView($suffix, $index)
     {
-        $task = Task::findOne(['index' => $index, 'suffix' => Yii::$app->get('projectService')->getSuffixUrl()]);
+        $task = TaskQuery::getByIndex($suffix, $index);
+
         return $this->render('view', ['task' => $task]);
     }
 
+
+    /**
+     * Закрыть задачу
+     *
+     * @return string
+     */
+    public function actionClose()
+    {
+        $form = new CloseTaskForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            $task = TaskQuery::getByIndex($form->suffix, $form->index);
+
+            $task->close($form->close_reason);
+            Yii::$app->session->addFlash('success', 'Task closed');
+
+            return $this->redirect(['view', 'index' => $task->index, 'suffix' => $task->suffix]);
+
+        } else {
+            Yii::$app->session->addFlash('error', 'Cannot close task');
+            Yii::error($form->getErrors(), 'Task');
+
+            // вобще эти гигантские строки надо заменить действиями по умолчанию и хелпером создающим урлы для редиректов
+            return $this->redirect(['project/overview', 'suffix' => Yii::$app->prjectService->project->suffix]);
+        }
+
+    }
 }

@@ -37,6 +37,7 @@ return [
     'p/<suffix:\w+>/task/create' => 'task/create',
     'p/<suffix:\w+>/task/<index:\d+>/edit' => 'task/edit',
     'p/<suffix:\w+>/task/<index:\d+>'      => 'task/view',
+    'p/<suffix:\w+>/task/<index:\d+>/close' => 'task/close',
 
     // main
     'captcha' => 'main/captcha',

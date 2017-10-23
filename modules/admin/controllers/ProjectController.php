@@ -2,7 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
-use app\helpers\ProjectHelper;
+use app\helpers\EntityInitializer;
 use Yii;
 use app\models\entities\Project;
 use yii\data\ActiveDataProvider;
@@ -69,7 +69,7 @@ class ProjectController extends Controller
         $project->admin_id = Yii::$app->user->identity->getId();
 
         if ($project->load(Yii::$app->request->post()) && $project->save()) {
-            ProjectHelper::initializeProject($project);
+            EntityInitializer::initializeProject($project);
 
             return $this->redirect(['view', 'id' => $project->id]);
         } else {

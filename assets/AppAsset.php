@@ -24,7 +24,8 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
-        'js/dictedit.js'
+        'js/dictedit.js',
+        'js/closetask.js',
     ];
 
     public $depends = [

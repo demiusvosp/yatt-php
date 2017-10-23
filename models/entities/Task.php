@@ -311,7 +311,10 @@ class Task extends ActiveRecord
      */
     public function close($reason)
     {
+        $this->progress = 100;
         $this->close_reason = $reason;
         $this->stage = DictStageQuery::closed($this->project);
+
+        $this->save();
     }
 }

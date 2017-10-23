@@ -17,13 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Close' => 'Закрыта',
-    'Close task' => 'Работа над задачей завершена',
-    'Open' => 'Открыта',
-    'Open task' => 'Новая задача',
     '#' => '#',
     'Categories' => 'Категории',
     'Category' => 'Категория',
+    'Close' => 'Закрыта',
+    'Close task' => 'Работа над задачей завершена',
     'Current' => 'Текущая',
     'Description' => 'Описание',
     'Difficulty' => 'Трудоемкость',
@@ -31,10 +29,11 @@ return [
     'Future' => 'Будущая',
     'ID' => 'ID',
     'Name' => 'Имя',
+    'Open' => 'Открыта',
     'Open in version' => 'Обнаружен в версии',
+    'Open task' => 'Новая задача',
     'Past' => 'Прошедшая',
     'Position' => 'Позиция',
-    'Project' => 'Проект',
     'Project ID' => 'ID',
     'Ratio' => 'Коэф. сложности',
     'Stage' => 'Этап',
@@ -42,6 +41,5 @@ return [
     'Tasks types' => 'Типы задач',
     'Tasks versions' => 'Версии проекта',
     'Type' => 'Тип',
-    'Version type' => 'Тип версии',
     'Сoming in version' => 'Ожидается в версии',
 ];

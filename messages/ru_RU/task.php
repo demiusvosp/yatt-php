@@ -17,7 +17,12 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Progress' => 'Прогресс',
+    'Cancel' => 'Отменена',
+    'Close task' => 'Закрыть задачу',
+    'Done' => 'Готова',
+    'Impossible' => 'Невозможно',
+    'No error' => 'Не ошибка',
+    'Retry' => 'Повтор',
     'Assigned' => 'Назначена',
     'Caption' => 'Заголовок',
     'Create task' => 'Новая',
@@ -32,6 +37,7 @@ return [
     'Low' => 'Низкий',
     'Medium' => 'Обычный',
     'Priority' => 'Приоритет',
+    'Progress' => 'Прогресс',
     'Suffix' => 'суффикс проекта',
     'Task list' => 'Список задач',
     'Task: ' => 'Задача:',

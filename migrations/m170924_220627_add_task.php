@@ -20,6 +20,9 @@ class m170924_220627_add_task extends Migration
             'priority'  =>  $this->integer()->comment('Приоритет задачи'),
             'progress'  =>  $this->integer()->comment('Прогресс выполнения'),
 
+            'is_closed' => $this->boolean()->comment('Задача закрыта'),
+            'close_reason' => $this->integer()->comment('Причина закрытия'),
+
             'created_at' => $this->dateTime()->comment('Создана'),
             'updated_at' => $this->dateTime()->comment('Оновленна'),
         ]);

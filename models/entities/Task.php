@@ -2,6 +2,7 @@
 
 namespace app\models\entities;
 
+use app\models\queries\DictStageQuery;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
@@ -20,29 +21,43 @@ use app\models\queries\TaskQuery;
  * @property integer $assigned_id
  * @property integer $priority
  * @property integer $progress
- * @property integer $dict_version_open_id
- * @property integer $dict_version_close_id
+ * @property integer $is_closed
+ * @property integer $close_reason
  * @property string $created_at
  * @property string $updated_at
+ * @property integer $dict_stage_id
+ * @property integer $dict_type_id
+ * @property integer $dict_version_open_id
+ * @property integer $dict_version_close_id
+ * @property integer $dict_difficulty_id
+ * @property integer $dict_category_id
  *
  * @property Project $project
- * @property User    $assigned
- * @property DictStage   $stage
- * @property DictType    $type
+ * @property User $assigned
+ * @property DictStage $stage
+ * @property DictType $type
  * @property DictVersion $versionClose
  * @property DictVersion $versionOpen
  * @property DictDifficulty $difficulty
- * @property DictCategory   $category
+ * @property DictCategory $category
  */
 class Task extends ActiveRecord
 {
-    const PRIORITY_UNKNOWN   = 0;
-    const PRIORITY_CRITICAL  = 1;
+    // Приоритеты задачи
+    const PRIORITY_UNKNOWN = 0;
+    const PRIORITY_CRITICAL = 1;
     const PRIORITY_VERY_HIGH = 2;
-    const PRIORITY_HIGH      = 3;
-    const PRIORITY_MEDIUM    = 4;
-    const PRIORITY_LOW       = 5;
-    const PRIORITY_VERY_LOW  = 6;
+    const PRIORITY_HIGH = 3;
+    const PRIORITY_MEDIUM = 4;
+    const PRIORITY_LOW = 5;
+    const PRIORITY_VERY_LOW = 6;
+
+    // Причины закрытия
+    const REASON_DONE = 0;
+    const REASON_CANCEL = 1;
+    const REASON_NOERROR = 2;
+    const REASON_RETRY = 3;
+    const REASON_IMPOSSIBLE = 4;
 
 
     /**
@@ -126,12 +141,12 @@ class Task extends ActiveRecord
     public static function priorityLabels()
     {
         return [
-            static::PRIORITY_CRITICAL  => Yii::t('task', 'Critical'),
+            static::PRIORITY_CRITICAL => Yii::t('task', 'Critical'),
             static::PRIORITY_VERY_HIGH => Yii::t('task', 'Very high'),
-            static::PRIORITY_HIGH      => Yii::t('task', 'High'),
-            static::PRIORITY_MEDIUM    => Yii::t('task', 'Medium'),
-            static::PRIORITY_LOW       => Yii::t('task', 'Low'),
-            static::PRIORITY_VERY_LOW  => Yii::t('task', 'Very Low'),
+            static::PRIORITY_HIGH => Yii::t('task', 'High'),
+            static::PRIORITY_MEDIUM => Yii::t('task', 'Medium'),
+            static::PRIORITY_LOW => Yii::t('task', 'Low'),
+            static::PRIORITY_VERY_LOW => Yii::t('task', 'Very Low'),
         ];
     }
 
@@ -139,13 +154,24 @@ class Task extends ActiveRecord
     public static function priorityStyles()
     {
         return [
-            static::PRIORITY_UNKNOWN   => 'unknown',
-            static::PRIORITY_CRITICAL  => 'critical',
+            static::PRIORITY_UNKNOWN => 'unknown',
+            static::PRIORITY_CRITICAL => 'critical',
             static::PRIORITY_VERY_HIGH => 'very_high',
-            static::PRIORITY_HIGH      => 'high',
-            static::PRIORITY_MEDIUM    => 'medium',
-            static::PRIORITY_LOW       => 'low',
-            static::PRIORITY_VERY_LOW  => 'very_low',
+            static::PRIORITY_HIGH => 'high',
+            static::PRIORITY_MEDIUM => 'medium',
+            static::PRIORITY_LOW => 'low',
+            static::PRIORITY_VERY_LOW => 'very_low',
+        ];
+    }
+
+    public static function reasonLabels()
+    {
+        return [
+            static::REASON_DONE => Yii::t('task', 'Done'),
+            static::REASON_CANCEL => Yii::t('task', 'Cancel'),
+            static::REASON_NOERROR => Yii::t('task', 'No error'),
+            static::REASON_RETRY => Yii::t('task', 'Retry'),
+            static::REASON_IMPOSSIBLE => Yii::t('task', 'Impossible'),
         ];
     }
 
@@ -154,7 +180,7 @@ class Task extends ActiveRecord
      */
     public function getPriorityName()
     {
-        if(!isset(static::priorityLabels()[$this->priority])) {
+        if (!isset(static::priorityLabels()[$this->priority])) {
             return Yii::t('common', 'Not set');
         }
         return static::priorityLabels()[$this->priority];
@@ -263,4 +289,15 @@ class Task extends ActiveRecord
         return $this->suffix . '#' . $this->index;
     }
 
+    /**
+     * Закрыть задачу
+     * И вот почти на 300 строке первая функция бизнес-логики.
+     * @param $reason
+     */
+    public function close($reason)
+    {
+        $this->close_reason = $reason;
+        $this->is_closed = true;
+        $this->dict_stage_id = DictStageQuery::closed($this->project);
+    }
 }

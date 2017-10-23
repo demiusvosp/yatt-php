@@ -42,8 +42,8 @@ class ProjectService extends Component
             ];
 
         } else {
-            if (isset(Yii::$app->request->queryParams['suffix'])) {
-                $this->project = Project::findOne(Yii::$app->request->queryParams['suffix']);
+            if (Yii::$app->request->get('suffix')) {
+                $this->project = Project::findOne(Yii::$app->request->get('suffix'));
             }
 
             $projectItems = [];

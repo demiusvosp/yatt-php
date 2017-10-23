@@ -27,7 +27,7 @@ class TaskQuery extends ActiveQuery
      */
     public function andProject($project)
     {
-        if($project instanceof Project) {
+        if ($project instanceof Project) {
             return $this->andWhere(['task.suffix' => $project->suffix]);
         } else {
             return $this->andWhere(['task.suffix' => $project]);
@@ -51,5 +51,11 @@ class TaskQuery extends ActiveQuery
     public function one($db = null)
     {
         return parent::one($db);
+    }
+
+
+    public static function getByIndex($suffix, $index)
+    {
+        return Task::find()->andWhere(['suffix' => $suffix, 'index' => $index])->one();
     }
 }

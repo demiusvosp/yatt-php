@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\entities\Project */
+/* @var $project app\models\entities\Project */
 
 $this->title = Yii::t('project', 'Update {modelClass}: ', [
     'modelClass' => 'Project',
-]) . $model->name;
+]) . $project->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('project', 'Project Manager'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $project->name, 'url' => ['view', 'id' => $project->id]];
 $this->params['breadcrumbs'][] = Yii::t('common', 'Update');
 ?>
 <div class="box box-solid box-default"><!-- box-solid box-default альтернатива-->
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = Yii::t('common', 'Update');
 
     <div class="box-body">
         <?= $this->render('_form', [
-            'model' => $model,
+            'project' => $project,
         ]) ?>
     </div>
 </div>

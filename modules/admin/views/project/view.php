@@ -5,9 +5,9 @@ use yii\widgets\DetailView;
 use app\models\entities\Project;
 
 /* @var $this yii\web\View */
-/* @var $model Project */
+/* @var $project Project */
 
-$this->title = $model->name;
+$this->title = $project->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('project', 'Project Manager'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -18,8 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="box-body">
         <p>
-            <?= Html::a(Yii::t('common', 'Edit'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(Yii::t('common', 'Delete'), ['delete', 'id' => $model->id], [
+            <?= Html::a(Yii::t('common', 'Edit'), ['update', 'id' => $project->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('common', 'Delete'), ['delete', 'id' => $project->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('common', 'Are you sure you want to delete this item?'),
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
 
         <?= DetailView::widget([
-            'model' => $model,
+            'model' => $project,
             'attributes' => [
                 'id',
                 'suffix',

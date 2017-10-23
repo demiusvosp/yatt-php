@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\helpers\ProjectHelper;
 use Yii;
 use app\models\entities\Project;
 use yii\data\ActiveDataProvider;
@@ -53,7 +54,7 @@ class ProjectController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'project' => $this->findModel($id),
         ]);
     }
 
@@ -64,14 +65,16 @@ class ProjectController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Project();
-        $model->admin_id = Yii::$app->user->identity->getId();
+        $project = new Project();
+        $project->admin_id = Yii::$app->user->identity->getId();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($project->load(Yii::$app->request->post()) && $project->save()) {
+            ProjectHelper::initializeProject($project);
+
+            return $this->redirect(['view', 'id' => $project->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'project' => $project,
             ]);
         }
     }
@@ -87,13 +90,13 @@ class ProjectController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $project = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($project->load(Yii::$app->request->post()) && $project->save()) {
+            return $this->redirect(['view', 'id' => $project->id]);
         } else {
             return $this->render('edit', [
-                'model' => $model,
+                'project' => $project,
             ]);
         }
     }
@@ -120,8 +123,8 @@ class ProjectController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Project::findOne($id)) !== null) {
-            return $model;
+        if (($project = Project::findOne($id)) !== null) {
+            return $project;
         } else {
             throw new NotFoundHttpException(Yii::t('common', 'The requested {{object}} does not exist.', ['object' => 'Project']));
         }

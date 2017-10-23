@@ -230,6 +230,20 @@ class Task extends ActiveRecord
 
 
     /**
+     * @param DictStage $stage
+     */
+    public function setStage(DictStage $stage)
+    {
+        if($stage->type == DictStage::TYPE_CLOSED) {
+            $this->is_closed = true;
+        } else {
+            $this->is_closed = false;
+        }
+        $this->dict_stage_id = $stage->id;
+    }
+
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getType()
@@ -289,6 +303,7 @@ class Task extends ActiveRecord
         return $this->suffix . '#' . $this->index;
     }
 
+
     /**
      * Закрыть задачу
      * И вот почти на 300 строке первая функция бизнес-логики.
@@ -297,7 +312,6 @@ class Task extends ActiveRecord
     public function close($reason)
     {
         $this->close_reason = $reason;
-        $this->is_closed = true;
-        $this->dict_stage_id = DictStageQuery::closed($this->project);
+        $this->stage = DictStageQuery::closed($this->project);
     }
 }

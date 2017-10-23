@@ -9,6 +9,7 @@
 namespace app\models\forms;
 
 use Yii;
+use app\helpers\EntityInitializer;
 use app\components\ProjectService;
 use app\models\entities\Task;
 
@@ -36,8 +37,7 @@ class TaskForm extends Task
         parent::init();
 
         if($this->isNewRecord) {
-            $this->priority = Task::PRIORITY_MEDIUM;
-            $this->assigned_id = Yii::$app->user->identity->getId();
+            EntityInitializer::initializeTask($this, $this->_projectService->project);
         }
     }
 

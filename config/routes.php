@@ -40,6 +40,13 @@ return [
     'admin/project/<id:\d+>/view'            => 'admin/project/view',
     'admin/project/<id:\d+>/delete'          => 'admin/project/delete',
 
+    // user managment
+    'admin/user/list'                     => 'admin/user/index',
+    'admin/user/create'                   => 'admin/user/create',
+    'admin/user/<id:\d+>/edit'            => 'admin/user/update',
+    'admin/user/<id:\d+>/view'            => 'admin/user/view',
+    'admin/user/<id:\d+>/delete'          => 'admin/user/delete',
+
 
     // main
     'captcha'                                => 'main/captcha',

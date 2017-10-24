@@ -73,7 +73,7 @@ class User extends ActiveRecord implements IdentityInterface
 
             ['status', 'integer'],
             ['status', 'default', 'value' => self::STATUS_WAIT],
-            ['status', 'in', 'range' => array_keys(self::getStatusesArray())],
+            //['status', 'in', 'range' => array_keys(self::getStatusesArray())], не даст юзать user из консоли. Переделать или убрать
         ];
     }
 

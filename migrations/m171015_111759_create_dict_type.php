@@ -2,7 +2,7 @@
 
 use app\migrations\DictMigration;
 
-class m171015_111759_add_dict_type extends DictMigration
+class m171015_111759_create_dict_type extends DictMigration
 {
     public $tableName = 'dict_type'; // не вижу смысла в {{%dict_type}}
     public $refField = 'dict_type_id';

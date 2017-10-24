@@ -2,7 +2,7 @@
 
 use app\migrations\DictMigration;
 
-class m171017_202620_add_dict_difficulty extends DictMigration
+class m171017_202620_create_dict_difficulty extends DictMigration
 {
     public $tableName = 'dict_difficulty';
     public $refField = 'dict_difficulty_id';

@@ -2,7 +2,7 @@
 
 use app\migrations\DictMigration;
 
-class m170928_101310_add_dict_stage extends DictMigration
+class m170928_101310_create_dict_stage extends DictMigration
 {
     public $tableName = 'dict_stage';
     public $refField = 'dict_stage_id';

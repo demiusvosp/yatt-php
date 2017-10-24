@@ -17,7 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'User Manager' => 'Управление пользователями',
+    'Create User' => 'Создать пользователя',
+    'Update User: ' => 'Редактировать пользователя',
     'Active' => 'Активен',
     'Auth key' => 'Auth key',
     'Blocked' => 'Заблокирован',
@@ -38,6 +39,7 @@ return [
 It is strongly recommended to change it immediately' => 'При установке создается суперадмин <strong>admin</strong> с паролем <strong>root</strong>.
         Настоятельно рекомендуется его сразу изменить',
     'Updated at' => 'Обновлен',
+    'User Manager' => 'Управление пользователями',
     'User profile' => 'Профиль пользователя',
     'User token' => 'Токен пользователя',
     'Username' => 'Имя',

@@ -51,6 +51,9 @@ $config = [
             'showScriptName' => false,
             'rules' => require(__DIR__ . '/routes.php'),
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         'view' => [
             'class' => 'yii\web\View',
             'renderers' => [

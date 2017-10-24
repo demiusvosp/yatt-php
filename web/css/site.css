@@ -3,6 +3,9 @@
     opacity: 0.4;
 }
 
+.table thead tr th {
+    border-bottom: 2px #00a65a solid;
+}
 
 /* тайл проекта */
 .project-item-block {

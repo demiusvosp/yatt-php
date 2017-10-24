@@ -4,11 +4,11 @@ namespace app\models\entities;
 
 use Yii;
 use yii\web\IdentityInterface;
-use app\models\queries\UserQuery;
 use yii\db\ActiveRecord;
 use yii\base\NotSupportedException;
 use yii\helpers\ArrayHelper;
 use yii\behaviors\TimestampBehavior;
+use app\models\queries\UserQuery;
 
 
 /**
@@ -23,6 +23,8 @@ use yii\behaviors\TimestampBehavior;
  * @property string $password_hash
  * @property string $email
  * @property integer $status
+ *
+ * @property Project[] $projects
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -222,5 +224,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
         // пока не делаем ролей и различий юзеров
         return User::find()->andStatus()->all();
+    }
+
+
+    public function getProjects()
+    {
+        return $this->hasMany(Project::className(), ['admin_id' => 'id']);
     }
 }

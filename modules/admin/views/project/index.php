@@ -32,6 +32,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'suffix',
                 'name',
                 [
+                    'attribute' => 'name',
+                    //'label'  => Yii::t('user', 'ID'),
+                    'content' => function($project) {
+                        return Html::a(
+                            $project->name,
+                            ['view', 'id' => $project->id]
+                        );
+                    },
+                ],
+                [
                     'attribute' => 'description',
                     'contentOptions' => ['class' => 'description-in-list'],
                     'value' => function($project) {

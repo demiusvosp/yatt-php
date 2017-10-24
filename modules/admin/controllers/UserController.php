@@ -52,7 +52,7 @@ class UserController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'user' => $this->findModel($id),
         ]);
     }
 
@@ -63,13 +63,13 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
+        $user = new User();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($user->load(Yii::$app->request->post()) && $user->save()) {
+            return $this->redirect(['view', 'id' => $user->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'user' => $user,
             ]);
         }
     }
@@ -82,13 +82,13 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $user = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($user->load(Yii::$app->request->post()) && $user->save()) {
+            return $this->redirect(['view', 'id' => $user->id]);
         } else {
-            return $this->render('update', [
-                'model' => $model,
+            return $this->render('edit', [
+                'user' => $user,
             ]);
         }
     }
@@ -115,8 +115,8 @@ class UserController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
-            return $model;
+        if (($user = User::findOne($id)) !== null) {
+            return $user;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

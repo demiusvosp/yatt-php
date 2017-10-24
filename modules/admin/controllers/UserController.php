@@ -3,7 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\models\entities\User;
+use app\modules\admin\models\User;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -63,7 +63,7 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $user = new User();
+        $user = new User(['scenario'=>User::SCENARIO_CREATE]);
 
         if ($user->load(Yii::$app->request->post()) && $user->save()) {
             return $this->redirect(['view', 'id' => $user->id]);
@@ -83,6 +83,7 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $user = $this->findModel($id);
+        $user->scenario = User::SCENARIO_EDIT;
 
         if ($user->load(Yii::$app->request->post()) && $user->save()) {
             return $this->redirect(['view', 'id' => $user->id]);

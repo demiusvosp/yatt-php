@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="box-body">
         <p>
-            <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a(Yii::t('common', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
         </p>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,

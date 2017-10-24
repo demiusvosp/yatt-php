@@ -19,8 +19,10 @@ use app\models\entities\User;
 
     <?= $form->field($user, 'status')->dropDownList(User::getStatusesArray()) ?>
 
+    <?= $form->field($user, 'password')->textInput(['maxlength' => true]) ?>
+
     <div class="form-group">
-        <?= Html::submitButton($user->isNewRecord ? 'Create' : 'Update', ['class' => $user->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($user->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'), ['class' => $user->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

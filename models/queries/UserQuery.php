@@ -35,4 +35,14 @@ class UserQuery extends ActiveQuery
     {
         return parent::one($db);
     }
+
+
+    /**
+     * Список пользователей, которых можно назначать
+     */
+    public static function getUsersMayProjectList()
+    {
+        // пока не делаем ролей и различий юзеров
+        return User::find()->andStatus()->all();
+    }
 }

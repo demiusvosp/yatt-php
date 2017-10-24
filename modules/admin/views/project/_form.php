@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\models\entities\User;
+use app\models\queries\UserQuery;
+
 
 /* @var $this yii\web\View */
 /* @var $project app\models\entities\Project */
@@ -10,7 +12,7 @@ use app\models\entities\User;
 
 $adminsChoices = [];
 /** @var User $user */
-foreach (User::getUsersMayProjectList() as $user) {// вобще это не шаблонная логика
+foreach (UserQuery::getUsersMayProjectList() as $user) {// вобще это не шаблонная логика
     $adminsChoices[$user->id] = $user->username;
 }
 ?>

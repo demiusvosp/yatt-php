@@ -11,6 +11,7 @@ use yii\bootstrap\ActiveForm;
 
 use app\models\entities\Task;
 use app\models\entities\User;
+use app\models\queries\UserQuery;
 use app\components\ProjectService;
 
 /** @var ProjectService $projectService */
@@ -23,7 +24,7 @@ $projectService = Yii::$app->projectService;
 // врменное решение
 $adminsChoices = [];
 /** @var User $user */
-foreach (User::getUsersMayProjectList() as $user) {// вобще это не шаблонная логика
+foreach (UserQuery::getUsersMayProjectList() as $user) {// вобще это не шаблонная логика
     $adminsChoices[$user->id] = $user->username;
 }
 // простое решение выбора прогресса (как в flyspray)

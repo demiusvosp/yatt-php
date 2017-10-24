@@ -216,17 +216,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
 
-    /**
-     * Список пользователей, которые могут создавать проекты.
-     * Вобще это очень специфическая функция, её может в хелпер или сервис какой.
-     */
-    public static function getUsersMayProjectList()
-    {
-        // пока не делаем ролей и различий юзеров
-        return User::find()->andStatus()->all();
-    }
-
-
     public function getProjects()
     {
         return $this->hasMany(Project::className(), ['admin_id' => 'id']);

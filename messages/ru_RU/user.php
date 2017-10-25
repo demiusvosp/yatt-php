@@ -36,8 +36,8 @@ return [
     'Profile ({user})' => 'Профиль ({user})',
     'Registration' => 'Регистрация',
     'Status' => 'Статус',
-    'The installation creates superadmin user <strong>admin</strong> with password <strong>root</strong>.
-It is strongly recommended to change it immediately' => 'При установке создается суперадмин <strong>admin</strong> с паролем <strong>root</strong>.
+    'The installation creates superadmin user <strong>root</strong> with password <strong>root</strong>.
+It is strongly recommended to change it immediately' => 'При установке создается суперадмин <strong>root</strong> с паролем <strong>root</strong>.
         Настоятельно рекомендуется его сразу изменить',
     'Update User: ' => 'Редактировать пользователя: ',
     'Updated at' => 'Обновлен',

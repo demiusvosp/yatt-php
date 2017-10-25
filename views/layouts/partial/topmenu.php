@@ -43,13 +43,17 @@ if($projectService->project) {
             ['label' => Yii::t('user', 'Registration'), 'url' => ['auth/registration']],
         ]);
     } else {
-        // позже здесь будут проверки прав и полномочий
-        $items = array_merge($items, [
-            ['label' => Yii::t('common', 'Administration'), 'items' => [
-                ['label' => Yii::t('user', 'User Manager'), 'url' => ['/admin/user/list']],
-                ['label' => Yii::t('project', 'Project Manager'), 'url' => ['/admin/project/list']]
-            ]],
-        ]);
+        if(Yii::$app->user->can('root')) {
+            $items = array_merge($items, [
+                [
+                    'label' => Yii::t('common', 'Administration'),
+                    'items' => [
+                        ['label' => Yii::t('user', 'User Manager'), 'url' => ['/admin/user/list']],
+                        ['label' => Yii::t('project', 'Project Manager'), 'url' => ['/admin/project/list']]
+                    ]
+                ],
+            ]);
+        }
 
         $items = array_merge($items, [
             ['label' => Yii::t('user', 'Profile ({user})', ['user' => Yii::$app->user->identity->username]),

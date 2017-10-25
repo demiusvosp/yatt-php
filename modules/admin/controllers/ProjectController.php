@@ -6,7 +6,6 @@ use app\helpers\EntityInitializer;
 use Yii;
 use app\models\entities\Project;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -14,7 +13,7 @@ use yii\filters\VerbFilter;
 /**
  * ProjectController implements the CRUD actions for Project model.
  */
-class ProjectController extends Controller
+class ProjectController extends BaseAdminControlller
 {
     /**
      * @inheritdoc

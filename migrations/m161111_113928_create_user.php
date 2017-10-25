@@ -30,10 +30,10 @@ class m161111_113928_create_user extends Migration
 
         // создадим сразу суперадмина. Не факт, что это стоит делать здесь, но разберемся, когда займемся установщиком
         $root = new User();
-        $root->username = 'admin';
+        $root->username = 'root';
         $root->email = Yii::$app->params['adminEmail'];
         $root->status = User::STATUS_ACTIVE;
-        $root->setPassword('admin');
+        $root->setPassword('root');
 
         $root->save();
     }

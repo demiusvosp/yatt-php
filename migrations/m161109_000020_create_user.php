@@ -3,7 +3,7 @@
 use yii\db\Migration;
 use app\models\entities\User;
 
-class m161111_113928_create_user extends Migration
+class m161109_000020_create_user extends Migration
 {
     public function safeUp()
     {

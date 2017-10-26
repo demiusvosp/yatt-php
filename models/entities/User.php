@@ -14,15 +14,15 @@ use app\models\queries\UserQuery;
 /**
  * This is the model class for table "user".
  *
- * @property integer $id
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $username
- * @property string $auth_key
- * @property string $user_token
- * @property string $password_hash
- * @property string $email
- * @property integer $status
+ * @property integer   $id
+ * @property integer   $created_at
+ * @property integer   $updated_at
+ * @property string    $username
+ * @property string    $auth_key
+ * @property string    $user_token
+ * @property string    $password_hash
+ * @property string    $email
+ * @property integer   $status
  *
  * @property Project[] $projects
  */
@@ -31,12 +31,16 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 0;
     const STATUS_WAIT = 1;
     const STATUS_BLOCKED = 2;
+
+
     // здесь появятся еще варианты, типа пользователь в процессе авторизации через OAuth
+
 
     public function getStatusName()
     {
         return ArrayHelper::getValue(self::getStatusesArray(), $this->status);
     }
+
 
     public static function getStatusesArray()
     {
@@ -47,6 +51,7 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+
     /**
      * @inheritdoc
      */
@@ -54,6 +59,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return 'user';
     }
+
 
     /**
      * @inheritdoc
@@ -63,7 +69,12 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['username', 'required'],
             ['username', 'match', 'pattern' => '#^[\w\._-]+$#i'],
-            ['username', 'unique', 'targetClass' => self::className(), 'message' => 'Данное имя пользователя уже используется'],
+            [
+                'username',
+                'unique',
+                'targetClass' => self::className(),
+                'message'     => 'Данное имя пользователя уже используется',
+            ],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'required'],
@@ -77,6 +88,7 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+
     public function behaviors()
     {
         return [
@@ -84,24 +96,26 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+
     /**
      * @inheritdoc
      */
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'created_at' => Yii::t('user', 'Created at'), //'Создан',
-            'updated_at' => Yii::t('user', 'Updated at'), //'Обновлен',
-            'username' => Yii::t('user', 'Username'), //'Username',
-            'auth_key' => Yii::t('user', 'Auth key'), //'Auth Key',
+            'id'                  => 'ID',
+            'created_at'          => Yii::t('user', 'Created at'), //'Создан',
+            'updated_at'          => Yii::t('user', 'Updated at'), //'Обновлен',
+            'username'            => Yii::t('user', 'Username'), //'Username',
+            'auth_key'            => Yii::t('user', 'Auth key'), //'Auth Key',
             'email_confirm_token' => Yii::t('user', 'Email Confirmation Token'), //'Email Confirm Token',
-            'password_hash' => Yii::t('user', 'Password hash'), //'Пароль',
-            'user_token' => Yii::t('user', 'User token'), //'Токен подтверждения',
-            'email' => Yii::t('user', 'Email'), //'Email',
-            'status' => Yii::t('user', 'Status'), //'Статус',
+            'password_hash'       => Yii::t('user', 'Password hash'), //'Пароль',
+            'user_token'          => Yii::t('user', 'User token'), //'Токен подтверждения',
+            'email'               => Yii::t('user', 'Email'), //'Email',
+            'status'              => Yii::t('user', 'Status'), //'Статус',
         ];
     }
+
 
     /**
      * @inheritdoc
@@ -112,31 +126,37 @@ class User extends ActiveRecord implements IdentityInterface
         return new UserQuery(get_called_class());
     }
 
+
     /* IdentityInterface */
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
+
     public static function findIdentityByAccessToken($token, $type = null)
     {
         throw new NotSupportedException('findIdentityByAccessToken is not implemented.');
     }
+
 
     public function getId()
     {
         return $this->getPrimaryKey();
     }
 
+
     public function getAuthKey()
     {
         return $this->auth_key;
     }
 
+
     public function validateAuthKey($authKey)
     {
         return $this->getAuthKey() === $authKey;
     }
+
 
     /**
      * Finds user by username
@@ -149,6 +169,7 @@ class User extends ActiveRecord implements IdentityInterface
         return static::findOne(['username' => $username]);
     }
 
+
     /**
      * Validates password
      *
@@ -160,6 +181,7 @@ class User extends ActiveRecord implements IdentityInterface
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
+
     /**
      * @param string $password
      */
@@ -167,6 +189,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
+
 
     /**
      * Generates "remember me" authentication key
@@ -176,6 +199,7 @@ class User extends ActiveRecord implements IdentityInterface
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
 
+
     /**
      * @param string $user_token
      * @return static|null
@@ -184,6 +208,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['user_token' => $user_token, 'status' => self::STATUS_WAIT]);
     }
+
 
     /**
      * Generates email confirmation token
@@ -202,9 +227,11 @@ class User extends ActiveRecord implements IdentityInterface
         }
         $expire = Yii::$app->params['user.torenExpire'];
         $parts = explode('_', $token);
-        $timestamp = (int) end($parts);
+        $timestamp = (int)end($parts);
+
         return $timestamp + $expire >= time();
     }
+
 
     /**
      * Removes password reset token

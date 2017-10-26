@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m170924_220627_create_task extends Migration
+class m161109_000040_create_task extends Migration
 {
     public function safeUp()
     {

@@ -2,7 +2,7 @@
 
 use app\migrations\DictMigration;
 
-class m171016_183939_create_dict_version extends DictMigration
+class m161109_000052_create_dict_version extends DictMigration
 {
     public $tableName = 'dict_version';
     public $refFieldOpen  = 'dict_version_open_id';

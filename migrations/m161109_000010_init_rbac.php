@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171025_183650_init_rbac extends Migration
+class m161109_000010_init_rbac extends Migration
 {
     public function safeUp()
     {

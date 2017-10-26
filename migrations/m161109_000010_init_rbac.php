@@ -13,30 +13,27 @@ class m161109_000010_init_rbac extends Migration
         $root->description = 'Root user with access all';
         $auth->add($root);
 
-        $projectAdmin = $auth->createRole('projectAdmin');// начинающиеся с project будут специальными, зависящеми от проекта.
-        $projectAdmin->description = 'All access to project';
-        $auth->add($projectAdmin);
-
-        $projectEmployee = $auth->createRole('projectEmployee');
-        $projectEmployee->description = 'Base role, to various project employee';
-        $auth->add($projectEmployee);
-
-        $projectViewer = $auth->createRole('projectViewer');
-        $projectViewer->description = 'Only view project';
-        $auth->add($projectViewer);
-
         $user = $auth->createRole('user');
         $user->description = 'other users, not assigned to project';
         $auth->add($user);
+        $auth->addChild($root, $user);
 
         // создаем пермишены
-        //$userManagement = $auth->createPermission('userManagement'); это не действие, это раздел.
-        //  В данный момент мы проверяем доступ к нему по роли. Возможно в будущем мы дадим доступ юзерам с полномочиями
-        //    к частям раздела. (восстанавливать/заводить своих юзеров админам проекта например)
+        $userManagement = $auth->createPermission('userManagement');
+        $userManagement->description = 'access to admin/userManager';
+        $auth->add($userManagement);
+        $auth->addChild($root, $userManagement);
 
+        $projectManagement = $auth->createPermission('projectManagement');
+        $projectManagement->description = 'access to admin/projectManager';
+        $auth->add($projectManagement);
+        $auth->addChild($root, $projectManagement);
 
-        // дадим системному пользователю все привилегии
-        $auth->assign($root, 1);
+        $accessManagement = $auth->createPermission('accessManagement');
+        $accessManagement->description = 'access to admin/accessManagement';
+        $auth->add($accessManagement);
+        $auth->addChild($root, $accessManagement);
+
     }
 
     public function safeDown()

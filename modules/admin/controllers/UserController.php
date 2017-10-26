@@ -3,15 +3,18 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\modules\admin\models\User;
-use yii\data\ActiveDataProvider;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
+use app\modules\admin\models\User;
+
 
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends BaseAdminControlller
+class UserController extends Controller
 {
     /**
      * @inheritdoc
@@ -27,6 +30,16 @@ class UserController extends BaseAdminControlller
             ],
         ];
     }
+
+
+    public function beforeAction($action)
+    {
+        if(!Yii::$app->user->can('userManagement')) {
+            throw new ForbiddenHttpException();
+        }
+        return parent::beforeAction($action);
+    }
+
 
     /**
      * Lists all User models.

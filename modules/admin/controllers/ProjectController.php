@@ -2,18 +2,20 @@
 
 namespace app\modules\admin\controllers;
 
-use app\helpers\EntityInitializer;
 use Yii;
-use app\models\entities\Project;
-use yii\data\ActiveDataProvider;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
+use app\models\entities\Project;
+use app\helpers\EntityInitializer;
 
 
 /**
  * ProjectController implements the CRUD actions for Project model.
  */
-class ProjectController extends BaseAdminControlller
+class ProjectController extends Controller
 {
     /**
      * @inheritdoc
@@ -29,6 +31,16 @@ class ProjectController extends BaseAdminControlller
             ],
         ];
     }
+
+
+    public function beforeAction($action)
+    {
+        if(!Yii::$app->user->can('projectManagement')) {
+            throw new ForbiddenHttpException();
+        }
+        return parent::beforeAction($action);
+    }
+
 
     /**
      * Lists all Project models.

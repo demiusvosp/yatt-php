@@ -7,6 +7,26 @@
     border-bottom: 2px #00a65a solid;
 }
 
+/* Беджи ролей и проектов */
+.sign {
+    display: inline;
+    padding: .2em .6em .3em;
+    border-radius: 3px;
+    color: #ffffff !important;
+    text-align: center;
+    font-weight: bold;
+    font-size: 100%;
+}
+.sign.sign-inline {
+    font-size: 75%;
+}
+.sign.sign-project {
+    background-color: #00a65a;
+}
+.sign.sign-role {
+    background-color: #f39c12;
+}
+
 /* тайл проекта */
 .project-item-block {
     width: 30em;
@@ -35,25 +55,6 @@
 .nav-tabs.tabs-left > li.active > a {
     border: 1px solid #ddd;
     border-right-color: transparent;
-}
-
-/* настройки справочников */
-.dict_setting_block {
-    width: 50em;
-}
-
-.dict_item {
-    border: #f4f4f4 1px solid;
-    background-color: white;
-    opacity: 1;
-}
-
-.dict_item_dropping {
-    border: red 1px solid;
-}
-
-.description-in-list {
-    width: 30%;
 }
 
 /* Задачи */
@@ -171,4 +172,23 @@
 
 .close-task-dialog {
     width: 30em;
+}
+
+/* настройки справочников */
+.dict_setting_block {
+    width: 50em;
+}
+
+.dict_item {
+    border: #f4f4f4 1px solid;
+    background-color: white;
+    opacity: 1;
+}
+
+.dict_item_dropping {
+    border: red 1px solid;
+}
+
+.description-in-list {
+    width: 30%;
 }

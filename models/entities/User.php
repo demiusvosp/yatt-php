@@ -247,4 +247,14 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Project::className(), ['admin_id' => 'id']);
     }
+
+    public function beforeSave($insert)
+    {
+        if($insert) {
+            $auth = Yii::$app->authManager;
+            $user = $auth->getRole('user');
+            $auth->assign($user, $this->id);
+        }
+        return parent::beforeSave($insert);
+    }
 }

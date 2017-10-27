@@ -50,15 +50,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'value' => function($user) {
                         /** @var User $user */
-                        $value = '';
+                        $value = [];
                         foreach ($user->projects as $project) {
-                            $value .= Html::a(
+                            $value[] = Html::a(
                                     $project->name,
                                     ProjectUrl::to(['/admin/project/view', 'id' => $project->id]),
-                                    ['class' => 'sign sign-project']) .
-                                ', ';
+                                    ['class' => 'sign sign-project']
+                            );
                         }
-                        return $value;
+                        return implode(', ', $value);
                     }
                 ],
                 [
@@ -66,16 +66,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => Yii::t('user', 'User roles'),
                     'format' => 'raw',
                     'value' => function($user) {
-                        $value = '';
+                        $value = [];
                         $roles = Yii::$app->authManager->getRolesByUser($user->id);
                         foreach ($roles as $role) {
-                            $value .= Html::a(
+                            $value[] = Html::a(
                                     $role->name,
                                     '',
-                                    ['class' => 'sign sign-role']) .
-                                ', ';
+                                    ['class' => 'sign sign-role']
+                            );
                         }
-                        return $value;
+                        return implode(', ', $value);
                     }
                 ],
             ],

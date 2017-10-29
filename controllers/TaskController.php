@@ -8,13 +8,16 @@
 
 namespace app\controllers;
 
-use app\models\forms\CloseTaskForm;
-use app\models\queries\TaskQuery;
 use Yii;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\data\ActiveDataProvider;
+use app\helpers\Access;
 use app\models\entities\Task;
 use app\models\forms\TaskForm;
+use app\models\forms\CloseTaskForm;
+use app\models\queries\TaskQuery;
+
 
 class TaskController extends Controller
 {
@@ -95,6 +98,10 @@ class TaskController extends Controller
      */
     public function actionCreate()
     {
+        if(!Yii::$app->user->can(Access::OPEN_TASK)) {
+            throw new ForbiddenHttpException('Вам не разрешено создавать задачи в этом проекте');
+        }
+
         $task = new TaskForm();
 
         if ($task->load(Yii::$app->request->post()) && $task->save()) {

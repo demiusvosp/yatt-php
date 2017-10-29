@@ -9,7 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use app\models\entities\Project;
-use app\helpers\EntityInitializer;
+//use app\helpers\EntityInitializer;
 
 
 /**
@@ -24,7 +24,7 @@ class ProjectController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -35,15 +35,17 @@ class ProjectController extends Controller
 
     public function beforeAction($action)
     {
-        if(!Yii::$app->user->can('projectManagement')) {
+        if (!Yii::$app->user->can('projectManagement')) {
             throw new ForbiddenHttpException();
         }
+
         return parent::beforeAction($action);
     }
 
 
     /**
      * Lists all Project models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -57,8 +59,10 @@ class ProjectController extends Controller
         ]);
     }
 
+
     /**
      * Displays a single Project model.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -69,9 +73,11 @@ class ProjectController extends Controller
         ]);
     }
 
+
     /**
      * Creates a new Project model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -80,7 +86,9 @@ class ProjectController extends Controller
         $project->admin_id = Yii::$app->user->identity->getId();
 
         if ($project->load(Yii::$app->request->post()) && $project->save()) {
-            EntityInitializer::initializeProject($project);
+            // Проект должен быть инициализирован в момент назначения админа, которое происходит в afterSave для
+            //   поддержки консистентности admin_id и прав админа на проект
+            //EntityInitializer::initializeProject($project);
 
             return $this->redirect(['view', 'id' => $project->id]);
         } else {
@@ -89,6 +97,7 @@ class ProjectController extends Controller
             ]);
         }
     }
+
 
     /**
      * Updates an existing Project model.
@@ -112,9 +121,11 @@ class ProjectController extends Controller
         }
     }
 
+
     /**
      * Deletes an existing Project model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -125,9 +136,11 @@ class ProjectController extends Controller
         return $this->redirect(['index']);
     }
 
+
     /**
      * Finds the Project model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return Project the loaded model
      * @throws NotFoundHttpException if the model cannot be found
@@ -137,7 +150,8 @@ class ProjectController extends Controller
         if (($project = Project::findOne($id)) !== null) {
             return $project;
         } else {
-            throw new NotFoundHttpException(Yii::t('common', 'The requested {{object}} does not exist.', ['object' => 'Project']));
+            throw new NotFoundHttpException(Yii::t('common', 'The requested {{object}} does not exist.',
+                ['object' => 'Project']));
         }
     }
 }

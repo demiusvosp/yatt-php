@@ -37,6 +37,7 @@ class EntityInitializer
             ]
         );
         $open->link('project', $project);
+
         $close = new DictStage(
             [
                 'name' => Yii::t('dicts', 'Close'),
@@ -45,6 +46,10 @@ class EntityInitializer
             ]
         );
         $close->link('project', $project);
+
+        // Создадим для проекта необходимые роли и полномочия
+        Yii::$app->get('accessService')->createProjectAccesses($project);
+
         if($andSave) {
             $project->save();
         }

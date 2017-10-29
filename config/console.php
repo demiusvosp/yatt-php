@@ -1,9 +1,10 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
-$db = require(__DIR__ . '/db.php');
 
-$config = [
+$config = require(__DIR__ . '/main.php');
+
+$config = array_merge_recursive($config, [
     'id' => 'basic-console',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -20,7 +21,6 @@ $config = [
                 ],
             ],
         ],
-        'db' => $db,
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
@@ -38,7 +38,7 @@ $config = [
             ],
         ],
     ],
-];
+]);
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment

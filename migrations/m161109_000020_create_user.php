@@ -36,7 +36,7 @@ class m161109_000020_create_user extends Migration
         $root->setPassword('root');
 
         $root->save();
-        Yii::$app->authManager->assign(Yii::$app->authManager->getRole('root'), $root->getId());
+        Yii::$app->get('accessService')->assign('root', $root->id);
     }
 
     public function safeDown()

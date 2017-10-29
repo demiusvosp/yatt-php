@@ -1,8 +1,9 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
+$config = require(__DIR__ . '/main.php');
 
-$config = [
+$config = array_merge_recursive($config, [
     'id' => 'yatt',
     'name' => 'Yatt',
     'version' => '0.1a',
@@ -23,6 +24,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
+            'class' => 'app\components\User',
             'identityClass' => 'app\models\entities\User',
             'enableAutoLogin' => true,
         ],
@@ -45,7 +47,6 @@ $config = [
                 ],
             ],
         ],
-        'db' => require(__DIR__ . '/db.php'),
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -80,25 +81,12 @@ $config = [
                 ],
             ],
         ],
-        'i18n' => [
-            'translations' => [
-                '*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    //'basePath' => '@app\translations', немного логично, но не факт, что настолько, чтобы уходить от унификации
-                ],
-            ],
-        ],
         'assetManager' => [
             'bundles' => [
                 'dmstr\web\AdminLteAsset' => [
                     'skin' => 'skin-green',
                 ],
             ],
-        ],
-        // сервис поддержки проектов для полномочий, вида треккера, меню и прочее.
-        //   его можно было бы назвать по аналогии с сервисом yii\web\user просто project (но мне претит два одноименных разных класса, которые будут юзать всюду и вместе)
-        'projectService' => [
-            'class' => 'app\components\ProjectService',
         ],
     ],
     'modules' => [
@@ -107,7 +95,7 @@ $config = [
         ],
     ],
     'params' => $params,
-];
+]);
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
@@ -127,7 +115,7 @@ if (YII_ENV_DEV) {
     $config['components']['log']['targets'][] = [
         'class' => 'yii\log\FileTarget',
         'levels' => ['error', 'warning', 'info', 'trace'],
-        'categories' => ['debug*'],
+        'categories' => ['debug*', 'access'],
         'logVars' => [],
         'exportInterval' => 1,
     ];

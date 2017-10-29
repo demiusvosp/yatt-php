@@ -9,6 +9,7 @@ use yii\base\NotSupportedException;
 use yii\helpers\ArrayHelper;
 use yii\behaviors\TimestampBehavior;
 use app\models\queries\UserQuery;
+use app\helpers\Access;
 
 
 /**
@@ -28,28 +29,12 @@ use app\models\queries\UserQuery;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    // Состояния пользователя
     const STATUS_ACTIVE = 0;
     const STATUS_WAIT = 1;
     const STATUS_BLOCKED = 2;
 
-
-    // здесь появятся еще варианты, типа пользователь в процессе авторизации через OAuth
-
-
-    public function getStatusName()
-    {
-        return ArrayHelper::getValue(self::getStatusesArray(), $this->status);
-    }
-
-
-    public static function getStatusesArray()
-    {
-        return [
-            self::STATUS_ACTIVE  => Yii::t('user', 'Active'), //'Активен',
-            self::STATUS_WAIT    => Yii::t('user', 'Confirmation wait'), //'Ожидает подтверждения',
-            self::STATUS_BLOCKED => Yii::t('user', 'Blocked'), // 'Заблокирован',
-        ];
-    }
+    // События пользователя
 
 
     /**
@@ -68,18 +53,23 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             ['username', 'required'],
-            ['username', 'match', 'pattern' => '#^[\w\._-]+$#i'],
+            ['username', 'string'],
             [
                 'username',
                 'unique',
                 'targetClass' => self::className(),
-                'message'     => 'Данное имя пользователя уже используется',
+                'message'     => Yii::t('user', 'Username already exist'),
             ],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'required'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => self::className(), 'message' => 'Данный email уже используется'],
+            [
+                'email',
+                'unique',
+                'targetClass' => self::className(),
+                'message' => Yii::t('user', 'Email already exist'),
+            ],
             ['email', 'string', 'max' => 255],
 
             ['status', 'integer'],
@@ -113,6 +103,32 @@ class User extends ActiveRecord implements IdentityInterface
             'user_token'          => Yii::t('user', 'User token'), //'Токен подтверждения',
             'email'               => Yii::t('user', 'Email'), //'Email',
             'status'              => Yii::t('user', 'Status'), //'Статус',
+        ];
+    }
+
+
+    /**
+     * Получить перевод статуса
+     *
+     * @return mixed
+     */
+    public function getStatusName()
+    {
+        return ArrayHelper::getValue(self::getStatusesArray(), $this->status);
+    }
+
+
+    /**
+     * Список статусов пользователя с переводами
+     *
+     * @return array
+     */
+    public static function getStatusesArray()
+    {
+        return [
+            self::STATUS_ACTIVE  => Yii::t('user', 'Active'), //'Активен',
+            self::STATUS_WAIT    => Yii::t('user', 'Confirmation wait'), //'Ожидает подтверждения',
+            self::STATUS_BLOCKED => Yii::t('user', 'Blocked'), // 'Заблокирован',
         ];
     }
 
@@ -220,6 +236,12 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
 
+    /**
+     * Проверить валидность токена
+     *
+     * @param $token
+     * @return bool
+     */
     public static function isUserTokenValid($token)
     {
         if (empty($token) || !is_string($token)) {
@@ -234,27 +256,32 @@ class User extends ActiveRecord implements IdentityInterface
 
 
     /**
-     * Removes password reset token
+     * Подтвердить почту юзера, и активировать его
      */
     public function confirmUser()
     {
         $this->user_token = null;
         $this->status = User::STATUS_ACTIVE;
+        $this->activate();
     }
 
 
+    /**
+     * Проекты, в которых юзер админ
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getProjects()
     {
         return $this->hasMany(Project::className(), ['admin_id' => 'id']);
     }
 
-    public function afterSave($insert, $changedAttributes)
+
+    /**
+     * Сделать пользователя активным
+     */
+    public function activate()
     {
-        if($insert) {
-            $auth = Yii::$app->authManager;
-            $user = $auth->getRole('user');
-            $auth->assign($user, $this->id);
-        }
-        parent::afterSave($insert, $changedAttributes);
+        Yii::$app->get('accessService')->assign(Access::USER, $this->id);
     }
 }

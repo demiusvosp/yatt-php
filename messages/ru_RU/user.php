@@ -17,9 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Admin in projects' => 'Админ в проектах',
-    'Password' => 'Пароль',
+    'Email already exist' => 'Данный email уже используется',
     'Active' => 'Активен',
+    'Admin in projects' => 'Админ в проектах',
     'Auth key' => 'Auth key',
     'Blocked' => 'Заблокирован',
     'Change password:' => 'Изменить пароль:',
@@ -32,19 +32,22 @@ return [
     'Fill register fields:' => 'Заполните поля для регистрации:',
     'Login' => 'Вход',
     'Logout' => 'Выход',
+    'Password' => 'Пароль',
     'Password hash' => 'Хеш пароля',
     'Profile ({user})' => 'Профиль ({user})',
     'Registration' => 'Регистрация',
     'Status' => 'Статус',
-    'The installation creates superadmin user <strong>root</strong> with password <strong>root</strong>.
+    'The installation creates superadmin user <strong>admin</strong> with password <strong>root</strong>.
 It is strongly recommended to change it immediately' => 'При установке создается суперадмин <strong>root</strong> с паролем <strong>root</strong>.
         Настоятельно рекомендуется его сразу изменить',
     'Update User: ' => 'Редактировать пользователя: ',
     'Updated at' => 'Обновлен',
     'User Manager' => 'Управление пользователями',
     'User profile' => 'Профиль пользователя',
+    'User roles' => 'Роли пользователя',
     'User token' => 'Токен пользователя',
     'Username' => 'Имя',
+    'Username already exist' => 'Имя пользователя уже используется',
     'You will need to confirm over email' => 'Потребуется подтверждение пользователя через email',
     'register' => 'Зарегистрировать',
     '{user} profile' => 'Профиль пользователя {user}',

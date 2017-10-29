@@ -68,13 +68,14 @@ class ProjectQuery extends ActiveQuery
     /**
      * Список проектов доступных пользователю
      * @param bool $forSelect false - [ ['id'=><id>, 'name'=><name>], ... ]; true - [ <id> => <name>, ... ]
+     * @param string $indexBy
      * @return array [<id> => <name>]
      */
-    static function allowProjectsList($forSelect = false)
+    static function allowProjectsList($forSelect = false, $indexBy = 'id')
     {
-        $query = static::allowProjectsQuery()->select(['id', 'suffix', 'name']);
+        $query = static::allowProjectsQuery();
         if($forSelect) {
-            $query->indexBy('id');
+            $query->select([$indexBy, 'name'])->indexBy($indexBy)->asArray();
         }
 
         $projects = $query->all();
@@ -107,6 +108,7 @@ class ProjectQuery extends ActiveQuery
         if(is_int($id)) {
             return $this->where(['id' => $id])->one();
         }
+        throw new \InvalidArgumentException('unknow '.gettype($id));
     }
 
 }

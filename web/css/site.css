@@ -7,6 +7,17 @@
     border-bottom: 2px #00a65a solid;
 }
 
+ul.table li{
+    list-style: none;
+    padding: 4px;
+}
+li ul.table {
+    background-color: transparent;
+}
+ul.table.table-striped li:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
 /* Беджи ролей и проектов */
 .sign {
     display: inline;

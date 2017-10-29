@@ -41,12 +41,14 @@ return [
     'admin/project/<id:\d+>/delete'          => 'admin/project/delete',
 
     // user managment
-    'admin/user/list'                     => 'admin/user/index',
-    'admin/user/create'                   => 'admin/user/create',
-    'admin/user/<id:\d+>/edit'            => 'admin/user/update',
-    'admin/user/<id:\d+>/view'            => 'admin/user/view',
-    'admin/user/<id:\d+>/delete'          => 'admin/user/delete',
+    'admin/user/list'                        => 'admin/user/index',
+    'admin/user/create'                      => 'admin/user/create',
+    'admin/user/<id:\d+>/edit'               => 'admin/user/update',
+    'admin/user/<id:\d+>/view'               => 'admin/user/view',
+    'admin/user/<id:\d+>/delete'             => 'admin/user/delete',
 
+    // user managment
+    'admin/access/list'                      => 'admin/access/index',
 
     // main
     'captcha'                                => 'main/captcha',

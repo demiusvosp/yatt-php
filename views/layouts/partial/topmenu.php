@@ -54,6 +54,11 @@ if ($projectService->project) {
                         'visible' => Yii::$app->user->can(Access::USER_MANAGEMENT),
                     ],
                     [
+                        'label'   => Yii::t('access', 'Access management'),
+                        'url'     => ['/admin/access/index'],
+                        'visible' => Yii::$app->user->can(Access::ACCESS_MANAGEMENT),
+                    ],
+                    [
                         'label'   => Yii::t('project', 'Project Manager'),
                         'url'     => ['/admin/project/list'],
                         'visible' => Yii::$app->user->can(Access::PROJECT_MANAGEMENT),

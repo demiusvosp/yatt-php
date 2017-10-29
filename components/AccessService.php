@@ -226,4 +226,16 @@ class AccessService extends Component implements CheckAccessInterface
 
         return $roles;
     }
+
+
+    public function getAllRoles()
+    {
+        $roles = [];
+        foreach ($this->authManager->getRoles() as $role) {
+            $roles[] = new Role($role);
+        }
+
+        return $roles;
+    }
+
 }

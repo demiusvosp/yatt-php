@@ -71,4 +71,17 @@ trait ItemExtendInfo
         return ! $data['is_project'];
     }
 
+
+    /**
+     * Получить суффикс проекта, ассоциированного с элементом доступа
+     * @return null|string
+     */
+    public function getProject()
+    {
+        if($this->isGlobal()) {
+            return null;
+        }
+        list( , $project) = explode('_', $this->name);
+        return $project;
+    }
 }

@@ -38,7 +38,7 @@ class ProjectService extends Component
             $this->project = ProjectQuery::allowProjectsQuery()->one();
             $this->projectMenu[] = [
                 'label' => $this->project->name,
-                'url' => ['project/overview', 'suffix' => strtolower($this->project->suffix)]
+                'url' => ProjectUrl::to(['project/overview', 'project' => $this->project])
             ];
 
         } else {

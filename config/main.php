@@ -11,7 +11,7 @@ return [
     'version' => '0.1a',
 
     'bootstrap' => ['log'],
-    'language' => 'ru_RU',
+    'language' => 'ru-RU',
 
     'container' => [
         'definitions' => [

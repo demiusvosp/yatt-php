@@ -53,7 +53,7 @@ class AccessService extends Component implements CheckAccessInterface
         if ($projectService->project) {
             $permissionName = Access::projectItem($permissionName, $projectService->project);
         }
-        Yii::trace('checkAccess to ' . $permissionName, 'access');
+        Yii::info('checkAccess '.$userId.' to '.$permissionName, 'access');
 
         return $this->authManager->checkAccess($userId, $permissionName, $params);
     }
@@ -129,6 +129,7 @@ class AccessService extends Component implements CheckAccessInterface
         );
 
         $this->authManager->add($role);
+        Yii::info('add Role '.$role->name, 'access');
         foreach ($parents as $parent) {
             $this->authManager->addChild($parent, $role);
         }
@@ -159,6 +160,7 @@ class AccessService extends Component implements CheckAccessInterface
         );
 
         $this->authManager->add($permission);
+        Yii::info('add Permission '.$permission->name, 'access');
         foreach ($parents as $parent) {
             $this->authManager->addChild($parent, $permission);
         }
@@ -183,6 +185,7 @@ class AccessService extends Component implements CheckAccessInterface
         if (!$role && !($role instanceof BaseRole)) {
             throw new \InvalidArgumentException('argument is not a Role');
         }
+        Yii::info('assign ' . $role->name . ' to ' . $userId,'access');
 
         return $this->authManager->assign($role, $userId);
     }
@@ -204,6 +207,7 @@ class AccessService extends Component implements CheckAccessInterface
         if (!$role && !($role instanceof BaseRole)) {
             throw new \InvalidArgumentException('argument is not a Role');
         }
+        Yii::info('revoke '.$role->name.' from '.$userId,'access');
 
         return $this->authManager->revoke($role, $userId);
     }

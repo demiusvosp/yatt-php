@@ -222,7 +222,7 @@ class Project extends ActiveRecord
             /** @var AccessService $auth */
             $auth = Yii::$app->get('accessService');
             if (isset($changedAttributes['admin_id'])) {
-                $auth->revoke(Access::ADMIN, $this->getOldAttribute('admin_id'), $this);
+                $auth->revoke(Access::ADMIN, $changedAttributes['admin_id'], $this);
             }
             $auth->assign(Access::ADMIN, $this->admin_id, $this);
         }

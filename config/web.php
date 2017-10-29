@@ -20,6 +20,7 @@ $config = array_merge_recursive($config, [
             'class' => 'app\components\User',
             'identityClass' => 'app\models\entities\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['auth/login']
         ],
         'errorHandler' => [
             'errorAction' => 'main/error',

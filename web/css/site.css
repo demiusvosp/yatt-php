@@ -23,8 +23,11 @@
 .sign.sign-project {
     background-color: #00a65a;
 }
-.sign.sign-role {
+.sign.sign-global-role {
     background-color: #f39c12;
+}
+.sign.sign-project-role {
+    background-color: #00a65a;
 }
 
 /* тайл проекта */

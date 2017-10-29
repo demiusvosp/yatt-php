@@ -12,7 +12,9 @@ use yii\base\Component;
 use yii\rbac\CheckAccessInterface;
 use yii\rbac\ManagerInterface;
 use yii\rbac\Item;
-use yii\rbac\Role;
+use yii\rbac\Role as BaseRole;
+use app\components\access\Role;
+use app\components\access\Permission;
 use app\helpers\Access;
 use app\models\entities\Project;
 
@@ -67,33 +69,40 @@ class AccessService extends Component implements CheckAccessInterface
         $root = $this->authManager->getRole(Access::ROOT);
 
         $admin = $this->addRole(
-            Access::projectItem(Access::ADMIN, $project),
-            [$root]
+            Access::ADMIN,
+            [$root],
+            $project
         );
         $employee = $this->addRole(
-            Access::projectItem(Access::EMPLOYEE, $project),
-            [$admin]
+            Access::EMPLOYEE,
+            [$admin],
+            $project
         );
         $view = $this->addRole(
-            Access::projectItem(Access::VIEW, $project),
-            [$employee]
+            Access::VIEW,
+            [$employee],
+            $project
         );
 
         $this->addPermission(
-            Access::projectItem(Access::PROJECT_SETTINGS, $project),
-            [$admin]
+            Access::PROJECT_SETTINGS,
+            [$admin],
+            $project
         );
         $this->addPermission(
-            Access::projectItem(Access::OPEN_TASK, $project),
-            [$employee]
+            Access::OPEN_TASK,
+            [$employee],
+            $project
         );
         $this->addPermission(
-            Access::projectItem(Access::EDIT_TASK, $project),
-            [$employee]
+            Access::EDIT_TASK,
+            [$employee],
+            $project
         );
         $this->addPermission(
-            Access::projectItem(Access::CLOSE_TASK, $project),
-            [$employee] // пока будем считать, что работник может закрывать задачи. (но потом в админке это можно будет выключить)
+            Access::CLOSE_TASK,
+            [$employee],  // пока будем считать, что работник может закрывать задачи. (но потом в админке это можно будет выключить)
+            $project
         );
     }
 
@@ -101,13 +110,24 @@ class AccessService extends Component implements CheckAccessInterface
     /**
      * Содать и добавить роль.
      *
-     * @param        $roleName
-     * @param Item[] $parents - те, кто наследуют права роли
+     * @param         $roleName
+     * @param Item[]  $parents - те, кто наследуют права роли
+     * @param Project $project - если указан, создается роль ассоциированная с проектом
      * @return \yii\rbac\Role
      */
-    public function addRole($roleName, $parents = [])
+    public function addRole($roleName, $parents = [], $project = null)
     {
+        $label = Access::itemLabels()[$roleName];
+        if ($project) {
+            $roleName = Access::projectItem($roleName, $project);
+            $label = $project->name . ': ' . $label;
+        }
         $role = $this->authManager->createRole($roleName);
+        $role->data = Role::setData(
+            (bool) $project,
+            $label
+        );
+
         $this->authManager->add($role);
         foreach ($parents as $parent) {
             $this->authManager->addChild($parent, $role);
@@ -122,11 +142,22 @@ class AccessService extends Component implements CheckAccessInterface
      *
      * @param        $permissionName
      * @param Item[] $parents - те, кто наследуют права полномочия
+     * @param Project $project - если указан, создается полномочие ассоциированная с проектом
      * @return \yii\rbac\Permission
      */
-    public function addPermission($permissionName, $parents = [])
+    public function addPermission($permissionName, $parents = [], $project = null)
     {
+        $label = Access::itemLabels()[$permissionName];
+        if ($project) {
+            $permissionName = Access::projectItem($permissionName, $project);
+            $label = $project->name . ': ' . $label;
+        }
         $permission = $this->authManager->createPermission($permissionName);
+        $permission->data = Permission::setData(
+            (bool)$project,
+            $label
+        );
+
         $this->authManager->add($permission);
         foreach ($parents as $parent) {
             $this->authManager->addChild($parent, $permission);
@@ -149,7 +180,7 @@ class AccessService extends Component implements CheckAccessInterface
         if (is_string($role)) {
             $role = $this->authManager->getRole(Access::projectItem($role, $project));
         }
-        if (!$role && !($role instanceof Role)) {
+        if (!$role && !($role instanceof BaseRole)) {
             throw new \InvalidArgumentException('argument is not a Role');
         }
 
@@ -170,11 +201,25 @@ class AccessService extends Component implements CheckAccessInterface
         if (is_string($role)) {
             $role = $this->authManager->getRole(Access::projectItem($role, $project));
         }
-        if (!$role && !($role instanceof Role)) {
+        if (!$role && !($role instanceof BaseRole)) {
             throw new \InvalidArgumentException('argument is not a Role');
         }
 
         return $this->authManager->revoke($role, $userId);
     }
 
+
+    /**
+     * @param User $user
+     * @return Role[]
+     */
+    public function getUserRoles($user)
+    {
+        $roles = [];
+        foreach ($this->authManager->getRolesByUser($user->id) as $role) {
+            $roles[] = new Role($role);
+        }
+
+        return $roles;
+    }
 }

@@ -6,6 +6,13 @@
  */
 
 return [
+    'id' => 'yatt',
+    'name' => 'Yatt',
+    'version' => '0.1a',
+
+    'bootstrap' => ['log'],
+    'language' => 'ru_RU',
+
     'container' => [
         'definitions' => [
 

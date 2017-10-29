@@ -4,15 +4,8 @@ $params = require(__DIR__ . '/params.php');
 $config = require(__DIR__ . '/main.php');
 
 $config = array_merge_recursive($config, [
-    'id' => 'yatt',
-    'name' => 'Yatt',
-    'version' => '0.1a',
-
     'basePath' => dirname(__DIR__),
     'defaultRoute' => 'main/index',
-    'bootstrap' => ['log'],
-    'language' => 'ru_RU',
-
     'layout' => 'default',
 
     'components' => [

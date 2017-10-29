@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\entities\User;
-use app\helpers\ProjectUrl;
+use app\helpers\HtmlBlocks;
 
 /* @var $this yii\web\View */
 /* @var $user app\models\entities\User */
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function($user) {
                         /** @var User $user */
                         return User::getStatusesArray()[$user->status];
-                    }
+                    },
                 ],
                 [
                     'attribute' => 'projects',
@@ -52,14 +52,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         /** @var User $user */
                         $value = [];
                         foreach ($user->projects as $project) {
-                            $value[] = Html::a(
-                                    $project->name,
-                                    ProjectUrl::to(['/admin/project/view', 'id' => $project->id]),
-                                    ['class' => 'sign sign-project']
-                            );
+                            $value[] = HtmlBlocks::projectBadge($project);
                         }
                         return implode(', ', $value);
-                    }
+                    },
                 ],
                 [
                     'attribute' => 'roles',
@@ -67,16 +63,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'value' => function($user) {
                         $value = [];
-                        $roles = Yii::$app->authManager->getRolesByUser($user->id);
+                        $roles = Yii::$app->get('accessService')->getUserRoles($user);
                         foreach ($roles as $role) {
-                            $value[] = Html::a(
-                                    $role->name,
-                                    '',
-                                    ['class' => 'sign sign-role']
-                            );
+                            $value[] = HtmlBlocks::roleBadge($role);
                         }
                         return implode(', ', $value);
-                    }
+                    },
                 ],
             ],
         ]) ?>

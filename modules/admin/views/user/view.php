@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\entities\User;
-use app\helpers\HtmlBlocks;
+use app\helpers\HtmlBlock;
 
 /* @var $this yii\web\View */
 /* @var $user app\models\entities\User */
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         /** @var User $user */
                         $value = [];
                         foreach ($user->projects as $project) {
-                            $value[] = HtmlBlocks::projectBadge($project);
+                            $value[] = HtmlBlock::projectBadge($project);
                         }
                         return implode(', ', $value);
                     },
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $value = [];
                         $roles = Yii::$app->get('accessService')->getUserRoles($user);
                         foreach ($roles as $role) {
-                            $value[] = HtmlBlocks::roleBadge($role);
+                            $value[] = HtmlBlock::roleBadge($role);
                         }
                         return implode(', ', $value);
                     },

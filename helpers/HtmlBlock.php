@@ -14,12 +14,12 @@ use app\components\access\Role;
 
 
 /**
- * Class HtmlBlocks - всякие мелкие html-блоки, коим место в шаблонах, но по по идеологии Yii это хелперы.
+ * Class HtmlBlock - всякие мелкие html-блоки, коим место в шаблонах, но по по идеологии Yii это хелперы.
  * Будем переходить на твиг, перепилим нормально
  *
  * @package app\helpers
  */
-class HtmlBlocks
+class HtmlBlock
 {
 
     /**

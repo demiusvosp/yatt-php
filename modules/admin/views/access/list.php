@@ -6,7 +6,7 @@
  */
 
 use yii\helpers\Html;
-use app\helpers\HtmlBlocks;
+use app\helpers\HtmlBlock;
 
 /* @var $this yii\web\View */
 /** @var array $list */
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php if(isset($item['items'])) { ?>
                     <ul class="table table-striped" id="<?=$key?>">
                     <?php foreach ($item['items'] as $role) { ?>
-                        <li><?=HtmlBlocks::roleBadge($role);?></li>
+                        <li><?=HtmlBlock::roleBadge($role);?></li>
                     <?php } ?>
                     </ul>
                 <?php } ?>

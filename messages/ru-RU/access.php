@@ -18,7 +18,7 @@
  */
 return [
     'Access management' => 'Управление доступами',
-    'Project Employee' => 'Рабочий проекта',
+    'Project Employee' => 'Работник проекта',
     'Project admin' => 'Админ проекта',
     'Project management' => 'Управление проектами',
     'Project watcher' => 'Просматривающий проект',

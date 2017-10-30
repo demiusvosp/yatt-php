@@ -6,7 +6,7 @@
 use yii\helpers\Html;
 
 use dmstr\helpers\AdminLteHelper;
-use app\widgets\Alert;
+use dmstr\widgets\Alert;
 
 use app\assets\AppAsset;
 

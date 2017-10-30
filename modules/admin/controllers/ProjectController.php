@@ -8,7 +8,7 @@ use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
-use app\models\entities\Project;
+use app\modules\admin\models\Project;
 //use app\helpers\EntityInitializer;
 
 
@@ -82,7 +82,7 @@ class ProjectController extends Controller
      */
     public function actionCreate()
     {
-        $project = new Project();
+        $project = new Project(['scenario'=>Project::SCENARIO_CREATE]);
         $project->admin_id = Yii::$app->user->identity->getId();
 
         if ($project->load(Yii::$app->request->post()) && $project->save()) {
@@ -111,6 +111,7 @@ class ProjectController extends Controller
     public function actionUpdate($id)
     {
         $project = $this->findModel($id);
+        $project->scenario = Project::SCENARIO_EDIT;
 
         if ($project->load(Yii::$app->request->post()) && $project->save()) {
             return $this->redirect(['view', 'id' => $project->id]);

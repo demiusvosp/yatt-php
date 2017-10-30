@@ -26,11 +26,15 @@ class User extends \app\models\entities\User
         ]);
     }
 
+
     public function scenarios()
     {
+        $fields = ['username', 'email', 'status', 'password'];
+
         return [
-            static::SCENARIO_CREATE => ['username', 'email', 'status', 'password'],
-            static::SCENARIO_EDIT => ['username', 'email', 'status', 'password'],
+            static::SCENARIO_CREATE  => $fields,
+            static::SCENARIO_EDIT    => $fields,
+            static::SCENARIO_DEFAULT => [],
         ];
     }
 

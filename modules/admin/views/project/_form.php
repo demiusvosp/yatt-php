@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\models\entities\User;
 use app\models\queries\UserQuery;
-
+use app\modules\admin\models\Project;
 
 /* @var $this yii\web\View */
-/* @var $project app\models\entities\Project */
+/* @var $project app\modules\admin\models\Project */
 /* @var $form yii\bootstrap\ActiveForm */
 
 $adminsChoices = [];
@@ -20,8 +20,12 @@ foreach (UserQuery::getUsersMayProjectList() as $user) {// вобще это н�
 <div class="project-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?php $isEdit = ($project->scenario == Project::SCENARIO_EDIT) ?>
 
-    <?= $form->field($project, 'suffix')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($project, 'suffix')
+        ->textInput(['maxlength' => true, 'disabled' => $isEdit])
+        ->hint($isEdit?false:'Нельзя будет отредактировать');
+    ?>
 
     <?= $form->field($project, 'name')->textInput(['maxlength' => true]) ?>
 
@@ -29,10 +33,13 @@ foreach (UserQuery::getUsersMayProjectList() as $user) {// вобще это н�
 
     <?= $form->field($project, 'public')->dropDownList($project->getPublicStatusesArray()) ?>
 
-    <?= $form->field($project, 'admin_id')->listBox($adminsChoices) ?>
+    <?= $form->field($project, 'admin_id')->listBox($adminsChoices, ['disabled' => $project->disableAdmin]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($project->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'), ['class' => $project->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton(
+                $project->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'),
+                ['class' => $project->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+        ) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

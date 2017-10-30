@@ -11,8 +11,11 @@ ul.table li{
     list-style: none;
     padding: 4px;
 }
+ul.table.bottom-hr > li{
+    border-bottom: #d2d6de 1px solid;
+}
 li ul.table {
-    background-color: transparent;
+    margin-bottom: 0;
 }
 ul.table.table-striped li:nth-child(even) {
     background-color: #f9f9f9;

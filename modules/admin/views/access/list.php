@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="box-body">
-        <ul class="table table-striped">
+        <ul class="table bottom-hr">
         <?php foreach ($list as $key => $item) { ?>
             <li>
                 <b><?= isset($item['label']) ? ($item['label'].':') : '-' ?></b>

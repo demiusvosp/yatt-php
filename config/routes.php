@@ -11,24 +11,19 @@ return [
     // project
     'p/<suffix:\w+>'                         => 'project/overview',
 
-    // project setting
-    'p/<suffix:\w+>/setting'                 => 'project-settings/main',
-    'p/<suffix:\w+>/setting/stages'          => 'project-settings/stages',
-    'p/<suffix:\w+>/setting/types'           => 'project-settings/types',
-    'p/<suffix:\w+>/setting/categories'      => 'project-settings/categories',
-    'p/<suffix:\w+>/setting/versions'        => 'project-settings/versions',
-    'p/<suffix:\w+>/setting/difficulty'      => 'project-settings/difficulties',
-
-    // события проекта
-    // Справочники
-    'DELETE p/<suffix:\w+>/dict/delete-item' => 'dict/delete-item',
-
     // task
     'task/<suffix:\w+>/list'                 => 'task/list',
     'task/<suffix:\w+>/create'               => 'task/create',
     'task/<suffix:\w+>-<index:\d+>'          => 'task/view',
     'task/<suffix:\w+>-<index:\d+>/edit'     => 'task/edit',
     'task/<suffix:\w+>-<index:\d+>/close'    => 'task/close',
+
+    // project setting
+    'p/<suffix:\w+>/setting/<action:\w+>'    => 'project-settings/<action>',
+
+    // события проекта
+    // Справочники
+    'DELETE p/<suffix:\w+>/dict/delete-item' => 'dict/delete-item',
 
     // admin
 

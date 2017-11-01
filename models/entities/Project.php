@@ -9,7 +9,6 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
-use app\components\AccessService;
 use app\models\queries\ProjectQuery;
 use app\helpers\EntityInitializer;
 
@@ -219,8 +218,7 @@ class Project extends ActiveRecord
 
         if (array_key_exists('admin_id', $changedAttributes)) {
             // у проекта поменялся админ. Меняем полномочия
-            /** @var AccessService $auth */
-            $auth = Yii::$app->get('accessService');
+            $auth = Yii::$app->get('authManager');
             if (isset($changedAttributes['admin_id'])) {
                 $auth->revoke(Access::ADMIN, $changedAttributes['admin_id'], $this);
             }

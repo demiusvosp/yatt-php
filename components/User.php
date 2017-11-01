@@ -15,6 +15,6 @@ class User extends \yii\web\User
     public function init()
     {
         parent::init();
-        $this->accessChecker = Yii::$app->get('accessService');
+        $this->accessChecker = Yii::$app->get('authManager');
     }
 }

@@ -2,6 +2,7 @@
 
 use yii\db\Migration;
 use app\models\entities\User;
+use app\components\AccessManager;
 
 class m161109_000020_create_user extends Migration
 {
@@ -36,7 +37,8 @@ class m161109_000020_create_user extends Migration
         $root->setPassword('root');
 
         $root->save();
-        Yii::$app->get('accessService')->assign('root', $root->id);
+        /** @var AccessManager */
+        Yii::$app->get('authManager')->assign('root', $root->id);
     }
 
     public function safeDown()

@@ -12,20 +12,20 @@ use app\models\queries\ProjectQuery;
 use Yii;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
-use app\components\AccessService;
+use app\components\AccessManager;
 use app\components\access\Role;
 
 
 class AccessController extends Controller
 {
-    /** @var AccessService */
-    public $accessService = null;
+    /** @var AccessManager */
+    public $accessManager = null;
 
 
     public function init()
     {
         parent::init();
-        $this->accessService = Yii::$app->get('accessService');
+        $this->accessManager = Yii::$app->authManager;
     }
 
 
@@ -44,14 +44,14 @@ class AccessController extends Controller
         $projects = ProjectQuery::allowProjectsList(true, 'suffix');
 
         // Поскольку роли получаются не из ar, здесь не будет выборок, а перебор полного списка
-        //   Возможно в будующем мы отрефакторим AccessService, выбросив из понего authManager
+        //   Возможно в будующем мы отрефакторим AccessManager, выбросив из него authManager
         $list = [ -1 => [] ];
         foreach ($projects as $id => $project) {
             $list[$project['suffix']] = ['label' => $project['name']];
         }
 
         /** @var Role $role */
-        foreach ($this->accessService->getAllRoles() as $role) {
+        foreach ($this->accessManager->getRoles() as $role) {
             if($role->isGlobal()) {
                 $list[-1]['items'][] = $role;
             } else {

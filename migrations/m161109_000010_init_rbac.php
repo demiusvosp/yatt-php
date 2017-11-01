@@ -2,14 +2,14 @@
 
 use yii\db\Migration;
 use app\helpers\Access;
-use app\components\AccessService;
+use app\components\AccessManager;
 
 class m161109_000010_init_rbac extends Migration
 {
     public function safeUp()
     {
-        /** @var AccessService $auth */
-        $auth = Yii::$app->get('accessService');
+        /** @var AccessManager $auth */
+        $auth = Yii::$app->get('authManager');
 
         // создаем роли
         $root = $auth->addRole(Access::ROOT);
@@ -32,7 +32,8 @@ class m161109_000010_init_rbac extends Migration
 
     public function safeDown()
     {
-        $auth = Yii::$app->authManager;
+        /** @var AccessManager $auth */
+        $auth = Yii::$app->get('authManager');
 
         $auth->removeAll();
     }

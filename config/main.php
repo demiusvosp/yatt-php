@@ -6,24 +6,24 @@
  */
 
 return [
-    'id' => 'yatt',
-    'name' => 'Yatt',
+    'id'      => 'yatt',
+    'name'    => 'Yatt',
     'version' => '0.1a',
 
     'bootstrap' => ['log'],
-    'language' => 'ru-RU',
+    'language'  => 'ru-RU',
 
-    'container' => [
+    'container'  => [
         'definitions' => [
 
         ],
-        'singletons' => [
+        'singletons'  => [
 
-        ]
+        ],
     ],
     'components' => [
-        'db' => require(__DIR__ . '/db.php'),
-        'i18n' => [
+        'db'             => require(__DIR__ . '/db.php'),
+        'i18n'           => [
             'translations' => [
                 '*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
@@ -34,8 +34,8 @@ return [
         'projectService' => [
             'class' => 'app\components\ProjectService',
         ],
-        'accessService' => [
-            'class' => 'app\components\AccessService',
+        'authManager' => [
+            'class' => 'app\components\AccessManager',
         ],
-    ]
+    ],
 ];

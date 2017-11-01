@@ -9,75 +9,85 @@
 namespace app\controllers;
 
 use Yii;
-use yii\web\Controller;
-use app\models\entities\Project;
+use app\components\AccessManager;
+use app\helpers\Access;
 use app\models\forms\DictForm;
 use app\models\forms\DictStagesForm;
+use yii\web\ForbiddenHttpException;
 
 
-class ProjectSettingsController extends Controller
+class ProjectSettingsController extends BaseProjectController
 {
     public $defaultAction = 'main';
     public $layout = 'project-settings';
 
+
+    public function beforeAction($action)
+    {
+        if (!Yii::$app->user->can(Access::ADMIN)) {
+            throw new ForbiddenHttpException();
+        }
+
+        return parent::beforeAction($action);
+    }
+
+
     public function actionMain()
     {
-        /** @var Project $project */
-        $project = Yii::$app->projectService->project;
         /*
-         * Вобще нельзя этому контроллеру воттак давать вгружать в моель проекта post.
+         * Вобще нельзя этому контроллеру вот так давать вгружать в модель проекта post.
          * но и вводить сенарии ради этого не хочется, модель проекта и так пухнет. Будем наследовать
          */
-        if ($project->load(Yii::$app->request->post())) {
-            if($project->save()) {
+        if ($this->project->load(Yii::$app->request->post())) {
+            if ($this->project->save()) {
                 Yii::$app->getSession()->addFlash('info', Yii::t('common', 'Successful'));
             }
         }
 
-        return $this->render('main', ['project' => $project]);
+        return $this->render('main', ['project' => $this->project]);
     }
+
 
     public function actionStages()
     {
-        /** @var Project $project */
-        $project = Yii::$app->projectService->project;
         $dictForm = new DictStagesForm([
-            'project' => $project,
-            'items'     => $project->stages,
+            'project'   => $this->project,
+            'items'     => $this->project->stages,
             'itemClass' => 'app\models\entities\DictStage',
         ]);
 
-        if($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
+        if ($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
             $dictForm->save();
+
             return $this->refresh();
         }
 
         return $this->render('stages', [
-            'project' => $project,
+            'project'  => $this->project,
             'dictForm' => $dictForm,
         ]);
     }
+
 
     /*
      * да они очень повторяются, будем вводить специальную функциональность справочников, посмотрим, как это исправить
      */
     public function actionTypes()
     {
-        /** @var Project $project */
-        $project = Yii::$app->projectService->project;
         $dictForm = new DictForm([
-            'project' => $project,
-            'items'     => $project->types,
+            'project'   => $this->project,
+            'items'     => $this->project->types,
             'itemClass' => 'app\models\entities\DictType',
         ]);
 
-        if($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
+        if ($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
             $dictForm->save();
+
             return $this->refresh();
         }
 
         return $this->render('types', [
-            'project' => $project,
+            'project'  => $this->project,
             'dictForm' => $dictForm,
         ]);
     }
@@ -85,21 +95,20 @@ class ProjectSettingsController extends Controller
 
     public function actionVersions()
     {
-        /** @var Project $project */
-        $project = Yii::$app->projectService->project;
         $dictForm = new DictForm([
-            'project' => $project,
-            'items'     => $project->versions,
+            'project'   => $this->project,
+            'items'     => $this->project->versions,
             'itemClass' => 'app\models\entities\DictVersion',
         ]);
 
-        if($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
+        if ($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
             $dictForm->save();
+
             return $this->refresh();
         }
 
         return $this->render('versions', [
-            'project' => $project,
+            'project'  => $this->project,
             'dictForm' => $dictForm,
         ]);
     }
@@ -107,21 +116,20 @@ class ProjectSettingsController extends Controller
 
     public function actionDifficulties()
     {
-        /** @var Project $project */
-        $project = Yii::$app->projectService->project;
         $dictForm = new DictForm([
-            'project' => $project,
-            'items'     => $project->difficulties,
+            'project'   => $this->project,
+            'items'     => $this->project->difficulties,
             'itemClass' => 'app\models\entities\DictDifficulty',
         ]);
 
-        if($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
+        if ($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
             $dictForm->save();
+
             return $this->refresh();
         }
 
         return $this->render('difficulties', [
-            'project' => $project,
+            'project'  => $this->project,
             'dictForm' => $dictForm,
         ]);
     }
@@ -129,22 +137,35 @@ class ProjectSettingsController extends Controller
 
     public function actionCategories()
     {
-        /** @var Project $project */
-        $project = Yii::$app->projectService->project;
         $dictForm = new DictForm([
-            'project' => $project,
-            'items'     => $project->categories,
+            'project'   => $this->project,
+            'items'     => $this->project->categories,
             'itemClass' => 'app\models\entities\DictCategory',
         ]);
 
-        if($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
+        if ($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
             $dictForm->save();
+
             return $this->refresh();
         }
 
         return $this->render('categories', [
-            'project' => $project,
+            'project'  => $this->project,
             'dictForm' => $dictForm,
         ]);
     }
+
+
+    public function actionUsers()
+    {
+        /** @var AccessManager $auth */
+        $auth = Yii::$app->get('authManager');
+        $roles = $auth->getRolesByProject($this->project);
+
+        return $this->render('users', [
+            'project' => $this->project,
+            'roles'   => $roles,
+        ]);
+    }
+
 }

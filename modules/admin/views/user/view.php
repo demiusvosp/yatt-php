@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'value' => function($user) {
                         $value = [];
-                        $roles = Yii::$app->get('accessService')->getUserRoles($user);
+                        $roles = Yii::$app->get('authManager')->getRolesByUser($user);
                         foreach ($roles as $role) {
                             $value[] = HtmlBlock::roleBadge($role);
                         }

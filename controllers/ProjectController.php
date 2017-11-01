@@ -8,23 +8,15 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 
-
-class ProjectController extends Controller
+class ProjectController extends BaseProjectController
 {
     public $defaultAction = 'overview';
     public $layout = 'project';
 
     public function actionOverview()
     {
-        $project = Yii::$app->get('projectService')->project;
-        if(!$project) {
-            throw new NotFoundHttpException(Yii::t('project', 'Project not found'));
-        }
-        return $this->render('overview', ['project' => $project]);
+        return $this->render('overview', ['project' => $this->project]);
     }
 
 }

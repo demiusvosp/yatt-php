@@ -25,11 +25,19 @@ $this->params['breadcrumbs'][] = $this->title;
             <li>
                 <b><?= isset($item['label']) ? ($item['label'].':') : '-' ?></b>
                 <?php if(isset($item['items'])) { ?>
-                    <ul class="table table-striped" id="<?=$key?>">
-                    <?php foreach ($item['items'] as $role) { ?>
-                        <li><?=HtmlBlock::roleBadge($role);?></li>
+                    <table class="table table-striped item-val" id="<?=$key?>">
+                    <tbody>
+                        <?php foreach ($item['items'] as $role) { ?>
+                            <tr>
+                                <td class="item">
+                                    <?=HtmlBlock::roleBadge($role);?>
+                                </td>
+                                <td class="value">
+<i>тут будет виджет юзеров</i>
+                                </td>
+                            </tr>
                     <?php } ?>
-                    </ul>
+                    </table>
                 <?php } ?>
             </li>
         <?php } ?>

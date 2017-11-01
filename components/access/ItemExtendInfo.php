@@ -15,27 +15,12 @@ namespace app\components\access;
  */
 trait ItemExtendInfo
 {
-
     /**
-     * @param bool   $isProject
      * @param string $label
-     * @return string
      */
-    public static function setData($isProject, $label)
+    public function setLabel($label)
     {
-        return serialize([
-            'is_project' => $isProject ? true : false,// пока мы не отказываемся от поддержки PHP5, так безопаснее
-            'label'   => $label,
-        ]);
-    }
-
-
-    /**
-     * @return array [is_project, label]
-     */
-    public function getData()
-    {
-        return unserialize($this->data);
+        $this->data['label'] = $label;
     }
 
 
@@ -44,9 +29,17 @@ trait ItemExtendInfo
      */
     public function getLabel()
     {
-        $data = $this->getData();
 
-        return $data['label'];
+        return $this->data['label'];
+    }
+
+
+    /**
+     * @param bool $is_project
+     */
+    public function setIsProject($is_project)
+    {
+        $this->data['is_project'] = (bool) $is_project;
     }
 
 
@@ -55,9 +48,7 @@ trait ItemExtendInfo
      */
     public function isProject()
     {
-        $data = $this->getData();
-
-        return (bool) $data['is_project'];
+        return (bool) $this->data['is_project'];
     }
 
 
@@ -66,9 +57,7 @@ trait ItemExtendInfo
      */
     public function isGlobal()
     {
-        $data = $this->getData();
-
-        return ! $data['is_project'];
+        return ! $this->data['is_project'];
     }
 
 

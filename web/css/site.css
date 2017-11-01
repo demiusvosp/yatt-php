@@ -21,6 +21,15 @@ ul.table.table-striped li:nth-child(even) {
     background-color: #f9f9f9;
 }
 
+/* таблица имя-значнеие (например роль-польователи или поле-значение у задачи) */
+.table.item-val {
+    width: auto;
+}
+.table.item-val td.item {
+    text-align: right;
+    font-weight: bold;
+}
+
 /* Беджи ролей и проектов */
 .sign {
     display: inline;

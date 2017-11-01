@@ -282,6 +282,6 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function activate()
     {
-        Yii::$app->get('accessService')->assign(Access::USER, $this->id);
+        Yii::$app->get('authManager')->assign(Access::USER, $this->id);
     }
 }

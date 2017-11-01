@@ -55,6 +55,11 @@ array_unshift($this->params['breadcrumbs'], $this->title);
                         <?=Yii::t('project/settings', 'Difficulty levels')?>
                     </a>
                 </li>
+                <li <?=$this->context->route == 'project-settings/users' ? $active : '' ?>>
+                    <a href="<?=ProjectUrl::to(['project-settings/users', 'project' => $project]) ?>">
+                        <?=Yii::t('project/settings', 'Users')?>
+                    </a>
+                </li>
             </ul>
         </div>
     </section>

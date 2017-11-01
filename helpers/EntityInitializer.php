@@ -48,7 +48,7 @@ class EntityInitializer
         $close->link('project', $project);
 
         // Создадим для проекта необходимые роли и полномочия
-        Yii::$app->get('accessService')->createProjectAccesses($project);
+        Yii::$app->get('authManager')->createProjectAccesses($project);
 
         if($andSave) {
             $project->save();

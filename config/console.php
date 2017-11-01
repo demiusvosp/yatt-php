@@ -21,9 +21,6 @@ $config = array_merge_recursive($config, [
                 ],
             ],
         ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
-        ],
     ],
     'params' => $params,
     'controllerMap' => [

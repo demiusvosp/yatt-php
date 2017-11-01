@@ -9,7 +9,6 @@
 namespace app\controllers;
 
 use Yii;
-use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\data\ActiveDataProvider;
 use app\helpers\Access;
@@ -19,7 +18,7 @@ use app\models\forms\CloseTaskForm;
 use app\models\queries\TaskQuery;
 
 
-class TaskController extends Controller
+class TaskController extends BaseProjectController
 {
     public $layout = 'project';
 
@@ -95,6 +94,7 @@ class TaskController extends Controller
 
     /**
      * @return string|\yii\web\Response
+     * @throws ForbiddenHttpException
      */
     public function actionCreate()
     {
@@ -108,7 +108,7 @@ class TaskController extends Controller
             return $this->redirect([
                 'view',
                 'index' => $task->index,
-                'suffix' => Yii::$app->projectService->project->suffix
+                'suffix' => $this->project->suffix
             ]);
         } else {
             if ($task->hasErrors()) {
@@ -177,7 +177,7 @@ class TaskController extends Controller
             Yii::error($form->getErrors(), 'Task');
 
             // вобще эти гигантские строки надо заменить действиями по умолчанию и хелпером создающим урлы для редиректов
-            return $this->redirect(['project/overview', 'suffix' => Yii::$app->prjectService->project->suffix]);
+            return $this->redirect(['project/overview', 'suffix' => $this->project->suffix]);
         }
 
     }

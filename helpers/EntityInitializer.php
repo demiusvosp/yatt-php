@@ -9,11 +9,13 @@
 namespace app\helpers;
 
 use Yii;
+use yii\helpers\Json;
+use app\components\AccessManager;
 use app\models\entities\Project;
 use app\models\entities\Task;
 use app\models\entities\DictStage;
 use app\models\queries\DictStageQuery;
-use yii\helpers\Json;
+
 
 class EntityInitializer
 {
@@ -48,7 +50,7 @@ class EntityInitializer
         $close->link('project', $project);
 
         // Создадим для проекта необходимые роли и полномочия
-        Yii::$app->get('authManager')->createProjectAccesses($project);
+        static::createProjectAccesses($project);
 
         if($andSave) {
             $project->save();
@@ -66,5 +68,57 @@ class EntityInitializer
         $task->priority = Task::PRIORITY_MEDIUM;
         $task->assigned_id = Yii::$app->user->identity->getId();
         $task->is_closed = false;
+    }
+
+
+    /**
+     * Создать и настроить роли и полномочия для проекта.
+     *
+     * @param $project
+     */
+    public static function createProjectAccesses($project)
+    {
+        /** @var AccessManager $auth */
+        $auth = Yii::$app->get('authManager');
+
+        $root = $auth->getRole(Access::ROOT);
+
+        $admin = $auth->addRole(
+            Access::ADMIN,
+            [$root],
+            $project
+        );
+        $employee = $auth->addRole(
+            Access::EMPLOYEE,
+            [$admin],
+            $project
+        );
+        $view = $auth->addRole(
+            Access::VIEW,
+            [$employee],
+            $project
+        );
+
+        $auth->addPermission(
+            Access::PROJECT_SETTINGS,
+            [$admin],
+            $project
+        );
+        $auth->addPermission(
+            Access::OPEN_TASK,
+            [$employee],
+            $project
+        );
+        $auth->addPermission(
+            Access::EDIT_TASK,
+            [$employee],
+            $project
+        );
+        $auth->addPermission(
+            Access::CLOSE_TASK,
+            [$employee],
+            // пока будем считать, что работник может закрывать задачи. (но потом в админке это можно будет выключить)
+            $project
+        );
     }
 }

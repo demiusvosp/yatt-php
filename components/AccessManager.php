@@ -59,55 +59,6 @@ class AccessManager extends DbManager implements CheckAccessInterface
 
 
     /**
-     * Создать и настроить роли и полномочия для проекта.
-     *
-     * @param $project
-     */
-    public function createProjectAccesses($project)
-    {
-        $root = $this->getRole(Access::ROOT);
-
-        $admin = $this->addRole(
-            Access::ADMIN,
-            [$root],
-            $project
-        );
-        $employee = $this->addRole(
-            Access::EMPLOYEE,
-            [$admin],
-            $project
-        );
-        $view = $this->addRole(
-            Access::VIEW,
-            [$employee],
-            $project
-        );
-
-        $this->addPermission(
-            Access::PROJECT_SETTINGS,
-            [$admin],
-            $project
-        );
-        $this->addPermission(
-            Access::OPEN_TASK,
-            [$employee],
-            $project
-        );
-        $this->addPermission(
-            Access::EDIT_TASK,
-            [$employee],
-            $project
-        );
-        $this->addPermission(
-            Access::CLOSE_TASK,
-            [$employee],
-            // пока будем считать, что работник может закрывать задачи. (но потом в админке это можно будет выключить)
-            $project
-        );
-    }
-
-
-    /**
      * Создать роль.
      * @inheritdoc
      */
@@ -293,7 +244,7 @@ class AccessManager extends DbManager implements CheckAccessInterface
 
     /**
      * Получить роли проекта.
-     * @param Project $project
+     * @param Project|string $project - проект или его суффикс
      * @return array
      */
     public function getRolesByProject($project)
@@ -309,7 +260,7 @@ class AccessManager extends DbManager implements CheckAccessInterface
         $rbacRoles = (new Query())
             ->from($this->itemTable)
             ->andwhere(['=', 'type', Role::TYPE_ROLE])
-            ->andWhere(['like', 'name', '_' . $project->suffix])
+            ->andWhere(['like', 'name', '_' . $suffix])
             ->all();
 
         $roles = [];

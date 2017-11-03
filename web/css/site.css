@@ -53,6 +53,14 @@ ul.table.table-striped li:nth-child(even) {
     background-color: #00a65a;
 }
 
+/* Пользователь */
+.user-item {
+
+}
+.user-item .fa-user {
+    color: #1b6d85;
+}
+
 /* тайл проекта */
 .project-item-block {
     width: 30em;

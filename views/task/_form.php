@@ -10,8 +10,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 use app\models\entities\Task;
-use app\models\entities\User;
-use app\models\queries\UserQuery;
+use app\widgets\UserSelect;
 use app\components\ProjectService;
 
 /** @var ProjectService $projectService */
@@ -21,12 +20,6 @@ $projectService = Yii::$app->projectService;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $task Task */
 
-// врменное решение
-$adminsChoices = [];
-/** @var User $user */
-foreach (UserQuery::getUsersMayProjectList() as $user) {// вобще это не шаблонная логика
-    $adminsChoices[$user->id] = $user->username;
-}
 // простое решение выбора прогресса (как в flyspray)
 $progressList = [];
 for($i = 0; $i <= 100; $i += 10) {
@@ -40,41 +33,59 @@ for($i = 0; $i <= 100; $i += 10) {
     чтобы подключить twig partial, необходимо и этот шаблон и create/update сделать twig'ом. Сейчас не до того. */ ?>
         <?php if(count($projectService->getStagesList()) > 1) { ?>
             <div class="row-fluid">
-                <?= $form->field($task, 'dict_stage_id')->dropDownList($projectService->getStagesList()) ?>
+                <?= $form->field($task, 'dict_stage_id')
+                    ->dropDownList($projectService->getStagesList())
+                ?>
             </div>
         <?php } ?>
         <div class="row-fluid">
-            <?= $form->field($task, 'progress')->dropDownList($progressList) ?>
+            <?= $form->field($task, 'progress')
+                ->dropDownList($progressList)
+            ?>
         </div>
         <?php if(count($projectService->getTypesList()) > 1) { ?>
             <div class="row-fluid">
-                <?= $form->field($task, 'dict_type_id')->dropDownList($projectService->getTypesList()) ?>
+                <?= $form->field($task, 'dict_type_id')
+                    ->dropDownList($projectService->getTypesList())
+                ?>
             </div>
         <?php } ?>
         <?php if(count($projectService->getCategoryList()) > 1) { ?>
             <div class="row-fluid">
-                <?= $form->field($task, 'dict_category_id')->dropDownList($projectService->getCategoryList()) ?>
+                <?= $form->field($task, 'dict_category_id')
+                    ->dropDownList($projectService->getCategoryList())
+                ?>
             </div>
         <?php } ?>
         <div class="row-fluid">
-            <?= $form->field($task, 'assigned_id')->listBox($adminsChoices) ?>
+            <?= $form->field($task, 'assigned_id')
+                ->widget(UserSelect::className(), ['userField' => 'assigned'])
+            ?>
         </div>
         <div class="row-fluid">
-            <?= $form->field($task, 'priority')->dropDownList(Task::priorityLabels()) ?>
+            <?= $form->field($task, 'priority')
+                ->dropDownList(Task::priorityLabels())
+            ?>
         </div>
         <?php if(count($projectService->getDifficultyList()) > 1) { ?>
             <div class="row-fluid">
-                <?= $form->field($task, 'dict_difficulty_id')->dropDownList($projectService->getDifficultyList()) ?>
+                <?= $form->field($task, 'dict_difficulty_id')
+                    ->dropDownList($projectService->getDifficultyList())
+                ?>
             </div>
         <?php } ?>
         <?php if(count($projectService->getVersionList(true)) > 1) { ?>
             <div class="row-fluid">
-                <?= $form->field($task, 'dict_version_open_id')->dropDownList($projectService->getVersionList(true)) ?>
+                <?= $form->field($task, 'dict_version_open_id')
+                    ->dropDownList($projectService->getVersionList(true))
+                ?>
             </div>
         <?php } ?>
         <?php if(count($projectService->getVersionList(false)) > 1) { ?>
             <div class="row-fluid">
-                <?= $form->field($task, 'dict_version_close_id')->dropDownList($projectService->getVersionList(false)) ?>
+                <?= $form->field($task, 'dict_version_close_id')
+                    ->dropDownList($projectService->getVersionList(false))
+                ?>
             </div>
         <?php } ?>
     </div>

@@ -33,5 +33,6 @@ class AppAsset extends AssetBundle
         'yii\bootstrap\BootstrapAsset',
         'yii\jui\JuiAsset',
         'dmstr\web\AdminLteAsset',
+        'kartik\select2\Select2Asset',
     ];
 }

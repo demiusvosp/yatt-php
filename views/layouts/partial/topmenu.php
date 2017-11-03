@@ -35,13 +35,13 @@ if ($projectService->project) {
     $items = Yii::$app->projectService->projectMenu;
 
     $items = array_merge($items, [
-        ['label' => Yii::t('common', 'About'), 'url' => ['main/about']],
+        ['label' => Yii::t('common', 'About'), 'url' => ['/main/about']],
     ]);
 
     if (Yii::$app->user->isGuest) {
         $items = array_merge($items, [
-            ['label' => Yii::t('user', 'Login'), 'url' => ['auth/login']],
-            ['label' => Yii::t('user', 'Registration'), 'url' => ['auth/registration']],
+            ['label' => Yii::t('user', 'Login'), 'url' => ['/auth/login']],
+            ['label' => Yii::t('user', 'Registration'), 'url' => ['/auth/registration']],
         ]);
     } else {
         $items = array_merge($items, [
@@ -71,11 +71,11 @@ if ($projectService->project) {
             [
                 'label' => Yii::t('user', 'Profile ({user})',
                     ['user' => Yii::$app->user->identity->username]),
-                'url'   => ['auth/profile'],
+                'url'   => ['/user/profile'],
             ],
             [
                 'label'       => Yii::t('user', 'Logout'),
-                'url'         => ['auth/logout'],
+                'url'         => ['/auth/logout'],
                 'linkOptions' => ['data-method' => 'post'],
             ],
         ]);

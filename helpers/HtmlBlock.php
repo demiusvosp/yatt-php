@@ -8,6 +8,8 @@
 namespace app\helpers;
 
 
+use app\models\entities\User;
+use http\Exception\InvalidArgumentException;
 use yii\helpers\Html;
 use app\models\entities\Project;
 use app\components\access\Role;
@@ -39,6 +41,8 @@ class HtmlBlock
 
 
     /**
+     * Значок роли юзера
+     *
      * @param Role $role
      * @return string
      */
@@ -49,5 +53,41 @@ class HtmlBlock
             '',
             ['class' => 'sign ' . ($role->isGlobal() ? 'sign-global-role' : 'sign-project-role')]
         );
+    }
+
+
+    /**
+     * Блок юзера
+     * @param array|User $user
+     * @return string
+     */
+    public static function userItem($user)
+    {
+        if(is_array($user)) {
+            $username = $user['username'];
+        } else if($user instanceof User) {
+            $username = $user->username;
+        } else {
+            throw new InvalidArgumentException('user должен быть массивом или моделью');
+        }
+
+        return '<div class="user-item"><i class="fa fa-user"></i>&nbsp;'.$username.'</div>';
+    }
+
+
+    /**
+     * Select2 форматирует юзеров исключительно через JS
+     * @return string
+     */
+    public static function userItemJs()
+    {
+        return <<<JS
+    var userItemJs = function(item) {
+        console.log('userItemJs:');
+        console.log(item);
+        return '<div class="user-item"><i class="fa fa-user"></i>&nbsp;'+item.text+'</div>';
+    };
+JS;
+
     }
 }

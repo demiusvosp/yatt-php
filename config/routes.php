@@ -6,7 +6,6 @@ return [
     'auth/logout'                            => 'authentication/logout',
     'auth/registration'                      => 'authentication/registration',
     'auth/email-confirm'                     => 'authentication/confirm-email',
-    'auth/profile'                           => 'authentication/profile',
 
     // project
     'p/<suffix:\w+>'                         => 'project/overview',
@@ -44,6 +43,10 @@ return [
 
     // user managment
     'admin/access/list'                      => 'admin/access/index',
+
+    // user
+    'user/profile'                           => 'user/profile',
+    'user/find-for-choose'                   => 'user/find-for-choose',
 
     // main
     'captcha'                                => 'main/captcha',

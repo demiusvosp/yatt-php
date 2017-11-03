@@ -2,19 +2,13 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use app\models\entities\User;
-use app\models\queries\UserQuery;
+use app\widgets\UserSelect;
 use app\modules\admin\models\Project;
 
 /* @var $this yii\web\View */
 /* @var $project app\modules\admin\models\Project */
 /* @var $form yii\bootstrap\ActiveForm */
 
-$adminsChoices = [];
-/** @var User $user */
-foreach (UserQuery::getUsersMayProjectList() as $user) {// вобще это не шаблонная логика
-    $adminsChoices[$user->id] = $user->username;
-}
 ?>
 
 <div class="project-form">
@@ -33,7 +27,7 @@ foreach (UserQuery::getUsersMayProjectList() as $user) {// вобще это н�
 
     <?= $form->field($project, 'public')->dropDownList($project->getPublicStatusesArray()) ?>
 
-    <?= $form->field($project, 'admin_id')->listBox($adminsChoices, ['disabled' => $project->disableAdmin]) ?>
+    <?= $form->field($project, 'admin_id')->widget(UserSelect::className(), ['userField' => 'admin']) ?>
 
     <div class="form-group">
         <?= Html::submitButton(

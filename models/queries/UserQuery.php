@@ -11,12 +11,18 @@ namespace app\models\queries;
 use app\models\entities\User;
 use yii\db\ActiveQuery;
 
+
 class UserQuery extends ActiveQuery
 {
+    /** Количество юзеров которое мы разрешаем выгружать за раз */
+    const FIND_USER_LIMIT = 5;
+
+
     public function andStatus($status = User::STATUS_ACTIVE)
     {
         return $this->andWhere(['status' => $status]);
     }
+
 
     /**
      * @inheritdoc
@@ -26,6 +32,7 @@ class UserQuery extends ActiveQuery
     {
         return parent::all($db);
     }
+
 
     /**
      * @inheritdoc
@@ -38,11 +45,26 @@ class UserQuery extends ActiveQuery
 
 
     /**
-     * Список пользователей, которых можно назначать
+     * Найти пользователей по имени или email
+     * @param string $search
+     * @param int    $limit
+     * @return mixed
      */
-    public static function getUsersMayProjectList()
+    public static function findUserByNameMail($search = '', $limit = UserQuery::FIND_USER_LIMIT)
     {
-        // пока не делаем ролей и различий юзеров
-        return User::find()->andStatus()->all();
+        $query = (new static(User::className()))
+            ->select(['id', 'username', 'email'])
+            ->andStatus()
+            ->limit($limit)
+            ->asArray();
+        if(empty($search)) {
+            // пока так, но вобще надо хранить активность юзера, и сортировать по ней.
+            $query->orderBy(['updated_at' => 'desc']);
+        } else {
+            $query->where(['or', ['like', 'username', $search], ['like', 'email', $search]]);
+        }
+
+        return $query->all();
     }
+
 }

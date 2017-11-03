@@ -69,8 +69,8 @@ if ($projectService->project) {
 
         $items = array_merge($items, [
             [
-                'label' => Yii::t('user', 'Profile ({user})',
-                    ['user' => Yii::$app->user->identity->username]),
+                'label' => '<i class="fa fa-user"></i>&nbsp;' . Yii::t('user', 'Profile ({user})',
+                        ['user' => Yii::$app->user->identity->username]),
                 'url'   => ['/user/profile'],
             ],
             [
@@ -82,8 +82,9 @@ if ($projectService->project) {
     }
 
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items'   => $items,
+        'encodeLabels' => false,
+        'options'      => ['class' => 'navbar-nav navbar-right'],
+        'items'        => $items,
     ]);
     NavBar::end();
     ?>

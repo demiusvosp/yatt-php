@@ -9,11 +9,12 @@
 namespace app\controllers;
 
 use Yii;
+use yii\web\ForbiddenHttpException;
 use app\components\AccessManager;
+use app\components\access\Role;
 use app\helpers\Access;
 use app\models\forms\DictForm;
 use app\models\forms\DictStagesForm;
-use yii\web\ForbiddenHttpException;
 
 
 class ProjectSettingsController extends BaseProjectController
@@ -161,10 +162,19 @@ class ProjectSettingsController extends BaseProjectController
         /** @var AccessManager $auth */
         $auth = Yii::$app->get('authManager');
         $roles = $auth->getRolesByProject($this->project);
+        $items = [];
+        /** @var Role $role */
+        foreach ($roles as $role) {
+            // да, мы здесь делаем запрос в цикле. Сейчас это не критично, а когда это будет тормозить - будем грузить юзеров аяксом
+            $items[] = [
+                'role' => $role,
+                'users' => $auth->getUsersByRole($role->name),
+            ];
+        }
 
         return $this->render('users', [
             'project' => $this->project,
-            'roles'   => $roles,
+            'items'   => $items,
         ]);
     }
 

@@ -35,7 +35,7 @@ class ProjectService extends Component
             $this->projectMenu[] = ['label' => Yii::t('common', 'Home'), 'url' => ['main/index']];
 
         } elseif (count($allProjects) == 1) {
-            $this->project = ProjectQuery::allowProjectsQuery()->one();
+            $this->project = $allProjects[0];
             $this->projectMenu[] = [
                 'label' => $this->project->name,
                 'url' => ProjectUrl::to(['project/overview', 'project' => $this->project])

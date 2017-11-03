@@ -297,4 +297,17 @@ class AccessManager extends DbManager implements CheckAccessInterface
         return $roles;
     }
 
+
+    public function getUsersByRole($roleName)
+    {
+        if (empty($roleName)) {
+            return [];
+        }
+
+        return EntityUser::find()
+            ->leftJoin($this->assignmentTable, $this->assignmentTable.'.user_id = user.id')
+            ->andStatus()
+            ->andWhere([$this->assignmentTable.'.item_name' => $roleName])
+            ->all();
+    }
 }

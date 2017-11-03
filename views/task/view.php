@@ -40,51 +40,112 @@ $this->params['breadcrumbs'][] = $this->title;// как вот это превр
 </div>
 <div class="row-fluid task-view">
     <div class="col-md-3 task-dict-block">
-        <div class="row-fluid">
-            Этап: <b><?=$task->stage->name ?></b>
-        </div>
-        <div class="row-fluid">
-            Прогресс:
-            <div class="progress">
-                <div
-                    class="progress-bar progress-bar-green" role="progressbar"
-                    aria-valuenow="<?=$task->progress?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$task->progress?>%"
-                >
-                    <span class="sr-only"><?=$task->progress?> Complete</span>
-                </div>
-                <div class="progress-value"><?=$task->progress?>%</div>
-            </div>
-        </div>
+        <table class="table table-striped item-val">
+            <tbody>
+            <tr>
+                <td class="item">
+                    <?=$task->getAttributeLabel('stage') ?>
+                </td>
+                <td class="value">
+                    <?=$task->stage->name ?>
+                </td>
+            </tr>
+            <tr>
+                <td class="item">
+                    <?=$task->getAttributeLabel('progress') ?>
+                </td>
+                <td class="value">
+                    <div class="progress">
+                        <div
+                                class="progress-bar progress-bar-green" role="progressbar"
+                                aria-valuenow="<?=$task->progress?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$task->progress?>%"
+                        >
+                            <span class="sr-only"><?=$task->progress?> Complete</span>
+                        </div>
+                        <div class="progress-value"><?=$task->progress?>%</div>
+                    </div>
+                </td>
+            </tr>
         <?php if($task->type) { ?>
-            <div class="row-fluid">
-                Тип задачи: <b><?=$task->type->name ?></b>
-            </div>
+            <tr>
+                <td class="item">
+                    <?=$task->getAttributeLabel('type') ?>
+                </td>
+                <td class="value">
+                    <?=$task->type->name ?>
+                </td>
+            </tr>
         <?php } ?>
         <?php if($task->category) { ?>
-            <div class="row-fluid">
-                Категория: <b><?=$task->category->name ?></b>
-            </div>
+            <tr>
+                <td class="item">
+                    <?=$task->getAttributeLabel('category') ?>
+                </td>
+                <td class="value">
+                    <?=$task->category->name ?>
+                </td>
+            </tr>
         <?php } ?>
-        <div class="row-fluid">
-            Назначена: <b><?=$task->assigned ? $task->assigned->username : Yii::t('common', 'Not set') ?></b><br>
-        </div>
-        <div class="row-fluid">
-            Приоритет: <b><?=$task->getPriorityName()?></b>
-        </div>
+            <tr>
+                <td class="item">
+                    <?=$task->getAttributeLabel('assigned') ?>
+                </td>
+                <td class="value">
+                    <?=$task->assigned ? $task->assigned->username : Yii::t('common', 'Not set') ?>
+                </td>
+            </tr>
+            <tr>
+                <td class="item">
+                    <?=$task->getAttributeLabel('priority') ?>
+                </td>
+                <td class="value">
+                    <?=$task->getPriorityName()?>
+                </td>
+            </tr>
         <?php if($task->difficulty) { ?>
-            <div class="row-fluid">
-                Трудоемкость: <b><?=$task->difficulty->name ?></b>
-            </div>
+            <tr>
+                <td class="item">
+                    <?=$task->getAttributeLabel('difficulty') ?>
+                </td>
+                <td class="value">
+                    <?=$task->difficulty->name ?>
+                </td>
+            </tr>
         <?php } ?>
-        <div class="row-fluid">
-            Обнаруженна в версии: <b><?=$task->versionOpen ? $task->versionOpen->name : Yii::t('common', 'Not set')  ?></b>
-        </div>
-        <div class="row-fluid">
-            Дата обнаружения: <b><?= Yii::$app->formatter->asDate($task->created_at) ?></b>
-        </div>
-        <div class="row-fluid">
-            Ожидается в версии: <b><?=$task->versionClose ? $task->versionClose->name : Yii::t('common', 'Not set') ?></b>
-        </div>
+            <tr>
+                <td class="item">
+                    <?=$task->getAttributeLabel('versionOpen') ?>
+                </td>
+                <td class="value">
+                    <?=$task->versionOpen ? $task->versionOpen->name : Yii::t('common', 'Not set')  ?>
+                </td>
+            </tr>
+            <tr>
+                <td class="item">
+                    <?=$task->getAttributeLabel('created_at') ?>
+                </td>
+                <td class="value">
+                    <?= Yii::$app->formatter->asDate($task->created_at) ?>
+                </td>
+            </tr>
+            <tr>
+                <td class="item">
+                    <?=$task->getAttributeLabel('versionClose') ?>
+                </td>
+                <td class="value">
+                    <?=$task->versionClose ? $task->versionClose->name : Yii::t('common', 'Not set') ?>
+                </td>
+            </tr>
+            <tr>
+                <td class="item">
+                    <?=$task->getAttributeLabel('updated_at') ?>
+                </td>
+                <td class="value">
+                    <?= Yii::$app->formatter->asDate($task->updated_at) ?>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     <div class="col-md-9 task-text-block">

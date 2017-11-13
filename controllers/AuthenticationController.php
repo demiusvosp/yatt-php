@@ -21,28 +21,29 @@ class AuthenticationController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['login, logout, registration, confirmEmail, profile'],
+                'only'  => ['login, logout, registration, confirmEmail, profile'],
                 'rules' => [
                     [
                         'actions' => ['login, registration, confirmEmail'],
-                        'allow' => true,
-                        'roles' => ['?'],
+                        'allow'   => true,
+                        'roles'   => ['?'],
                     ],
                     [
                         'actions' => ['logout, profile'],
-                        'allow' => true,
-                        'roles' => ['@'],
+                        'allow'   => true,
+                        'roles'   => ['@'],
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
+            'verbs'  => [
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
                 ],
             ],
         ];
     }
+
 
     /**
      * @inheritdoc
@@ -70,14 +71,16 @@ class AuthenticationController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
-            if($model->login()) {
+            if ($model->login()) {
                 return $this->goBack();
             }
         }
+
         return $this->render('login', [
             'model' => $model,
         ]);
     }
+
 
     /**
      * Logout action.
@@ -91,6 +94,7 @@ class AuthenticationController extends Controller
         return $this->goHome();
     }
 
+
     public function actionRegistration()
     {
         if (!Yii::$app->user->isGuest) {
@@ -99,34 +103,41 @@ class AuthenticationController extends Controller
 
         $model = new RegistrationForm();
         if ($model->load(Yii::$app->request->post())) {
-            if($newUser = $model->registration()) {
-                Yii::$app->getSession()->setFlash('success', $newUser->username . ' успешно зарегистрированн. Пожалуйста подтвердите email');
+            if ($newUser = $model->registration()) {
+                Yii::$app->getSession()->setFlash('success',
+                    $newUser->username . ' успешно зарегистрированн. Пожалуйста подтвердите email');
+
                 return $this->goBack();
             }
         }
+
         return $this->render('registration', [
             'model' => $model,
         ]);
     }
 
+
     public function actionConfirmEmail($token)
     {
-        if(empty($token) || !is_string($token)) {
+        if (empty($token) || !is_string($token)) {
             Yii::$app->getSession()->setFlash('error', ' Ошибка при получении токена подтверждения');
+
             return $this->goHome();
         }
         $user = User::findByUserToken($token);
-        if(!$user) {
+        if (!$user) {
             Yii::$app->getSession()->setFlash('error', 'Токен подтверждения не найден');
+
             return $this->goHome();
         }
-        if(! User::isUserTokenValid($token)) {
+        if (!User::isUserTokenValid($token)) {
             Yii::$app->getSession()->setFlash('error', 'Токен подтверждения просрочен');
+
             return $this->goHome();
         }
         $user->confirmUser();
         $user->save();
-        if(!Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             Yii::$app->user->logout();
         }
         Yii::$app->user->login($user);

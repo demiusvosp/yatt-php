@@ -26,7 +26,7 @@ class DictController extends Controller
         $dict = Yii::$app->request->post('dict', null);
         if(is_numeric($item_id)) {
             $res = Yii::$app->db->createCommand()->delete($dict, ['id' => $item_id])->execute();
-            return $this->asJson(['result' => $res])->setStatusCode(200);
+            return $this->asJson(['result' => $res])->setStatusCode(201);
         }
 
         return Yii::$app->getResponse()->setStatusCode(500, 'Invalid arguments');

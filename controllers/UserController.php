@@ -8,14 +8,14 @@
 namespace app\controllers;
 
 
-use app\models\queries\UserQuery;
 use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\web\Response;
 use app\models\entities\User;
 use app\models\forms\ChangeMainFieldsForm;
 use app\models\forms\ChangePasswordForm;
-use yii\web\Response;
+use app\models\queries\UserQuery;
 
 
 class UserController extends Controller

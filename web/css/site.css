@@ -63,6 +63,9 @@ ul.table.table-striped li:nth-child(even) {
     font-size: 1.1em;
     display: inline-block;
 }
+.user-item.disabled {
+    color: #7c7c7c;
+}
 .user-item .fa-user {
     color: #1b6d85;
 }

@@ -311,6 +311,11 @@ class AccessManager extends DbManager implements CheckAccessInterface
     }
 
 
+    /**
+     * аналог ManagerInterface::getUsersByRole(), но возвращающий сущности, а не id'ы
+     * @param $roleName
+     * @return Project[]|array
+     */
     public function getUsersByRole($roleName)
     {
         if (empty($roleName)) {

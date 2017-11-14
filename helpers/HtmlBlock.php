@@ -59,9 +59,10 @@ class HtmlBlock
     /**
      * Блок юзера
      * @param array|User $user
+     * @param bool $disabled
      * @return string
      */
-    public static function userItem($user)
+    public static function userItem($user, $disabled = false)
     {
         if(is_array($user)) {
             $username = $user['username'];
@@ -71,7 +72,7 @@ class HtmlBlock
             throw new InvalidArgumentException('user должен быть массивом или моделью');
         }
 
-        return '<div class="user-item"><i class="fa fa-user"></i>&nbsp;'.$username.'</div>';
+        return '<div class="user-item'.($disabled?' disabled':'').'"><i class="fa fa-user"></i>&nbsp;'.$username.'</div>';
     }
 
 

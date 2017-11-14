@@ -32,9 +32,12 @@ $this->params['project'] = $project;
                 </td>
                 <td class="value" data-role="<?= $item['role']->name ?>">
                     <?php foreach ($item['users'] as $i => $user) { ?>
+                        <?php $disabled = ($user->id == $project->admin_id);?>
                         <div class="user_wrapper" data-id="<?=$user->id ?>">
-                            <?= HtmlBlock::userItem($user) ?>
-                            <div class="remove_user btn btn-default"><i class="fa fa-minus"></i></div>
+                            <?= HtmlBlock::userItem($user, $disabled) ?>
+                            <?php if(!$disabled) { ?>
+                                <div class="remove_user btn btn-default"><i class="fa fa-minus"></i></div>
+                            <?php } ?>
                         </div>
                     <?php } ?>
                     <div class="add_user btn btn-default"><i class="fa fa-plus"></i></div>

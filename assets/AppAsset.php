@@ -26,6 +26,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/dictedit.js',
         'js/closetask.js',
+        'js/useraccesses.js',
     ];
 
     public $depends = [

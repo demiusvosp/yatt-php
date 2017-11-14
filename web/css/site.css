@@ -3,6 +3,11 @@
     opacity: 0.4;
 }
 
+/* аналог hidden из bootstrap, но показываемый через jquery */
+.unshow {
+    display: none;
+}
+
 .table thead tr th {
     border-bottom: 2px #00a65a solid;
 }
@@ -55,7 +60,8 @@ ul.table.table-striped li:nth-child(even) {
 
 /* Пользователь */
 .user-item {
-
+    font-size: 1.1em;
+    display: inline-block;
 }
 .user-item .fa-user {
     color: #1b6d85;
@@ -225,4 +231,19 @@ ul.table.table-striped li:nth-child(even) {
 
 .description-in-list {
     width: 30%;
+}
+
+.user-accesses .user_wrapper {
+    display: inline-block;
+    margin-right: 1em;
+    border-radius: 3px;
+    padding: 3px;
+}
+.user-accesses .add_user {
+    display: inline-block;
+    font-size: 0.8em;
+}
+.user-accesses .remove_user {
+    display: inline-block;
+    font-size: 0.8em;
 }

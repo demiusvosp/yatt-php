@@ -43,6 +43,9 @@ return [
 
     // user managment
     'admin/access/list'                      => 'admin/access/index',
+    // access ajax
+    'POST access/assign' => 'access/assign-role',
+    'POST access/revoke' => 'access/revoke-role',
 
     // user
     'user/profile'                           => 'user/profile',

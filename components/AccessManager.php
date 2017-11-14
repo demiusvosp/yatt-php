@@ -60,12 +60,14 @@ class AccessManager extends DbManager implements CheckAccessInterface
 
     /**
      * Создать роль.
+     *
      * @inheritdoc
      */
     public function createRole($name)
     {
         $role = new Role();
         $role->name = $name;
+
         return $role;
     }
 
@@ -106,6 +108,7 @@ class AccessManager extends DbManager implements CheckAccessInterface
     {
         $permission = new Permission();
         $permission->name = $name;
+
         return $permission;
     }
 
@@ -142,37 +145,39 @@ class AccessManager extends DbManager implements CheckAccessInterface
     /**
      * Назначить пользователю указнный доступ
      *
-     * @param string|Role  $role
-     * @param int          $userId
-     * @param Project|null $project
+     * @param string|Role         $role
+     * @param int                 $userId
+     * @param Project|string|null $project
      * @return \yii\rbac\Assignment
      */
     public function assign($role, $userId, $project = null)
     {
         $assignment = new Assignment([
-            'userId' => $userId,
+            'userId'    => $userId,
             'createdAt' => time(),
         ]);
 
         if (is_string($role)) {
             $assignment->roleName = $role;
 
-        } else if($role instanceof BaseRole) {
-            $assignment->roleName = $role->name;
-
         } else {
-            throw new \InvalidArgumentException('argument is not a Role');
+            if ($role instanceof BaseRole) {
+                $assignment->roleName = $role->name;
+
+            } else {
+                throw new \InvalidArgumentException('argument is not a Role');
+            }
         }
         // реальное название роли проекта состоит из имени роли и суффикса проекта
-        if($project) {
+        if (Access::isProjectItem($assignment->roleName) && $project) {
             $assignment->roleName = Access::projectItem($assignment->roleName, $project);
         }
 
         Yii::info('assign ' . $assignment->roleName . ' to ' . $assignment->userId, 'access');
         $this->db->createCommand()
             ->insert($this->assignmentTable, [
-                'user_id' => $assignment->userId,
-                'item_name' => $assignment->roleName,
+                'user_id'    => $assignment->userId,
+                'item_name'  => $assignment->roleName,
                 'created_at' => $assignment->createdAt,
             ])->execute();
 
@@ -183,9 +188,9 @@ class AccessManager extends DbManager implements CheckAccessInterface
     /**
      * Отзвать у пользователя указанный доступ
      *
-     * @param string|Role  $role
-     * @param int          $userId
-     * @param Project|null $project
+     * @param string|Role         $role
+     * @param int                 $userId
+     * @param Project|string|null $project
      * @return bool
      */
     public function revoke($role, $userId, $project = null)
@@ -197,21 +202,24 @@ class AccessManager extends DbManager implements CheckAccessInterface
         if (is_string($role)) {
             $roleName = $role;
 
-        } else if($role instanceof BaseRole) {
-            $roleName = $role->name;
-
         } else {
-            throw new \InvalidArgumentException('argument is not a Role');
+            if ($role instanceof BaseRole) {
+                $roleName = $role->name;
+
+            } else {
+                throw new \InvalidArgumentException('argument is not a Role');
+            }
         }
         // реальное название роли проекта состоит из имени роли и суффикса проекта
-        if($project) {
+        if ($project) {
             $roleName = Access::projectItem($roleName, $project);
         }
 
 
         Yii::info('revoke ' . $roleName . ' from ' . $userId, 'access');
+
         return $this->db->createCommand()
-                ->delete($this->assignmentTable, ['user_id' => (string) $userId, 'item_name' => $roleName])
+                ->delete($this->assignmentTable, ['user_id' => (string)$userId, 'item_name' => $roleName])
                 ->execute() > 0;
     }
 
@@ -219,6 +227,7 @@ class AccessManager extends DbManager implements CheckAccessInterface
     /**
      * Populates an auth item with the data fetched from database
      * Переопределяем из yii\rbac\DbManager для инстанцирования своих классов ролей и полномочий
+     *
      * @param array $row the data from the auth item table
      * @return Item the populated auth item instance (either Role or Permission)
      */
@@ -231,30 +240,33 @@ class AccessManager extends DbManager implements CheckAccessInterface
         }
 
         return new $class([
-            'name' => $row['name'],
-            'type' => $row['type'],
+            'name'        => $row['name'],
+            'type'        => $row['type'],
             'description' => $row['description'],
-            'ruleName' => $row['rule_name'],
-            'data' => $data,
-            'createdAt' => $row['created_at'],
-            'updatedAt' => $row['updated_at'],
+            'ruleName'    => $row['rule_name'],
+            'data'        => $data,
+            'createdAt'   => $row['created_at'],
+            'updatedAt'   => $row['updated_at'],
         ]);
     }
 
 
     /**
      * Получить роли проекта.
+     *
      * @param Project|string $project - проект или его суффикс
      * @return array
      */
     public function getRolesByProject($project)
     {
-        if(is_string($project)) {
+        if (is_string($project)) {
             $suffix = $project;
-        } else if($project instanceof Project) {
-            $suffix = $project->suffix;
         } else {
-            throw new \InvalidArgumentException();
+            if ($project instanceof Project) {
+                $suffix = $project->suffix;
+            } else {
+                throw new \InvalidArgumentException();
+            }
         }
 
         $rbacRoles = (new Query())
@@ -280,20 +292,21 @@ class AccessManager extends DbManager implements CheckAccessInterface
         if (!isset($userId) || $userId === '') {
             return [];
         }
-        if($userId instanceof EntityUser) {
+        if ($userId instanceof EntityUser) {
             $userId = $userId->id;
         }
 
         $query = (new Query)->select('b.*')
             ->from(['a' => $this->assignmentTable, 'b' => $this->itemTable])
             ->where('{{a}}.[[item_name]]={{b}}.[[name]]')
-            ->andWhere(['a.user_id' => (string) $userId])
+            ->andWhere(['a.user_id' => (string)$userId])
             ->andWhere(['b.type' => Item::TYPE_ROLE]);
 
         $roles = $this->getDefaultRoleInstances();
         foreach ($query->all($this->db) as $row) {
             $roles[$row['name']] = $this->populateItem($row);
         }
+
         return $roles;
     }
 
@@ -305,9 +318,9 @@ class AccessManager extends DbManager implements CheckAccessInterface
         }
 
         return EntityUser::find()
-            ->leftJoin($this->assignmentTable, $this->assignmentTable.'.user_id = user.id')
+            ->leftJoin($this->assignmentTable, $this->assignmentTable . '.user_id = user.id')
             ->andStatus()
-            ->andWhere([$this->assignmentTable.'.item_name' => $roleName])
+            ->andWhere([$this->assignmentTable . '.item_name' => $roleName])
             ->all();
     }
 }

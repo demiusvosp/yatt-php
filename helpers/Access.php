@@ -115,6 +115,15 @@ class Access
      */
     public static function isProjectItem($accessItem)
     {
+        if (strpos('_', $accessItem) !== false) {
+            // в роли/полномочии уже указан проект
+            list($project, $accessItem) = explode('_', $accessItem);
+
+            if (!$project) {
+                throw new \InvalidArgumentException('project access item without project');
+            }
+        }
+
         return isset(static::projectItems()[$accessItem]);
     }
 
@@ -122,14 +131,23 @@ class Access
     /**
      * Получить полное имя роли/полномочия ассоциированной с проектом
      *
-     * @param string       $accessItem
-     * @param Project|null $project
+     * @param string              $accessItem
+     * @param Project|string|null $project
      * @return string
      */
     public static function projectItem($accessItem, $project = null)
     {
+        if (strpos('_', $accessItem) !== false) {
+            // роль/полномочие уже скомбинированы с проектом
+            return $accessItem;
+        }
+
         if (static::isProjectItem($accessItem) && $project) {
-            return $accessItem . '_' . $project->suffix;
+            if ($project instanceof Project) {
+                $project = $project->suffix;
+            }
+
+            return $accessItem . '_' . $project;
         }
 
         return $accessItem;

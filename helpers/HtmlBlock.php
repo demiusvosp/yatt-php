@@ -83,8 +83,6 @@ class HtmlBlock
     {
         return <<<JS
     var userItemJs = function(item) {
-        console.log('userItemJs:');
-        console.log(item);
         return '<div class="user-item"><i class="fa fa-user"></i>&nbsp;'+item.text+'</div>';
     };
 JS;

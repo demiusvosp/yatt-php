@@ -41,6 +41,9 @@ class AccessController extends Controller
 
     public function actionIndex()
     {
+        /** @var AccessManager $auth */
+        $auth = Yii::$app->authManager;
+
         $projects = ProjectQuery::allowProjectsList(true, 'suffix');
 
         // Поскольку роли получаются не из ar, здесь не будет выборок, а перебор полного списка
@@ -52,10 +55,15 @@ class AccessController extends Controller
 
         /** @var Role $role */
         foreach ($this->accessManager->getRoles() as $role) {
+            $item = [
+                'role' => $role,
+                'users' => $auth->getUsersByRole($role->name)
+            ];
+
             if($role->isGlobal()) {
-                $list[-1]['items'][] = $role;
+                $list[-1]['items'][] = $item;
             } else {
-                $list[$role->getProject()]['items'][] = $role;
+                $list[$role->getProject()]['items'][] = $item;
             }
         }
 

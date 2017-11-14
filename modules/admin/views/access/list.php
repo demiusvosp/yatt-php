@@ -21,19 +21,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="box-body">
         <ul class="table bottom-hr">
-        <?php foreach ($list as $key => $item) { ?>
+        <?php foreach ($list as $key => $block) { ?>
             <li>
-                <b><?= isset($item['label']) ? ($item['label'].':') : '-' ?></b>
-                <?php if(isset($item['items'])) { ?>
+                <b><?= isset($block['label']) ? ($block['label'].':') : '-' ?></b>
+                <?php if(isset($block['items'])) { ?>
                     <table class="table table-striped item-val" id="<?=$key?>">
                     <tbody>
-                        <?php foreach ($item['items'] as $role) { ?>
+                        <?php foreach ($block['items'] as $item) { ?>
                             <tr>
                                 <td class="item">
-                                    <?=HtmlBlock::roleBadge($role);?>
+                                    <?=HtmlBlock::roleBadge($item['role']);?>
                                 </td>
                                 <td class="value">
-<i>тут будет виджет юзеров</i>
+                                    <?php foreach ($item['users'] as $i => $user) { ?>
+                                        <?= HtmlBlock::userItem($user); ?>
+                                        <?= ($i+1 < count($item['users'])) ? ', ' : '' ?>
+                                    <?php } ?>
                                 </td>
                             </tr>
                     <?php } ?>

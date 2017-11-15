@@ -44,28 +44,33 @@ if ($projectService->project) {
             ['label' => Yii::t('user', 'Registration'), 'url' => ['/auth/registration']],
         ]);
     } else {
-        $items = array_merge($items, [
-            [
-                'label' => Yii::t('common', 'Administration'),
-                'items' => [
-                    [
-                        'label'   => Yii::t('user', 'User Manager'),
-                        'url'     => ['/admin/user/list'],
-                        'visible' => Yii::$app->user->can(Access::USER_MANAGEMENT),
-                    ],
-                    [
-                        'label'   => Yii::t('access', 'Access management'),
-                        'url'     => ['/admin/access/index'],
-                        'visible' => Yii::$app->user->can(Access::ACCESS_MANAGEMENT),
-                    ],
-                    [
-                        'label'   => Yii::t('project', 'Project Manager'),
-                        'url'     => ['/admin/project/list'],
-                        'visible' => Yii::$app->user->can(Access::PROJECT_MANAGEMENT),
-                    ],
+        $adminItems = [];
+        if(Yii::$app->user->can(Access::USER_MANAGEMENT)) {
+            $adminItems[] = [
+                'label'   => Yii::t('user', 'User Manager'),
+                'url'     => ['/admin/user/list'],
+            ];
+        }
+        if(Yii::$app->user->can(Access::ACCESS_MANAGEMENT)) {
+            $adminItems[] = [
+                'label'   => Yii::t('access', 'Access management'),
+                'url'     => ['/admin/access/index'],
+            ];
+        }
+        if(Yii::$app->user->can(Access::PROJECT_MANAGEMENT)) {
+            $adminItems[] = [
+                'label'   => Yii::t('project', 'Project Manager'),
+                'url'     => ['/admin/project/list'],
+            ];
+        }
+        if(count($adminItems)) {
+            $items = array_merge($items, [
+                [
+                    'label' => Yii::t('common', 'Administration'),
+                    'items' => $adminItems,
                 ],
-            ],
-        ]);
+            ]);
+        }
 
         $items = array_merge($items, [
             [

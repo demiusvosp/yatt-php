@@ -9,10 +9,11 @@
 namespace app\controllers;
 
 use Yii;
-use yii\web\ForbiddenHttpException;
+use yii\filters\AccessControl;
 use app\components\AccessManager;
 use app\components\access\Role;
 use app\helpers\Access;
+use app\helpers\ProjectAccessRule;
 use app\models\forms\DictForm;
 use app\models\forms\DictStagesForm;
 
@@ -23,13 +24,25 @@ class ProjectSettingsController extends BaseProjectController
     public $layout = 'project-settings';
 
 
-    public function beforeAction($action)
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
     {
-        if (!Yii::$app->user->can(Access::ADMIN)) {
-            throw new ForbiddenHttpException();
-        }
-
-        return parent::beforeAction($action);
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'class'   => ProjectAccessRule::className(),
+                        'project' => $this->project,
+                        'actions' => ['main', 'stages', 'types', 'versions', 'difficulties', 'categories', 'users'],
+                        'roles'   => [Access::ADMIN],
+                        'allow'   => true,
+                    ],
+                ],
+            ],
+        ];
     }
 
 
@@ -167,7 +180,7 @@ class ProjectSettingsController extends BaseProjectController
         foreach ($roles as $role) {
             // да, мы здесь делаем запрос в цикле. Сейчас это не критично, а когда это будет тормозить - будем грузить юзеров аяксом
             $items[] = [
-                'role' => $role,
+                'role'  => $role,
                 'users' => $auth->getUsersByRole($role->name),
             ];
         }

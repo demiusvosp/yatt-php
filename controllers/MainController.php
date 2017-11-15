@@ -8,10 +8,10 @@
 
 namespace app\controllers;
 
-use app\models\queries\ProjectQuery;
-use Yii;
 use yii\web\Controller;
-use app\models\forms\ContactForm;
+use yii\filters\AccessControl;
+use app\models\queries\ProjectQuery;
+
 
 class MainController extends Controller
 {
@@ -21,6 +21,16 @@ class MainController extends Controller
     public function actions()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'about', 'error'],
+                        'allow'   => true,
+                        'roles'   => ['*'],
+                    ],
+                ],
+            ],
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],

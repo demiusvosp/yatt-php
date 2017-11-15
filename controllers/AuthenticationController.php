@@ -5,7 +5,6 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use app\models\entities\User;
 use app\models\forms\LoginForm;
 use app\models\forms\RegistrationForm;
@@ -29,16 +28,11 @@ class AuthenticationController extends Controller
                         'roles'   => ['?'],
                     ],
                     [
-                        'actions' => ['logout, profile'],
+                        'actions' => ['logout'],
                         'allow'   => true,
                         'roles'   => ['@'],
+                        'verbs'    => ['POST'],
                     ],
-                ],
-            ],
-            'verbs'  => [
-                'class'   => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
                 ],
             ],
         ];

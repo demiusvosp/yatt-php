@@ -8,12 +8,41 @@
 
 namespace app\controllers;
 
+use yii\filters\AccessControl;
+use app\helpers\ProjectAccessRule;
+
 
 class ProjectController extends BaseProjectController
 {
     public $defaultAction = 'overview';
     public $layout = 'project';
 
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'class'   => ProjectAccessRule::className(),
+                        'project' => $this->project,
+                        'actions' => ['overview'],
+                        'allow'   => true,
+                    ],
+                ],
+            ],
+        ];
+    }
+
+
+    /**
+     * Главная страница проекта
+     * @return string
+     */
     public function actionOverview()
     {
         return $this->render('overview', ['project' => $this->project]);

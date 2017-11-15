@@ -8,21 +8,43 @@
 namespace app\controllers;
 
 
-use app\models\entities\Project;
 use Yii;
-use yii\base\InvalidParamException;
 use yii\web\Controller;
-use yii\web\ForbiddenHttpException;
 use yii\web\Response;
+use yii\filters\AccessControl;
+use yii\base\InvalidParamException;
+use yii\web\ForbiddenHttpException;
+use app\components\AccessManager;
 use app\helpers\RequestHelper;
 use app\helpers\Access;
 use app\helpers\HtmlBlock;
-use app\components\AccessManager;
 use app\models\entities\User;
+use app\models\entities\Project;
 
 
 class AccessController extends Controller
 {
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['assign-role', 'revoke-role'],
+                        'allow'   => true,
+                        'roles'   => [Access::ACCESS_MANAGEMENT, Access::ADMIN],
+                        'verbs'    => ['POST'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
 
     /**
      * @return Response
@@ -46,7 +68,7 @@ class AccessController extends Controller
         }
 
         $project = Project::findOne($projectSuffix);
-        if(!$project) {
+        if (!$project) {
             throw new InvalidParamException('Cannot find project');
         }
 
@@ -87,10 +109,10 @@ class AccessController extends Controller
         }
 
         $project = Project::findOne($projectSuffix);
-        if(!$project) {
+        if (!$project) {
             throw new InvalidParamException('Cannot find project');
         }
-        if($project->admin_id == $userId) {
+        if ($project->admin_id == $userId) {
             throw new \DomainException('Cannot remove project admin access. Use project admin');
         }
 

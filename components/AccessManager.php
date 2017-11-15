@@ -52,9 +52,10 @@ class AccessManager extends DbManager implements CheckAccessInterface
         if ($projectService->project) {
             $permissionName = Access::projectItem($permissionName, $projectService->project);
         }
-        Yii::info('checkAccess ' . $userId . ' to ' . $permissionName, 'access');
 
-        return parent::checkAccess($userId, $permissionName, $params);
+        $result = parent::checkAccess($userId, $permissionName, $params);
+        Yii::info('checkAccess ' . $userId . ' to ' . $permissionName, 'access = ' . $result);
+        return $result;
     }
 
 

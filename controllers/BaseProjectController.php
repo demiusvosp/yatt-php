@@ -10,8 +10,9 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use app\models\entities\Project;
 use app\components\ProjectService;
+use app\models\entities\Project;
+
 
 class BaseProjectController extends Controller
 {
@@ -20,13 +21,22 @@ class BaseProjectController extends Controller
     /** @var  Project */
     public $project;
 
+
+    /**
+     * Проверка и установка текущего проекта, с которым работают все страницы проекта
+     * @param \yii\base\Action $action
+     * @return bool
+     * @throws NotFoundHttpException
+     */
     public function beforeAction($action)
     {
         $this->projectService = Yii::$app->get('projectService');
         $this->project = $this->projectService->project;
-        if(!$this->project) {
+        if (!$this->project) {
             throw new NotFoundHttpException(Yii::t('project', 'Project not found'));
         }
+
         return parent::beforeAction($action);
     }
+
 }

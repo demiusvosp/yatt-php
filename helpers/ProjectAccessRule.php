@@ -21,8 +21,9 @@ class ProjectAccessRule extends AccessRule
     public function allows($action, $user, $request)
     {
         if (!parent::allows($action, $user, $request)) {
+
             // запретили, например по роли или методу
-            return false;
+            return null;
         }
 
         if ($this->project->public == Project::STATUS_PUBLIC_ALL) {
@@ -42,6 +43,6 @@ class ProjectAccessRule extends AccessRule
             return true;
         }
 
-        return false;
+        return null;
     }
 }

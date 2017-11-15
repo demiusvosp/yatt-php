@@ -21,6 +21,8 @@ class BaseProjectController extends Controller
     /** @var  Project */
     public $project;
 
+    public $layout = 'project';
+
 
     /**
      * Проверка и установка текущего проекта, с которым работают все страницы проекта

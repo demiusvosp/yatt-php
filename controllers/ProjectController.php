@@ -15,7 +15,6 @@ use app\helpers\ProjectAccessRule;
 class ProjectController extends BaseProjectController
 {
     public $defaultAction = 'overview';
-    public $layout = 'project';
 
 
     /**

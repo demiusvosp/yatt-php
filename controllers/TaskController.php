@@ -11,6 +11,8 @@ namespace app\controllers;
 use Yii;
 use yii\web\ForbiddenHttpException;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use app\helpers\ProjectAccessRule;
 use app\helpers\Access;
 use app\models\entities\Task;
 use app\models\forms\TaskForm;
@@ -20,7 +22,46 @@ use app\models\queries\TaskQuery;
 
 class TaskController extends BaseProjectController
 {
-    public $layout = 'project';
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'class'   => ProjectAccessRule::className(),
+                        'project' => $this->project,
+                        'actions' => ['list', 'view'],
+                        'allow'   => true,
+                    ],
+                    [
+                        'class'   => ProjectAccessRule::className(),
+                        'project' => $this->project,
+                        'actions' => ['create'],
+                        'roles'   => [Access::OPEN_TASK],
+                        'allow'   => true,
+                    ],
+                    [
+                        'class'   => ProjectAccessRule::className(),
+                        'project' => $this->project,
+                        'actions' => ['edit'],
+                        'roles'   => [Access::EDIT_TASK],
+                        'allow'   => true,
+                    ],
+                    [
+                        'class'   => ProjectAccessRule::className(),
+                        'project' => $this->project,
+                        'actions' => ['close'],
+                        'roles'   => [Access::CLOSE_TASK],
+                        'allow'   => true,
+                    ],
+                ],
+            ],
+        ];
+    }
 
 
     public function actionList()
@@ -29,32 +70,32 @@ class TaskController extends BaseProjectController
         $query->joinWith([
             'assigned' => function ($query) {
                 $query->from(['assigned' => 'user']);
-            }
+            },
         ]);
         $query->joinWith([
             'stage' => function ($query) {
                 $query->from(['stage' => 'dict_stage']);
-            }
+            },
         ]);
         $query->joinWith([
             'type' => function ($query) {
                 $query->from(['type' => 'dict_type']);
-            }
+            },
         ]);
         $query->joinWith([
             'category' => function ($query) {
                 $query->from(['category' => 'dict_category']);
-            }
+            },
         ]);
         $query->joinWith([
             'versionOpen' => function ($query) {
                 $query->from(['versionOpen' => 'dict_version']);
-            }
+            },
         ]);
         $query->joinWith([
             'versionClose' => function ($query) {
                 $query->from(['versionClose' => 'dict_version']);
-            }
+            },
         ]);
 
         $dataProvider = new ActiveDataProvider([
@@ -62,27 +103,27 @@ class TaskController extends BaseProjectController
         ]);
 
         $dataProvider->sort->attributes['assigned.username'] = [
-            'asc' => ['assigned.username' => SORT_ASC],
+            'asc'  => ['assigned.username' => SORT_ASC],
             'desc' => ['assigned.username' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['stage.name'] = [
-            'asc' => ['stage.position' => SORT_ASC],
+            'asc'  => ['stage.position' => SORT_ASC],
             'desc' => ['stage.position' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['type.name'] = [
-            'asc' => ['type.position' => SORT_ASC],
+            'asc'  => ['type.position' => SORT_ASC],
             'desc' => ['type.position' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['category.name'] = [
-            'asc' => ['category.position' => SORT_ASC],
+            'asc'  => ['category.position' => SORT_ASC],
             'desc' => ['category.position' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['versionOpen.name'] = [
-            'asc' => ['type.position' => SORT_ASC],
+            'asc'  => ['type.position' => SORT_ASC],
             'desc' => ['type.position' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['versionClose.name'] = [
-            'asc' => ['type.position' => SORT_ASC],
+            'asc'  => ['type.position' => SORT_ASC],
             'desc' => ['type.position' => SORT_DESC],
         ];
 
@@ -98,17 +139,13 @@ class TaskController extends BaseProjectController
      */
     public function actionCreate()
     {
-        if(!Yii::$app->user->can(Access::OPEN_TASK)) {
-            throw new ForbiddenHttpException('Вам не разрешено создавать задачи в этом проекте');
-        }
-
         $task = new TaskForm();
 
         if ($task->load(Yii::$app->request->post()) && $task->save()) {
             return $this->redirect([
                 'view',
-                'index' => $task->index,
-                'suffix' => $this->project->suffix
+                'index'  => $task->index,
+                'suffix' => $this->project->suffix,
             ]);
         } else {
             if ($task->hasErrors()) {

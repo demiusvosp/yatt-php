@@ -9,6 +9,7 @@
 use app\helpers\ProjectUrl;
 use app\models\entities\Task;
 use app\widgets\CloseTaskWidget;
+use app\helpers\Access;
 
 /* @var $this yii\web\View */
 /* @var $task Task */
@@ -22,12 +23,14 @@ $this->params['breadcrumbs'][] = $this->title;// как вот это превр
 ?>
 <div class="row-fluid task-toolbar">
     <div class="btn-group">
-        <a href="<?= ProjectUrl::to(['task/edit', 'suffix'=>$task->suffix, 'index'=>$task->index])?>" class="btn btn-app">
-            <i class="fa fa-edit"></i>
-            <?=Yii::t('task', 'Edit task')?>
-        </a>
+        <?php if(Yii::$app->user->can(Access::EDIT_TASK)) { ?>
+            <a href="<?= ProjectUrl::to(['task/edit', 'suffix'=>$task->suffix, 'index'=>$task->index])?>" class="btn btn-app">
+                <i class="fa fa-edit"></i>
+                <?=Yii::t('task', 'Edit task')?>
+            </a>
+        <?php } ?>
 
-        <?php if(!$task->is_closed) { ?>
+        <?php if(!$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK)) { ?>
             <a data-action="<?= ProjectUrl::to(['task/close', 'suffix'=>$task->suffix, 'index'=>$task->index])?>"
                data-toggle="modal" data-target="#closeTask"
                class="btn btn-app"

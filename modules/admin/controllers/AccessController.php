@@ -8,12 +8,13 @@
 namespace app\modules\admin\controllers;
 
 
-use app\models\queries\ProjectQuery;
 use Yii;
 use yii\web\Controller;
-use yii\web\ForbiddenHttpException;
+use yii\filters\AccessControl;
+use app\helpers\Access;
 use app\components\AccessManager;
 use app\components\access\Role;
+use app\models\queries\ProjectQuery;
 
 
 class AccessController extends Controller
@@ -29,13 +30,23 @@ class AccessController extends Controller
     }
 
 
-    public function beforeAction($action)
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
     {
-        if (!Yii::$app->user->can('accessManagement')) {
-            throw new ForbiddenHttpException();
-        }
-
-        return parent::beforeAction($action);
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => [Access::ACCESS_MANAGEMENT],
+                    ],
+                ],
+            ],
+        ];
     }
 
 

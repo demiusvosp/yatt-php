@@ -4,9 +4,9 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use app\helpers\Access;
 use yii\data\ActiveDataProvider;
 use app\modules\admin\models\Project;
 //use app\helpers\EntityInitializer;
@@ -23,23 +23,23 @@ class ProjectController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class'   => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update'],
+                        'allow' => true,
+                        'roles' => [Access::PROJECT_MANAGEMENT],
+                    ],
+                    [
+                        'actions' => ['delete'],
+                        'allow' => true,
+                        'roles' => [Access::PROJECT_MANAGEMENT],
+                        'verbs' => ['POST'],
+                    ],
                 ],
             ],
         ];
-    }
-
-
-    public function beforeAction($action)
-    {
-        if (!Yii::$app->user->can('projectManagement')) {
-            throw new ForbiddenHttpException();
-        }
-
-        return parent::beforeAction($action);
     }
 
 

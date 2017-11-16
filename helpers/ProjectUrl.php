@@ -21,13 +21,14 @@ class ProjectUrl extends Url
             if(isset($url['project']) && $url['project'] instanceof Project) {
                 $url['suffix'] = strtolower($url['project']->suffix);
                 unset($url['project']);
-                if(strpos($url[0], '/') !== 0) {
-                    // нет лидирующего слеша в роуте, ставим слеш, чтобы из любого места/модуля сделать ссылку на проект
-                    $url[0] = '/' . $url[0];
-                }
             }
             if(isset($url['suffix'])) {
                 $url['suffix'] = strtolower($url['suffix']);
+            }
+
+            if(strpos($url[0], '/') !== 0) {
+                // нет лидирующего слеша в роуте, ставим слеш, чтобы из любого места/модуля сделать ссылку на проект
+                $url[0] = '/' . $url[0];
             }
         }
 

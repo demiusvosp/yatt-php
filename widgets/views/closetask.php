@@ -26,7 +26,7 @@ use app\helpers\ProjectUrl;
                     </button>
                 </div>
             </div>
-            <?php $form = ActiveForm::begin(['action' => ProjectUrl::to(['close']), 'id'=> 'closeTaskForm']); ?>
+            <?php $form = ActiveForm::begin(['action' => ProjectUrl::to(['task/close', 'suffix' => $task->suffix, 'index' => $task->index]), 'id'=> 'closeTaskForm']); ?>
             <div class="modal-body box-body">
                 <?= Html::activeHiddenInput($model, 'index') ?>
                 <?= Html::activeHiddenInput($model, 'suffix') ?>

@@ -57,6 +57,7 @@ class TaskController extends BaseProjectController
                         'actions' => ['close'],
                         'roles'   => [Access::CLOSE_TASK],
                         'allow'   => true,
+                        'verbs'   => ['POST'],
                     ],
                 ],
             ],

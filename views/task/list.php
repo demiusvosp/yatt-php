@@ -11,6 +11,7 @@ use yii\grid\GridView;
 use yii\helpers\StringHelper;
 use app\models\entities\Task;
 
+
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -24,23 +25,25 @@ const COLUMN_MAX_LEN = 255;
 </div>
 <div class="row-fluid">
     <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'options' => ['class' => 'task_list'],
+        'dataProvider'   => $dataProvider,
+        'options'        => ['class' => 'task_list'],
         'captionOptions' => ['class' => 'task_list_caption'],
-        'rowOptions' => function ($model, $key, $index, $grid) {
+        'rowOptions'     => function ($model, $key, $index, $grid) {
             /** @var Task $model */
-            if($model->is_closed) {
+            if ($model->is_closed) {
                 return ['class' => 'closed'];
             }
+
             return '';
         },
-        'columns' => [
+        'columns'        => [
             ['class' => 'yii\grid\SerialColumn'],
 
             [
                 'attribute' => 'name',
-                'label'  => Yii::t('task', 'ID'),
-                'content' => function($task) {
+                'contentOptions'   => ['class' => 'item-name'],
+                'label'     => Yii::t('task', 'ID'),
+                'content'   => function ($task) {
                     return Html::a(
                         $task->name,
                         ['task/view', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index]
@@ -49,16 +52,18 @@ const COLUMN_MAX_LEN = 255;
             ],
             [
                 'attribute' => 'category.name',
-                'label'     => Yii::t('dicts', 'Category')
+                'label'     => Yii::t('dicts', 'Category'),
             ],
             [
                 'attribute' => 'type.name',
-                'label'     => Yii::t('dicts', 'Type')
+                'label'     => Yii::t('dicts', 'Type'),
             ],
             [
                 'attribute' => 'caption',
-                'label'  => Yii::t('task', 'Caption'),
-                'content' => function($task) {
+                'contentOptions'   => ['class' => 'item-caption'],
+                'label'     => Yii::t('task', 'Caption'),
+                'content'   => function ($task) {
+                    //@TODO при наведении показывать тултип с описанием (или нет)
                     /** @var Task $task */
                     return Html::a(
                         StringHelper::truncate($task->caption, COLUMN_MAX_LEN),
@@ -67,45 +72,44 @@ const COLUMN_MAX_LEN = 255;
                 },
             ],
             [
-                'attribute' => 'priority',
-                'content' => function($task) {
+                'attribute'      => 'priority',
+                'content'        => function ($task) {
                     /** @var Task $task */
                     return $task->getPriorityName();
                 },
                 'contentOptions' => function ($task, $key, $index, $column) {
                     return ['class' => 'priority ' . Task::priorityStyles()[$task->priority]];
-                }
+                },
             ],
             [
                 'attribute' => 'assigned.username',
-                'label' => Yii::t('task', 'Assigned'),
+                'label'     => Yii::t('task', 'Assigned'),
             ],
-            'description:ntext',
 
             [
                 'attribute' => 'stage.name',
-                'label'     => Yii::t('dicts', 'Stage')
+                'label'     => Yii::t('dicts', 'Stage'),
             ],
             [
                 'attribute' => 'progress',
-                'content' => function($task) {
+                'content'   => function ($task) {
                     return '<div class="progress">
                     <div class="progress-bar progress-bar-green" role="progressbar"
-                        aria-valuenow="' . $task->progress .'" aria-valuemin="0" aria-valuemax="100" 
+                        aria-valuenow="' . $task->progress . '" aria-valuemin="0" aria-valuemax="100" 
                         style="width: ' . $task->progress . '%"></div>
-                    <div class="progress-value">'.$task->progress.'%</div>';
-                }
+                    <div class="progress-value">' . $task->progress . '%</div>';
+                },
             ],
 
             'created_at:datetime',
             [
                 'attribute' => 'versionOpen.name',
-                'label'     => Yii::t('dicts', 'Open in version')
+                'label'     => Yii::t('dicts', 'Open in version'),
             ],
             'updated_at:datetime',
             [
                 'attribute' => 'versionClose.name',
-                'label'     => Yii::t('dicts', 'Сoming in version')
+                'label'     => Yii::t('dicts', 'Сoming in version'),
             ],
             // 'admin_id',
 

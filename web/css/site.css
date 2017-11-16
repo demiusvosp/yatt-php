@@ -173,6 +173,12 @@ ul.table.table-striped li:nth-child(even) {
     font-weight: bold;
 }
 .task_list tr.closed {
+    background-color: #dddddd !important;
+}
+.task_list tr.closed .item-name {
+    text-decoration: line-through;
+}
+.task_list tr.closed .item-caption {
     text-decoration: line-through;
 }
 

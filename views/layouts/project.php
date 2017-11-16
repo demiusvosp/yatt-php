@@ -43,9 +43,9 @@ array_unshift($this->params['breadcrumbs'], $this->title);
                     </a>
                 </li>
                 <?php if (Yii::$app->user->can(Access::OPEN_TASK)) { ?>
-                    <li <?=$this->context->route == 'task/create' ? $active : '' ?>>
-                        <a href="<?= ProjectUrl::to(['task/create', 'project' => $project]) ?>">
-                            <?= Yii::t('task', 'Create task') ?>
+                    <li <?=$this->context->route == 'task/open' ? $active : '' ?>>
+                        <a href="<?= ProjectUrl::to(['task/open', 'project' => $project]) ?>">
+                            <?= Yii::t('task', 'Open task') ?>
                         </a>
                     </li>
                 <?php } ?>

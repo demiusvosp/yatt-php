@@ -17,11 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Create User' => 'Создать пользователя',
+    'Choose user' => 'Выбрать пользователя',
+    'Open' => 'Открыть',
     'About' => 'О программе',
     'Administration' => 'Настройка',
     'Are you sure you want to delete this item?' => 'Вы действительно готовы удалить?',
     'Create' => 'Создать',
+    'Create User' => 'Создать пользователя',
     'Delete' => 'Удалить',
     'Design:' => 'Дизайн:',
     'Edit' => 'Редактировать',

@@ -17,10 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Close reason' => 'Причина закрытия',
+    'Open task' => 'Открыть задачу',
     'Assigned' => 'Назначена',
     'Cancel' => 'Отменена',
     'Caption' => 'Заголовок',
+    'Close reason' => 'Причина закрытия',
     'Close task' => 'Закрыть задачу',
     'Create task' => 'Новая',
     'Created' => 'Создана',

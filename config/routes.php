@@ -12,7 +12,7 @@ return [
 
     // task
     'task/<suffix:\w+>/list'                 => 'task/list',
-    'task/<suffix:\w+>/create'               => 'task/create',
+    'task/<suffix:\w+>/open'                 => 'task/open',
     'task/<suffix:\w+>-<index:\d+>'          => 'task/view',
     'task/<suffix:\w+>-<index:\d+>/edit'     => 'task/edit',
     'task/<suffix:\w+>-<index:\d+>/close'    => 'task/close',
@@ -44,8 +44,8 @@ return [
     // user managment
     'admin/access/list'                      => 'admin/access/index',
     // access ajax
-    'POST access/assign' => 'access/assign-role',
-    'POST access/revoke' => 'access/revoke-role',
+    'POST access/assign'                     => 'access/assign-role',
+    'POST access/revoke'                     => 'access/revoke-role',
 
     // user
     'user/profile'                           => 'user/profile',

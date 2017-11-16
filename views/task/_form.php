@@ -98,7 +98,7 @@ for($i = 0; $i <= 100; $i += 10) {
         <?= $form->field($task, 'description')->textarea(['rows' => 10]) ?>
 
         <div class="form-group">
-            <?= Html::submitButton($task->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'), ['class' => $task->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($task->isNewRecord ? Yii::t('common', 'Open') : Yii::t('common', 'Update'), ['class' => $task->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     </div>
 </div>

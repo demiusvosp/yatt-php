@@ -11,7 +11,7 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $task app\models\entities\Task */
 
-$this->title = Yii::t('task', 'Create task');
+$this->title = Yii::t('task', 'Open task');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

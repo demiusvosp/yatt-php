@@ -40,7 +40,7 @@ class TaskController extends BaseProjectController
                     [
                         'class'   => ProjectAccessRule::className(),
                         'project' => $this->project,
-                        'actions' => ['create'],
+                        'actions' => ['open'],
                         'roles'   => [Access::OPEN_TASK],
                         'allow'   => true,
                     ],
@@ -137,7 +137,7 @@ class TaskController extends BaseProjectController
      * @return string|\yii\web\Response
      * @throws ForbiddenHttpException
      */
-    public function actionCreate()
+    public function actionOpen()
     {
         $task = new TaskForm();
 
@@ -152,7 +152,7 @@ class TaskController extends BaseProjectController
                 Yii::$app->session->addFlash('error', Yii::t('task', 'Error in create new task'));
             }
 
-            return $this->render('create', [
+            return $this->render('open', [
                 'task' => $task,
             ]);
         }
@@ -171,7 +171,7 @@ class TaskController extends BaseProjectController
         if ($task->load(Yii::$app->request->post()) && $task->save()) {
             return $this->redirect(['view', 'index' => $index, 'suffix' => $suffix]);
         } else {
-            return $this->render('create', [
+            return $this->render('edit', [
                 'task' => $task,
             ]);
         }

@@ -17,13 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Open task' => 'Открыть задачу',
     'Assigned' => 'Назначена',
     'Cancel' => 'Отменена',
     'Caption' => 'Заголовок',
     'Close reason' => 'Причина закрытия',
     'Close task' => 'Закрыть задачу',
-    'Create task' => 'Новая',
     'Created' => 'Создана',
     'Critical' => 'Критический',
     'Description' => 'Описание',
@@ -37,6 +35,7 @@ return [
     'Low' => 'Низкий',
     'Medium' => 'Обычный',
     'No error' => 'Не ошибка',
+    'Open task' => 'Открыть задачу',
     'Priority' => 'Приоритет',
     'Progress' => 'Прогресс',
     'Retry' => 'Повтор',

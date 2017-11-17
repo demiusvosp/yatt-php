@@ -46,32 +46,6 @@ $config = array_merge_recursive($config, [
             'showScriptName' => false,
             'rules' => require(__DIR__ . '/routes.php'),
         ],
-        'view' => [
-            'class' => 'yii\web\View',
-            'renderers' => [
-                'twig' => [
-                    'class' => 'yii\twig\ViewRenderer',
-                    'cachePath' => '@runtime/Twig/cache',
-                    // Array of twig options:
-                    'options' => [
-                        'debug' => YII_DEBUG,
-                        'auto_reload' => YII_DEBUG,
-                        'strict_variables' => YII_DEBUG,
-                    ],
-                    'globals' => [
-                        'url'  => ['class' => 'app\helpers\ProjectUrl'],
-                        'html' => ['class' => '\yii\helpers\Html']
-                    ],
-                    'functions' => [
-                        't' => 'Yii::t',
-                    ],
-                    'uses' => ['yii\bootstrap'],
-//                    'extensions' => [
-//                        \yii\twig\html\HtmlHelperExtension::class,
-//                    ],
-                ],
-            ],
-        ],
         'assetManager' => [
             'bundles' => [
                 'dmstr\web\AdminLteAsset' => [

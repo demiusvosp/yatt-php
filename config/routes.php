@@ -15,6 +15,7 @@ return [
     'task/<suffix:\w+>/open'                 => 'task/open',
     'task/<suffix:\w+>-<index:\d+>'          => 'task/view',
     'task/<suffix:\w+>-<index:\d+>/edit'     => 'task/edit',
+    'task/<suffix:\w+>-<index:\d+>/change-stage' => 'task/change-stage',
     'task/<suffix:\w+>-<index:\d+>/close'    => 'task/close',
 
     // project setting

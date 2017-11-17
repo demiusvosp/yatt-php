@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'can change task stage' => 'может менять этап задачи',
     'Access management' => 'Управление доступами',
     'Project Employee' => 'Работник проекта',
     'Project admin' => 'Админ проекта',

@@ -36,6 +36,7 @@ class Access
     // полномочия в проекте
     const OPEN_TASK = 'openTask';
     const EDIT_TASK = 'editTask';
+    const CHANGE_STAGE = 'changeStage';
     const CLOSE_TASK = 'closeTask';
     const PROJECT_SETTINGS = 'projectSettings';
 
@@ -59,6 +60,7 @@ class Access
             static::VIEW             => Yii::t('access', 'Project watcher'),
             static::OPEN_TASK        => Yii::t('access', 'can open task'),
             static::EDIT_TASK        => Yii::t('access', 'can edit task'),
+            static::CHANGE_STAGE         => Yii::t('access', 'can change task stage'),
             static::CLOSE_TASK       => Yii::t('access', 'can close task'),
             static::PROJECT_SETTINGS => Yii::t('access', 'can change setting'),
         ];
@@ -99,6 +101,7 @@ class Access
 
             static::OPEN_TASK,
             static::EDIT_TASK,
+            static::CHANGE_STAGE,
             static::CLOSE_TASK,
             static::PROJECT_SETTINGS,
         ];
@@ -117,7 +120,7 @@ class Access
     {
         if (strpos('_', $accessItem) !== false) {
             // в роли/полномочии уже указан проект
-            list($project, $accessItem) = explode('_', $accessItem);
+            list($accessItem, $project) = explode('_', $accessItem);
 
             if (!$project) {
                 throw new \InvalidArgumentException('project access item without project');

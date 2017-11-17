@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Change stage' => 'Сменить этап',
+    'Go to stage' => 'Перейти на ',
     'Assigned' => 'Назначена',
     'Cancel' => 'Отменена',
     'Caption' => 'Заголовок',

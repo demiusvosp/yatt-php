@@ -9,10 +9,14 @@
 use app\helpers\ProjectUrl;
 use app\models\entities\Task;
 use app\widgets\CloseTaskWidget;
+use app\components\ProjectService;
 use app\helpers\Access;
 
 /* @var $this yii\web\View */
 /* @var $task Task */
+
+/** @var ProjectService $projectService */
+$projectService = Yii::$app->get('projectService');
 
 $this->title = Yii::t('task', 'Task: ') . $task->getName();
 $this->params['breadcrumbs'][] = $this->title;// как вот это превращать в твиг?
@@ -24,20 +28,49 @@ $this->params['breadcrumbs'][] = $this->title;// как вот это превр
 <div class="row-fluid task-toolbar">
     <div class="btn-group">
         <?php if(Yii::$app->user->can(Access::EDIT_TASK)) { ?>
-            <a href="<?= ProjectUrl::to(['task/edit', 'suffix'=>$task->suffix, 'index'=>$task->index])?>" class="btn btn-app">
+            <a
+                class="btn btn-app"
+                href="<?= ProjectUrl::to(['task/edit', 'suffix'=>$task->suffix, 'index'=>$task->index])?>"
+            >
                 <i class="fa fa-edit"></i>
                 <?=Yii::t('task', 'Edit task')?>
             </a>
         <?php } ?>
 
         <?php if(!$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK)) { ?>
-            <a data-action="<?= ProjectUrl::to(['task/close', 'suffix'=>$task->suffix, 'index'=>$task->index])?>"
-               data-toggle="modal" data-target="#closeTask"
-               class="btn btn-app"
+            <button class="btn btn-app"
+                data-action="<?= ProjectUrl::to(['task/close', 'suffix'=>$task->suffix, 'index'=>$task->index])?>"
+                data-toggle="modal" data-target="#closeTask"
             >
                 <i class="glyphicon glyphicon-ok"></i>
                 <?=Yii::t('task', 'Close task')?>
-            </a>
+            </button>
+        <?php } ?>
+
+        <?php if(Yii::$app->user->can(Access::CHANGE_STAGE)) { ?>
+            <div class="btn-group">
+                <button class="btn btn-app dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                    <span>
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                        <?=Yii::t('task', 'Change stage')?>
+                    </span>
+                    <span class="fa fa-caret-down"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <?php foreach ($projectService->getStagesList() as $stageId => $stageName) { ?>
+                        <li>
+                            <a href="<?= ProjectUrl::to([
+                                'task/change-stage',
+                                'suffix'=>$task->suffix,
+                                'index'=>$task->index,
+                                'stage'=>$stageId
+                            ])?>">
+                                <?=Yii::t('task', 'Go to stage') . $stageName ?>
+                            </a>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
         <?php } ?>
     </div>
 </div>

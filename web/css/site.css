@@ -2,6 +2,12 @@
 .btn.disabled {
     opacity: 0.4;
 }
+.btn-app.dropdown-toggle i {
+    display: block;
+}
+.btn-app.dropdown-toggle span {
+    display: inline-block;
+}
 
 /* аналог hidden из bootstrap, но показываемый через jquery */
 .unshow {

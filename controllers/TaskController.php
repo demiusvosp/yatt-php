@@ -11,6 +11,7 @@ namespace app\controllers;
 use Yii;
 use yii\web\ForbiddenHttpException;
 use yii\data\ActiveDataProvider;
+use yii\web\Response;
 use yii\filters\AccessControl;
 use app\helpers\ProjectAccessRule;
 use app\helpers\Access;
@@ -50,6 +51,14 @@ class TaskController extends BaseProjectController
                         'actions' => ['edit'],
                         'roles'   => [Access::EDIT_TASK],
                         'allow'   => true,
+                    ],
+                    [
+                        'class'   => ProjectAccessRule::className(),
+                        'project' => $this->project,
+                        'actions' => ['change-stage'],
+                        'roles'   => [Access::CHANGE_STAGE],
+                        'allow'   => true,
+                        //'verbs'   => ['POST'],
                     ],
                     [
                         'class'   => ProjectAccessRule::className(),
@@ -195,9 +204,23 @@ class TaskController extends BaseProjectController
 
 
     /**
+     * @return Response
+     */
+    public function actionChangeStage($suffix, $index, $stage)
+    {
+        $task = TaskQuery::getByIndex($suffix, $index);
+
+        $task->changeStage($stage);
+        $task->save();
+
+        return $this->redirect(['view', 'index' => $task->index, 'suffix' => $task->suffix]);
+    }
+
+
+    /**
      * Закрыть задачу
      *
-     * @return string
+     * @return Response
      */
     public function actionClose()
     {

@@ -324,4 +324,17 @@ class Task extends ActiveRecord
 
         $this->save();
     }
+
+
+    /**
+     * @param int|DictStage $stage
+     */
+    public function changeStage($stage)
+    {
+        if(!$stage instanceof DictStage) {
+            $stage = DictStage::findOne(['id'=>$stage]);
+        }
+        $this->setStage($stage);
+    }
+
 }

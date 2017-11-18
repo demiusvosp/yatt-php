@@ -18,7 +18,7 @@ class ProjectFixture extends ActiveFixture
     public $modelClass = 'app\models\entities\Project';
 
     public $depends = [
-        'tests\unit\fixtures\UserFixture',
+        //'tests\unit\fixtures\UserFixture', иначе он удалит всех пользователей
     ];
 
 

@@ -8,8 +8,8 @@
 namespace app\helpers;
 
 
+use Yii;
 use app\models\entities\User;
-use http\Exception\InvalidArgumentException;
 use yii\helpers\Html;
 use app\models\entities\Project;
 use app\components\access\Role;
@@ -69,7 +69,7 @@ class HtmlBlock
         } else if($user instanceof User) {
             $username = $user->username;
         } else {
-            throw new InvalidArgumentException('user должен быть массивом или моделью');
+            return Yii::t('common', 'Not set');
         }
 
         return '<div class="user-item'.($disabled?' disabled':'').'"><i class="fa fa-user"></i>&nbsp;'.$username.'</div>';

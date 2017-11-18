@@ -28,6 +28,12 @@ phpunit.phar
 
 tests/_output/*
 tests/_support/_generated
+tests/unit/fixtures/data/*
 
 composer.lock
 runtime/*
+
+Будет удалено assets/res/
+Будет удалено rbac/
+Будет удалено tests/fixtures/dev/data/
+Будет удалено tests/unit/fixtures/data/

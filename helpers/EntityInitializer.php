@@ -121,4 +121,31 @@ class EntityInitializer
             $project
         );
     }
+
+
+    /**
+     * Правильно удалить все связанное с проектом
+     * @param Project $project
+     */
+    public static function deinitializeProject($project)
+    {
+        /** @var AccessManager $auth */
+        $auth = Yii::$app->authManager;
+
+        // удалим связанные с проектом полномочия
+        $auth->removeProjectAccesses($project);
+
+        // если уж проект удаляют, удалим каскадом все, с ним связанное.
+        // правда в случае аттачмента это может потом сказаться... (хотя это тоже можно решить, например сервисными командами уборки)
+    }
+
+
+    /**
+     * Правильно удалить все связанное с задачей
+     * @param Task $task
+     */
+    public static function deinitializeTask($task)
+    {
+
+    }
 }

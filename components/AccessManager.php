@@ -329,4 +329,45 @@ class AccessManager extends DbManager implements CheckAccessInterface
             ->andWhere([$this->assignmentTable . '.item_name' => $roleName])
             ->all();
     }
+
+
+    /**
+     * @param Project $project
+     */
+    public function removeProjectAccesses($project)
+    {
+        // все элементы доступа проекта
+        $names = (new Query())
+            ->select(['name'])
+            ->from($this->itemTable)
+            ->where(['like', 'name', '_'.$project->suffix])
+            ->column($this->db);
+        if (empty($names)) {
+            return;
+        }
+var_dump($names);
+
+var_dump($this->db->createCommand()
+    ->delete($this->assignmentTable, ['item_name' => $names])->rawSql);
+        // удалим назначения пользователям
+        $this->db->createCommand()
+            ->delete($this->assignmentTable, ['item_name' => $names])
+            ->execute();
+
+var_dump($this->db->createCommand()
+    ->delete($this->itemChildTable, ['child' => $names])->rawSql);
+        // иерархия
+        $this->db->createCommand()
+            ->delete($this->itemChildTable, ['child' => $names])
+            ->execute();
+
+var_dump($this->db->createCommand()
+    ->delete($this->itemTable, ['name' => $names])->rawSql);
+        // сами элементы доступа
+        $this->db->createCommand()
+            ->delete($this->itemTable, ['name' => $names])
+            ->execute();
+
+        $this->invalidateCache();
+    }
 }

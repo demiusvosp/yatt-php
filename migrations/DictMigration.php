@@ -53,7 +53,9 @@ class DictMigration extends Migration
             $this->tableName,
             'project_id',
             'project',
-            'id'
+            'id',
+            'CASCADE',
+            'CASCADE'
         );
 
         $this->addColumn('task', $this->refField, $this->integer());
@@ -62,7 +64,9 @@ class DictMigration extends Migration
             'task',
             $this->refField,
             $this->tableName,
-            'id'
+            'id',
+            'CASCADE',
+            'CASCADE'
         );
     }
 

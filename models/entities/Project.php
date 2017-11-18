@@ -2,11 +2,11 @@
 
 namespace app\models\entities;
 
-use app\helpers\Access;
 use Yii;
 use yii\db\ActiveRecord;
-use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use yii\behaviors\TimestampBehavior;
+use app\helpers\Access;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use app\models\queries\ProjectQuery;
@@ -187,6 +187,15 @@ class Project extends ActiveRecord
     }
 
 
+    public function afterFind()
+    {
+        if(is_string($this->config)) {
+            $this->config = Json::decode($this->config, true);
+        }
+        parent::afterFind();
+    }
+
+
     /**
      *
      * Обработка даных перед сохранением
@@ -197,7 +206,9 @@ class Project extends ActiveRecord
     public function beforeSave($insert)
     {
         $this->suffix = strtoupper($this->suffix);
-        $this->config = Json::encode($this->config);
+        if(is_array($this->config)) {
+            $this->config = Json::encode($this->config);
+        }
 
         return parent::beforeSave($insert);
     }
@@ -225,6 +236,13 @@ class Project extends ActiveRecord
             $auth->assign(Access::ADMIN, $this->admin_id, $this);
         }
         parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function beforeDelete()
+    {
+        EntityInitializer::deinitializeProject($this);
+
+        return parent::beforeDelete();
     }
 
 

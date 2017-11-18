@@ -17,7 +17,7 @@ class m161109_000030_create_project extends Migration
             'admin_id'    => $this->integer()->comment('основной админ проекта'),
             'config'      => $this->text()->comment('прочий конфиг'),
 
-            'last_task_id' => $this->integer()->defaultValue(0)->comment('номер последней задачи'),
+            'last_task_index' => $this->integer()->defaultValue(1)->comment('номер последней задачи'),
         ]);
 
         $this->addForeignKey('fk-project-user-ref', 'project', 'admin_id', 'user', 'id');

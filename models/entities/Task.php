@@ -2,12 +2,12 @@
 
 namespace app\models\entities;
 
-use app\models\queries\DictStageQuery;
 use Yii;
 use yii\db\ActiveRecord;
-use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use yii\behaviors\TimestampBehavior;
 use app\models\queries\TaskQuery;
+use app\models\queries\DictStageQuery;
 
 
 /**

@@ -23,9 +23,13 @@ $config = array_merge_recursive($config, [
         ],
     ],
     'params' => $params,
+    'aliases' => [
+        'tests' => '@app/tests',
+    ],
     'controllerMap' => [
         'fixture' => [ // Fixture generation command line.
             'class' => 'yii\faker\FixtureController',
+            'language' => 'ru_RU',
         ],
         'migrate' => [
             'class' => 'yii\console\controllers\MigrateController',

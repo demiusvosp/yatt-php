@@ -47,6 +47,9 @@ class User extends ActiveRecord implements IdentityInterface
 
 
     /**
+     * Здесь все поля, которые могут использовать в том числе специальные сервисы, импортеры, фикстуры и т.д.
+     * Для защиты секретных полей, наследовтаь свои формы и модели
+     *
      * @inheritdoc
      */
     public function rules()
@@ -57,17 +60,19 @@ class User extends ActiveRecord implements IdentityInterface
             [
                 'username',
                 'unique',
-                'targetClass' => self::className(),
+                'targetClass' => static::className(),
                 'message'     => Yii::t('user', 'Username already exist'),
             ],
             ['username', 'string', 'min' => 2, 'max' => 255],
+
+            ['password_hash', 'string'],
 
             ['email', 'required'],
             ['email', 'email'],
             [
                 'email',
                 'unique',
-                'targetClass' => self::className(),
+                'targetClass' => static::className(),
                 'message' => Yii::t('user', 'Email already exist'),
             ],
             ['email', 'string', 'max' => 255],

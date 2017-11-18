@@ -23,7 +23,7 @@ use app\helpers\EntityInitializer;
  * @property integer          $public
  * @property array            $config
  * @property integer          $admin_id
- * @property integer          $last_task_id
+ * @property integer          $last_task_index
  * @property DictStage[]      $stages
  * @property DictType[]       $types
  * @property DictVersion[]    $versions
@@ -189,7 +189,7 @@ class Project extends ActiveRecord
 
     public function afterFind()
     {
-        if(is_string($this->config)) {
+        if (is_string($this->config)) {
             $this->config = Json::decode($this->config, true);
         }
         parent::afterFind();
@@ -206,7 +206,7 @@ class Project extends ActiveRecord
     public function beforeSave($insert)
     {
         $this->suffix = strtoupper($this->suffix);
-        if(is_array($this->config)) {
+        if (is_array($this->config)) {
             $this->config = Json::encode($this->config);
         }
 
@@ -216,6 +216,7 @@ class Project extends ActiveRecord
 
     /**
      * Поддержка консистенции проекта после его создания/сохранения. Инициализирует проект
+     *
      * @param bool  $insert
      * @param array $changedAttributes
      */
@@ -237,6 +238,7 @@ class Project extends ActiveRecord
         }
         parent::afterSave($insert, $changedAttributes);
     }
+
 
     public function beforeDelete()
     {
@@ -265,7 +267,7 @@ class Project extends ActiveRecord
 
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \app\models\queries\DictVersionQuery
      */
     public function getVersions()
     {
@@ -288,6 +290,18 @@ class Project extends ActiveRecord
     public function getCategories()
     {
         return $this->hasMany(DictCategory::className(), ['project_id' => 'id']);
+    }
+
+
+    /**
+     * Сгенерировать новый ид задачи, и запомнить состояние из проекта.
+     */
+    public function generateNewTaskIndex()
+    {
+        $lastIndex = $this->last_task_index;
+        $this->updateCounters(['last_task_index' => 1]);
+
+        return $lastIndex;
     }
 
 }

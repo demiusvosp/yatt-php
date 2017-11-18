@@ -44,7 +44,7 @@ class TaskForm extends Task
 
     public function beforeSave($insert)
     {
-        $this->index = $this->_projectService->generateNewTaskId();
+        $this->index = $this->project->generateNewTaskIndex();
         $this->suffix = $this->_projectService->project->suffix;
 
         return parent::beforeSave($insert);

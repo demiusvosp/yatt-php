@@ -27,7 +27,7 @@ class EntityInitializer
     public static function initializeProject($project, $andSave = true)
     {
         // дефолтные настройки
-        $project->last_task_id = 1;
+        $project->last_task_index = 1;
         $project->config = Json::encode([]);
 
         // создаем минимально необходимые этапы

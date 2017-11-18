@@ -1,0 +1,2 @@
+# Игнорим те фикстуры, которые генерятся из tests/unit/templates/fixtures
+task.php

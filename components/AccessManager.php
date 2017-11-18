@@ -345,24 +345,17 @@ class AccessManager extends DbManager implements CheckAccessInterface
         if (empty($names)) {
             return;
         }
-var_dump($names);
 
-var_dump($this->db->createCommand()
-    ->delete($this->assignmentTable, ['item_name' => $names])->rawSql);
         // удалим назначения пользователям
         $this->db->createCommand()
             ->delete($this->assignmentTable, ['item_name' => $names])
             ->execute();
 
-var_dump($this->db->createCommand()
-    ->delete($this->itemChildTable, ['child' => $names])->rawSql);
         // иерархия
         $this->db->createCommand()
             ->delete($this->itemChildTable, ['child' => $names])
             ->execute();
 
-var_dump($this->db->createCommand()
-    ->delete($this->itemTable, ['name' => $names])->rawSql);
         // сами элементы доступа
         $this->db->createCommand()
             ->delete($this->itemTable, ['name' => $names])

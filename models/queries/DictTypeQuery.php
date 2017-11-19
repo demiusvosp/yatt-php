@@ -2,7 +2,7 @@
 
 namespace app\models\queries;
 
-use yii\db\ActiveQuery;
+
 use app\models\entities\DictType;
 
 
@@ -11,7 +11,7 @@ use app\models\entities\DictType;
  *
  * @see DictType
  */
-class DictTypeQuery extends ActiveQuery
+class DictTypeQuery extends DictBaseQuery
 {
     public function __construct($modelClass, array $config = [])
     {

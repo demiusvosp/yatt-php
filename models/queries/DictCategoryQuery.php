@@ -2,15 +2,15 @@
 
 namespace app\models\queries;
 
-use yii\db\ActiveQuery;
 use app\models\entities\DictCategory;
+
 
 /**
  * This is the ActiveQuery class for [[\app\models\entities\DictCategory]].
  *
  * @see \app\models\entities\DictCategory
  */
-class DictCategoryQuery extends ActiveQuery
+class DictCategoryQuery extends DictBaseQuery
 {
 
     public function __construct($modelClass, array $config = [])
@@ -27,6 +27,7 @@ class DictCategoryQuery extends ActiveQuery
     public function all($db = null)
     {
         $this->orderBy(['position' => 'asc']);
+
         return parent::all($db);
     }
 

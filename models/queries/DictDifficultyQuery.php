@@ -2,15 +2,15 @@
 
 namespace app\models\queries;
 
-use yii\db\ActiveQuery;
 use app\models\entities\DictDifficulty;
+
 
 /**
  * This is the ActiveQuery class for [[DictDifficulty]].
  *
  * @see DictDifficulty
  */
-class DictDifficultyQuery extends ActiveQuery
+class DictDifficultyQuery extends DictBaseQuery
 {
 
     public function __construct($modelClass, array $config = [])
@@ -27,6 +27,7 @@ class DictDifficultyQuery extends ActiveQuery
     public function all($db = null)
     {
         $this->orderBy(['position' => 'asc']);
+
         return parent::all($db);
     }
 

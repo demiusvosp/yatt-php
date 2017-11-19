@@ -2,7 +2,7 @@
 
 namespace app\models\queries;
 
-use yii\db\ActiveQuery;
+
 use app\models\entities\DictVersion;
 
 /**
@@ -10,7 +10,7 @@ use app\models\entities\DictVersion;
  *
  * @see DictVersion
  */
-class DictVersionQuery extends ActiveQuery
+class DictVersionQuery extends DictBaseQuery
 {
 
     public function __construct($modelClass, array $config = [])

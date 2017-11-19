@@ -133,12 +133,12 @@ class TaskController extends BaseProjectController
             'desc' => ['category.position' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['versionOpen.name'] = [
-            'asc'  => ['type.position' => SORT_ASC],
-            'desc' => ['type.position' => SORT_DESC],
+            'asc'  => ['versionOpen.position' => SORT_ASC],
+            'desc' => ['versionOpen.position' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['versionClose.name'] = [
-            'asc'  => ['type.position' => SORT_ASC],
-            'desc' => ['type.position' => SORT_DESC],
+            'asc'  => ['versionClose.position' => SORT_ASC],
+            'desc' => ['versionClose.position' => SORT_DESC],
         ];
 
         return $this->render('list', [

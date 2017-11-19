@@ -10,7 +10,11 @@ class m161109_000050_create_dict_stage extends DictMigration
     public function safeUp()
     {
         parent::safeUp();
-        $this->addColumn($this->tableName, 'type', $this->integer()->unsigned());
+        $this->addColumn(
+            $this->tableName,
+            'type',
+            $this->integer()->unsigned()->defaultValue(0)
+        );
     }
 
     public function safeDown()

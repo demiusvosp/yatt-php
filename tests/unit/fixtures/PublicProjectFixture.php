@@ -61,25 +61,25 @@ class PublicProjectFixture extends ActiveFixture
         $auth->assign(Access::projectItem(Access::EMPLOYEE), $alice->id, $project);
 
         // разные справочники
-        (new DictStage(['name' => 'Разработка']))->link('project', $project);
-        (new DictStage(['name' => 'Тестирование']))->link('project', $project);
+        (new DictStage(['name' => 'Разработка']))->append($project);
+        (new DictStage(['name' => 'Тестирование']))->append($project);
 
-        (new DictVersion(['name' => '1.0', 'type' => DictVersion::CURRENT]))->link('project', $project);
-        (new DictVersion(['name' => '1.1', 'type' => DictVersion::FUTURE]))->link('project', $project);
-        (new DictVersion(['name' => '2.0', 'type' => DictVersion::FUTURE]))->link('project', $project);
+        (new DictVersion(['name' => '1.0', 'type' => DictVersion::CURRENT]))->append($project);
+        (new DictVersion(['name' => '1.1', 'type' => DictVersion::FUTURE]))->append($project);
+        (new DictVersion(['name' => '2.0', 'type' => DictVersion::FUTURE]))->append($project);
 
-        (new DictType(['name' => 'Задача']))->link('project', $project);
-        (new DictType(['name' => 'Ошибка']))->link('project', $project);
-        (new DictType(['name' => 'Рефакторинг']))->link('project', $project);
+        (new DictType(['name' => 'Задача']))->append($project);
+        (new DictType(['name' => 'Ошибка']))->append($project);
+        (new DictType(['name' => 'Рефакторинг']))->append($project);
 
-        (new DictDifficulty(['name' => 'Простая', 'ratio' => 0.5]))->link('project', $project);
-        (new DictDifficulty(['name' => 'Обычная', 'ratio' => 1]))->link('project', $project);
-        (new DictDifficulty(['name' => 'Сложная', 'ratio' => 2]))->link('project', $project);
+        (new DictDifficulty(['name' => 'Простая', 'ratio' => 0.5]))->append($project);
+        (new DictDifficulty(['name' => 'Обычная', 'ratio' => 1]))->append($project);
+        (new DictDifficulty(['name' => 'Сложная', 'ratio' => 2]))->append($project);
 
-        (new DictCategory(['name' => 'Ядро']))->link('project', $project);
-        (new DictCategory(['name' => 'API']))->link('project', $project);
-        (new DictCategory(['name' => 'Админка']))->link('project', $project);
-        (new DictCategory(['name' => 'Консоль']))->link('project', $project);
+        (new DictCategory(['name' => 'Ядро']))->append($project);
+        (new DictCategory(['name' => 'API']))->append($project);
+        (new DictCategory(['name' => 'Админка']))->append($project);
+        (new DictCategory(['name' => 'Консоль']))->append($project);
     }
 
 

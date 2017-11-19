@@ -5,6 +5,7 @@ namespace app\models\entities;
 
 use app\models\queries\DictStageQuery;
 
+
 /**
  * This is the model class for table "dict_state".
  *
@@ -24,6 +25,7 @@ class DictStage extends DictBase
      *   текущей платформы
      */
     const POSITION_MAX = 9999;
+
 
     /**
      * @inheritdoc
@@ -58,15 +60,6 @@ class DictStage extends DictBase
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProject()
-    {
-        return $this->hasOne(Project::className(), ['id' => 'project_id']);
-    }
-
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getTasks()
     {
         return $this->hasMany(Task::className(), ['dict_stage_id' => 'id']);
@@ -87,6 +80,7 @@ class DictStage extends DictBase
 
     /**
      * запрет смены позиции элемента справочника
+     *
      * @return bool
      */
     public function disableReposition()
@@ -94,8 +88,10 @@ class DictStage extends DictBase
         return $this->type == static::TYPE_OPEN || $this->type == static::TYPE_CLOSED;
     }
 
+
     /**
      * запрет удаления элемента
+     *
      * @return bool
      */
     public function disableDelete()

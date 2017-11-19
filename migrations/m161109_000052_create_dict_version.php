@@ -11,7 +11,11 @@ class m161109_000052_create_dict_version extends DictMigration
     public function safeUp()
     {
         $this->upTable();
-        $this->addColumn($this->tableName, 'type', 'integer');
+        $this->addColumn(
+            $this->tableName,
+            'type',
+            $this->integer()->unsigned()->defaultValue(1)
+        );
 
         $this->addForeignKey(
             'fk-'.$this->tableName.'-project-ref',

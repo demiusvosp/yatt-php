@@ -2,9 +2,8 @@
 
 namespace app\models\queries;
 
-use yii\db\ActiveQuery;
+
 use app\models\entities\DictStage;
-use app\models\entities\Project;
 
 
 /**
@@ -12,7 +11,7 @@ use app\models\entities\Project;
  *
  * @see DictStage
  */
-class DictStageQuery extends ActiveQuery
+class DictStageQuery extends DictBaseQuery
 {
 
     public function __construct($modelClass, array $config = [])
@@ -21,23 +20,36 @@ class DictStageQuery extends ActiveQuery
         $this->from(['stage' => DictStage::tableName()]);
     }
 
-
-    public function andProject($project)
+    public function getLastPosition($project)
     {
-        if($project instanceof Project) {
-            return $this->andWhere(['project_id' => $project->id]);
+        return $this
+            ->select('position')
+            ->andOpen()
+            ->orderBy('position DESC')
+            ->limit(1)
+            ->scalar();
+    }
+
+
+    /**
+     * Не закрытые
+     * @param bool $onlyOpen - строго только этап открыта
+     * @return $this
+     */
+    public function andOpen($onlyOpen = false)
+    {
+        if($onlyOpen) {
+            return $this->andWhere(['type' => DictStage::TYPE_OPEN]);
         } else {
-            return $this->andWhere(['project_id' => $project]);
+            return $this->andWhere(['<>', 'type', DictStage::TYPE_CLOSED]);
         }
     }
 
 
-    public function andOpen()
-    {
-        return $this->andWhere(['type' => DictStage::TYPE_OPEN]);
-    }
-
-
+    /**
+     * Только закрытые
+     * @return $this
+     */
     public function andClosed()
     {
         return $this->andWhere(['type' => DictStage::TYPE_CLOSED]);
@@ -72,7 +84,7 @@ class DictStageQuery extends ActiveQuery
      */
     public static function open($project)
     {
-        return DictStage::find()->andProject($project)->andOpen()->one();
+        return DictStage::find()->andProject($project)->andOpen(true)->one();
     }
 
 

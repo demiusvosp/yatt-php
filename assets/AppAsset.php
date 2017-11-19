@@ -15,13 +15,16 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
+    //public $basePath = '@webroot';
     public $baseUrl = '@web';
-    // пока оставим на месте, потом, в рамках #181, когда заюзаем лесс и минификатор будем их копировать и собирать на лету.
-    //public $sourcePath = '@app/assets/res';
+
+    public $sourcePath = '@app/assets/res';
 
     public $css = [
-        'css/site.css',
+        'css/common.css',
+        'css/project.css',
+        'css/projectSettings.css',
+        'css/task.css',
     ];
     public $js = [
         'js/dictedit.js',

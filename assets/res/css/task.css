@@ -1,0 +1,122 @@
+/* Задачи */
+.progress-bar-green {
+    background-color: #00C170;
+}
+
+/* Список задач */
+.task_list_caption {
+    text-align: center;
+}
+
+.priority {
+    padding: 0;
+    text-align: center;
+    font-weight: bold;
+}
+.priority.unknown {
+    background-color: #999999;
+}
+.priority.critical {
+    background-color: #FF0000;
+}
+.priority.very_high {
+    background-color: #FF5C5C;
+}
+.priority.high {
+    background-color: #ff854d;
+}
+.priority.medium {
+    background-color: #FDFD58;
+}
+.priority.low {
+    background-color: #BBFF7A;
+}
+.priority.very_low {
+    background-color: #CCFFCC;
+}
+
+.closed .priority.critical {
+    background-color: #775151;
+}
+.closed .priority.very_high {
+    background-color: #A38282;
+}
+.closed .priority.high {
+    background-color: #7f3f2b;
+}
+.closed .priority.medium {
+    background-color: #EDEDCC;
+}
+.closed .priority.low {
+    background-color: #D4E2C7;
+}
+.closed .priority.very_low {
+    background-color: #E3EDE3;
+}
+
+.task_list table tr>td {
+    padding: 7px;
+}
+.task_list tr>td .progress {
+    display: inline-block;
+    width: 8em;
+    margin: 0;
+    text-align:center;
+    position:relative;
+}
+.task_list tr>td .progress-value {
+    position:absolute;
+    right:0;
+    left:0;
+    font-weight: bold;
+}
+.task_list tr.closed {
+    background-color: #dddddd !important;
+}
+.task_list tr.closed .item-name {
+    text-decoration: line-through;
+}
+.task_list tr.closed .item-caption {
+    text-decoration: line-through;
+}
+
+
+
+/* Страница задачи */
+.task-toolbar {
+    margin: 0 1em 1em 1em;
+}
+
+.task-view .task-header.closed {
+    text-decoration: line-through;
+}
+
+.task-dict-block {
+    padding-right: 1em;
+    border-right: #ddd 1px solid;
+    height: 100%;
+
+}
+
+.task-text-block {
+
+}
+
+.task-dict-block .progress {
+    display: inline-block;
+    width: 20em;
+    margin: 0;
+    text-align:center;
+    color: #000;
+    position:relative;
+}
+.task-dict-block .progress-value {
+    position:absolute;
+    right:0;
+    left:0;
+    font-weight: bold;
+}
+
+.close-task-dialog {
+    width: 30em;
+}

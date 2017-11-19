@@ -1,0 +1,33 @@
+/* настройки справочников */
+.dict_setting_block {
+    width: 50em;
+}
+
+.dict_item {
+    border: #f4f4f4 1px solid;
+    background-color: white;
+    opacity: 1;
+}
+
+.dict_item_dropping {
+    border: red 1px solid;
+}
+
+.description-in-list {
+    width: 30%;
+}
+
+.user-accesses .user_wrapper {
+    display: inline-block;
+    margin-right: 1em;
+    border-radius: 3px;
+    padding: 3px;
+}
+.user-accesses .add_user {
+    display: inline-block;
+    font-size: 0.8em;
+}
+.user-accesses .remove_user {
+    display: inline-block;
+    font-size: 0.8em;
+}

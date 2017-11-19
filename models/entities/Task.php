@@ -13,34 +13,35 @@ use app\models\queries\DictStageQuery;
 /**
  * This is the model class for table "task".
  *
- * @property integer $id
- * @property string $suffix
- * @property integer $index
- * @property string $caption
- * @property string $description
- * @property integer $assigned_id
- * @property integer $priority
- * @property integer $progress
- * @property integer $is_closed
- * @property integer $close_reason
- * @property string $created_at
- * @property string $updated_at
- * @property integer $dict_stage_id
- * @property integer $dict_type_id
- * @property integer $dict_version_open_id
- * @property integer $dict_version_close_id
- * @property integer $dict_difficulty_id
- * @property integer $dict_category_id
+ * @property integer        $id
+ * @property string         $suffix
+ * @property integer        $index
+ * @property string         $caption
+ * @property string         $description
+ * @property integer        $assigned_id
+ * @property integer        $priority
+ * @property integer        $progress
+ * @property integer        $difficulty_ratio
+ * @property integer        $is_closed
+ * @property integer        $close_reason
+ * @property string         $created_at
+ * @property string         $updated_at
+ * @property integer        $dict_stage_id
+ * @property integer        $dict_type_id
+ * @property integer        $dict_version_open_id
+ * @property integer        $dict_version_close_id
+ * @property integer        $dict_difficulty_id
+ * @property integer        $dict_category_id
  *
- * @property string $name - имя(ID) задачи вида <project>#<index>
- * @property Project $project
- * @property User $assigned
- * @property DictStage $stage
- * @property DictType $type
- * @property DictVersion $versionClose
- * @property DictVersion $versionOpen
+ * @property string         $name - имя(ID) задачи вида <project>#<index>
+ * @property Project        $project
+ * @property User           $assigned
+ * @property DictStage      $stage
+ * @property DictType       $type
+ * @property DictVersion    $versionClose
+ * @property DictVersion    $versionOpen
  * @property DictDifficulty $difficulty
- * @property DictCategory $category
+ * @property DictCategory   $category
  */
 class Task extends ActiveRecord
 {
@@ -87,9 +88,9 @@ class Task extends ActiveRecord
                     'dict_category_id',
                     'dict_version_open_id',
                     'dict_version_close_id',
-                    'dict_difficulty_id'
+                    'dict_difficulty_id',
                 ],
-                'integer'
+                'integer',
             ],
             [['description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
@@ -98,16 +99,16 @@ class Task extends ActiveRecord
             [
                 ['suffix'],
                 'exist',
-                'skipOnError' => true,
-                'targetClass' => Project::className(),
-                'targetAttribute' => ['suffix' => 'suffix']
+                'skipOnError'     => true,
+                'targetClass'     => Project::className(),
+                'targetAttribute' => ['suffix' => 'suffix'],
             ],
             [
                 ['assigned_id'],
                 'exist',
-                'skipOnError' => true,
-                'targetClass' => User::className(),
-                'targetAttribute' => ['assigned_id' => 'id']
+                'skipOnError'     => true,
+                'targetClass'     => User::className(),
+                'targetAttribute' => ['assigned_id' => 'id'],
             ],
         ];
     }
@@ -119,29 +120,29 @@ class Task extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('task', 'ID'),
-            'suffix' => Yii::t('task', 'Suffix'),
-            'index' => Yii::t('task', 'Index'),
-            'caption' => Yii::t('task', 'Caption'),
-            'description' => Yii::t('task', 'Description'),
-            'assigned' => Yii::t('task', 'Assigned'),
-            'assigned_id' => Yii::t('task', 'Assigned'),
-            'priority' => Yii::t('task', 'Priority'),
-            'progress' => Yii::t('task', 'Progress'),
-            'created_at' => Yii::t('task', 'Created'),
-            'updated_at' => Yii::t('task', 'Updated'),
-            'stage' => Yii::t('dicts', 'Stage'),
-            'dict_stage_id' => Yii::t('dicts', 'Stage'),
-            'type' => Yii::t('dicts', 'Type'),
-            'dict_type_id' => Yii::t('dicts', 'Type'),
-            'versionOpen' => Yii::t('dicts', 'Open in version'),
-            'dict_version_open_id' => Yii::t('dicts', 'Open in version'),
-            'versionClose' => Yii::t('dicts', 'Сoming in version'),
+            'id'                    => Yii::t('task', 'ID'),
+            'suffix'                => Yii::t('task', 'Suffix'),
+            'index'                 => Yii::t('task', 'Index'),
+            'caption'               => Yii::t('task', 'Caption'),
+            'description'           => Yii::t('task', 'Description'),
+            'assigned'              => Yii::t('task', 'Assigned'),
+            'assigned_id'           => Yii::t('task', 'Assigned'),
+            'priority'              => Yii::t('task', 'Priority'),
+            'progress'              => Yii::t('task', 'Progress'),
+            'created_at'            => Yii::t('task', 'Created'),
+            'updated_at'            => Yii::t('task', 'Updated'),
+            'stage'                 => Yii::t('dicts', 'Stage'),
+            'dict_stage_id'         => Yii::t('dicts', 'Stage'),
+            'type'                  => Yii::t('dicts', 'Type'),
+            'dict_type_id'          => Yii::t('dicts', 'Type'),
+            'versionOpen'           => Yii::t('dicts', 'Open in version'),
+            'dict_version_open_id'  => Yii::t('dicts', 'Open in version'),
+            'versionClose'          => Yii::t('dicts', 'Сoming in version'),
             'dict_version_close_id' => Yii::t('dicts', 'Сoming in version'),
-            'difficulty' => Yii::t('dicts', 'Difficulty'),
-            'dict_difficulty_id' => Yii::t('dicts', 'Difficulty'),
-            'category' => Yii::t('dicts', 'Category'),
-            'dict_category_id' => Yii::t('dicts', 'Category'),
+            'difficulty'            => Yii::t('dicts', 'Difficulty'),
+            'dict_difficulty_id'    => Yii::t('dicts', 'Difficulty'),
+            'category'              => Yii::t('dicts', 'Category'),
+            'dict_category_id'      => Yii::t('dicts', 'Category'),
         ];
     }
 
@@ -149,12 +150,12 @@ class Task extends ActiveRecord
     public static function priorityLabels()
     {
         return [
-            static::PRIORITY_CRITICAL => Yii::t('task', 'Critical'),
+            static::PRIORITY_CRITICAL  => Yii::t('task', 'Critical'),
             static::PRIORITY_VERY_HIGH => Yii::t('task', 'Very high'),
-            static::PRIORITY_HIGH => Yii::t('task', 'High'),
-            static::PRIORITY_MEDIUM => Yii::t('task', 'Medium'),
-            static::PRIORITY_LOW => Yii::t('task', 'Low'),
-            static::PRIORITY_VERY_LOW => Yii::t('task', 'Very Low'),
+            static::PRIORITY_HIGH      => Yii::t('task', 'High'),
+            static::PRIORITY_MEDIUM    => Yii::t('task', 'Medium'),
+            static::PRIORITY_LOW       => Yii::t('task', 'Low'),
+            static::PRIORITY_VERY_LOW  => Yii::t('task', 'Very Low'),
         ];
     }
 
@@ -162,26 +163,28 @@ class Task extends ActiveRecord
     public static function priorityStyles()
     {
         return [
-            static::PRIORITY_UNKNOWN => 'unknown',
-            static::PRIORITY_CRITICAL => 'critical',
+            static::PRIORITY_UNKNOWN   => 'unknown',
+            static::PRIORITY_CRITICAL  => 'critical',
             static::PRIORITY_VERY_HIGH => 'very_high',
-            static::PRIORITY_HIGH => 'high',
-            static::PRIORITY_MEDIUM => 'medium',
-            static::PRIORITY_LOW => 'low',
-            static::PRIORITY_VERY_LOW => 'very_low',
+            static::PRIORITY_HIGH      => 'high',
+            static::PRIORITY_MEDIUM    => 'medium',
+            static::PRIORITY_LOW       => 'low',
+            static::PRIORITY_VERY_LOW  => 'very_low',
         ];
     }
+
 
     public static function reasonLabels()
     {
         return [
-            static::REASON_DONE => Yii::t('task', 'Done'),
-            static::REASON_CANCEL => Yii::t('task', 'Cancel'),
-            static::REASON_NOERROR => Yii::t('task', 'No error'),
-            static::REASON_RETRY => Yii::t('task', 'Retry'),
+            static::REASON_DONE       => Yii::t('task', 'Done'),
+            static::REASON_CANCEL     => Yii::t('task', 'Cancel'),
+            static::REASON_NOERROR    => Yii::t('task', 'No error'),
+            static::REASON_RETRY      => Yii::t('task', 'Retry'),
             static::REASON_IMPOSSIBLE => Yii::t('task', 'Impossible'),
         ];
     }
+
 
     /**
      * @return string
@@ -191,6 +194,7 @@ class Task extends ActiveRecord
         if (!isset(static::priorityLabels()[$this->priority])) {
             return Yii::t('common', 'Not set');
         }
+
         return static::priorityLabels()[$this->priority];
     }
 
@@ -199,12 +203,12 @@ class Task extends ActiveRecord
     {
         return [
             [
-                'class' => TimestampBehavior::className(),
+                'class'      => TimestampBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
-                'value' => new Expression('NOW()'),
+                'value'      => new Expression('NOW()'),
             ],
         ];
     }
@@ -242,7 +246,7 @@ class Task extends ActiveRecord
      */
     public function setStage(DictStage $stage)
     {
-        if($stage->type == DictStage::TYPE_CLOSED) {
+        if ($stage->type == DictStage::TYPE_CLOSED) {
             $this->is_closed = true;
         } else {
             $this->is_closed = false;
@@ -288,6 +292,16 @@ class Task extends ActiveRecord
 
 
     /**
+     * @param DictDifficulty $difficulty
+     */
+    public function setDifficulty(DictDifficulty $difficulty)
+    {
+        $this->dict_difficulty_id = $difficulty->id;
+        $this->difficulty_ratio   = $difficulty->ratio;
+    }
+
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getCategory()
@@ -306,6 +320,26 @@ class Task extends ActiveRecord
     }
 
 
+    /**
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+        // обновим денормальзованную сложность из справочника
+        if($this->difficulty) {
+            $this->difficulty_ratio = $this->difficulty->ratio;
+        } else {
+            $this->difficulty_ratio = 1;
+        }
+        return parent::beforeSave($insert);
+    }
+
+
+    /**
+     * имя(ID) задачи вида <project>#<index>
+     * @return string
+     */
     public function getName()
     {
         return $this->suffix . '#' . $this->index;
@@ -315,13 +349,14 @@ class Task extends ActiveRecord
     /**
      * Закрыть задачу
      * И вот почти на 300 строке первая функция бизнес-логики.
+     *
      * @param $reason
      */
     public function close($reason)
     {
-        $this->progress = 100;
+        $this->progress     = 100;
         $this->close_reason = $reason;
-        $this->stage = DictStageQuery::closed($this->project);
+        $this->stage        = DictStageQuery::closed($this->project);
 
         $this->save();
     }
@@ -332,8 +367,8 @@ class Task extends ActiveRecord
      */
     public function changeStage($stage)
     {
-        if(!$stage instanceof DictStage) {
-            $stage = DictStage::findOne(['id'=>$stage]);
+        if (!$stage instanceof DictStage) {
+            $stage = DictStage::findOne(['id' => $stage]);
         }
         $this->setStage($stage);
     }

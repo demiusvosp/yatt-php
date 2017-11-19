@@ -36,6 +36,17 @@ class TaskQuery extends ActiveQuery
 
 
     /**
+     * Только закрытые
+     * @param bool $closed
+     * @return $this
+     */
+    public function andClosed($closed = true)
+    {
+        return $this->andWhere(['is_closed' => $closed]);
+    }
+
+
+    /**
      * @inheritdoc
      * @return \app\models\entities\Task[]|array
      */

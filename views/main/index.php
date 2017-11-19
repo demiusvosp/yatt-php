@@ -1,14 +1,17 @@
 <?php
 
+use app\widgets\ProjectTileWidget;
+
 /* @var $this yii\web\View */
 /* @var $projects */
 
 $this->title = Yii::$app->name;
 ?>
-<div class="row-fluid">
-
+<div class="row-fluid project-tiles">
     <?php foreach ($projects as $project) { ?>
-        <?= $this->render('//project/item', ['project' => $project]); // когда логика вывода тайла станет сложнее, стоит переделать в виджет ?>
+        <div class="item">
+            <?= ProjectTileWidget::widget(['project' => $project]) ?>
+        </div>
     <?php } ?>
 
 </div>

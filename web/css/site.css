@@ -9,11 +9,20 @@
     display: inline-block;
 }
 
+/* аналог box-solid, не заливающий цветом заголовок */
+.box-bordered {
+    /* все, кроме top, кторый назначается раньше, и не хочется тут переопределять */
+    border-left: 1px solid #00a65a;
+    border-right: 1px solid #00a65a;
+    border-bottom: 1px solid #00a65a;
+}
+
 /* аналог hidden из bootstrap, но показываемый через jquery */
 .unshow {
     display: none;
 }
 
+/* таблицы */
 .table thead tr th {
     border-bottom: 2px #00a65a solid;
 }
@@ -76,11 +85,18 @@ ul.table.table-striped li:nth-child(even) {
     color: #1b6d85;
 }
 
-/* тайл проекта */
-.project-item-block {
+/* блок тайлов  на главной */
+.project-tiles .item {
+    float: left;
     width: 30em;
     height: 10em;
     margin: 0.5em;
+}
+
+
+/* тайл проекта */
+.project-tile .box-title {
+    /*font-weight: bold; */
 }
 
 /* табы слева от контента */

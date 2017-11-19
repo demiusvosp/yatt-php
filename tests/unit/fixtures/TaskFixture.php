@@ -57,16 +57,23 @@ class TaskFixture extends ActiveFixture
             $task->suffix = $project->suffix;
             $task->index  = $project->generateNewTaskIndex();
 
-            if (rand(0, 2) > 0) {
-                // у двух третей задач есть исполнителей
+            if (rand(0, 3) > 0) {
+                // у 3/4 задач есть исполнитель, прогресс
                 $task->assigned_id = $assigned[array_rand($assigned)]->id;
+                $task->progress = $faker->numberBetween(0, 10)*10;
+                $task->dict_stage_id      = $project->stages[array_rand($project->stages)]->id;
+            } else {
+                // у новых задач без исполнителей нет прогресса и этап первый
+                $task->progress = 0;
+                $task->stage = DictStageQuery::open($project);
             }
             $task->priority           = array_rand(Task::priorityLabels());
             $task->dict_type_id       = $project->types[array_rand($project->types)]->id;
             $task->dict_category_id   = $project->categories[array_rand($project->categories)]->id;
             $task->dict_difficulty_id = $project->difficulties[array_rand($project->difficulties)]->id;
-            $task->dict_stage_id      = $project->stages[array_rand($project->stages)]->id;
             if ($task->dict_stage_id == $closedStage->id) {
+                // у закрытой задачи точно есть исполнитель
+                $task->assigned_id = $assigned[array_rand($assigned)]->id;
                 // если выпало быть закрытым, закрываем правильно
                 $task->close($faker->paragraph());
             }

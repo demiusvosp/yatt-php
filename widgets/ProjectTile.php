@@ -8,11 +8,12 @@
 namespace app\widgets;
 
 
-use app\models\entities\DictVersion;
 use yii\jui\Widget;
 use app\helpers\ProjectUrl;
 use app\models\entities\Project;
+use app\models\entities\Task;
 use app\models\queries\TaskStatsQuery;
+use app\models\entities\DictVersion;
 
 
 class ProjectTile extends Widget
@@ -28,6 +29,9 @@ class ProjectTile extends Widget
 
     /** @var array дополнительные html-аттрибуты таге контейнера виджета */
     public $options = ['class' => 'box-bordered box-success'];
+
+    /** @var bool добавить блок последние задачи */
+    public $lastTasks = false;
 
 
     public function init()
@@ -46,6 +50,26 @@ class ProjectTile extends Widget
 
 
     public function run()
+    {
+
+
+        return $this->render('projectTile', [
+            'project' => $this->project,
+            'caption' => $this->caption,
+            'link'    => $this->link,
+            'options' => $this->options,
+
+            'taskStat' => $this->getTasksStats(),
+            'lastTasks' => ($this->lastTasks) ? $this->getLastTasks() : null,
+        ]);
+    }
+
+
+    /**
+     * Базовая статистика задач
+     * @return array
+     */
+    public function getTasksStats()
     {
         $taskStat = [
             'total'    => TaskStatsQuery::statAllTasks($this->project),
@@ -78,13 +102,16 @@ class ProjectTile extends Widget
             ];
         }
 
-        return $this->render('projectTile', [
-            'project' => $this->project,
-            'caption' => $this->caption,
-            'link'    => $this->link,
-            'options' => $this->options,
+        return $taskStat;
+    }
 
-            'taskStat' => $taskStat,
-        ]);
+
+    /**
+     * Последние открытые задачи
+     * @return Task[]|array
+     */
+    public function getLastTasks()
+    {
+        return Task::find()->andOpen()->orderBy('updated_at DESC')->limit(5)->all();
     }
 }

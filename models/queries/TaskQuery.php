@@ -37,16 +37,21 @@ class TaskQuery extends ActiveQuery
 
     /**
      * Только закрытые
-     * @param bool $closed
      * @return $this
      */
-    public function andClosed($closed = true)
+    public function andClosed()
     {
-        if($closed) {
-            return $this->andWhere(['is_closed' => true]);
-        } else {
-            return $this->andWhere(['<>', 'is_closed', true]);
-        }
+        return $this->andWhere(['is_closed' => true]);
+    }
+
+
+    /**
+     * Только не закрытые
+     * @return $this
+     */
+    public function andOpen()
+    {
+        return $this->andWhere(['<>', 'is_closed', true]);
     }
 
 

@@ -32,6 +32,7 @@ use app\models\queries\DictStageQuery;
  * @property integer $dict_difficulty_id
  * @property integer $dict_category_id
  *
+ * @property string $name - имя(ID) задачи вида <project>#<index>
  * @property Project $project
  * @property User $assigned
  * @property DictStage $stage

@@ -21,12 +21,13 @@ $this->params['project']       = $project;
 <div class="row-fluid">
     <div class="col-md-5">
         <?= ProjectTile::widget([
-            'project' => $project,
-            'link'    => false,// пока нет отдельной страницы со статистикой, графиками и проч.
-            'caption' => Yii::t('project', 'Statistics'),
-            'options' => [
-                'class' => 'box-success'
+            'project'   => $project,
+            'link'      => false,// пока нет отдельной страницы со статистикой, графиками и проч.
+            'caption'   => Yii::t('project', 'Statistics'),
+            'options'   => [
+                'class' => 'box-success',
             ],
+            'lastTasks' => true,
         ]) ?>
     </div>
     <div class="col-md-7">

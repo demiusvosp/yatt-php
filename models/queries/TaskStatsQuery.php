@@ -40,7 +40,7 @@ class TaskStatsQuery extends TaskQuery
     public static function statOpenTasks($project)
     {
         $query = (new TaskQuery(Task::className()))->andProject($project);
-        return $query->andClosed(false)->count('id');
+        return $query->andOpen()->count('id');
     }
 
 

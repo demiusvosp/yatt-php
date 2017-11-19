@@ -113,6 +113,15 @@ ul.table.table-striped li:nth-child(even) {
 .project-tile .box-title {
     /*font-weight: bold; */
 }
+.project-tile .task-stat {
+    margin-right: 1em;
+    float: left;
+    display: inline-block;
+}
+.project-tile .last-tasks {
+    float: left;
+    display: inline-block;
+}
 .project-tile .progress {
     width: 10em;
     vertical-align: sub;

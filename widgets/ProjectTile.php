@@ -13,7 +13,7 @@ use app\helpers\ProjectUrl;
 use app\models\entities\Project;
 
 
-class ProjectTileWidget extends Widget
+class ProjectTile extends Widget
 {
     /** @var  Project */
     public $project;

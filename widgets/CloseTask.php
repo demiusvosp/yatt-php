@@ -14,7 +14,7 @@ use app\models\entities\Task;
 
 
 /**
- * Class CloseTaskWidget
+ * Class CloseTask
  *
  * Да, виджет кажется слишком простым, чтобы выделять в виджет, зато в несвязаном с действиями контролере нет тысячи
  *   форм модальных действий. Я бы еще валидаию средствами виджета делал, чтобы не размазывать функционал маленькой
@@ -22,7 +22,7 @@ use app\models\entities\Task;
  *
  * @package app\widgets
  */
-class CloseTaskWidget extends Widget
+class CloseTask extends Widget
 {
 
     /** @var  Task */

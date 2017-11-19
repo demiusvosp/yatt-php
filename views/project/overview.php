@@ -7,7 +7,7 @@
  */
 
 use app\models\entities\Project;
-use app\widgets\ProjectTileWidget;
+use app\widgets\ProjectTile;
 
 
 /* @var $this yii\web\View */
@@ -20,7 +20,7 @@ $this->params['project']       = $project;
 ?>
 <div class="row-fluid">
     <div class="col-md-5">
-        <?= ProjectTileWidget::widget([
+        <?= ProjectTile::widget([
             'project' => $project,
             'link'    => false,// пока нет отдельной страницы со статистикой, графиками и проч.
             'caption' => Yii::t('project', 'Statistics'),

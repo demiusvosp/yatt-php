@@ -8,7 +8,7 @@
 
 use app\helpers\ProjectUrl;
 use app\models\entities\Task;
-use app\widgets\CloseTaskWidget;
+use app\widgets\CloseTask;
 use app\components\ProjectService;
 use app\helpers\Access;
 
@@ -192,5 +192,5 @@ $this->params['breadcrumbs'][] = $this->title;// как вот это превр
     </div>
 </div>
 <div class="clearfix"></div>
-<?= CloseTaskWidget::widget(['task'=>$task, 'modalId' => 'closeTask']);
+<?= CloseTask::widget(['task' =>$task, 'modalId' => 'closeTask']);
 ?>

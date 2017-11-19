@@ -1,13 +1,14 @@
 {
-    "name": "yatt/php",
+    "name": "demius/yatt",
+    "version": "0.2",
+    "minimum-stability": "alpha",
     "description": "Yet Another Task Trackker",
     "keywords": ["bugtracker", "tasktracker", "yatt"],
     "type": "project",
-    "license": "BSD-3-Clause",
+    "license": "MIT",
     "support": {
         "issues": "http://tasks.demius.ru/index.php?project=7"
     },
-    "minimum-stability": "alpha",
     "require": {
         "php": ">=5.6",
         "yiisoft/yii2": ">2.0.11",

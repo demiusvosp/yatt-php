@@ -8,7 +8,7 @@
 return [
     'id'      => 'yatt',
     'name'    => 'Yatt',
-    'version' => '0.1a',
+    'version' => '0.2a',
 
     'bootstrap' => ['log'],
     'language'  => 'ru-RU',

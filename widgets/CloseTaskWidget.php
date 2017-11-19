@@ -47,7 +47,7 @@ class CloseTaskWidget extends Widget
     public function run()
     {
         return $this->render(
-            'closetask',
+            'closeTask',
             [
                 'task' => $this->task,
                 'model' => $this->closeForm,

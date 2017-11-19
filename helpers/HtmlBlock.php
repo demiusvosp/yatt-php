@@ -89,4 +89,18 @@ class HtmlBlock
 JS;
 
     }
+
+    public static function progressWidget($progress, $class = '')
+    {
+        return '
+        <div class="progress ' . $class . '">
+            <div
+                    class="progress-bar progress-bar-green" role="progressbar"
+                    aria-valuenow="' . $progress . '" aria-valuemin="0" aria-valuemax="100" style="width: ' . $progress . '%"
+            >
+                <span class="sr-only">' . $progress . ' Complete</span>
+            </div>
+            <div class="progress-value">' . $progress . '%</div>
+        ';
+    }
 }

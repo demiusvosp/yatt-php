@@ -6,7 +6,7 @@
  */
 
 use app\models\entities\Project;
-
+use app\helpers\HtmlBlock;
 
 /* @var $project Project */
 /* @var $caption string */
@@ -29,5 +29,6 @@ use app\models\entities\Project;
     </div>
     <div class="box-body">
         <p>Открытых задач <?=$taskStat['open']?> из <?=$taskStat['total']?></p>
+        Прогресс: <?=HtmlBlock::progressWidget($taskStat['progress'])?>
     </div>
 </div>

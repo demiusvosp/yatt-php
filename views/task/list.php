@@ -10,6 +10,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\StringHelper;
 use app\models\entities\Task;
+use app\helpers\HtmlBlock;
 
 
 /* @var $this yii\web\View */
@@ -93,11 +94,8 @@ const COLUMN_MAX_LEN = 255;
             [
                 'attribute' => 'progress',
                 'content'   => function ($task) {
-                    return '<div class="progress">
-                    <div class="progress-bar progress-bar-green" role="progressbar"
-                        aria-valuenow="' . $task->progress . '" aria-valuemin="0" aria-valuemax="100" 
-                        style="width: ' . $task->progress . '%"></div>
-                    <div class="progress-value">' . $task->progress . '%</div>';
+                    /** @var Task $task */
+                    return HtmlBlock::progressWidget($task->progress);
                 },
             ],
 

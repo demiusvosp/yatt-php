@@ -85,6 +85,22 @@ ul.table.table-striped li:nth-child(even) {
     color: #1b6d85;
 }
 
+/* виджет прогресс */
+.progress {
+    display: inline-block;
+    margin: 0;
+    text-align:center;
+    position:relative;
+    border: #d3d3d3 1px solid;
+}
+.progress-value {
+    position:absolute;
+    right:0;
+    left:0;
+    font-weight: bold;
+}
+
+
 /* блок тайлов  на главной */
 .project-tiles .item {
     float: left;
@@ -93,10 +109,13 @@ ul.table.table-striped li:nth-child(even) {
     margin: 0.5em;
 }
 
-
 /* тайл проекта */
 .project-tile .box-title {
     /*font-weight: bold; */
+}
+.project-tile .progress {
+    width: 10em;
+    vertical-align: sub;
 }
 
 /* табы слева от контента */

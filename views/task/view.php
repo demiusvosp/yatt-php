@@ -11,6 +11,8 @@ use app\models\entities\Task;
 use app\widgets\CloseTask;
 use app\components\ProjectService;
 use app\helpers\Access;
+use app\helpers\HtmlBlock;
+
 
 /* @var $this yii\web\View */
 /* @var $task Task */
@@ -91,15 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;// как вот это превр
                     <?=$task->getAttributeLabel('progress') ?>
                 </td>
                 <td class="value">
-                    <div class="progress">
-                        <div
-                                class="progress-bar progress-bar-green" role="progressbar"
-                                aria-valuenow="<?=$task->progress?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$task->progress?>%"
-                        >
-                            <span class="sr-only"><?=$task->progress?> Complete</span>
-                        </div>
-                        <div class="progress-value"><?=$task->progress?>%</div>
-                    </div>
+                    <?=HtmlBlock::progressWidget($task->progress)?>
                 </td>
             </tr>
         <?php if($task->type) { ?>

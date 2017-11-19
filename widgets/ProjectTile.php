@@ -47,8 +47,9 @@ class ProjectTile extends Widget
     public function run()
     {
         $taskStat = [
-            'total' => TaskStatsQuery::statAllTasks($this->project),
-            'open'  => TaskStatsQuery::statOpenTasks($this->project),
+            'total'    => TaskStatsQuery::statAllTasks($this->project),
+            'open'     => TaskStatsQuery::statOpenTasks($this->project),
+            'progress' => round(TaskStatsQuery::statTasksProgress($this->project)),
         ];
 
         return $this->render('projectTile', [

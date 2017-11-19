@@ -26,8 +26,8 @@ class TaskStatsQuery extends TaskQuery
      */
     public static function statAllTasks($project)
     {
-        $query = new TaskQuery(Task::className());
-        return $query->andProject($project)->count('id');
+        $query = (new TaskQuery(Task::className()))->andProject($project);
+        return $query->count('id');
     }
 
 
@@ -38,8 +38,8 @@ class TaskStatsQuery extends TaskQuery
      */
     public static function statOpenTasks($project)
     {
-        $query = new TaskQuery(Task::className());
-        return $query->andProject($project)->andClosed(false)->count('id');
+        $query = (new TaskQuery(Task::className()))->andProject($project);
+        return $query->andClosed(false)->count('id');
     }
 
 
@@ -49,6 +49,8 @@ class TaskStatsQuery extends TaskQuery
      */
     public static function statTasksProgress($project)
     {
-        $query = new TaskQuery(Task::className());
+        $query = (new TaskQuery(Task::className()))->andProject($project);
+        //$query->select('AVG(progress)');
+        return floatval($query->average('progress'));
     }
 }

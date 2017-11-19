@@ -112,6 +112,6 @@ class ProjectTile extends Widget
      */
     public function getLastTasks()
     {
-        return Task::find()->andOpen()->orderBy('updated_at DESC')->limit(5)->all();
+        return Task::find()->andProject($this->project)->andOpen()->orderBy('updated_at DESC')->limit(5)->all();
     }
 }

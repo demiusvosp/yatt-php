@@ -98,3 +98,8 @@ ul.table.table-striped li:nth-child(even) {
     left:0;
     font-weight: bold;
 }
+
+/* ограничение поля описания в таблицах */
+.description-in-list {
+    width: 30%;
+}

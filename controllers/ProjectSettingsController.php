@@ -10,6 +10,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use app\assets\ProjectSettingsAsset;
 use app\components\AccessManager;
 use app\components\access\Role;
 use app\helpers\Access;
@@ -22,6 +23,12 @@ class ProjectSettingsController extends BaseProjectController
 {
     public $defaultAction = 'main';
     public $layout = 'project-settings';
+
+    public function init()
+    {
+        ProjectSettingsAsset::register($this->view);
+        parent::init();
+    }
 
 
     /**

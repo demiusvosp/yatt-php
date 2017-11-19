@@ -13,7 +13,7 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class AppAsset extends AssetBundle
+class ProjectSettingsAsset extends AssetBundle
 {
     //public $basePath = '@webroot';
     public $baseUrl = '@web';
@@ -21,18 +21,15 @@ class AppAsset extends AssetBundle
     public $sourcePath = '@app/assets/res';
 
     public $css = [
-        'css/common.css',
-        'css/project.css',
-        'css/task.css',
+        'css/projectSettings.css',
     ];
     public $js = [
-        'js/closetask.js',
+        'js/dictedit.js',
+        'js/useraccesses.js',
     ];
 
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
-        'yii\jui\JuiAsset',
-        'dmstr\web\AdminLteAsset',
+        'app\assets\AppAsset',
+        'kartik\select2\Select2Asset',
     ];
 }

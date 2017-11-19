@@ -101,6 +101,7 @@ JS;
                 <span class="sr-only">' . $progress . ' Complete</span>
             </div>
             <div class="progress-value">' . $progress . '%</div>
+        </div>
         ';
     }
 }

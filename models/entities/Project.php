@@ -249,7 +249,7 @@ class Project extends ActiveRecord
 
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \app\models\queries\DictStageQuery
      */
     public function getStages()
     {
@@ -258,7 +258,7 @@ class Project extends ActiveRecord
 
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \app\models\queries\DictTypeQuery
      */
     public function getTypes()
     {
@@ -276,7 +276,7 @@ class Project extends ActiveRecord
 
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \app\models\queries\DictDifficultyQuery
      */
     public function getDifficulties()
     {
@@ -285,7 +285,7 @@ class Project extends ActiveRecord
 
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \app\models\queries\DictCategoryQuery
      */
     public function getCategories()
     {

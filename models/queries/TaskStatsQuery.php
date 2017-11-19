@@ -7,6 +7,7 @@
 
 namespace app\models\queries;
 
+use app\models\entities\DictVersion;
 use app\models\entities\Project;
 use app\models\entities\Task;
 
@@ -33,7 +34,7 @@ class TaskStatsQuery extends TaskQuery
 
     /**
      * Сколько еще открытых задач
-     * @param $project
+     * @param Project $project
      * @return int|string
      */
     public static function statOpenTasks($project)
@@ -45,12 +46,24 @@ class TaskStatsQuery extends TaskQuery
 
     /**
      * Прогресс задач
-     * @param $project
+     * @param Project $project
+     * @return float
      */
     public static function statTasksProgress($project)
     {
         $query = (new TaskQuery(Task::className()))->andProject($project);
-        //$query->select('AVG(progress)');
+        return floatval($query->average('progress'));
+    }
+
+
+    /**
+     * @param DictVersion $version
+     * @return float
+     */
+    public static function statVersionProgress($version)
+    {
+        $query = (new TaskQuery(Task::className()))->andProject($version->project);
+        $query->where(['dict_version_close_id' => $version->id]);
         return floatval($query->average('progress'));
     }
 }

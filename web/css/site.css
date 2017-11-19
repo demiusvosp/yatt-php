@@ -117,6 +117,33 @@ ul.table.table-striped li:nth-child(even) {
     width: 10em;
     vertical-align: sub;
 }
+.project-tile .stat-item {
+    margin-bottom: 0.3em;
+}
+.project-tile .table {
+    width: auto;
+    margin-left: 1em;
+}
+.project-tile .table tr {
+    text-align: right;
+}
+.project-tile .table > tbody > tr > td {
+    padding: 0 0.5em;
+    border-top: 0;
+    vertical-align: middle;
+}
+
+.project-tile .past {
+    color: #7c7c7c;
+    text-decoration: line-through;
+}
+.project-tile .past .progress-bar {
+    background-color: #d3d3d3;
+    color: #000000;
+}
+.project-tile .current {
+    font-weight: bold;
+}
 
 /* табы слева от контента */
 .nav-tabs.tabs-left {

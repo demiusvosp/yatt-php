@@ -41,6 +41,16 @@ class DictVersionQuery extends ActiveQuery
 
 
     /**
+     * Прошедшие версии, работа над которыми закончена
+     * @return $this
+     */
+    public function andPast()
+    {
+        return $this->andWhere(['version.type' => DictVersion::PAST]);
+    }
+
+
+    /**
      * @inheritdoc
      * @return \app\models\entities\DictVersion[]|array
      */

@@ -8,6 +8,7 @@
 namespace app\widgets;
 
 
+use app\models\entities\DictVersion;
 use yii\jui\Widget;
 use app\helpers\ProjectUrl;
 use app\models\entities\Project;
@@ -50,7 +51,32 @@ class ProjectTile extends Widget
             'total'    => TaskStatsQuery::statAllTasks($this->project),
             'open'     => TaskStatsQuery::statOpenTasks($this->project),
             'progress' => round(TaskStatsQuery::statTasksProgress($this->project)),
+            'versions' => [],
         ];
+        // css-классы отображаемых версий
+        $versionTypes = [
+            DictVersion::PAST => 'past',
+            DictVersion::CURRENT => 'current',
+            DictVersion::FUTURE => 'future'
+        ];
+        // Прошедшие версии (чтобы не было обидно релизить и закрывтаь версию)
+        $versions = $this->project->getVersions()->andPast()->all();
+        foreach ($versions as $version) {
+            $taskStat['versions'][] = [
+                'name' => $version->name,
+                'type' => $versionTypes[$version->type],
+                'progress' => 100,
+            ];
+        }
+        // текущие и будующие версии, над которыми идет работа
+        $versions = $this->project->getVersions()->andForClose()->limit(4)->all();
+        foreach ($versions as $version) {
+            $taskStat['versions'][] = [
+                'name' => $version->name,
+                'type' => $versionTypes[$version->type],
+                'progress' => round(TaskStatsQuery::statVersionProgress($version))
+            ];
+        }
 
         return $this->render('projectTile', [
             'project' => $this->project,

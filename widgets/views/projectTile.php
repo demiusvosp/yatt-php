@@ -18,17 +18,32 @@ use app\helpers\HtmlBlock;
 <div class="<?= $options['class'] ?>"><!-- box-solid box-default альтернатива-->
     <div class="box-header">
         <?php if ($link) { ?>
-        <a href="<?= $link ?>">
-            <?php } ?>
+            <a href="<?= $link ?>">
+        <?php } ?>
             <h3 class="box-title">
                 <?= $caption ?>
             </h3>
-            <?php if ($link) { ?>
-        </a>
-    <?php } ?>
+        <?php if ($link) { ?>
+            </a>
+        <?php } ?>
     </div>
     <div class="box-body">
-        <p>Открытых задач <?=$taskStat['open']?> из <?=$taskStat['total']?></p>
-        Прогресс: <?=HtmlBlock::progressWidget($taskStat['progress'])?>
+        <div class="stat-item">Открытых задач <b><?=$taskStat['open']?></b> из <b><?=$taskStat['total']?></b>.</div>
+        <div class="stat-item"><b>Прогресс: </b><?=HtmlBlock::progressWidget($taskStat['progress'])?></div>
+        <?php if(count($taskStat['versions']) > 0) { ?>
+            <div class="stat-item">
+                <b>Список версий:</b>
+                <table class="table">
+                    <tbody>
+                    <?php foreach ($taskStat['versions'] as $version) { ?>
+                        <tr class="<?=$version['type']?>">
+                            <td><?=$version['name']?></td>
+                            <td><?=HtmlBlock::progressWidget($version['progress'])?></td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php } ?>
     </div>
 </div>

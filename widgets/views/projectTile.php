@@ -12,6 +12,7 @@ use app\models\entities\Project;
 /* @var $caption string */
 /* @var $link string|false */
 /* @var $options array */
+/* @var $taskStat array */
 
 ?>
 <div class="<?= $options['class'] ?>"><!-- box-solid box-default альтернатива-->
@@ -27,6 +28,6 @@ use app\models\entities\Project;
     <?php } ?>
     </div>
     <div class="box-body">
-        <p>Здесь будет задачи, статистика и проч...</p>
+        <p>Открытых задач <?=$taskStat['open']?> из <?=$taskStat['total']?></p>
     </div>
 </div>

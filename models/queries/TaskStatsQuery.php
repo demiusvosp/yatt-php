@@ -8,6 +8,7 @@
 namespace app\models\queries;
 
 use app\models\entities\Project;
+use app\models\entities\Task;
 
 
 /**
@@ -23,9 +24,10 @@ class TaskStatsQuery extends TaskQuery
      * @param Project $project
      * @return int|string
      */
-    public function statAllTasks($project)
+    public static function statAllTasks($project)
     {
-        return $this->andProject($project)->count();
+        $query = new TaskQuery(Task::className());
+        return $query->andProject($project)->count('id');
     }
 
 
@@ -34,9 +36,10 @@ class TaskStatsQuery extends TaskQuery
      * @param $project
      * @return int|string
      */
-    public function statOpenTasks($project)
+    public static function statOpenTasks($project)
     {
-        return $this->andProject($project)->andClosed(false)->count();
+        $query = new TaskQuery(Task::className());
+        return $query->andProject($project)->andClosed(false)->count('id');
     }
 
 
@@ -44,8 +47,8 @@ class TaskStatsQuery extends TaskQuery
      * Прогресс задач
      * @param $project
      */
-    public function statTasksProgress($project)
+    public static function statTasksProgress($project)
     {
-
+        $query = new TaskQuery(Task::className());
     }
 }

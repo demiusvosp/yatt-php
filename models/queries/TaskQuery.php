@@ -42,7 +42,11 @@ class TaskQuery extends ActiveQuery
      */
     public function andClosed($closed = true)
     {
-        return $this->andWhere(['is_closed' => $closed]);
+        if($closed) {
+            return $this->andWhere(['is_closed' => true]);
+        } else {
+            return $this->andWhere(['<>', 'is_closed', true]);
+        }
     }
 
 

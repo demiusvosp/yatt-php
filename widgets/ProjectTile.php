@@ -11,6 +11,7 @@ namespace app\widgets;
 use yii\jui\Widget;
 use app\helpers\ProjectUrl;
 use app\models\entities\Project;
+use app\models\queries\TaskStatsQuery;
 
 
 class ProjectTile extends Widget
@@ -25,7 +26,7 @@ class ProjectTile extends Widget
     public $caption;
 
     /** @var array дополнительные html-аттрибуты таге контейнера виджета */
-    public $options = [ 'class' => 'box-bordered box-success'];
+    public $options = ['class' => 'box-bordered box-success'];
 
 
     public function init()
@@ -45,11 +46,18 @@ class ProjectTile extends Widget
 
     public function run()
     {
+        $taskStat = [
+            'total' => TaskStatsQuery::statAllTasks($this->project),
+            'open'  => TaskStatsQuery::statOpenTasks($this->project),
+        ];
+
         return $this->render('projectTile', [
             'project' => $this->project,
             'caption' => $this->caption,
             'link'    => $this->link,
             'options' => $this->options,
+
+            'taskStat' => $taskStat,
         ]);
     }
 }

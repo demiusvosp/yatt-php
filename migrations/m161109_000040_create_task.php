@@ -20,7 +20,7 @@ class m161109_000040_create_task extends Migration
             'priority'  =>  $this->integer()->comment('Приоритет задачи'),
             'progress'  =>  $this->integer()->comment('Прогресс выполнения'),
 
-            'is_closed' => $this->boolean()->comment('Задача закрыта'),
+            'is_closed' => $this->boolean()->notNull()->comment('Задача закрыта')->defaultValue(false),
             'close_reason' => $this->integer()->comment('Причина закрытия'),
 
             'created_at' => $this->dateTime()->comment('Создана'),

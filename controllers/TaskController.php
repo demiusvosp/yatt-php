@@ -112,6 +112,10 @@ class TaskController extends BaseProjectController
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['name'] = [
+            'asc'  => ['suffix' => SORT_ASC, 'index' => SORT_ASC],
+            'desc' => ['suffix' => SORT_DESC, 'index' => SORT_DESC],
+        ];
         $dataProvider->sort->attributes['assigned'] = [
             'asc'  => ['assigned.username' => SORT_ASC],
             'desc' => ['assigned.username' => SORT_DESC],

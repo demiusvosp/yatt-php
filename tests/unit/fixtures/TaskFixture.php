@@ -36,6 +36,7 @@ class TaskFixture extends ActiveFixture
 
     public function load()
     {
+        echo "generate task for " . self::PROJECT . "\r\n";
         $assigned      = [
             User::findOne(['username' => 'bob']),
             User::findOne(['username' => 'ivan']),
@@ -85,6 +86,7 @@ class TaskFixture extends ActiveFixture
 
     public function unload()
     {
+        echo 'delete tasks from ' . self::PROJECT . "\r\n";
         // удалим все задачи проекта, все равно выцепить эти нет возможности
         Task::deleteAll(['suffix' => self::PROJECT]);
     }

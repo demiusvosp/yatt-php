@@ -18,6 +18,8 @@ class UserFixture extends ActiveFixture
 
     public function load()
     {
+        echo "generate test users\r\n";
+
         foreach ($this->getData() as $alias => $row) {
             $user = new User();
             $user->setAttributes($row);
@@ -30,6 +32,7 @@ class UserFixture extends ActiveFixture
 
     public function unload()
     {
+        echo "delete test users \r\n";
         foreach ($this->getData() as $alias => $row) {
             $user = User::findOne(['email' => $row['email']]);
             if($user) {

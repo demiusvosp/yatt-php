@@ -24,10 +24,13 @@ class ProjectFixture extends ActiveFixture
 
     public function load()
     {
+        echo "generate test projects \r\n";
+
         $bob  = User::findOne(['username' => 'bob']);
         $ivan = User::findOne(['username' => 'ivan']);
 
         foreach ($this->getData() as $alias => $row) {
+            echo "project " . $alias . "\r\n";
             $project = new Project();
             $project->setAttributes($row);
             if ($alias == 'priv') {
@@ -49,6 +52,7 @@ class ProjectFixture extends ActiveFixture
 
     public function unload()
     {
+        echo "delete generated projects \r\n";
         foreach ($this->getData() as $alias => $row) {
             $project = Project::findOne($row['suffix']);
             if ($project) {

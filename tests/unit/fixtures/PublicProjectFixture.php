@@ -34,7 +34,7 @@ class PublicProjectFixture extends ActiveFixture
 
     public function load()
     {
-        echo 'create Project PUB';
+        echo "create Project PUB \r\n";
         /** @var AccessManager $auth */
         $auth = Yii::$app->authManager;
 
@@ -87,7 +87,7 @@ class PublicProjectFixture extends ActiveFixture
     {
         $project = Project::findOne(self::PROJECT);
         if ($project) {
-            echo 'delete project ' . $project->suffix;
+            echo "delete project " . $project->suffix . "\r\n";
             $project->delete();
         }
     }

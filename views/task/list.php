@@ -83,8 +83,11 @@ const COLUMN_MAX_LEN = 255;
                 },
             ],
             [
-                'attribute' => 'assigned.username',
-                'label'     => Yii::t('task', 'Assigned'),
+                'attribute' => 'assigned',
+                'content'        => function ($task) {
+                    /** @var Task $task */
+                    return HtmlBlock::userItem($task->assigned);
+                },
             ],
 
             [

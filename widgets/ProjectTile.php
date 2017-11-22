@@ -8,7 +8,7 @@
 namespace app\widgets;
 
 
-use yii\jui\Widget;
+use yii\base\Widget;
 use app\helpers\ProjectUrl;
 use app\models\entities\Project;
 use app\models\entities\Task;

@@ -8,9 +8,9 @@
 namespace app\widgets;
 
 
-use app\models\forms\CloseTaskForm;
-use yii\jui\Widget;
+use yii\base\Widget;
 use app\models\entities\Task;
+use app\models\forms\CloseTaskForm;
 
 
 /**

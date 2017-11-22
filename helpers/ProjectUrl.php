@@ -8,9 +8,10 @@
 
 namespace app\helpers;
 
+use yii\base\InvalidParamException;
 use yii\helpers\Url;
-
 use app\models\entities\Project;
+use app\models\entities\Task;
 
 
 class ProjectUrl extends Url
@@ -33,5 +34,31 @@ class ProjectUrl extends Url
         }
 
         return parent::to($url, $scheme);
+    }
+
+
+    /**
+     * @param Project|string $project
+     * @return string
+     */
+    public static function toProject($project)
+    {
+        if(is_string($project)) {
+            return static::to(['/project/overview', 'suffix' => $project]);
+        }
+        if($project instanceof Project) {
+            return static::to(['/project/overview', 'project' => $project]);
+        }
+        throw new InvalidParamException('toProject need Project or project suffix');
+    }
+
+
+    /**
+     * @param Task $task
+     * @return string
+     */
+    public static function toTask($task)
+    {
+        return static::to(['/task/view', 'suffix' => $task->suffix, 'index'=>$task->index]);
     }
 }

@@ -60,7 +60,7 @@ use app\helpers\ProjectUrl;
                         foreach ($lastTasks as $task) {
                     ?>
                         <li>
-                            <a href="<?=ProjectUrl::to(['/task/view', 'suffix' => $task->suffix])?>">
+                            <a href="<?=ProjectUrl::toTask($task)?>">
                                 <?=$task->name . '-' . $task->caption ?>
                             </a>
                         </li>

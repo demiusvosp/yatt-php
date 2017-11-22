@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
         'css/common.css',
         'css/project.css',
         'css/task.css',
+        'css/comment.css',
     ];
     public $js = [
         'js/closetask.js',

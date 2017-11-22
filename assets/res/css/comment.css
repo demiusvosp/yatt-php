@@ -1,0 +1,28 @@
+.comment-thread {
+    max-width: 40%;
+}
+
+.comment-thread .comment {
+
+}
+.comment-thread .comment .comment-edited {
+
+}
+
+.comment-thread .comment-form {
+
+}
+
+.comment-thread .comment-author {
+    display: inline-block;
+}
+
+.comment-thread .comment-date {
+    display: inline-block;
+    float: right;
+}
+
+.comment-thread .comment-ctrl {
+    display: inline-block;
+    float: right;
+}

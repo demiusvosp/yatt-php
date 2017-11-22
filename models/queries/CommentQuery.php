@@ -2,6 +2,9 @@
 
 namespace app\models\queries;
 
+use yii\db\ActiveRecord;
+
+
 /**
  * This is the ActiveQuery class for [[\app\models\entities\Comment]].
  *
@@ -9,10 +12,23 @@ namespace app\models\queries;
  */
 class CommentQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    /**
+     * Получить тред коментов (в будующем тут бы пагинацию из коробки поддержать)
+     *
+     * @param ActiveRecord $object
+     * @param null         $db
+     * @return \app\models\entities\Comment[]|array
+     */
+    public function getThread($object, $db = null)
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this
+            ->andWhere([
+                'object_class' => $object->className(),
+                'object_id'    => $object->id,
+            ])
+            ->all($db);
+    }
+
 
     /**
      * @inheritdoc
@@ -22,6 +38,7 @@ class CommentQuery extends \yii\db\ActiveQuery
     {
         return parent::all($db);
     }
+
 
     /**
      * @inheritdoc

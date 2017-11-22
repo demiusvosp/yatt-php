@@ -3,26 +3,27 @@
 namespace app\models\entities;
 
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\behaviors\TimestampBehavior;
-use app\models\entities\User;
 use app\models\queries\CommentQuery;
 
 
 /**
  * This is the model class for table "comment".
  *
- * @property integer $id
- * @property string  $object
- * @property integer $object_id
- * @property integer $author_id
- * @property integer $type
- * @property string  $text
- * @property string  $created_at
- * @property string  $updated_at
+ * @property integer      $id
+ * @property string       $object_class
+ * @property integer      $object_id
+ * @property integer      $author_id
+ * @property integer      $type
+ * @property string       $text
+ * @property string       $created_at
+ * @property string       $updated_at
  *
- * @property User    $author
+ * @property User         $author
+ * @property ActiveRecord $object
  */
 class Comment extends ActiveRecord
 {
@@ -44,11 +45,11 @@ class Comment extends ActiveRecord
     public function rules()
     {
         return [
-            [['object', 'object_id'], 'required'],
+            [['object_class', 'object_id'], 'required'],
             [['object_id', 'author_id', 'type'], 'integer'],
             [['text'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['object'], 'string', 'max' => 80],
+            [['object_class'], 'string', 'max' => 80],
             [
                 ['author_id'],
                 'exist',
@@ -66,15 +67,15 @@ class Comment extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id'         => Yii::t('comment', 'ID'),
-            'object'     => Yii::t('comment', 'Object'),
-            'object_id'  => Yii::t('comment', 'Object ID'),
-            'author_id'  => Yii::t('comment', 'Author ID'),
-            'author'     => Yii::t('comment', 'Author'),
-            'type'       => Yii::t('comment', 'Type'),
-            'text'       => Yii::t('comment', 'Text'),
-            'created_at' => Yii::t('comment', 'Created At'),
-            'updated_at' => Yii::t('comment', 'Updated At'),
+            'id'           => Yii::t('comment', 'ID'),
+            'object_class' => Yii::t('comment', 'Object'),
+            'object_id'    => Yii::t('comment', 'Object ID'),
+            'author_id'    => Yii::t('comment', 'Author ID'),
+            'author'       => Yii::t('comment', 'Author'),
+            'type'         => Yii::t('comment', 'Type'),
+            'text'         => Yii::t('comment', 'Text'),
+            'created_at'   => Yii::t('comment', 'Created At'),
+            'updated_at'   => Yii::t('comment', 'Updated At'),
         ];
     }
 
@@ -95,11 +96,41 @@ class Comment extends ActiveRecord
 
 
     /**
-     * @return User
+     * @return ActiveQuery
      */
     public function getAuthor()
     {
         return $this->hasOne(User::className(), ['id' => 'author_id']);
+    }
+
+
+    /**
+     * @param User $user
+     */
+    public function setAuthor($user)
+    {
+        $this->author_id = $user->id;
+    }
+
+
+    /**
+     * @return array|null|ActiveRecord
+     */
+    public function getObject()
+    {
+        return (new ActiveQuery($this->object_class))
+            ->where(['id' => $this->object_id])
+            ->one();
+    }
+
+
+    /**
+     * @param ActiveRecord $object
+     */
+    public function setObject($object)
+    {
+        $this->object_class = $object->className();
+        $this->object_id    = $object->id;
     }
 
 

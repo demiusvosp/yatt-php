@@ -47,6 +47,8 @@ $config = array_merge_recursive($config, [
             'rules' => require(__DIR__ . '/routes.php'),
         ],
         'assetManager' => [
+            'appendTimestamp' => true,
+            'linkAssets' => true,
             'bundles' => [
                 'dmstr\web\AdminLteAsset' => [
                     'skin' => 'skin-green',

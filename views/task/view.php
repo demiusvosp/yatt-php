@@ -9,6 +9,7 @@
 use app\helpers\ProjectUrl;
 use app\models\entities\Task;
 use app\widgets\CloseTask;
+use app\widgets\CommentThread;
 use app\components\ProjectService;
 use app\helpers\Access;
 use app\helpers\HtmlBlock;
@@ -27,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;// как вот это превр
  * {{ set(this, 'params', { 'breadcrumbs' : { '' : this.title } }) }}
  */
 ?>
-<div class="row-fluid task-toolbar">
+<div class="row-fluid">
     <div class="btn-group">
         <?php if(Yii::$app->user->can(Access::EDIT_TASK)) { ?>
             <a
@@ -186,5 +187,6 @@ $this->params['breadcrumbs'][] = $this->title;// как вот это превр
     </div>
 </div>
 <div class="clearfix"></div>
-<?= CloseTask::widget(['task' =>$task, 'modalId' => 'closeTask']);
-?>
+<?= CommentThread::widget(['object' => $task])?>
+    <div class="clearfix"></div>
+<?= CloseTask::widget(['task' => $task, 'modalId' => 'closeTask'])?>

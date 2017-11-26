@@ -17,9 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Create coment' => 'Написать комментарий',
+    'Cannot save comment' => 'Не удалось сохранить комментарий',
+    'Comment deleted' => 'Комментарий удален',
+    'Delete' => '',
+    'Edit' => '',
     'Author' => 'Автор',
     'Author ID' => 'ID автора',
+    'Create coment' => 'Написать комментарий',
     'Created At' => 'Создан',
     'ID' => 'ID',
     'Object' => 'Объект',

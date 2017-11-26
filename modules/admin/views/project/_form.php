@@ -30,6 +30,7 @@ use app\modules\admin\models\Project;
     <?= $form->field($project, 'admin_id')->widget(UserSelect::className(), ['userField' => 'admin']) ?>
 
     <?= $form->field($project, 'enableCommentProject')->checkbox() ?>
+    <?= $form->field($project, 'enableCommentToClosed')->checkbox() ?>
 
     <div class="form-group">
         <?= Html::submitButton(

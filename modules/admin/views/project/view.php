@@ -55,6 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
 
                 'enableCommentProject:boolean',
+                'enableCommentToClosed:boolean',
 
             ],
         ]) ?>

@@ -17,7 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Enable comment project' => 'Разрешить комментирование проекта',
+    'Enable comment to closed tasks' => 'Разрешить комментирование закрытых задач',
+    'Enable comment to project' => 'Разрешить комментирование проекта',
     'All' => 'Все',
     'Configuration' => 'Конфигурация',
     'Create Project' => 'Новый проект',

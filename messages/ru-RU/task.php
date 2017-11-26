@@ -17,11 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Change stage' => 'Сменить этап',
-    'Go to stage' => 'Перейти на ',
+    'Task closed' => '',
     'Assigned' => 'Назначена',
     'Cancel' => 'Отменена',
     'Caption' => 'Заголовок',
+    'Change stage' => 'Сменить этап',
     'Close reason' => 'Причина закрытия',
     'Close task' => 'Закрыть задачу',
     'Created' => 'Создана',
@@ -30,6 +30,7 @@ return [
     'Done' => 'Готова',
     'Edit task' => 'Редактировать задачу',
     'Error in create new task' => 'Ошибка при созданиии задачи',
+    'Go to stage' => 'Перейти на ',
     'High' => 'Высокий',
     'ID' => 'ID',
     'Impossible' => 'Невозможно',

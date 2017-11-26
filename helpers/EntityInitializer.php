@@ -74,6 +74,7 @@ class EntityInitializer
     /**
      * Создать и настроить роли и полномочия для проекта.
      *
+     * @TODO а не забота ли это Access, это иерархия полномочий, а не особености инициализации
      * @param $project
      */
     public static function createProjectAccesses($project)
@@ -118,6 +119,16 @@ class EntityInitializer
             Access::CLOSE_TASK,
             [$employee],
             // пока будем считать, что работник может закрывать задачи. (но потом в админке это можно будет выключить)
+            $project
+        );
+        $auth->addPermission(
+            Access::CREATE_COMMENT,
+            [$employee],
+            $project
+        );
+        $auth->addPermission(
+            Access::MANAGE_COMMENT,
+            [$admin],
             $project
         );
     }

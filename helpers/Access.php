@@ -39,6 +39,8 @@ class Access
     const CHANGE_STAGE = 'changeStage';
     const CLOSE_TASK = 'closeTask';
     const PROJECT_SETTINGS = 'projectSettings';
+    const CREATE_COMMENT = 'createComment';
+    const MANAGE_COMMENT = 'manageComment'; // управление комментариями (редактирование/удаление)
 
 
     /**
@@ -60,9 +62,11 @@ class Access
             static::VIEW             => Yii::t('access', 'Project watcher'),
             static::OPEN_TASK        => Yii::t('access', 'can open task'),
             static::EDIT_TASK        => Yii::t('access', 'can edit task'),
-            static::CHANGE_STAGE         => Yii::t('access', 'can change task stage'),
+            static::CHANGE_STAGE     => Yii::t('access', 'can change task stage'),
             static::CLOSE_TASK       => Yii::t('access', 'can close task'),
             static::PROJECT_SETTINGS => Yii::t('access', 'can change setting'),
+            static::CREATE_COMMENT => Yii::t('access', 'can create comment'),
+            static::MANAGE_COMMENT => Yii::t('access', 'can manage (edit/delete) comment'),
         ];
     }
 
@@ -104,6 +108,8 @@ class Access
             static::CHANGE_STAGE,
             static::CLOSE_TASK,
             static::PROJECT_SETTINGS,
+            static::CREATE_COMMENT,
+            static::MANAGE_COMMENT,
         ];
 
         return array_combine($items, $items);

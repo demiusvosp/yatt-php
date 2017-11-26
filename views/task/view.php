@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;// как вот это превр
  * полагают так, но я не очень понимаю как это будет работать. Как-нибудь надо будет проверить
  * {{ set(this, 'params', { 'breadcrumbs' : { '' : this.title } }) }}
  */
+$canClose = !$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK);
 ?>
 <div class="row-fluid">
     <div class="btn-group">
@@ -40,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;// как вот это превр
             </a>
         <?php } ?>
 
-        <?php if(!$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK)) { ?>
+        <?php if($canClose) { ?>
             <button class="btn btn-app"
                 data-action="<?= ProjectUrl::to(['task/close', 'suffix'=>$task->suffix, 'index'=>$task->index])?>"
                 data-toggle="modal" data-target="#closeTask"
@@ -188,5 +189,7 @@ $this->params['breadcrumbs'][] = $this->title;// как вот это превр
 </div>
 <div class="clearfix"></div>
 <?= CommentThread::widget(['object' => $task])?>
-    <div class="clearfix"></div>
-<?= CloseTask::widget(['task' => $task, 'modalId' => 'closeTask'])?>
+<div class="clearfix"></div>
+<?php if($canClose) { ?>
+    <?= CloseTask::widget(['task' => $task, 'modalId' => 'closeTask'])?>
+<?php } ?>

@@ -28,12 +28,14 @@ use app\helpers\ProjectUrl;
             </div>
             <?php $form = ActiveForm::begin(['action' => ProjectUrl::to(['task/close', 'suffix' => $task->suffix, 'index' => $task->index]), 'id'=> 'closeTaskForm']); ?>
             <div class="modal-body box-body">
-                <?= Html::activeHiddenInput($model, 'index') ?>
-                <?= Html::activeHiddenInput($model, 'suffix') ?>
+                <?= Html::activeHiddenInput($model, 'task_id') ?>
 
                 <?= $form->field($model, 'close_reason')->dropDownList(Task::reasonLabels()); ?>
+
+                <?= $form->field($model->comment, 'text')->textarea(['rows' => 5]) ?>
             </div>
             <div class="modal-footer box-footer">
+                <?= Html::activeHiddenInput($model->comment, 'author_id') ?>
                 <?= Html::submitButton(
                         '<i class="glyphicon glyphicon-ok"></i> Закрыть',
                         ['class' => 'btn btn-success']) ?>

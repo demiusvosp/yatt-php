@@ -230,7 +230,8 @@ class TaskController extends BaseProjectController
     {
         $form = new CloseTaskForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            $task = TaskQuery::getByIndex($form->suffix, $form->index);
+            $task = Task::findOne($form->task_id);
+            $form->saveComment();
 
             $task->close($form->close_reason);
             Yii::$app->session->addFlash('success', 'Task closed');

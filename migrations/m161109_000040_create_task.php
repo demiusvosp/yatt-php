@@ -2,6 +2,7 @@
 
 use yii\db\Migration;
 
+use app\models\entities\Task;
 
 class m161109_000040_create_task extends Migration
 {
@@ -18,12 +19,12 @@ class m161109_000040_create_task extends Migration
 
             'assigned_id' => $this->integer()->comment('Текущий пользователь, работающий над задачей'),
 
-            'priority'   => $this->integer()->comment('Приоритет задачи'),
-            'progress'   => $this->integer()->comment('Прогресс выполнения'),
+            'priority'   => $this->integer()->notNull()->defaultValue(Task::PRIORITY_MEDIUM)->comment('Приоритет задачи'),
+            'progress'   => $this->integer()->notNull()->defaultValue(0)->comment('Прогресс выполнения'),
             'difficulty_ratio' => $this->float()->notNull()->defaultValue(1)->comment('Сложность задачи'),
 
-            'is_closed'    => $this->boolean()->notNull()->comment('Задача закрыта')->defaultValue(false),
-            'close_reason' => $this->integer()->comment('Причина закрытия'),
+            'is_closed'    => $this->boolean()->notNull()->defaultValue(false)->comment('Задача закрыта'),
+            'close_reason' => $this->integer()->notNull()->defaultValue(Task::REASON_DONE)->comment('Причина закрытия'),
 
             'created_at' => $this->dateTime()->comment('Создана'),
             'updated_at' => $this->dateTime()->comment('Оновленна'),

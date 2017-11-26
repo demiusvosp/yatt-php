@@ -17,6 +17,8 @@ class CommentThread extends Widget
 {
     public $object;
 
+    public $enableNewComment = true;
+
     /** @var array */
     protected $comments;
 
@@ -38,7 +40,10 @@ class CommentThread extends Widget
         // полномочия менеджмента комментов
         $editAnything = Yii::$app->user->can(Access::projectItem(Access::MANAGE_COMMENT));
 
-        if (Yii::$app->user->can(Access::projectItem(Access::CREATE_COMMENT)) && !$editCommentId) {
+        if ($this->enableNewComment &&
+            Yii::$app->user->can(Access::projectItem(Access::CREATE_COMMENT)) &&
+            !$editCommentId
+        ) {
             // Коменты можно создавать и сейчас не редактируем, создаем новый под фрму.
             $newComment = new Comment([
                 'author' => Yii::$app->user->identity,

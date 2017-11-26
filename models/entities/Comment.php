@@ -28,7 +28,7 @@ use app\models\queries\CommentQuery;
 class Comment extends ActiveRecord
 {
     const TYPE_USUAL = 0; // стандартный тип
-    // потом тут появятся коменты системы, комменты бота, комменты важных событий, вроде комент к закрытию задачи
+    const TYPE_CLOSE = 1; // комментарий к закрытию задачи
 
     /**
      * @inheritdoc
@@ -109,7 +109,7 @@ class Comment extends ActiveRecord
      */
     public function setAuthor($user)
     {
-        $this->author_id = $user->id;
+        $this->author_id = $user ? $user->id : null;
     }
 
 

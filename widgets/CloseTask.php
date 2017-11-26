@@ -38,8 +38,7 @@ class CloseTask extends Widget
     public function init()
     {
         $this->closeForm = new CloseTaskForm([
-            'index' => $this->task->index,
-            'suffix' => $this->task->suffix
+            'task_id' => $this->task->id,
         ]);
     }
 

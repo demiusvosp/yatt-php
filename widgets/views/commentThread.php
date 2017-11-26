@@ -28,7 +28,10 @@ use app\models\entities\Comment;
         ) { ?>
             <?php $form = ActiveForm::begin(); ?>
             <div class="comment-form">
-                <div class="box box-success comment" id="comment-<?= $comment->id ?>">
+                <div
+                    class="box box-success comment <?=$comment->type == Comment::TYPE_CLOSE ? 'box-bordered' : '' ?>"
+                    id="comment-<?= $comment->id ?>"
+                >
                     <div class="box-header">
                         <h3 class="box-title">
                             <?= Yii::t('comment', 'Create coment') ?>
@@ -50,7 +53,10 @@ use app\models\entities\Comment;
             </div>
             <?php ActiveForm::end(); ?>
         <?php } else { ?>
-            <div class="box box-success comment" id="comment-<?= $comment->id ?>">
+            <div
+                class="box box-success comment <?=$comment->type == Comment::TYPE_CLOSE ? 'box-bordered' : '' ?>"
+                id="comment-<?= $comment->id ?>"
+            >
                 <div class="box-header">
                     <div class="comment-author"><?= HtmlBlock::userItem($comment->author) ?></div>
                     <div class="comment-date"><?= Yii::$app->formatter->asDatetime($comment->created_at) ?></div>

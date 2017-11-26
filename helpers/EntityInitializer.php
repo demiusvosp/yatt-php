@@ -122,6 +122,11 @@ class EntityInitializer
             $project
         );
         $auth->addPermission(
+            Access::CHANGE_STAGE,
+            [$employee],
+            $project
+        );
+        $auth->addPermission(
             Access::CREATE_COMMENT,
             [$employee],
             $project

@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Task closed' => '',
+    'Task closed. Reason: {reason}' => 'Задача закрыта. Резолюция: {reason}',
     'Assigned' => 'Назначена',
     'Cancel' => 'Отменена',
     'Caption' => 'Заголовок',

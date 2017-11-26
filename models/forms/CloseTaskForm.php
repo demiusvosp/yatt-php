@@ -11,6 +11,7 @@ namespace app\models\forms;
 use Yii;
 use elisdn\compositeForm\CompositeForm;
 use app\models\entities\Comment;
+use app\models\entities\Task;
 
 
 /**
@@ -89,7 +90,9 @@ class CloseTaskForm extends CompositeForm
     public function saveComment()
     {
         if(empty($this->comment->text)) {
-            $this->comment->text = Yii::t('task', 'Task closed');
+            $this->comment->text = Yii::t('task', 'Task closed. Reason: {reason}', [
+                'reason' => Task::reasonLabels()[$this->close_reason]
+            ]);
         }
         $this->comment->save();
     }

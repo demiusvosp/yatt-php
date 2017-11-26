@@ -59,6 +59,7 @@ class Project extends \app\models\entities\Project
         return [
             Project::EDITOR_PLAIN => Yii::t('project', 'plain text'),
             Project::EDITOR_MD => Yii::t('project', 'Markdown'),
+            Project::EDITOR_WYSIWYG => Yii::t('project', 'Wysiwyg-editor'),
         ];
     }
 

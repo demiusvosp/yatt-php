@@ -49,7 +49,7 @@ class Project extends ActiveRecord
 
 
     const EDITOR_PLAIN = 'plain';
-    // const EDITOR_WYSIWYG = 'wysiwyg';
+    const EDITOR_WYSIWYG = 'wysiwyg';
     const EDITOR_MD = 'md';
     // const EDITOR_WIKI = 'wiki';
 

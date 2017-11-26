@@ -8,6 +8,7 @@
 
 use app\models\entities\Project;
 use app\widgets\ProjectTile;
+use app\widgets\CommentThread;
 
 
 /* @var $this yii\web\View */
@@ -18,7 +19,7 @@ $this->params['breadcrumbs'][] = Yii::t('project', 'Overview');
 $this->params['project']       = $project;
 
 ?>
-<div class="row-fluid">
+<div class="row">
     <div class="col-md-5">
         <?= ProjectTile::widget([
             'project'   => $project,
@@ -42,4 +43,9 @@ $this->params['project']       = $project;
             </div>
         </div>
     </div>
+</div>
+<div class="row">
+    <?php if($project->getConfigItem('enableCommentProject')) { ?>
+        <?=CommentThread::widget(['object'=>$project]); ?>
+    <?php } ?>
 </div>

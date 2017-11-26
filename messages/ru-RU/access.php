@@ -17,7 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'can change task stage' => 'может менять этап задачи',
+    'can create comment' => 'может создавать комментарии',
+    'can manage (edit/delete) comment' => 'может управлять комментариями',
     'Access management' => 'Управление доступами',
     'Project Employee' => 'Работник проекта',
     'Project admin' => 'Админ проекта',
@@ -25,6 +26,7 @@ return [
     'Project watcher' => 'Просматривающий проект',
     'User management' => 'Управление пользователями',
     'can change setting' => 'может настраивать проект',
+    'can change task stage' => 'может менять этап задачи',
     'can close task' => 'может закрывать задачи',
     'can edit task' => 'может редактировать задачи',
     'can open task' => 'может открывать задачи',

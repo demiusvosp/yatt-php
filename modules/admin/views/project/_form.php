@@ -32,6 +32,7 @@ use app\modules\admin\models\Project;
     <?= $form->field($project, 'enableCommentProject')->checkbox() ?>
     <?= $form->field($project, 'enableCommentToClosed')->checkbox() ?>
 
+    <?= $form->field($project, 'editorType')->radioList(Project::editorTypesLabels()) ?>
     <div class="form-group">
         <?= Html::submitButton(
                 $project->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'),

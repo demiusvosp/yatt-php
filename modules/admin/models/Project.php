@@ -27,6 +27,8 @@ class Project extends \app\models\entities\Project
     /** @var bool можно оставлять комментарии к закрытым задачам */
     public $enableCommentToClosed = false;
 
+    public $editorType = Project::EDITOR_MD;
+
 
     /**
      * @return array
@@ -47,13 +49,26 @@ class Project extends \app\models\entities\Project
         return array_merge(parent::attributeLabels(), [
             'enableCommentProject' => Yii::t('project', 'Enable comment to project'),
             'enableCommentToClosed' => Yii::t('project', 'Enable comment to closed tasks'),
+            'editorType' => Yii::t('project', 'Text editor type'),
         ]);
+    }
+
+
+    public static function editorTypesLabels()
+    {
+        return [
+            Project::EDITOR_PLAIN => Yii::t('project', 'plain text'),
+            Project::EDITOR_MD => Yii::t('project', 'Markdown'),
+        ];
     }
 
 
     public function scenarios()
     {
-        $fields = ['suffix', 'name', 'description', 'public', 'enableCommentProject', 'enableCommentToClosed'];
+        $fields = [
+            'suffix', 'name', 'description', 'public',
+            'enableCommentProject', 'enableCommentToClosed', 'editorType'
+        ];
 
         if (Yii::$app->user->can(Access::ACCESS_MANAGEMENT)) {
             $fields[] = 'admin_id';
@@ -76,6 +91,7 @@ class Project extends \app\models\entities\Project
         parent::afterFind();
         $this->enableCommentProject = $this->getConfigItem('enableCommentProject');
         $this->enableCommentToClosed = $this->getConfigItem('enableCommentToClosed');
+        $this->editorType = $this->getConfigItem('editorType', Project::EDITOR_PLAIN);
     }
 
 
@@ -88,6 +104,7 @@ class Project extends \app\models\entities\Project
     {
         $this->setConfigItem('enableCommentProject', $this->enableCommentProject);
         $this->setConfigItem('enableCommentToClosed', $this->enableCommentToClosed);
+        $this->setConfigItem('editorType', $this->editorType);
 
         return parent::beforeSave($insert);
     }

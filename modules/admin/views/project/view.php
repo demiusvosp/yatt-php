@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use app\models\entities\Project;
+use app\modules\admin\models\Project;
 
 /* @var $this yii\web\View */
 /* @var $project Project */
@@ -56,6 +56,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'enableCommentProject:boolean',
                 'enableCommentToClosed:boolean',
+
+                [
+                    'attribute' => 'editorType',
+                    'value' => function($project) {
+                        /** @var Project $project */
+                        //return $project->editorType;
+                        return Project::editorTypesLabels()[$project->editorType];
+                    }
+                ],
 
             ],
         ]) ?>

@@ -47,6 +47,13 @@ class Project extends ActiveRecord
     /** Уполномоченные */
     const STATUS_PUBLIC_AUTHED = 2;
 
+
+    const EDITOR_PLAIN = 'plain';
+    // const EDITOR_WYSIWYG = 'wysiwyg';
+    const EDITOR_MD = 'md';
+    // const EDITOR_WIKI = 'wiki';
+
+
     /** @var array Конфигурация проекта (отдельная переменная, так как нельзя обращаться к вирутальному полю, как к массиву) */
     public $configuration = [];
 
@@ -299,11 +306,12 @@ class Project extends ActiveRecord
     /**
      * Получать настройку проекта
      * @param string $name
+     * @param mixed|null $default
      * @return mixed|null
      */
-    public function getConfigItem($name)
+    public function getConfigItem($name, $default = null)
     {
-        return isset($this->configuration[$name]) ? $this->configuration[$name] : null;
+        return isset($this->configuration[$name]) ? $this->configuration[$name] : $default;
     }
 
 

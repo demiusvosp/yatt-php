@@ -17,14 +17,17 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Enable comment to closed tasks' => 'Разрешить комментирование закрытых задач',
-    'Enable comment to project' => 'Разрешить комментирование проекта',
+    'Text editor type' => 'Редактор текста',
+    'Markdown' => 'Markdown',
+    'plain text' => 'текст без форматирования',
     'All' => 'Все',
     'Configuration' => 'Конфигурация',
     'Create Project' => 'Новый проект',
     'Created' => 'Создан',
     'Description' => 'Описание',
     'Empowered' => 'Уполномоченные',
+    'Enable comment to closed tasks' => 'Разрешить комментирование закрытых задач',
+    'Enable comment to project' => 'Разрешить комментирование проекта',
     'Name' => 'Имя',
     'Overview' => 'Обзор',
     'Project Manager' => 'Управление проектами',

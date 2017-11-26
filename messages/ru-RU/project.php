@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Statistics' => 'Статистика',
+    'Enable comment project' => 'Разрешить комментирование проекта',
     'All' => 'Все',
     'Configuration' => 'Конфигурация',
     'Create Project' => 'Новый проект',
@@ -34,6 +34,7 @@ return [
     'Public' => 'Виден для',
     'Registered' => 'Зарегистрированные',
     'Settings' => 'Настройки',
+    'Statistics' => 'Статистика',
     'Suffix' => 'Суффикс',
     'Update {modelClass}: ' => 'Изменить {modelClass}: ',
     'Updated' => 'Обновлен',

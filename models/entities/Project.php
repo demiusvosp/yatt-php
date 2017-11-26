@@ -21,7 +21,7 @@ use app\helpers\EntityInitializer;
  * @property string           $name
  * @property string           $description
  * @property integer          $public
- * @property array            $config
+ * @property string           $config - json настроек, хранящеся в БД
  * @property integer          $admin_id
  * @property integer          $last_task_index
  * @property DictStage[]      $stages
@@ -35,7 +35,10 @@ use app\helpers\EntityInitializer;
 class Project extends ActiveRecord
 {
 
-    /** Публичность проекта (в будущем наверно это будет тоже через назначение ролей групам пользователей (в том числе группе гости) */
+    /**
+     * Публичность проекта
+     * @TODO продумать, может не хранить тут, а выдавать роль <project>_VIEW кому надо
+     */
 
     /** Все. (в том числе гости) */
     const STATUS_PUBLIC_ALL = 0;
@@ -43,6 +46,9 @@ class Project extends ActiveRecord
     const STATUS_PUBLIC_REGISTED = 1;
     /** Уполномоченные */
     const STATUS_PUBLIC_AUTHED = 2;
+
+    /** @var array Конфигурация проекта (отдельная переменная, так как нельзя обращаться к вирутальному полю, как к массиву) */
+    public $configuration = [];
 
 
     public function getPublicStatusName()
@@ -189,10 +195,9 @@ class Project extends ActiveRecord
 
     public function afterFind()
     {
-        if (is_string($this->config)) {
-            $this->config = Json::decode($this->config, true);
-        }
         parent::afterFind();
+
+        $this->configuration = Json::decode($this->config, true);
     }
 
 
@@ -206,9 +211,7 @@ class Project extends ActiveRecord
     public function beforeSave($insert)
     {
         $this->suffix = strtoupper($this->suffix);
-        if (is_array($this->config)) {
-            $this->config = Json::encode($this->config);
-        }
+        $this->config = Json::encode($this->configuration);
 
         return parent::beforeSave($insert);
     }
@@ -290,6 +293,28 @@ class Project extends ActiveRecord
     public function getCategories()
     {
         return $this->hasMany(DictCategory::className(), ['project_id' => 'id']);
+    }
+
+
+    /**
+     * Получать настройку проекта
+     * @param string $name
+     * @return mixed|null
+     */
+    public function getConfigItem($name)
+    {
+        return isset($this->configuration[$name]) ? $this->configuration[$name] : null;
+    }
+
+
+    /**
+     * Установить настройку проекта
+     * @param string $name
+     * @param mixed $value
+     */
+    public function setConfigItem($name, $value)
+    {
+        $this->configuration[$name] = $value;
     }
 
 

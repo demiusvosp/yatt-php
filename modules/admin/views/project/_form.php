@@ -29,6 +29,8 @@ use app\modules\admin\models\Project;
 
     <?= $form->field($project, 'admin_id')->widget(UserSelect::className(), ['userField' => 'admin']) ?>
 
+    <?= $form->field($project, 'enableCommentProject')->checkbox() ?>
+
     <div class="form-group">
         <?= Html::submitButton(
                 $project->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'),

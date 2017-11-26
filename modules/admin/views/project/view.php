@@ -54,6 +54,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 ],
 
+                'enableCommentProject:boolean',
+
             ],
         ]) ?>
     </div>

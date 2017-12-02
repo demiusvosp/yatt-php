@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Task closed. Reason: {reason}' => 'Задача закрыта. Резолюция: {reason}',
     'Assigned' => 'Назначена',
     'Cancel' => 'Отменена',
     'Caption' => 'Заголовок',
@@ -43,8 +42,8 @@ return [
     'Progress' => 'Прогресс',
     'Retry' => 'Повтор',
     'Suffix' => 'суффикс проекта',
+    'Task closed. Reason: {reason}' => 'Задача закрыта. Резолюция: {reason}',
     'Task list' => 'Список задач',
-    'Task: ' => 'Задача:',
     'Tasks' => 'Задачи',
     'Updated' => 'Обновлена',
     'Very Low' => 'Очень низкий',

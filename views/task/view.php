@@ -17,16 +17,14 @@ use app\helpers\HtmlBlock;
 
 /* @var $this yii\web\View */
 /* @var $task Task */
+/* @var $project */
 
 /** @var ProjectService $projectService */
 $projectService = Yii::$app->get('projectService');
 
-$this->title = Yii::t('task', 'Task: ') . $task->getName();
-$this->params['breadcrumbs'][] = $this->title;// как вот это превращать в твиг?
-/*
- * полагают так, но я не очень понимаю как это будет работать. Как-нибудь надо будет проверить
- * {{ set(this, 'params', { 'breadcrumbs' : { '' : this.title } }) }}
- */
+$this->title = HtmlBlock::titleString($task->getFullName(), $project);
+$this->params['breadcrumbs'][] = $task->getFullName();
+
 $canClose = !$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK);
 ?>
 <div class="row-fluid">

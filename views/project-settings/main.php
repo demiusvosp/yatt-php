@@ -8,8 +8,12 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use app\helpers\HtmlBlock;
 
-$this->title = $project->name;
+$this->title = HtmlBlock::titleString(
+    Yii::t('project', 'Settings') . ' - ' . Yii::t('project/settings', 'Main'),
+    $project
+);
 $this->params['breadcrumbs'][] = Yii::t('project/settings', 'Main');
 $this->params['project'] = $project;
 ?>

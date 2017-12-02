@@ -84,7 +84,6 @@ class ProjectSettingsController extends BaseProjectController
         }
 
         return $this->render('stages', [
-            'project'  => $this->project,
             'dictForm' => $dictForm,
         ]);
     }
@@ -96,7 +95,6 @@ class ProjectSettingsController extends BaseProjectController
     public function actionTypes()
     {
         $dictForm = new DictForm([
-            'project'   => $this->project,
             'items'     => $this->project->types,
             'itemClass' => 'app\models\entities\DictType',
         ]);
@@ -108,7 +106,6 @@ class ProjectSettingsController extends BaseProjectController
         }
 
         return $this->render('types', [
-            'project'  => $this->project,
             'dictForm' => $dictForm,
         ]);
     }
@@ -129,7 +126,6 @@ class ProjectSettingsController extends BaseProjectController
         }
 
         return $this->render('versions', [
-            'project'  => $this->project,
             'dictForm' => $dictForm,
         ]);
     }
@@ -150,7 +146,6 @@ class ProjectSettingsController extends BaseProjectController
         }
 
         return $this->render('difficulties', [
-            'project'  => $this->project,
             'dictForm' => $dictForm,
         ]);
     }
@@ -171,7 +166,6 @@ class ProjectSettingsController extends BaseProjectController
         }
 
         return $this->render('categories', [
-            'project'  => $this->project,
             'dictForm' => $dictForm,
         ]);
     }
@@ -193,7 +187,6 @@ class ProjectSettingsController extends BaseProjectController
         }
 
         return $this->render('users', [
-            'project' => $this->project,
             'items'   => $items,
         ]);
     }

@@ -7,13 +7,13 @@ use app\models\entities\Project;
 /* @var $this yii\web\View */
 /* @var $project Project */
 
-$this->title = $project->name;
+$this->title = Yii::$app->name . ' :: ' . Yii::t('project', 'Project Manager') . ': ' . $project->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('project', 'Project Manager'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $project->name;
 ?>
 <div class="box box-solid box-default"><!-- box-solid box-default альтернатива-->
     <div class="box-header">
-        <h1 class="box-title"><?= Html::encode($this->title) ?></h1>
+        <h1 class="box-title"><?= Html::encode(Yii::t('project', 'Project Manager') . ': ' . $project->name) ?></h1>
     </div>
 
     <div class="box-body">

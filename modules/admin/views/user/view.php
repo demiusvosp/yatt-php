@@ -8,13 +8,13 @@ use app\helpers\HtmlBlock;
 /* @var $this yii\web\View */
 /* @var $user app\models\entities\User */
 
-$this->title = $user->username;
+$this->title = Yii::$app->name . ' :: ' . Yii::t('user', 'User Manager') . ' - ' . $user->username;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('user', 'User Manager'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $user->username;
 ?>
 <div class="box box-solid box-default"><!-- box-solid box-default альтернатива-->
     <div class="box-header">
-        <h1 class="box-title"><?= Html::encode($this->title) ?></h1>
+        <h1 class="box-title"><?= Html::encode(Yii::t('user', 'User Manager') . ' - ' . $user->username) ?></h1>
     </div>
 
     <div class="box-body">

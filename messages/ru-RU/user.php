@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Email already exist' => 'Данный email уже используется',
+    'Update' => 'Редактировать',
     'Active' => 'Активен',
     'Admin in projects' => 'Админ в проектах',
     'Auth key' => 'Auth key',
@@ -29,6 +29,7 @@ return [
     'Created at' => 'Создан',
     'Email' => 'Email',
     'Email Confirmation Token' => 'Токен подтверждения Email',
+    'Email already exist' => 'Данный email уже используется',
     'Fill register fields:' => 'Заполните поля для регистрации:',
     'Login' => 'Вход',
     'Logout' => 'Выход',
@@ -40,7 +41,7 @@ return [
     'The installation creates superadmin user <strong>admin</strong> with password <strong>root</strong>.
 It is strongly recommended to change it immediately' => 'При установке создается суперадмин <strong>root</strong> с паролем <strong>root</strong>.
         Настоятельно рекомендуется его сразу изменить',
-    'Update User: ' => 'Редактировать пользователя: ',
+    'Update User' => 'Редактировать пользователя',
     'Updated at' => 'Обновлен',
     'User Manager' => 'Управление пользователями',
     'User profile' => 'Профиль пользователя',

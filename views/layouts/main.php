@@ -7,18 +7,18 @@ use yii\helpers\Html;
 
 use dmstr\helpers\AdminLteHelper;
 use dmstr\widgets\Alert;
-
 use app\assets\AppAsset;
-
 use app\components\ProjectService;
 
 AppAsset::register($this);
 /** @var ProjectService $projectService */
 $projectService = Yii::$app->projectService;
 
-$title = Yii::$app->name;
-if($projectService->project) {
-    $title .= ': ' . $projectService->project->name;
+if(!$this->title) {
+    $this->title = Yii::$app->name;
+    if ($projectService->project) {
+        $this->title .= ' :: ' . $projectService->project->name;
+    }
 }
 ?>
 <?php $this->beginPage() ?>
@@ -28,7 +28,7 @@ if($projectService->project) {
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($title) ?></title>
+    <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
 <body class="<?= AdminLteHelper::skinClass() ?> sidebar-mini layout-top-nav" >

@@ -7,6 +7,7 @@
  */
 
 use app\models\entities\Project;
+use app\helpers\HtmlBlock;
 use app\widgets\ProjectTile;
 use app\widgets\CommentThread;
 
@@ -14,7 +15,7 @@ use app\widgets\CommentThread;
 /* @var $this yii\web\View */
 /* @var $project Project */
 
-$this->title                   = $project->name;
+$this->title                   = HtmlBlock::titleString(Yii::t('project', 'Overview'), $project);
 $this->params['breadcrumbs'][] = Yii::t('project', 'Overview');
 $this->params['project']       = $project;
 

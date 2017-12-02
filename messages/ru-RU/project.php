@@ -17,14 +17,15 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Enable comment to closed tasks' => 'Разрешить комментирование закрытых задач',
-    'Enable comment to project' => 'Разрешить комментирование проекта',
+    'Update Project' => 'Редактировать проект',
     'All' => 'Все',
     'Configuration' => 'Конфигурация',
     'Create Project' => 'Новый проект',
     'Created' => 'Создан',
     'Description' => 'Описание',
     'Empowered' => 'Уполномоченные',
+    'Enable comment to closed tasks' => 'Разрешить комментирование закрытых задач',
+    'Enable comment to project' => 'Разрешить комментирование проекта',
     'Name' => 'Имя',
     'Overview' => 'Обзор',
     'Project Manager' => 'Управление проектами',
@@ -37,7 +38,6 @@ return [
     'Settings' => 'Настройки',
     'Statistics' => 'Статистика',
     'Suffix' => 'Суффикс',
-    'Update {modelClass}: ' => 'Изменить {modelClass}: ',
     'Updated' => 'Обновлен',
     'suffix must be unique' => 'суффикс уже используется',
     'suffix must contain only A-Z or 0-9 chars' => 'суфикс может содержать только символы A-Z и цифры 0-9',

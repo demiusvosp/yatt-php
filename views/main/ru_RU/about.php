@@ -4,14 +4,14 @@
 
 use yii\helpers\Html;
 
-$this->title = Yii::t('common', 'About');
+$this->title = 'О проекте';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <pre>
-Yet another task tracker
+    <pre><!-- это потом стоит рендерить маркдауном. Причем для того, чтобы два раза не править стоит брать из README.md -->
+Yet another task tracker (еще один треккер задач)
 ============================
 
 Я заметил, что практически нет адекватного багтреккера, написанного на пхп.

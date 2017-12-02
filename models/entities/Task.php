@@ -347,6 +347,16 @@ class Task extends ActiveRecord
 
 
     /**
+     * Полное имя задачи
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->getName() . ' - ' . $this->caption;
+    }
+
+
+    /**
      * Закрыть задачу
      * И вот почти на 300 строке первая функция бизнес-логики.
      *

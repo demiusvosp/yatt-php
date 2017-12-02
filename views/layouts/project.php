@@ -18,8 +18,10 @@ use app\models\entities\Project;
 
 $project = Yii::$app->projectService->project;
 
-$this->title = $project->name;
-array_unshift($this->params['breadcrumbs'], $this->title);
+if(!$this->title) {
+    $this->title = $project->name;
+}
+array_unshift($this->params['breadcrumbs'], $project->name);
 
 
 ?>

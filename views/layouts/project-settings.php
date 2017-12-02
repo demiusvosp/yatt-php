@@ -9,6 +9,7 @@
 
 use app\helpers\ProjectUrl;
 use app\models\entities\Project;
+use app\helpers\HtmlBlock;
 
 /* @var $this yii\web\View */
 /* @var $project Project */
@@ -16,8 +17,10 @@ use app\models\entities\Project;
 
 $project = Yii::$app->projectService->project;
 
-$this->title = Yii::t('project', 'Settings');
-array_unshift($this->params['breadcrumbs'], $this->title);
+if(!$this->title) {
+    $this->title = HtmlBlock::titleString(Yii::t('project', 'Settings'), $project);
+}
+array_unshift($this->params['breadcrumbs'], Yii::t('project', 'Settings'));
 
 ?>
 <?php $this->beginContent('@app/views/layouts/project.php'); ?>

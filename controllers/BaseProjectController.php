@@ -41,4 +41,13 @@ class BaseProjectController extends Controller
         return parent::beforeAction($action);
     }
 
+
+    public function render($view, $params = [])
+    {
+        if(!isset($params['project'])) {
+            $params = array_merge($params, ['project' => $this->project]);
+        }
+
+        return parent::render($view, $params);
+    }
 }

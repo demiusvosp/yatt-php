@@ -8,7 +8,7 @@
 
 use app\models\entities\Project;
 use app\models\forms\DictForm;
-
+use app\helpers\HtmlBlock;
 use app\widgets\DictEdit;
 
 /* @var $this yii\web\View */
@@ -16,7 +16,10 @@ use app\widgets\DictEdit;
 /* @var $project Project */
 /* @var $dictForm DictForm */
 
-$this->title = $project->name;
+$this->title = HtmlBlock::titleString(
+    Yii::t('project', 'Settings') . ' - ' . Yii::t('project/settings', 'Types'),
+    $project
+);
 $this->params['breadcrumbs'][] = Yii::t('project/settings', 'Types');
 $this->params['project'] = $project;
 

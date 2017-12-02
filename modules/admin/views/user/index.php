@@ -7,12 +7,12 @@ use app\models\entities\User;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('user', 'User Manager');
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::$app->name . ' :: ' . Yii::t('user', 'User Manager');
+$this->params['breadcrumbs'][] = Yii::t('user', 'User Manager');
 ?>
 <div class="box box-solid box-default"><!-- box-solid box-default альтернатива-->
     <div class="box-header">
-        <h1 class="box-title"><?= Html::encode($this->title) ?></h1>
+        <h1 class="box-title"><?= Html::encode(Yii::t('user', 'User Manager')) ?></h1>
     </div>
 
     <div class="box-body">

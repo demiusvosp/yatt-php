@@ -4,13 +4,13 @@
 
 use yii\helpers\Html;
 
-$this->title = Yii::t('common', 'About');
+$this->title = 'About';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <pre>
+    <pre><!-- это потом стоит рендерить маркдауном. Причем для того, чтобы два раза не править стоит брать из README.md -->
 Yet another task tracker
 ============================
 

@@ -64,9 +64,7 @@ class DictMigration extends Migration
             'task',
             $this->refField,
             $this->tableName,
-            'id',
-            'CASCADE',
-            'CASCADE'
+            'id'
         );
     }
 

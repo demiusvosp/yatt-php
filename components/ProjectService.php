@@ -11,6 +11,7 @@ namespace app\components;
 use Yii;
 use yii\base\Component;
 use yii\web\NotFoundHttpException;
+use yii\helpers\ArrayHelper;
 use app\helpers\ProjectUrl;
 use app\models\entities\Project;
 use app\models\entities\DictStage;
@@ -117,7 +118,7 @@ class ProjectService extends Component
 
             $list[$type->id] = $type->name;
         }
-        return $list;
+        return ArrayHelper::merge([ null => Yii::t('common', 'Not set')], $list);
     }
 
 
@@ -143,7 +144,7 @@ class ProjectService extends Component
 
             $list[$version->id] = $version->name;
         }
-        return $list;
+        return ArrayHelper::merge([ null => Yii::t('common', 'Not set')], $list);
     }
 
 
@@ -159,7 +160,7 @@ class ProjectService extends Component
 
             $list[$level->id] = $level->name;
         }
-        return $list;
+        return ArrayHelper::merge([ null => Yii::t('common', 'Not set')], $list);
     }
 
 
@@ -175,7 +176,7 @@ class ProjectService extends Component
 
             $list[$category->id] = $category->name;
         }
-        return $list;
+        return ArrayHelper::merge([ null => Yii::t('common', 'Not set')], $list);
     }
 
 }

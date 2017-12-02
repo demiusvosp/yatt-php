@@ -13,7 +13,10 @@ use app\models\entities\Project;
 /** @var array $items */
 /** @var Project $project */
 
-$this->title = $project->name;
+$this->title = HtmlBlock::titleString(
+    Yii::t('project', 'Settings') . ' - ' . Yii::t('project/settings', 'Users'),
+    $project
+);
 $this->params['breadcrumbs'][] = Yii::t('project/settings', 'Users');
 $this->params['project'] = $project;
 ?>

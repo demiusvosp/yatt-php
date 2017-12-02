@@ -9,15 +9,17 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\StringHelper;
-use app\models\entities\Task;
 use app\helpers\HtmlBlock;
+use app\models\entities\Task;
+use app\models\entities\Project;
 
 
 /* @var $this yii\web\View */
+/* @var $project Project */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('task', 'Task list');
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = HtmlBlock::titleString(Yii::t('task', 'Task list'), $project);
+$this->params['breadcrumbs'][] = Yii::t('task', 'Task list');
 
 const COLUMN_MAX_LEN = 255;
 ?>

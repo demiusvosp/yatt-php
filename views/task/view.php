@@ -17,16 +17,14 @@ use app\helpers\HtmlBlock;
 
 /* @var $this yii\web\View */
 /* @var $task Task */
+/* @var $project */
 
 /** @var ProjectService $projectService */
 $projectService = Yii::$app->get('projectService');
 
-$this->title = Yii::t('task', 'Task: ') . $task->getName();
-$this->params['breadcrumbs'][] = $this->title;// как вот это превращать в твиг?
-/*
- * полагают так, но я не очень понимаю как это будет работать. Как-нибудь надо будет проверить
- * {{ set(this, 'params', { 'breadcrumbs' : { '' : this.title } }) }}
- */
+$this->title = HtmlBlock::titleString($task->getFullName(), $project);
+$this->params['breadcrumbs'][] = $task->getFullName();
+
 $canClose = !$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK);
 ?>
 <div class="row-fluid">
@@ -157,7 +155,7 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK);
                     <?=$task->getAttributeLabel('created_at') ?>
                 </td>
                 <td class="value">
-                    <?= Yii::$app->formatter->asDate($task->created_at) ?>
+                    <?= Yii::$app->formatter->asDatetime($task->created_at) ?>
                 </td>
             </tr>
             <tr>
@@ -168,14 +166,16 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK);
                     <?=$task->versionClose ? $task->versionClose->name : Yii::t('common', 'Not set') ?>
                 </td>
             </tr>
-            <tr>
-                <td class="item">
-                    <?=$task->getAttributeLabel('updated_at') ?>
-                </td>
-                <td class="value">
-                    <?= Yii::$app->formatter->asDate($task->updated_at) ?>
-                </td>
-            </tr>
+            <?php if($task->created_at != $task->updated_at) { ?>
+                <tr>
+                    <td class="item">
+                        <?=$task->getAttributeLabel('updated_at') ?>
+                    </td>
+                    <td class="value">
+                        <?= Yii::$app->formatter->asDatetime($task->updated_at) ?>
+                    </td>
+                </tr>
+            <?php } ?>
             </tbody>
         </table>
     </div>

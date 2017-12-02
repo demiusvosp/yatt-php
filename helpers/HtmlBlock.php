@@ -25,6 +25,21 @@ class HtmlBlock
 {
 
     /**
+     * @param string $title
+     * @param Project|null $project
+     * @return string
+     */
+    public static function titleString($title, $project = null)
+    {
+        if($project) {
+            return $project->name . ' :: ' . $title;
+        } else {
+            return $title;
+        }
+    }
+
+
+    /**
      * Значок отношения к проекту
      *
      * @param Project $project

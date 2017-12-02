@@ -18,6 +18,7 @@
  */
 return [
     'Wysiwyg-editor' => 'Wysiwyg-редактор',
+    'Update Project' => 'Редактировать проект',
     'All' => 'Все',
     'Configuration' => 'Конфигурация',
     'Create Project' => 'Новый проект',
@@ -40,7 +41,6 @@ return [
     'Statistics' => 'Статистика',
     'Suffix' => 'Суффикс',
     'Text editor type' => 'Редактор текста',
-    'Update {modelClass}: ' => 'Изменить {modelClass}: ',
     'Updated' => 'Обновлен',
     'plain text' => 'текст без форматирования',
     'suffix must be unique' => 'суффикс уже используется',

@@ -274,6 +274,19 @@ class Task extends ActiveRecord
 
 
     /**
+     * @param DictType| null $type
+     */
+    public function setType($type)
+    {
+        if($type) {
+            $this->dict_type_id = $type->id;
+        } else {
+            $this->dict_type_id = null;
+        }
+    }
+
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getVersionOpen()
@@ -283,11 +296,37 @@ class Task extends ActiveRecord
 
 
     /**
+     * @param DictVersion| null $version
+     */
+    public function setVersionOpen($version)
+    {
+        if($version) {
+            $this->dict_version_open_id = $version->id;
+        } else {
+            $this->dict_version_open_id = null;
+        }
+    }
+
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getVersionClose()
     {
         return $this->hasOne(DictVersion::className(), ['id' => 'dict_version_close_id']);
+    }
+
+
+    /**
+     * @param DictVersion| null $version
+     */
+    public function setVersionClose($version)
+    {
+        if($version) {
+            $this->dict_version_close_id = $version->id;
+        } else {
+            $this->dict_version_close_id = null;
+        }
     }
 
 
@@ -305,8 +344,13 @@ class Task extends ActiveRecord
      */
     public function setDifficulty(DictDifficulty $difficulty)
     {
-        $this->dict_difficulty_id = $difficulty->id;
-        $this->difficulty_ratio   = $difficulty->ratio;
+        if($difficulty) {
+            $this->dict_difficulty_id = $difficulty->id;
+            $this->difficulty_ratio   = $difficulty->ratio;
+        } else {
+            $this->dict_difficulty_id = null;
+            $this->difficulty_ratio   = 1;
+        }
     }
 
 
@@ -317,6 +361,20 @@ class Task extends ActiveRecord
     {
         return $this->hasOne(DictCategory::className(), ['id' => 'dict_category_id']);
     }
+
+
+    /**
+     * @param DictCategory| null $category
+     */
+    public function setCategory($category)
+    {
+        if($category) {
+            $this->dict_category_id = $category->id;
+        } else {
+            $this->dict_category_id = null;
+        }
+    }
+
 
 
     /**

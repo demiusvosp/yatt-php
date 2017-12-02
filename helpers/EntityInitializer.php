@@ -8,7 +8,9 @@
 
 namespace app\helpers;
 
+use app\models\entities\DictVersion;
 use app\models\queries\DictDifficultyQuery;
+use app\models\queries\DictVersionQuery;
 use Yii;
 use yii\helpers\Json;
 use app\components\AccessManager;
@@ -73,6 +75,17 @@ class EntityInitializer
 
         $task->progress = 0;
         $task->difficulty = DictDifficultyQuery::getDefault($project);
+
+        // Вопрос версии.
+var_dump(DictVersion::find()->andForOpen()->count());
+        if(DictVersion::find()->andForOpen()->count() == 1) {
+            // есть только одна версия, в которой задачу можно открыть. Её и установим
+            $task->versionOpen = DictVersion::find()->andForOpen()->one();
+        }
+        if(DictVersion::find()->andForClose()->count() == 1) {
+            // есть только одна версия, в которой задачу можно закрыть. Её и установим
+            $task->versionClose = DictVersion::find()->andForClose()->one();
+        }
     }
 
 

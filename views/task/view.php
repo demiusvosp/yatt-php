@@ -155,7 +155,7 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK);
                     <?=$task->getAttributeLabel('created_at') ?>
                 </td>
                 <td class="value">
-                    <?= Yii::$app->formatter->asDate($task->created_at) ?>
+                    <?= Yii::$app->formatter->asDatetime($task->created_at) ?>
                 </td>
             </tr>
             <tr>
@@ -166,14 +166,16 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK);
                     <?=$task->versionClose ? $task->versionClose->name : Yii::t('common', 'Not set') ?>
                 </td>
             </tr>
-            <tr>
-                <td class="item">
-                    <?=$task->getAttributeLabel('updated_at') ?>
-                </td>
-                <td class="value">
-                    <?= Yii::$app->formatter->asDate($task->updated_at) ?>
-                </td>
-            </tr>
+            <?php if($task->created_at != $task->updated_at) { ?>
+                <tr>
+                    <td class="item">
+                        <?=$task->getAttributeLabel('updated_at') ?>
+                    </td>
+                    <td class="value">
+                        <?= Yii::$app->formatter->asDatetime($task->updated_at) ?>
+                    </td>
+                </tr>
+            <?php } ?>
             </tbody>
         </table>
     </div>

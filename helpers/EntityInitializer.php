@@ -8,6 +8,7 @@
 
 namespace app\helpers;
 
+use app\models\queries\DictDifficultyQuery;
 use Yii;
 use yii\helpers\Json;
 use app\components\AccessManager;
@@ -64,10 +65,14 @@ class EntityInitializer
     public static function initializeTask($task, $project)
     {
         $task->suffix = $project->suffix;
-        $task->dict_stage_id = DictStageQuery::open($project)->id;
+        $task->stage = DictStageQuery::open($project);
+        $task->is_closed = false;
+
         $task->priority = Task::PRIORITY_MEDIUM;
         $task->assigned_id = Yii::$app->user->identity->getId();
-        $task->is_closed = false;
+
+        $task->progress = 0;
+        $task->difficulty = DictDifficultyQuery::getDefault($project);
     }
 
 

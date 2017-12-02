@@ -233,6 +233,15 @@ class Task extends ActiveRecord
 
 
     /**
+     * @param User $user
+     */
+    public function setAssigned($user)
+    {
+        $this->assigned_id = $user->id;
+    }
+
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getStage()

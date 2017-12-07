@@ -23,7 +23,7 @@ require_once ($dictItemView.'.php');
 <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
 <table
     id="dictForm"
-    class="table"
+    class="table dict-form"
     data-drop-url="<?= Url::to(['dict/delete-item']) ?>"
     data-dict="<?= $dictForm->tableName()?>"
     <?= $project ? ('data-project="'.$project->id.'"') : '' ?>
@@ -32,7 +32,7 @@ require_once ($dictItemView.'.php');
     <tr>
         <th><?=Yii::t('dicts', '#')?></th>
         <?= columnHeaders() ?>
-        <th><?=Yii::t('dicts', 'Tasks')?></th>
+        <th><?=Yii::t('dicts', 'Assigned tasks')?></th>
         <th>&nbsp;</th>
     </tr>
     </thead>
@@ -43,10 +43,10 @@ require_once ($dictItemView.'.php');
         <tr class="dict_item" id="<?= $index ?>" data-id="<?= $item->id ?>">
             <td><?=$index?></td>
             <?= columnRow($form, $item, $index, $fieldSettings); ?>
-            <td>
+            <td class="centered">
                 <?=$item->countTask()?>
             </td>
-            <td>
+            <td class="centered">
                 <?= Html::activeHiddenInput($item, "[$index]position"); ?>
                 <span class="btn btn-flat drop-item">
                     <i class="fa fa-close text-red"></i>

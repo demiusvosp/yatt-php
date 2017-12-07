@@ -1,4 +1,8 @@
 /* настройки справочников */
+.dict-form thead tr th {
+    text-align: center;
+}
+
 .dict_setting_block {
     width: 50em;
 }

@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Assigned tasks' => 'Соотнесенные задачи',
+    'Not closed tasks' => 'Не закрытые задачи',
     '#' => '#',
     'Categories' => 'Категории',
     'Category' => 'Категория',

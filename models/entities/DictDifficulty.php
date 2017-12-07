@@ -63,4 +63,14 @@ class DictDifficulty extends DictBase
         return $this->hasMany(Task::className(), ['dict_difficulty_id' => 'id']);
     }
 
+
+    /**
+     * Количество задач использующих значение справочника
+     * @return int
+     */
+    public function countTask()
+    {
+        return $this->getTasks()->count('id');
+    }
+
 }

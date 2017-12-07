@@ -78,7 +78,7 @@ class DictVersion extends DictBase
      */
     public function getTasksOnOpen()
     {
-        return $this->hasMany(Task::className(), ['$dict_version_open_id' => 'id']);
+        return $this->hasMany(Task::className(), ['dict_version_open_id' => 'id']);
     }
 
 
@@ -87,7 +87,17 @@ class DictVersion extends DictBase
      */
     public function getTasksOnClose()
     {
-        return $this->hasMany(Task::className(), ['$dict_version_close_id' => 'id']);
+        return $this->hasMany(Task::className(), ['dict_version_close_id' => 'id']);
+    }
+
+
+    /**
+     * Количество задач использующих значение справочника
+     * @return int
+     */
+    public function countTask()
+    {
+        return $this->getTasksOnOpen()->count('id') + $this->getTasksOnClose()->count('id');
     }
 
 }

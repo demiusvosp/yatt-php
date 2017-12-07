@@ -9,7 +9,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
-use yii\db\ActiveRecord;
+use app\models\entities\DictBase;
 use app\models\forms\DictForm;
 use app\models\entities\Project;
 
@@ -32,16 +32,20 @@ require_once ($dictItemView.'.php');
     <tr>
         <th><?=Yii::t('dicts', '#')?></th>
         <?= columnHeaders() ?>
+        <th><?=Yii::t('dicts', 'Tasks')?></th>
         <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody class="ui-sortable">
     <?php $fieldSettings = ['template' => '{input}{error}', 'options' => ['class' => '']]; ?>
     <?php foreach ($dictForm->items as $index => $item) { ?>
-        <?php /* @var $item ActiveRecord */ ?>
+        <?php /* @var $item DictBase */ ?>
         <tr class="dict_item" id="<?= $index ?>" data-id="<?= $item->id ?>">
             <td><?=$index?></td>
             <?= columnRow($form, $item, $index, $fieldSettings); ?>
+            <td>
+                <?=$item->countTask()?>
+            </td>
             <td>
                 <?= Html::activeHiddenInput($item, "[$index]position"); ?>
                 <span class="btn btn-flat drop-item">

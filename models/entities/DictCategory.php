@@ -38,4 +38,14 @@ class DictCategory extends DictBase
         return $this->hasMany(Task::className(), ['dict_category_id' => 'id']);
     }
 
+
+    /**
+     * Количество задач использующих значение справочника
+     * @return int
+     */
+    public function countTask()
+    {
+        return $this->getTasks()->count('id');
+    }
+
 }

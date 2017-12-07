@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Update' => 'Редактировать',
     'Active' => 'Активен',
     'Admin in projects' => 'Админ в проектах',
     'Auth key' => 'Auth key',
@@ -41,10 +40,10 @@ return [
     'The installation creates superadmin user <strong>admin</strong> with password <strong>root</strong>.
 It is strongly recommended to change it immediately' => 'При установке создается суперадмин <strong>root</strong> с паролем <strong>root</strong>.
         Настоятельно рекомендуется его сразу изменить',
+    'Update' => 'Редактировать',
     'Update User' => 'Редактировать пользователя',
     'Updated at' => 'Обновлен',
     'User Manager' => 'Управление пользователями',
-    'User profile' => 'Профиль пользователя',
     'User roles' => 'Роли пользователя',
     'User token' => 'Токен пользователя',
     'Username' => 'Имя',

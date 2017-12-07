@@ -31,9 +31,9 @@ require_once ($dictItemView.'.php');
     <thead>
     <tr>
         <th><?=Yii::t('dicts', '#')?></th>
-        <?= columnHeaders() ?>
+        <?php (function_exists('columnHeaders'))?columnHeaders():'' ?>
         <th><?=Yii::t('dicts', 'Assigned tasks')?></th>
-        <th>&nbsp;</th>
+        <th class="ctrl-column">&nbsp;</th>
     </tr>
     </thead>
     <tbody class="ui-sortable">
@@ -42,15 +42,16 @@ require_once ($dictItemView.'.php');
         <?php /* @var $item DictBase */ ?>
         <tr class="dict_item" id="<?= $index ?>" data-id="<?= $item->id ?>">
             <td><?=$index?></td>
-            <?= columnRow($form, $item, $index, $fieldSettings); ?>
+            <?php (function_exists('columnRow'))?columnRow($form, $item, $index, $fieldSettings):''; ?>
             <td class="centered">
                 <?=$item->countTask()?>
             </td>
-            <td class="centered">
+            <td class="centered ctrl-column">
                 <?= Html::activeHiddenInput($item, "[$index]position"); ?>
                 <span class="btn btn-flat drop-item">
                     <i class="fa fa-close text-red"></i>
                 </span>
+                <?=(function_exists('columnCtrl'))?columnCtrl($form, $item):''; ?>
             </td>
         </tr>
     <?php } ?>

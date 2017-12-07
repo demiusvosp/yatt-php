@@ -27,3 +27,14 @@ use app\models\entities\DictVersion;
     <td><?= $form->field($item, "[$index]type", $fieldSettings)->dropDownList($item->typesAvailable()); ?></td>
     <td class="centered"><?=$item->countOpenTasks()?></td>
 <?php } ?>
+
+<?php function columnCtrl($form, $item) {
+    /** @var ActiveForm $form */
+    /** @var $item DictVersion */
+?>
+    <?php if(!$item->isNewRecord && $item->canChangeType(DictVersion::PAST)) { ?>
+        <span class="btn btn-flat past-item">
+            <i class="fa  fa-thumbs-o-up"></i>
+        </span>
+    <?php } ?>
+<?php } ?>

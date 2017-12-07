@@ -1,22 +1,23 @@
 
 jQuery(function(){
 
+    $dictForm = $("#dictForm");
+
     // Удаление элемента
-    $("#dictForm").on('click', '.drop-item', function(){
-        var form = $('#dictForm');
+    $dictForm.on('click', '.drop-item', function(){
         var item = $(this).parents("tr");
         item.addClass('dict_item_dropping');
 
         var request = {
-            'dict': form.data('dict'),
+            'dict': $dictForm.data('dict'),
             'item_id': item.data('id')
         };
-        if(form.data('project')) {
-            request.project_id = form.data('project')
+        if($dictForm.data('project')) {
+            request.project_id = $dictForm.data('project')
         }
 
         $.ajax({
-            url:  form.data('drop-url'),
+            url:  $dictForm.data('drop-url'),
             type: 'DELETE',
             data: request,
             success: function (answer) {
@@ -32,12 +33,37 @@ jQuery(function(){
     $(".ui-sortable").sortable({
         items: 'tr:not(.disable-reposition)',
         update: function(event, ui) {
-            var form = $('#dictForm');
             var newOrder = $(".ui-sortable").sortable("toArray");
             console.log(newOrder);
             for (var i = 0; i < newOrder.length; i++) {
-                $('#'+form.data('dict-name')+'-'+newOrder[i]+'-position').val(i);
+                $('#'+$dictForm.data('dict-name')+'-'+newOrder[i]+'-position').val(i);
             }
         }
+    });
+
+
+    // Для справочников версий. Перевод версии к прошлой
+    $dictForm.on('click', '.past-item', function(){
+        var item = $(this).parents("tr");
+        item.addClass('dict_item_dropping');
+
+        var request = {
+            'dict': $dictForm.data('dict'),
+            'item_id': item.data('id')
+        };
+        if($dictForm.data('project')) {
+            request.project_id = $dictForm.data('project')
+        }
+
+        $.ajax({
+            url:  $dictForm.data('drop-url'),
+            type: 'DELETE',
+            data: request,
+            success: function (answer) {
+                if (answer) {
+                    item.remove();
+                }
+            }
+        });
     });
 });

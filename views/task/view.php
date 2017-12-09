@@ -188,7 +188,10 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK);
     </div>
 </div>
 <div class="clearfix"></div>
-<?= CommentThread::widget(['object' => $task, 'enableNewComment' => $task->project->getConfigItem('enableCommentToClosed')])?>
+<?= CommentThread::widget([
+        'object' => $task,
+        'enableNewComment' => !$task->is_closed || $task->project->getConfigItem('enableCommentToClosed')
+])?>
 <div class="clearfix"></div>
 <?php if($canClose) { ?>
     <?= CloseTask::widget(['task' => $task, 'modalId' => 'closeTask'])?>

@@ -39,7 +39,8 @@ class DictEdit extends Widget
         return $this->render('dictEdit', [
             'dictForm' => $this->dictForm,
             'project' => $this->dictForm->project,
-            'dictItemView' => $this->dictItemView
+            'dictItemView' => $this->dictItemView,
+            'inputPrefix' => strtolower(end($this->dictForm->items)->formName()),
         ]);
     }
 

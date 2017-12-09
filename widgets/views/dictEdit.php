@@ -17,6 +17,7 @@ use app\models\entities\Project;
 /* @var $dict string */
 /* @var $project Project|null */
 /* @var $dictItemView string */
+/* @var $inputPrefix string */
 
 require_once ($dictItemView.'.php');
 ?>
@@ -26,6 +27,7 @@ require_once ($dictItemView.'.php');
     class="table dict-form"
     data-drop-url="<?= Url::to(['dict/delete-item']) ?>"
     data-dict="<?= $dictForm->tableName()?>"
+    data-dict-name="<?=$inputPrefix?>"
     <?= $project ? ('data-project="'.$project->id.'"') : '' ?>
 >
     <thead>

@@ -8,7 +8,7 @@
 
 namespace app\widgets;
 
-use app\models\forms\DictForm;
+use app\models\forms\DictsWidgetForm;
 use yii\base\Widget;
 
 /**
@@ -20,7 +20,7 @@ use yii\base\Widget;
  */
 class DictEdit extends Widget
 {
-    /** @var  DictForm */
+    /** @var  DictsWidgetForm */
     public $dictForm;
 
     public $dictItemView = 'dictDefaultModel';
@@ -39,7 +39,8 @@ class DictEdit extends Widget
         return $this->render('dictEdit', [
             'dictForm' => $this->dictForm,
             'project' => $this->dictForm->project,
-            'dictItemView' => $this->dictItemView
+            'dictItemView' => $this->dictItemView,
+            'inputPrefix' => strtolower(end($this->dictForm->items)->formName()),
         ]);
     }
 

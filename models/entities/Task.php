@@ -340,9 +340,9 @@ class Task extends ActiveRecord
 
 
     /**
-     * @param DictDifficulty $difficulty
+     * @param DictDifficulty| null $difficulty
      */
-    public function setDifficulty(DictDifficulty $difficulty)
+    public function setDifficulty($difficulty)
     {
         if($difficulty) {
             $this->dict_difficulty_id = $difficulty->id;

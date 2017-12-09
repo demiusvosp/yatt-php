@@ -10,7 +10,6 @@ namespace app\models\entities;
 
 use Yii;
 use yii\db\ActiveRecord;
-use app\models\queries\DictBaseQuery;
 
 
 /**
@@ -82,6 +81,13 @@ abstract class DictBase extends ActiveRecord
     {
         return $this->hasOne(Project::className(), ['id' => 'project_id']);
     }
+
+
+    /**
+     * Количество задач использующих значение справочника
+     * @return integer
+     */
+    abstract public function countTask();
 
 
     /**

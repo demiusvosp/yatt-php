@@ -62,7 +62,7 @@ class TaskStatsQuery extends TaskQuery
      */
     public static function statVersionProgress($version)
     {
-        $query = (new TaskQuery(Task::className()))->andProject($version->project);
+        $query = Task::find()->andProject($version->project);
         $query->where(['dict_version_close_id' => $version->id]);
         return floatval($query->average('progress * difficulty_ratio'));
     }

@@ -7,45 +7,56 @@
  */
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
-use yii\db\ActiveRecord;
-use app\models\forms\DictForm;
+use app\helpers\ProjectUrl;
+use app\models\entities\DictBase;
+use app\models\forms\DictsWidgetForm;
 use app\models\entities\Project;
 
-/* @var $dictForm DictForm */
+/* @var $dictForm DictsWidgetForm */
 /* @var $dict string */
 /* @var $project Project|null */
 /* @var $dictItemView string */
+/* @var $inputPrefix string */
 
 require_once ($dictItemView.'.php');
 ?>
 <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
 <table
     id="dictForm"
-    class="table"
-    data-drop-url="<?= Url::to(['dict/delete-item']) ?>"
-    data-dict="<?= $dictForm->tableName()?>"
-    <?= $project ? ('data-project="'.$project->id.'"') : '' ?>
+    class="table dict-form"
+    data-dict-url="<?= ProjectUrl::toDictAction($project) ?>"
+    data-dict="<?= $dictForm->itemClass ?>"
+    data-dict-name="<?=$inputPrefix?>"
+    <?= $project ? ('data-project="'.$project->suffix.'"') : '' ?>
 >
     <thead>
     <tr>
         <th><?=Yii::t('dicts', '#')?></th>
-        <?= columnHeaders() ?>
-        <th>&nbsp;</th>
+        <?php (function_exists('columnHeaders'))?columnHeaders():'' ?>
+        <th><?=Yii::t('dicts', 'Assigned tasks')?></th>
+        <th class="ctrl-column">&nbsp;</th>
     </tr>
     </thead>
     <tbody class="ui-sortable">
     <?php $fieldSettings = ['template' => '{input}{error}', 'options' => ['class' => '']]; ?>
     <?php foreach ($dictForm->items as $index => $item) { ?>
-        <?php /* @var $item ActiveRecord */ ?>
+        <?php /* @var $item DictBase */ ?>
         <tr class="dict_item" id="<?= $index ?>" data-id="<?= $item->id ?>">
             <td><?=$index?></td>
-            <?= columnRow($form, $item, $index, $fieldSettings); ?>
-            <td>
+            <?php (function_exists('columnRow'))?columnRow($form, $item, $index, $fieldSettings):''; ?>
+            <td class="centered">
+                <?=$item->countTask()?>
+            </td>
+            <td class="centered ctrl-column">
                 <?= Html::activeHiddenInput($item, "[$index]position"); ?>
-                <span class="btn btn-flat drop-item">
+                <?=(function_exists('columnCtrl'))?columnCtrl($form, $item):''; ?>
+
+                <span class="btn btn-flat <?=$item->disableDelete() ? 'disabled' : 'drop-item'?>">
                     <i class="fa fa-close text-red"></i>
+                </span>
+                <span class="btn btn-default <?=$item->disableReposition() ? 'disabled' : ''?>">
+                    <i class="fa fa-arrows-v"></i>
                 </span>
             </td>
         </tr>

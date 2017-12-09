@@ -15,8 +15,8 @@ use app\components\AccessManager;
 use app\components\access\Role;
 use app\helpers\Access;
 use app\helpers\ProjectAccessRule;
-use app\models\forms\DictForm;
-use app\models\forms\DictStagesForm;
+use app\models\forms\DictsWidgetForm;
+use app\models\forms\DictsWidgetStagesForm;
 
 
 class ProjectSettingsController extends BaseProjectController
@@ -71,7 +71,7 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionStages()
     {
-        $dictForm = new DictStagesForm([
+        $dictForm = new DictsWidgetStagesForm([
             'project'   => $this->project,
             'items'     => $this->project->stages,
             'itemClass' => 'app\models\entities\DictStage',
@@ -94,7 +94,7 @@ class ProjectSettingsController extends BaseProjectController
      */
     public function actionTypes()
     {
-        $dictForm = new DictForm([
+        $dictForm = new DictsWidgetForm([
             'items'     => $this->project->types,
             'itemClass' => 'app\models\entities\DictType',
         ]);
@@ -113,7 +113,7 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionVersions()
     {
-        $dictForm = new DictForm([
+        $dictForm = new DictsWidgetForm([
             'project'   => $this->project,
             'items'     => $this->project->versions,
             'itemClass' => 'app\models\entities\DictVersion',
@@ -133,7 +133,7 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionDifficulties()
     {
-        $dictForm = new DictForm([
+        $dictForm = new DictsWidgetForm([
             'project'   => $this->project,
             'items'     => $this->project->difficulties,
             'itemClass' => 'app\models\entities\DictDifficulty',
@@ -153,7 +153,7 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionCategories()
     {
-        $dictForm = new DictForm([
+        $dictForm = new DictsWidgetForm([
             'project'   => $this->project,
             'items'     => $this->project->categories,
             'itemClass' => 'app\models\entities\DictCategory',

@@ -1,6 +1,20 @@
 /* настройки справочников */
+.dict-form thead tr th {
+    text-align: center;
+}
+
 .dict_setting_block {
-    width: 50em;
+    width: 65em;
+}
+
+.dict-form .ctrl-column {
+    width: 10em;
+    text-align: right;
+}
+
+.dict-form .ctrl-column .btn {
+    border: #ddd 1px solid;
+    border-radius: 2px;
 }
 
 .dict_item {
@@ -9,8 +23,11 @@
     opacity: 1;
 }
 
-.dict_item_dropping {
-    border: red 1px solid;
+.dict_item_warning {
+    border: orangered 1px solid;
+}
+.dict_item_past {
+    border: darkgray 1px solid;
 }
 
 

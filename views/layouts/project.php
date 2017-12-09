@@ -41,12 +41,14 @@ array_unshift($this->params['breadcrumbs'], $project->name);
                 </li>
                 <li <?= $this->context->route == 'task/list' ? $active : '' ?>>
                     <a href="<?= ProjectUrl::to(['task/list', 'project' => $project]) ?>">
+                        <i class="fa fa-tasks"></i>
                         <?= Yii::t('task', 'Tasks') ?>
                     </a>
                 </li>
                 <?php if (Yii::$app->user->can(Access::OPEN_TASK)) { ?>
                     <li <?=$this->context->route == 'task/open' ? $active : '' ?>>
                         <a href="<?= ProjectUrl::to(['task/open', 'project' => $project]) ?>">
+                            <i class="fa fa-file-o"></i>
                             <?= Yii::t('task', 'Open task') ?>
                         </a>
                     </li>
@@ -54,6 +56,7 @@ array_unshift($this->params['breadcrumbs'], $project->name);
                 <?php if(Yii::$app->user->can(Access::ADMIN)) { ?>
                     <li <?= strpos($this->context->route, 'project-settings') !== false ? $active : '' ?>>
                         <a href="<?= ProjectUrl::to(['project-settings/main', 'project' => $project]) ?>">
+                            <i class="fa fa-gears"></i>
                             <?= Yii::t('project', 'Project settings') ?>
                         </a>
                     </li>

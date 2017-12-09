@@ -64,6 +64,20 @@ class DictVersion extends DictBase
 
 
     /**
+     * Список типов для виджета настройки справчника (чтобы не делать наследующийся виджет, хотя это не логика справочника)
+     * @return array
+     */
+    public function typesAvailable()
+    {
+        $types = static::typesLabels();
+        if(!$this->canChangeType(static::PAST)) {
+            unset($types[static::PAST]);
+        }
+        return $types;
+    }
+
+
+    /**
      * @inheritdoc
      * @return DictVersionQuery the active query used by this AR class.
      */
@@ -78,7 +92,7 @@ class DictVersion extends DictBase
      */
     public function getTasksOnOpen()
     {
-        return $this->hasMany(Task::className(), ['$dict_version_open_id' => 'id']);
+        return $this->hasMany(Task::className(), ['dict_version_open_id' => 'id']);
     }
 
 
@@ -87,7 +101,37 @@ class DictVersion extends DictBase
      */
     public function getTasksOnClose()
     {
-        return $this->hasMany(Task::className(), ['$dict_version_close_id' => 'id']);
+        return $this->hasMany(Task::className(), ['dict_version_close_id' => 'id']);
     }
 
+
+    /**
+     * Количество задач использующих значение справочника
+     * @return string
+     */
+    public function countTask()
+    {
+        return $this->getTasksOnOpen()->count('id') + $this->getTasksOnClose()->count('id');
+    }
+
+
+    public function countOpenTasks()
+    {
+        return $this->getTasksOnClose()->andWhere(['task.is_closed' => false])->count();
+    }
+
+
+    /**
+     * Можно ли сменить тип версии на указанный
+     * @param integer $type
+     * @return bool
+     */
+    public function canChangeType($type)
+    {
+        if($type == static::PAST && $this->countOpenTasks() > 0) {
+            // еще не все задачи закрыты
+            return false;
+        }
+        return true;
+    }
 }

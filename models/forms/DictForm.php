@@ -1,100 +1,55 @@
 <?php
 /**
- * Created by PhpStorm.
  * User: demius
- * Date: 28.09.17
- * Time: 14:43
+ * Date: 09.12.17
+ * Time: 14:00
  */
 
 namespace app\models\forms;
 
-use Yii;
+
+use yii\base\InvalidParamException;
 use yii\base\Model;
+use yii\db\ActiveQuery;
 
-use app\models\entities\Project;
-use app\models\entities\DictBase;
 
-/**
- * Class DictForm - Форма справочник. Содерит подборку значений справочника.
- * В конфиге необходимо указать коллекцию, и модель значения справочника
- * @package app\models\forms
- */
 class DictForm extends Model
 {
-    /** @var array[DictBase] коллекция справочника */
-    public $items;
+    /** @var  string - Dict className */
+    public $class;
 
-    /** @var  string класс модели значения справочника */
-    public $itemClass;
+    /** @var  integer - Dict id */
+    public $id;
 
-    /** @var  Project проект, которому принадлежит справочник */
-    public $project = null;
+    /** @var  string - Project suffix */
+    public $suffix;
 
-
-    public function __construct(array $config = ['items' => null])
+    public function rules()
     {
-        if(!$config['items']) {
-            $this->items = [];
+        return [
+            [['class', 'id'], 'required'],
+
+            [['class', 'suffix'], 'string'],
+            [['id'], 'integer'],
+        ];
+    }
+
+
+    /**
+     * Получить элемент справочника
+     * @return array|null|\yii\db\ActiveRecord
+     */
+    public function getDict()
+    {
+        if(!class_exists($this->class)) {
+            throw new InvalidParamException('unknown dict class');
         }
-        if(!$config['itemClass']) {
-            throw new \DomainException('need itemClass field');
+
+        $dict = (new ActiveQuery($this->class))->andWhere(['id' => $this->id])->one();
+        if(!$dict) {
+            throw new InvalidParamException('cannot find dict');
         }
 
-        parent::__construct($config);
+        return $dict;
     }
-
-
-    public function init()
-    {
-        parent::init();
-        // и новая для создания нового занчения
-        $newItem = Yii::createObject($this->itemClass, []);
-        if($this->project && $newItem instanceof DictBase) {
-            $newItem->project_id = $this->project->id;
-        }
-        $newItem->position = count($this->items);
-        $this->items[] = $newItem;
-    }
-
-
-    public function tableName()
-    {
-        return end($this->items)->tableName();
-    }
-
-
-    public function load($data, $formName = null)
-    {
-        return Model::loadMultiple($this->items, $data, $formName);
-    }
-
-
-    public function validate($attributeNames = null, $clearErrors = true)
-    {
-        foreach ($this->items as $index => $item) {
-            if($item->isNewRecord) {
-                if(empty($item->name)) {
-                    // Если новая запись не имеет имени, значит её не заполняли - удаляем
-                    unset($this->items[$index]);
-                }
-            }
-        }
-        return Model::validateMultiple($this->items, $attributeNames);
-    }
-
-
-    public function save()
-    {
-        foreach ($this->items as $item) {
-            if($this->project) {
-                $item->project_id = $this->project->id;
-            }
-            if(empty($item->description)) {
-                $item->description = $item->name;
-            }
-
-            $item->save(false);
-        }
-    }
-
 }

@@ -66,6 +66,16 @@ class DictStage extends DictBase
     }
 
 
+    /**
+     * Количество задач использующих значение справочника
+     * @return int
+     */
+    public function countTask()
+    {
+        return $this->getTasks()->count('id');
+    }
+
+
     public function beforeSave($insert)
     {
         if ($this->type == static::TYPE_OPEN) {

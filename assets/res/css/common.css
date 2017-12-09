@@ -126,3 +126,7 @@ ul.table.table-striped li:nth-child(even) {
     border: 1px solid #ddd;
     border-right-color: transparent;
 }
+
+.centered {
+    text-align: center;
+}

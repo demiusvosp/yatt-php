@@ -48,10 +48,14 @@ require_once ($dictItemView.'.php');
             </td>
             <td class="centered ctrl-column">
                 <?= Html::activeHiddenInput($item, "[$index]position"); ?>
-                <span class="btn btn-flat drop-item">
+                <?=(function_exists('columnCtrl'))?columnCtrl($form, $item):''; ?>
+
+                <span class="btn btn-flat <?=$item->disableDelete() ? 'disabled' : 'drop-item'?>">
                     <i class="fa fa-close text-red"></i>
                 </span>
-                <?=(function_exists('columnCtrl'))?columnCtrl($form, $item):''; ?>
+                <span class="btn btn-default <?=$item->disableReposition() ? 'disabled' : ''?>">
+                    <i class="fa fa-arrows-v"></i>
+                </span>
             </td>
         </tr>
     <?php } ?>

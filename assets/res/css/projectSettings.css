@@ -8,7 +8,8 @@
 }
 
 .dict-form .ctrl-column {
-    width: 8em;
+    width: 10em;
+    text-align: right;
 }
 
 .dict-form .ctrl-column .btn {

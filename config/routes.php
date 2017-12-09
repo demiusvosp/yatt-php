@@ -23,7 +23,7 @@ return [
 
     // события проекта
     // Справочники
-    'DELETE p/<suffix:\w+>/dict/delete-item' => 'dict/delete-item',
+    'p/<suffix:\w+>/dict/<action:(delete|past)>' => 'dict/<action>',
 
     // admin
 

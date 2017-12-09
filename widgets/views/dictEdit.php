@@ -7,13 +7,13 @@
  */
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
+use app\helpers\ProjectUrl;
 use app\models\entities\DictBase;
-use app\models\forms\DictForm;
+use app\models\forms\DictsWidgetForm;
 use app\models\entities\Project;
 
-/* @var $dictForm DictForm */
+/* @var $dictForm DictsWidgetForm */
 /* @var $dict string */
 /* @var $project Project|null */
 /* @var $dictItemView string */
@@ -25,10 +25,10 @@ require_once ($dictItemView.'.php');
 <table
     id="dictForm"
     class="table dict-form"
-    data-drop-url="<?= Url::to(['dict/delete-item']) ?>"
-    data-dict="<?= $dictForm->tableName()?>"
+    data-dict-url="<?= ProjectUrl::toDictAction($project) ?>"
+    data-dict="<?= $dictForm->itemClass ?>"
     data-dict-name="<?=$inputPrefix?>"
-    <?= $project ? ('data-project="'.$project->id.'"') : '' ?>
+    <?= $project ? ('data-project="'.$project->suffix.'"') : '' ?>
 >
     <thead>
     <tr>

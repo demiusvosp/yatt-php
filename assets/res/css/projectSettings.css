@@ -23,8 +23,11 @@
     opacity: 1;
 }
 
-.dict_item_dropping {
-    border: red 1px solid;
+.dict_item_warning {
+    border: orangered 1px solid;
+}
+.dict_item_past {
+    border: darkgray 1px solid;
 }
 
 

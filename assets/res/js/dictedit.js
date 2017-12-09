@@ -6,18 +6,18 @@ jQuery(function(){
     // Удаление элемента
     $dictForm.on('click', '.drop-item', function(){
         var item = $(this).parents("tr");
-        item.addClass('dict_item_dropping');
+        item.addClass('dict_item_warning');
 
         var request = {
-            'dict': $dictForm.data('dict'),
-            'item_id': item.data('id')
+            'class': $dictForm.data('dict'),
+            'id': item.data('id')
         };
         if($dictForm.data('project')) {
             request.project_id = $dictForm.data('project')
         }
 
         $.ajax({
-            url:  $dictForm.data('drop-url'),
+            url:  $dictForm.data('dict-url') + '/delete',
             type: 'DELETE',
             data: request,
             success: function (answer) {
@@ -45,23 +45,25 @@ jQuery(function(){
     // Для справочников версий. Перевод версии к прошлой
     $dictForm.on('click', '.past-item', function(){
         var item = $(this).parents("tr");
-        item.addClass('dict_item_dropping');
+        item.addClass('dict_item_warning');
 
         var request = {
-            'dict': $dictForm.data('dict'),
-            'item_id': item.data('id')
+            'class': $dictForm.data('dict'),
+            'id': item.data('id')
         };
         if($dictForm.data('project')) {
-            request.project_id = $dictForm.data('project')
+            request.suffix = $dictForm.data('project')
         }
 
         $.ajax({
-            url:  $dictForm.data('drop-url'),
-            type: 'DELETE',
+            url:  $dictForm.data('dict-url') + '/past',
+            type: 'POST',
             data: request,
             success: function (answer) {
                 if (answer) {
-                    item.remove();
+                    item.removeClass('dict_item_warning').addClass('dict_item_past');
+                    $('#'+$dictForm.data('dict-name')+'-'+item.id+'-type oprion[value=2]').attr('selected', 'selected');
+                    // лять, может проще перегрузить это гавно
                 }
             }
         });

@@ -8,14 +8,17 @@
 
 namespace app\controllers;
 
+use app\models\entities\DictVersion;
 use Yii;
-use yii\web\Controller;
+use yii\base\InvalidParamException;
 use yii\web\Response;
 use yii\filters\AccessControl;
 use app\helpers\Access;
+use app\helpers\ProjectAccessRule;
+use app\models\forms\DictForm;
 
 
-class DictController extends Controller
+class DictController extends BaseProjectController
 {
 
     /**
@@ -28,7 +31,17 @@ class DictController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['delete-item'],
+                        'class'   => ProjectAccessRule::className(),
+                        'project' => $this->project,
+                        'actions' => ['delete'],
+                        'allow'   => true,
+                        'roles'   => [Access::ADMIN],
+                        'verbs'   => ['DELETE'],
+                    ],
+                    [
+                        'class'   => ProjectAccessRule::className(),
+                        'project' => $this->project,
+                        'actions' => ['past'],
                         'allow'   => true,
                         'roles'   => [Access::ADMIN],
                         'verbs'   => ['POST'],
@@ -44,18 +57,44 @@ class DictController extends Controller
      *
      * @return Response
      */
-    public function actionDeleteItem()
+    public function actionDelete()
     {
-        if (Yii::$app->request->method != 'DELETE') {
-            return Yii::$app->getResponse()->setStatusCode(500, 'Unavailable method');
-        }
+        $dictForm = new DictForm();
+        if($dictForm->load(Yii::$app->request->post(), '') && $dictForm->validate()) {
 
-        $item_id = Yii::$app->request->post('item_id');
-        $dict = Yii::$app->request->post('dict', null);
-        if (is_numeric($item_id)) {
-            $res = Yii::$app->db->createCommand()->delete($dict, ['id' => $item_id])->execute();
+            $dict = $dictForm->getDict();
+            $res = $dict->delete();
 
             return $this->asJson(['result' => $res])->setStatusCode(201);
+        }
+
+        return $this
+            ->asJson(['result'=> false, 'errors' => $dictForm->getErrors()])
+            ->setStatusCode(500, 'Invalid arguments');
+    }
+
+
+    /**
+     * Отметить версию, как пройденную
+     *
+     * @return Response
+     */
+    public function actionPast()
+    {
+        $dictForm = new DictForm();
+        if($dictForm->load(Yii::$app->request->post(), '') && $dictForm->validate()) {
+            $dict = $dictForm->getDict();
+            if(!$dict instanceof DictVersion) {
+                throw new InvalidParamException('Cannot set past at not DictVersion');
+            }
+            if(!$dict->canChangeType(DictVersion::PAST)) {
+                throw new \DomainException('Cannot set this version as past');
+            }
+
+            $dict->type = DictVersion::PAST;
+            $res = $dict->save();
+
+            return $this->asJson(['result' => $res])->setStatusCode(202);
         }
 
         return Yii::$app->getResponse()->setStatusCode(500, 'Invalid arguments');

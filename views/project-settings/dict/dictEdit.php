@@ -12,13 +12,14 @@ use yii\helpers\ArrayHelper;
 use app\helpers\ProjectUrl;
 use app\models\entities\DictBase;
 use app\models\forms\DictsWidgetForm;
-use app\models\entities\Project;
 
 /* @var $dictForm DictsWidgetForm */
-/* @var $dict string */
-/* @var $project Project|null */
 /* @var $dictItemView string */
-/* @var $inputPrefix string */
+
+if(!isset($dictItemView)) {
+    $dictItemView = 'dictDefaultModel';
+}
+$project = $dictForm->project;
 
 require_once ($dictItemView.'.php');
 ?>
@@ -28,7 +29,7 @@ require_once ($dictItemView.'.php');
     class="table dict-form"
     data-dict-url="<?= ProjectUrl::toDictAction($project) ?>"
     data-dict="<?= $dictForm->itemClass ?>"
-    data-dict-name="<?=$inputPrefix?>"
+    data-dict-name="<?= strtolower(end($dictForm->items)->formName())?>"
     <?= $project ? ('data-project="'.$project->suffix.'"') : '' ?>
 >
     <thead>
@@ -53,7 +54,7 @@ require_once ($dictItemView.'.php');
             </td>
             <td class="centered ctrl-column">
                 <?= Html::activeHiddenInput($item, "[$index]position"); ?>
-                <?=(function_exists('columnCtrl'))?columnCtrl($form, $item):''; ?>
+                <?php (function_exists('columnCtrl'))?columnCtrl($form, $item):''; ?>
 
                 <?php if(! $item->isNewRecord) { ?>
                     <span

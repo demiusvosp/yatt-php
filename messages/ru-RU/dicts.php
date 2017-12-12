@@ -18,6 +18,7 @@
  */
 return [
     'Check version as Past' => 'Отметить версию как прошлую',
+    'Cannot delete this dict item' => 'Невозможно удалить этот элемент справочника',
     'Cannot reposition this dict item' => 'Невозможно поменять позицию этого элемента справочника',
     'Delete dict item' => 'Удалить элемент справочника',
     'Dict item associated to entities' => 'Некоторые объекты используют этот справочник',

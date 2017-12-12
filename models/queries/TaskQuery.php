@@ -12,7 +12,7 @@ use app\models\entities\Project;
  *
  * @see \app\models\entities\Task
  */
-class TaskQuery extends ActiveQuery
+class TaskQuery extends ActiveQuery implements IDictRelatedEntityQuery
 {
 
     public function __construct($modelClass, array $config = [])
@@ -77,5 +77,21 @@ class TaskQuery extends ActiveQuery
     public static function getByIndex($suffix, $index)
     {
         return Task::find()->andWhere(['suffix' => $suffix, 'index' => $index])->one();
+    }
+
+
+    public function relatedEntityCount($relatedField = '')
+    {
+        $query = Task::find()
+            ->groupBy([$relatedField])
+            ->select([$relatedField . ' as dict_id', 'count(task.id) as n'])
+            ->andWhere(['not', [$relatedField => null]])
+            ->asArray();
+
+        $result = [];
+        foreach ($query->all() as $item) {
+            $result[$item['dict_id']] = $item['n'];
+        }
+        return $result;
     }
 }

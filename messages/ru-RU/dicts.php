@@ -17,9 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Assigned tasks' => 'Соотнесенные задачи',
-    'Not closed tasks' => 'Не закрытые задачи',
+    'Check version as Past' => 'Отметить версию как прошлую',
+    'Cannot reposition this dict item' => 'Невозможно поменять позицию этого элемента справочника',
+    'Delete dict item' => 'Удалить элемент справочника',
+    'Dict item associated to entities' => 'Некоторые объекты используют этот справочник',
+    'Drag and drop to new position' => 'Схватите и передвиньте элемент справочника для смены его позиции в справочнике',
     '#' => '#',
+    'Actions' => 'Действия',
+    'Assigned entities' => 'Ассоциированные объекты',
     'Categories' => 'Категории',
     'Category' => 'Категория',
     'Close' => 'Закрыта',
@@ -31,6 +36,7 @@ return [
     'Future' => 'Будущая',
     'ID' => 'ID',
     'Name' => 'Имя',
+    'Not closed tasks' => 'Не закрытые задачи',
     'Open' => 'Открыта',
     'Open in version' => 'Обнаружен в версии',
     'Open task' => 'Новая задача',

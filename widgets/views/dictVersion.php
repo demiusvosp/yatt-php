@@ -33,7 +33,7 @@ use app\models\entities\DictVersion;
     /** @var $item DictVersion */
 ?>
     <?php if(!$item->isNewRecord && $item->canChangeType(DictVersion::PAST)) { ?>
-        <span class="btn btn-flat past-item">
+        <span class="btn btn-flat past-item" title="<?=Yii::t('dicts', 'Check version as Past')?>">
             <i class="fa  fa-thumbs-o-up"></i>
         </span>
     <?php } ?>

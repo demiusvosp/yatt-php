@@ -129,7 +129,7 @@ class DictVersion extends DictBase
     public function canChangeType($type)
     {
         if($type == static::PAST && $this->countOpenTasks() > 0) {
-            // еще не все задачи закрыты
+            // версия уже прошедшая, либо мы делаем прошлой версию с незакрытыми задачами
             return false;
         }
         return true;

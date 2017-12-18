@@ -17,11 +17,11 @@ use yii\db\ActiveRecord;
 
 
 /**
- * Class DictsWidgetForm - Форма справочник. Содерит подборку значений справочника.
+ * Class DictEditForm - Форма справочник. Содерит подборку значений справочника.
  * В конфиге необходимо указать коллекцию, и модель значения справочника
  * @package app\models\forms
  */
-class DictsWidgetForm extends Model
+class DictEditForm extends Model
 {
     /** @var array[DictBase] коллекция справочника */
     public $items;
@@ -60,7 +60,7 @@ class DictsWidgetForm extends Model
             /** @var ActiveRecord $relatedItem[0] */
             $query = $relatedItem[0]::find();
             if($query instanceof IDictRelatedEntityQuery) {
-                $stat = $query->relatedEntityCount($relatedItem[1]);
+                $stat = $query->relatedEntityCount($this->project, $relatedItem[1]);
                 if($stat) {
                     foreach ($stat as $dict => $item) {
                         if(isset($this->relatedItemCount[$dict])) {

@@ -16,8 +16,9 @@ use app\components\access\Role;
 use app\helpers\Access;
 use app\helpers\ProjectAccessRule;
 use app\models\entities\Task;
-use app\models\forms\DictsWidgetForm;
-use app\models\forms\DictsWidgetStagesForm;
+use app\models\forms\DictEditForm;
+use app\models\forms\DictEditStagesForm;
+use app\models\forms\DictEditVersionForm;
 
 
 class ProjectSettingsController extends BaseProjectController
@@ -73,7 +74,7 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionStages()
     {
-        $dictForm = new DictsWidgetStagesForm([
+        $dictForm = new DictEditStagesForm([
             'project'       => $this->project,
             'items'         => $this->project->stages,
             'itemClass'     => 'app\models\entities\DictStage',
@@ -97,7 +98,7 @@ class ProjectSettingsController extends BaseProjectController
      */
     public function actionTypes()
     {
-        $dictForm = new DictsWidgetForm([
+        $dictForm = new DictEditForm([
             'project'       => $this->project,
             'items'         => $this->project->types,
             'itemClass'     => 'app\models\entities\DictType',
@@ -118,7 +119,7 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionVersions()
     {
-        $dictForm = new DictsWidgetForm([
+        $dictForm = new DictEditVersionForm([
             'project'       => $this->project,
             'items'         => $this->project->versions,
             'itemClass'     => 'app\models\entities\DictVersion',
@@ -142,7 +143,7 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionDifficulties()
     {
-        $dictForm = new DictsWidgetForm([
+        $dictForm = new DictEditForm([
             'project'       => $this->project,
             'items'         => $this->project->difficulties,
             'itemClass'     => 'app\models\entities\DictDifficulty',
@@ -163,7 +164,7 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionCategories()
     {
-        $dictForm = new DictsWidgetForm([
+        $dictForm = new DictEditForm([
             'project'       => $this->project,
             'items'         => $this->project->categories,
             'itemClass'     => 'app\models\entities\DictCategory',

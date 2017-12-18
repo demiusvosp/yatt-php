@@ -7,6 +7,8 @@
 
 namespace app\models\queries;
 
+use app\models\entities\Project;
+
 
 /**'
  * Interface IDictRelatedEntityQuery - Запросы получения связанных к справочнику сущностей.
@@ -17,9 +19,10 @@ interface IDictRelatedEntityQuery
 {
     /**
      * Количество использующих справочник сущностей
+     * @param Project $project
      * @param string $relatedField
      * @return array|null - [dict_id => entity_count]
      */
-    public function relatedEntityCount($relatedField = '');
+    public function relatedEntityCount($project, $relatedField = '');
 
 }

@@ -11,9 +11,9 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\helpers\ProjectUrl;
 use app\models\entities\DictBase;
-use app\models\forms\DictsWidgetForm;
+use app\models\forms\DictEditForm;
 
-/* @var $dictForm DictsWidgetForm */
+/* @var $dictForm DictEditForm */
 /* @var $dictItemView string */
 
 if(!isset($dictItemView)) {
@@ -35,7 +35,7 @@ require_once ($dictItemView.'.php');
     <thead>
     <tr>
         <th><?=Yii::t('dicts', '#')?></th>
-        <?php (function_exists('columnHeaders'))?columnHeaders():'' ?>
+        <?php if(function_exists('columnHeaders')) { columnHeaders(); } ?>
         <th><?=Yii::t('dicts', 'Assigned entities')?></th>
         <th><?=Yii::t('dicts', 'Actions')?></th>
     </tr>
@@ -48,13 +48,13 @@ require_once ($dictItemView.'.php');
         ?>
         <tr class="dict_item" id="<?= $index ?>" data-id="<?= $item->id ?>">
             <td><?=$index?></td>
-            <?php (function_exists('columnRow'))?columnRow($form, $item, $index, $fieldSettings):''; ?>
+            <?php if(function_exists('columnRow')) { columnRow($form, $item, $index, $fieldSettings); } ?>
             <td class="centered">
                 <?=$taskCount; ?>
             </td>
             <td class="centered ctrl-column">
                 <?= Html::activeHiddenInput($item, "[$index]position"); ?>
-                <?php (function_exists('columnCtrl'))?columnCtrl($form, $item):''; ?>
+                <?php if(function_exists('columnCtrl')) { columnCtrl($form, $item); } ?>
 
                 <?php if(! $item->isNewRecord) { ?>
                     <span

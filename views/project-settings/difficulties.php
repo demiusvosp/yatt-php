@@ -7,13 +7,13 @@
  */
 
 use app\models\entities\Project;
-use app\models\forms\DictsWidgetForm;
+use app\models\forms\DictEditForm;
 use app\helpers\HtmlBlock;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $project Project */
-/* @var $dictForm DictsWidgetForm */
+/* @var $dictForm DictEditForm */
 
 $this->title = HtmlBlock::titleString(
     Yii::t('project', 'Settings') . ' - ' . Yii::t('project/settings', 'Difficulty levels'),

@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Check version as Past' => 'Отметить версию как прошлую',
     'Cannot delete this dict item' => 'Невозможно удалить этот элемент справочника',
     'Cannot reposition this dict item' => 'Невозможно поменять позицию этого элемента справочника',
     'Delete dict item' => 'Удалить элемент справочника',
@@ -28,6 +27,7 @@ return [
     'Assigned entities' => 'Ассоциированные объекты',
     'Categories' => 'Категории',
     'Category' => 'Категория',
+    'Check version as Past' => 'Отметить версию как прошлую',
     'Close' => 'Закрыта',
     'Close task' => 'Работа над задачей завершена',
     'Current' => 'Текущая',

@@ -132,7 +132,15 @@ class ProjectController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $project = $this->findModel($id);
+
+        if($project->canDelete()) {
+            $project->delete();
+        } else {
+            Yii::$app->session->addFlash('error',
+                Yii::t('project', 'Cannot delete project with tasks')
+            );
+        }
 
         return $this->redirect(['index']);
     }

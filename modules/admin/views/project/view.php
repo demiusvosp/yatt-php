@@ -20,11 +20,13 @@ $this->params['breadcrumbs'][] = $project->name;
         <p>
             <?= Html::a(Yii::t('common', 'Edit'), ['update', 'id' => $project->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('common', 'Delete'), ['delete', 'id' => $project->id], [
-                'class' => 'btn btn-danger',
+                'class' => 'btn btn-danger ' . ($project->canDelete()?'':'disabled'),
                 'data' => [
                     'confirm' => Yii::t('common', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
+                    'toggle' => 'tooltip'
                 ],
+                'title' => ($project->canDelete()?Yii::t('project', 'Delete project'):Yii::t('project', 'Cannot delete project with tasks'))
             ]) ?>
         </p>
 

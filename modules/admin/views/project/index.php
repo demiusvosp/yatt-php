@@ -68,7 +68,10 @@ $this->params['breadcrumbs'][] = Yii::t('project', 'Project Manager');
                 'updated_at:datetime',
                 // 'admin_id',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{view} {update}',
+                ],
             ],
         ]); ?>
     </div>

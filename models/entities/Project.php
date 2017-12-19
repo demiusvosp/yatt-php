@@ -251,6 +251,11 @@ class Project extends ActiveRecord
     }
 
 
+    public function getTasks()
+    {
+        return $this->hasMany(Task::className(), ['suffix' => 'suffix']);
+    }
+
     /**
      * @return \app\models\queries\DictStageQuery
      */
@@ -329,4 +334,12 @@ class Project extends ActiveRecord
         return $lastIndex;
     }
 
+    public function canDelete()
+    {
+        if($this->getTasks()->count() > 0) {
+            return false;
+        }
+
+        return true;
+    }
 }

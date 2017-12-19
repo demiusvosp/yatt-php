@@ -17,8 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Update Project' => 'Редактировать проект',
+    'Delete project' => 'Удалить проект',
     'All' => 'Все',
+    'Cannot delete project with tasks' => 'Невозможно удаить проект имеющий задачи',
     'Configuration' => 'Конфигурация',
     'Create Project' => 'Новый проект',
     'Created' => 'Создан',
@@ -38,6 +39,7 @@ return [
     'Settings' => 'Настройки',
     'Statistics' => 'Статистика',
     'Suffix' => 'Суффикс',
+    'Update Project' => 'Редактировать проект',
     'Updated' => 'Обновлен',
     'suffix must be unique' => 'суффикс уже используется',
     'suffix must contain only A-Z or 0-9 chars' => 'суфикс может содержать только символы A-Z и цифры 0-9',

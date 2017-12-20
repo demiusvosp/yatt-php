@@ -28,6 +28,17 @@ $this->params['breadcrumbs'][] = $project->name;
                 ],
                 'title' => ($project->canDelete()?Yii::t('project', 'Delete project'):Yii::t('project', 'Cannot delete project with tasks'))
             ]) ?>
+            <?= Html::a(
+                ($project->archived) ? Yii::t('project', 'From archive') : Yii::t('project', 'To archive'),
+                ['archive', 'id' => $project->id],
+                [
+                    'class' => 'btn btn-default',
+                    'data' => [
+                        'confirm' => ($project->archived) ? Yii::t('project', 'Are you sure you want to active this project?') : Yii::t('project', 'Are you sure you want to archive this project?'),
+                        'method' => 'post',
+                    ],
+                ]
+            ) ?>
         </p>
 
         <?= DetailView::widget([

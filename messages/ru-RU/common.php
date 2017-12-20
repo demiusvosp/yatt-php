@@ -17,11 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Choose user' => 'Выбрать пользователя',
-    'Open' => 'Открыть',
     'About' => 'О программе',
     'Administration' => 'Настройка',
     'Are you sure you want to delete this item?' => 'Вы действительно готовы удалить?',
+    'Choose user' => 'Выбрать пользователя',
     'Create' => 'Создать',
     'Create User' => 'Создать пользователя',
     'Delete' => 'Удалить',
@@ -29,6 +28,7 @@ return [
     'Edit' => 'Редактировать',
     'Home' => 'Домой',
     'Not set' => 'Не установленно',
+    'Open' => 'Открыть',
     'Save' => 'Сохранить',
     'Successful' => 'Успешно',
     'The requested {{object}} does not exist.' => 'Запрошенный {{object}} не найден.',

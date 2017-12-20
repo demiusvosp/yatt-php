@@ -25,6 +25,14 @@ $this->params['breadcrumbs'][] = Yii::t('project', 'Project Manager');
         </p>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
+            'rowOptions'     => function ($model, $key, $index, $grid) {
+                /** @var Project $model */
+                if ($model->archived) {
+                    return ['class' => 'archived'];
+                }
+
+                return '';
+            },
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
@@ -66,7 +74,7 @@ $this->params['breadcrumbs'][] = Yii::t('project', 'Project Manager');
                 ],
                 'created_at:datetime',
                 'updated_at:datetime',
-                // 'admin_id',
+
 
                 [
                     'class' => 'yii\grid\ActionColumn',

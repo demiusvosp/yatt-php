@@ -1,3 +1,9 @@
+/* проект в архиве */
+.archived {
+    background-color: #bbbbbb !important;
+    color: #4a4a4a !important;
+}
+
 /* блок тайлов  на главной */
 .project-tiles .item {
     float: left;

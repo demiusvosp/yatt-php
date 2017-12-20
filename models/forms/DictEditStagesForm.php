@@ -11,7 +11,7 @@ namespace app\models\forms;
 use yii\base\Model;
 use app\models\entities\DictStage;
 
-class DictsWidgetStagesForm extends DictsWidgetForm
+class DictEditStagesForm extends DictEditForm
 {
     public function init()
     {

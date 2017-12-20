@@ -10,6 +10,7 @@ namespace app\modules\admin\models;
 
 use Yii;
 use app\helpers\Access;
+use app\models\queries\ProjectQuery;
 
 
 class Project extends \app\models\entities\Project
@@ -108,6 +109,12 @@ class Project extends \app\models\entities\Project
         $this->setConfigItem('editorType', $this->editorType);
 
         return parent::beforeSave($insert);
+    }
+
+
+    public static function find()
+    {
+        return new ProjectQuery(get_called_class(), true);
     }
 
 }

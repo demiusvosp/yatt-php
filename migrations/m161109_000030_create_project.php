@@ -10,6 +10,7 @@ class m161109_000030_create_project extends Migration
             'id'     => $this->primaryKey(),
             'suffix' => $this->string(8)->unique()->comment('суффикс'),
             'name'   => $this->string(255)->comment('Имя'),
+            'archived' => $this->boolean()->defaultValue(false)->comment('В архиве'),
             'description' => $this->text()->comment('Описание'),
             'public'      => $this->integer(255)->comment('0-всем, 1-только зарегистрированным, 2-только уполномоченным'),
             'created_at'  => $this->dateTime()->comment('Создана'),
@@ -20,6 +21,8 @@ class m161109_000030_create_project extends Migration
             'last_task_index' => $this->integer()->defaultValue(1)->comment('номер последней задачи'),
         ]);
 
+        $this->createIndex('name', 'project', 'name', true);
+        $this->createIndex('archived', 'project', 'archived', false);
         $this->addForeignKey('fk-project-user-ref', 'project', 'admin_id', 'user', 'id');
     }
 

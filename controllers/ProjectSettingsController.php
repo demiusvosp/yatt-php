@@ -15,14 +15,17 @@ use app\components\AccessManager;
 use app\components\access\Role;
 use app\helpers\Access;
 use app\helpers\ProjectAccessRule;
-use app\models\forms\DictsWidgetForm;
-use app\models\forms\DictsWidgetStagesForm;
+use app\models\entities\Task;
+use app\models\forms\DictEditForm;
+use app\models\forms\DictEditStagesForm;
+use app\models\forms\DictEditVersionForm;
 
 
 class ProjectSettingsController extends BaseProjectController
 {
     public $defaultAction = 'main';
     public $layout = 'project-settings';
+
 
     public function init()
     {
@@ -71,10 +74,11 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionStages()
     {
-        $dictForm = new DictsWidgetStagesForm([
-            'project'   => $this->project,
-            'items'     => $this->project->stages,
-            'itemClass' => 'app\models\entities\DictStage',
+        $dictForm = new DictEditStagesForm([
+            'project'       => $this->project,
+            'items'         => $this->project->stages,
+            'itemClass'     => 'app\models\entities\DictStage',
+            'relatedFields' => [[Task::className(), 'dict_stage_id']],
         ]);
 
         if ($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
@@ -94,9 +98,11 @@ class ProjectSettingsController extends BaseProjectController
      */
     public function actionTypes()
     {
-        $dictForm = new DictsWidgetForm([
-            'items'     => $this->project->types,
-            'itemClass' => 'app\models\entities\DictType',
+        $dictForm = new DictEditForm([
+            'project'       => $this->project,
+            'items'         => $this->project->types,
+            'itemClass'     => 'app\models\entities\DictType',
+            'relatedFields' => [[Task::className(), 'dict_type_id']],
         ]);
 
         if ($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
@@ -113,10 +119,14 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionVersions()
     {
-        $dictForm = new DictsWidgetForm([
-            'project'   => $this->project,
-            'items'     => $this->project->versions,
-            'itemClass' => 'app\models\entities\DictVersion',
+        $dictForm = new DictEditVersionForm([
+            'project'       => $this->project,
+            'items'         => $this->project->versions,
+            'itemClass'     => 'app\models\entities\DictVersion',
+            'relatedFields' => [
+                [Task::className(), 'dict_version_open_id'],
+                [Task::className(), 'dict_version_close_id'],
+            ],
         ]);
 
         if ($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
@@ -133,10 +143,11 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionDifficulties()
     {
-        $dictForm = new DictsWidgetForm([
-            'project'   => $this->project,
-            'items'     => $this->project->difficulties,
-            'itemClass' => 'app\models\entities\DictDifficulty',
+        $dictForm = new DictEditForm([
+            'project'       => $this->project,
+            'items'         => $this->project->difficulties,
+            'itemClass'     => 'app\models\entities\DictDifficulty',
+            'relatedFields' => [[Task::className(), 'dict_difficulty_id']],
         ]);
 
         if ($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
@@ -153,10 +164,11 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionCategories()
     {
-        $dictForm = new DictsWidgetForm([
-            'project'   => $this->project,
-            'items'     => $this->project->categories,
-            'itemClass' => 'app\models\entities\DictCategory',
+        $dictForm = new DictEditForm([
+            'project'       => $this->project,
+            'items'         => $this->project->categories,
+            'itemClass'     => 'app\models\entities\DictCategory',
+            'relatedFields' => [[Task::className(), 'dict_category_id']],
         ]);
 
         if ($dictForm->load(Yii::$app->request->post()) && $dictForm->validate()) {
@@ -174,7 +186,7 @@ class ProjectSettingsController extends BaseProjectController
     public function actionUsers()
     {
         /** @var AccessManager $auth */
-        $auth = Yii::$app->get('authManager');
+        $auth  = Yii::$app->get('authManager');
         $roles = $auth->getRolesByProject($this->project);
         $items = [];
         /** @var Role $role */
@@ -187,7 +199,7 @@ class ProjectSettingsController extends BaseProjectController
         }
 
         return $this->render('users', [
-            'items'   => $items,
+            'items' => $items,
         ]);
     }
 

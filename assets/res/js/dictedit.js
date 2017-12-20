@@ -60,10 +60,12 @@ jQuery(function(){
             type: 'POST',
             data: request,
             success: function (answer) {
+                console.log('set version as past success.');
+                console.log(answer);
                 if (answer) {
                     item.removeClass('dict_item_warning').addClass('dict_item_past');
-                    $('#'+$dictForm.data('dict-name')+'-'+item.id+'-type oprion[value=2]').attr('selected', 'selected');
-                    // лять, может проще перегрузить это гавно
+                    //$('#'+$dictForm.data('dict-name')+'-'+item.id+'-type option[value=2]').attr('selected', 'selected');
+                    window.location.reload(true);
                 }
             }
         });

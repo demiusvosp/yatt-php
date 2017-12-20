@@ -28,6 +28,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/closetask.js',
+        'js/common.js'
     ];
 
     public $depends = [

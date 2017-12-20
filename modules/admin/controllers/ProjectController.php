@@ -32,7 +32,7 @@ class ProjectController extends Controller
                         'roles' => [Access::PROJECT_MANAGEMENT],
                     ],
                     [
-                        'actions' => ['delete'],
+                        'actions' => ['delete', 'archive'],
                         'allow' => true,
                         'roles' => [Access::PROJECT_MANAGEMENT],
                         'verbs' => ['POST'],
@@ -51,7 +51,7 @@ class ProjectController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Project::find(),
+            'query' => Project::find()->orderBy(['archived' => SORT_ASC]),
         ]);
 
         return $this->render('index', [
@@ -132,7 +132,42 @@ class ProjectController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $project = $this->findModel($id);
+
+        if($project->canDelete()) {
+            $project->delete();
+        } else {
+            Yii::$app->session->addFlash('error',
+                Yii::t('project', 'Cannot delete project with tasks')
+            );
+        }
+
+        return $this->redirect(['index']);
+    }
+
+
+    /**
+     * Переместить проект в архив или из него
+     *
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionArchive($id)
+    {
+        $project = $this->findModel($id);
+
+        $project->archived = !$project->archived;
+        if($project->save()) {
+            Yii::$app->session->addFlash('success',
+                $project->archived ?
+                    Yii::t('project', 'Project archived') :
+                    Yii::t('project', 'Project activate')
+            );
+        } else {
+            Yii::$app->session->addFlash('error',
+                Yii::t('project', 'Cannot change project archive status')
+            );
+        }
 
         return $this->redirect(['index']);
     }

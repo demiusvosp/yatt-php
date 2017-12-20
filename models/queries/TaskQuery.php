@@ -12,7 +12,7 @@ use app\models\entities\Project;
  *
  * @see \app\models\entities\Task
  */
-class TaskQuery extends ActiveQuery
+class TaskQuery extends ActiveQuery implements IDictRelatedEntityQuery
 {
 
     public function __construct($modelClass, array $config = [])
@@ -74,8 +74,48 @@ class TaskQuery extends ActiveQuery
     }
 
 
+    public function relatedEntityCount($project, $relatedField = '')
+    {
+        $query = Task::find()
+            ->andProject($project)
+            ->groupBy([$relatedField])
+            ->select([$relatedField . ' as dict_id', 'count(task.id) as n'])
+            ->andWhere(['not', [$relatedField => null]])
+            ->asArray();
+
+        $result = [];
+        foreach ($query->all() as $item) {
+            $result[$item['dict_id']] = $item['n'];
+        }
+        return $result;
+    }
+
+
+    /**
+     * Посчитать незакрытые задачи по версиям в которых они должны быть закрыты
+     * @param Project $project
+     * @return array
+     */
+    public static function versionWithOpenedTaskCount($project)
+    {
+        $query = Task::find()
+            ->andProject($project)
+            ->groupBy(['dict_version_close_id'])
+            ->select(['dict_version_close_id as dict_id', 'count(task.id) as n'])
+            ->andWhere(['not', ['dict_version_close_id' => null]])
+            ->asArray();
+
+        $result = [];
+        foreach ($query->all() as $item) {
+            $result[$item['dict_id']] = $item['n'];
+        }
+        return $result;
+    }
+
+
     public static function getByIndex($suffix, $index)
     {
         return Task::find()->andWhere(['suffix' => $suffix, 'index' => $index])->one();
     }
+
 }

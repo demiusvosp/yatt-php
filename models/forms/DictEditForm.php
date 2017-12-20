@@ -10,16 +10,18 @@ namespace app\models\forms;
 
 use Yii;
 use yii\base\Model;
-
 use app\models\entities\Project;
 use app\models\entities\DictBase;
+use app\models\queries\IDictRelatedEntityQuery;
+use yii\db\ActiveRecord;
+
 
 /**
- * Class DictsWidgetForm - Форма справочник. Содерит подборку значений справочника.
+ * Class DictEditForm - Форма справочник. Содерит подборку значений справочника.
  * В конфиге необходимо указать коллекцию, и модель значения справочника
  * @package app\models\forms
  */
-class DictsWidgetForm extends Model
+class DictEditForm extends Model
 {
     /** @var array[DictBase] коллекция справочника */
     public $items;
@@ -30,6 +32,11 @@ class DictsWidgetForm extends Model
     /** @var  Project проект, которому принадлежит справочник */
     public $project = null;
 
+    /** @var  array [ [<Entity-класс>, <поле>], [], ...] которые используют справочник */
+    public $relatedFields = [];
+
+    /** @var array количество ассоциированных со справочником объектов */
+    public $relatedItemCount = [];
 
     public function __construct(array $config = ['items' => null])
     {
@@ -47,7 +54,26 @@ class DictsWidgetForm extends Model
     public function init()
     {
         parent::init();
-        // и новая для создания нового занчения
+
+        // посчитаем статистику
+        foreach ($this->relatedFields as $relatedItem) {
+            /** @var ActiveRecord $relatedItem[0] */
+            $query = $relatedItem[0]::find();
+            if($query instanceof IDictRelatedEntityQuery) {
+                $stat = $query->relatedEntityCount($this->project, $relatedItem[1]);
+                if($stat) {
+                    foreach ($stat as $dict => $item) {
+                        if(isset($this->relatedItemCount[$dict])) {
+                            $this->relatedItemCount[$dict] += $item;
+                        } else {
+                            $this->relatedItemCount[$dict] = $item;
+                        }
+                    }
+                }
+            }
+        }
+
+        // новый элемент справочника
         $newItem = Yii::createObject($this->itemClass, []);
         if($this->project && $newItem instanceof DictBase) {
             $newItem->project_id = $this->project->id;

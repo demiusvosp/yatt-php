@@ -19,6 +19,7 @@ use app\helpers\EntityInitializer;
  * @property integer          $id
  * @property string           $suffix
  * @property string           $name
+ * @property integer          $archived
  * @property string           $description
  * @property integer          $public
  * @property string           $config - json настроек, хранящеся в БД
@@ -37,6 +38,7 @@ class Project extends ActiveRecord
 
     /**
      * Публичность проекта
+     *
      * @TODO продумать, может не хранить тут, а выдавать роль <project>_VIEW кому надо
      */
 
@@ -259,6 +261,15 @@ class Project extends ActiveRecord
 
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTasks()
+    {
+        return $this->hasMany(Task::className(), ['suffix' => 'suffix']);
+    }
+
+
+    /**
      * @return \app\models\queries\DictStageQuery
      */
     public function getStages()
@@ -305,6 +316,7 @@ class Project extends ActiveRecord
 
     /**
      * Получать настройку проекта
+     *
      * @param string $name
      * @param mixed|null $default
      * @return mixed|null
@@ -317,8 +329,9 @@ class Project extends ActiveRecord
 
     /**
      * Установить настройку проекта
+     *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function setConfigItem($name, $value)
     {
@@ -337,4 +350,17 @@ class Project extends ActiveRecord
         return $lastIndex;
     }
 
+
+    /**
+     * Можно ли удалить проект
+     * @return bool
+     */
+    public function canDelete()
+    {
+        if ($this->getTasks()->count() > 0) {
+            return false;
+        }
+
+        return true;
+    }
 }

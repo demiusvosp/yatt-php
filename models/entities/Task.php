@@ -43,7 +43,7 @@ use app\models\queries\DictStageQuery;
  * @property DictDifficulty $difficulty
  * @property DictCategory   $category
  */
-class Task extends ActiveRecord
+class Task extends ActiveRecord implements IEditorType
 {
     // Приоритеты задачи
     const PRIORITY_UNKNOWN = 0;
@@ -211,6 +211,17 @@ class Task extends ActiveRecord
                 'value'      => new Expression('NOW()'),
             ],
         ];
+    }
+
+
+    /**
+     * Получить тип редактора поля (возможно стоит вынести в трейт для всех сущностей завязанных на проект)
+     * @param string $field
+     * @return mixed|null
+     */
+    public function getEditorType($field)
+    {
+        return $this->project->getConfigItem('editorType');
     }
 
 

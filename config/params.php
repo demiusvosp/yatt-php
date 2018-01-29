@@ -6,13 +6,5 @@ return [
     'user.torenExpire' => 3600*24*1, // время подтверждения сутки. Более чем достаточно
     'user.rememberMeExpire' => 3600*24*30,
 
-    'textEditors' => [
-        'plain' => [ 'class' => null, ],
-        'wysiwyg' => [
-            'class' => '',
-        ],
-        'md' => [
-            'class' => '',
-        ],
-    ],
+    'defaultEditor' => 'plain',
 ];

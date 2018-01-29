@@ -15,7 +15,26 @@ return [
 
     'container'  => [
         'definitions' => [
-
+            /* text Editors */
+            'plainEditor' => [
+                'class' => 'app\components\textEditors\PlainEditor',
+            ],
+            'wysiwygEditor' => [
+                'class' => 'app\components\textEditors\WysiwygEditor',
+            ],
+            'mdEditor' => [
+                'class' => 'app\components\textEditors\MdEditor',
+            ],
+            /* text Renderers */
+            'plainRenderer' => [
+                'class' => 'app\components\textRenderers\PlainRenderer',
+            ],
+            'wysiwygRenderer' => [
+                'class' => 'app\components\textRenderers\WysiwygRenderer',
+            ],
+            'mdRenderer' => [
+                'class' => 'app\components\textRenderers\MdRenderer',
+            ],
         ],
         'singletons'  => [
 

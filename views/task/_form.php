@@ -8,10 +8,10 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
+use app\components\ProjectService;
 use app\models\entities\Task;
 use app\widgets\UserSelect;
-use app\components\ProjectService;
+use app\widgets\TextEditor;
 
 /** @var ProjectService $projectService */
 $projectService = Yii::$app->projectService;
@@ -26,7 +26,7 @@ for($i = 0; $i <= 100; $i += 10) {
     $progressList[$i] = $i . '%';
 }
 ?>
-<?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(['fieldClass' => 'app\widgets\TextEditor']); ?>
 <div class="row">
     <div class="col-md-4 task-dict-block">
         <?php /* $this->renderFile('partial/dictSelect.twig', ['form'=>$form, 'task'=>$task, 'choices'=>$projectService->getStagesList()])
@@ -58,9 +58,9 @@ for($i = 0; $i <= 100; $i += 10) {
             </div>
         <?php } ?>
         <div class="row-fluid">
-            <?= $form->field($task, 'assigned_id')
-                ->widget(UserSelect::className(), ['userField' => 'assigned'])
-            ?>
+<!--            --><?//= $form->field($task, 'assigned_id')
+//                ->widget(UserSelect::className(), ['userField' => 'assigned'])
+//            ?>
         </div>
         <div class="row-fluid">
             <?= $form->field($task, 'priority')
@@ -95,7 +95,9 @@ for($i = 0; $i <= 100; $i += 10) {
             <h2><?=$task->getName()?></h2>
         <?php } ?>
         <?= $form->field($task, 'caption')->textInput() ?>
-        <?= $form->field($task, 'description')->textarea(['rows' => 10]) ?>
+        <?= '';//$form->field($task, 'description')->textarea(['rows' => 10]) ?>
+        <?php /* $form->field($task, 'description')->widget(TextEditor::className(), ['options' => ['rows' => 10]]) */ ?>
+        <?= $form->field($task, 'description')->editor(['rows' => 10]) ?>
 
         <div class="form-group">
             <?= Html::submitButton($task->isNewRecord ? Yii::t('common', 'Open') : Yii::t('common', 'Update'), ['class' => $task->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

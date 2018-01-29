@@ -36,3 +36,4 @@ runtime/*
 Будет удалено rbac/
 Будет удалено tests/fixtures/dev/data/
 Будет удалено tests/unit/fixtures/data/
+/config/db.php

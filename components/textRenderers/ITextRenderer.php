@@ -10,5 +10,9 @@ namespace app\components\textRenderers;
 
 interface ITextRenderer
 {
-
+    /**
+     * @param $data
+     * @return string
+     */
+    public function render($data);
 }

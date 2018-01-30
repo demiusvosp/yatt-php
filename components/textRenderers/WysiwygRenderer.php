@@ -13,5 +13,8 @@ use yii\base\Component;
 
 class WysiwygRenderer extends Component implements ITextRenderer
 {
-
+    public function render($data)
+    {
+        return $data;
+    }
 }

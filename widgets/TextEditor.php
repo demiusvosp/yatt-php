@@ -37,8 +37,10 @@ class TextEditor extends ActiveField
         } else {
             throw new \LogicException('Cannot get editor type to ' . $this->model->className() . '::' . $this->attribute);
         }
-        $editorType = $editorType . 'Editor';
 
+        $options = array_merge($this->inputOptions, $options);
+
+        $config['class'] = $editorType . 'Editor';
         $config['options'] = $options;
         $config['model'] = $this->model;
         $config['attribute'] = $this->attribute;
@@ -52,7 +54,7 @@ class TextEditor extends ActiveField
         try {
             $out = '';
             /** @var ATextEditor $editorClass */
-            $editorWidget = Yii::createObject($editorType, $config);
+            $editorWidget = Yii::createObject($config);
 
             if ($editorWidget->beforeRun()) {
                 $result = $editorWidget->run();

@@ -13,22 +13,13 @@ use yii\helpers\Html;
 
 class PlainEditor extends ATextEditor
 {
-
-    public function __construct(array $config = [])
-    {
-var_dump($config);
-        parent::__construct($config);
-    }
-
-
     public function init()
     {
-var_dump($this);die();
         parent::init();
     }
 
     public function run()
     {
-        return Html::textarea($this->name, $this->value, $this->options);
+        return Html::activeTextarea($this->model, $this->attribute, $this->options);
     }
 }

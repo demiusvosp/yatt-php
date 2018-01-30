@@ -95,8 +95,6 @@ for($i = 0; $i <= 100; $i += 10) {
             <h2><?=$task->getName()?></h2>
         <?php } ?>
         <?= $form->field($task, 'caption')->textInput() ?>
-        <?= '';//$form->field($task, 'description')->textarea(['rows' => 10]) ?>
-        <?php /* $form->field($task, 'description')->widget(TextEditor::className(), ['options' => ['rows' => 10]]) */ ?>
         <?= $form->field($task, 'description')->editor(['rows' => 10]) ?>
 
         <div class="form-group">

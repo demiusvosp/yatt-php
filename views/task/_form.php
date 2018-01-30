@@ -10,8 +10,6 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\components\ProjectService;
 use app\models\entities\Task;
-use app\widgets\UserSelect;
-use app\widgets\TextEditor;
 
 /** @var ProjectService $projectService */
 $projectService = Yii::$app->projectService;
@@ -26,7 +24,7 @@ for($i = 0; $i <= 100; $i += 10) {
     $progressList[$i] = $i . '%';
 }
 ?>
-<?php $form = ActiveForm::begin(['fieldClass' => 'app\widgets\TextEditor']); ?>
+<?php $form = ActiveForm::begin(); ?>
 <div class="row">
     <div class="col-md-4 task-dict-block">
         <?php /* $this->renderFile('partial/dictSelect.twig', ['form'=>$form, 'task'=>$task, 'choices'=>$projectService->getStagesList()])

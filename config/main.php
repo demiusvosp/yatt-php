@@ -35,6 +35,10 @@ return [
             'mdRenderer' => [
                 'class' => 'app\components\textRenderers\MdRenderer',
             ],
+            /* переопределения классов Yii */
+            'yii\bootstrap\ActiveForm' => [
+                'fieldClass' => 'app\widgets\TextEditorField'
+            ],
         ],
         'singletons'  => [
 

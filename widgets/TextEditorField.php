@@ -7,37 +7,45 @@
 
 namespace app\widgets;
 
+use Yii;
+use yii\widgets\ActiveField;
 use app\components\textEditors\ATextEditor;
 use app\models\entities\IEditorType;
-use Yii;
-use yii\base\Widget;
-use yii\helpers\Html;
-use yii\widgets\ActiveField;
-use yii\widgets\InputWidget;
 
 
-class TextEditor extends ActiveField
+class TextEditorField extends ActiveField
 {
 
 
+    /**
+     * отрисовтаь виджет с текстовым редактором (указанного типа или из модели)
+     * @param null  $type
+     * @param array $options
+     * @return $this
+     * @throws \Exception
+     */
     public function editor($type = null, $options = [])
     {
-        if(is_string($type)) {
+        $editorType = null;
+        if (is_string($type)) {
             $editorType = $type;
-        } else if(is_array($type)) {
-            if(isset($type['type'])) {
+        } else if (is_array($type)) {
+            if (isset($type['type'])) {
                 $editorType = $type['type'];
             } else {
                 $editorType = Yii::$app->params['defaultEditor'];
             }
             unset($type['type']);
             $options = $type;
-        } else if($this->model instanceof IEditorType) {
-            $editorType = $this->model->getEditorType($this->attribute);
-        } else {
-            throw new \LogicException('Cannot get editor type to ' . $this->model->className() . '::' . $this->attribute);
         }
 
+        if(empty($editorType)) {
+            if ($this->model instanceof IEditorType) {
+                $editorType = $this->model->getEditorType($this->attribute);
+            } else {
+                throw new \LogicException('Cannot get editor type to ' . $this->model->className() . '::' . $this->attribute);
+            }
+        }
         $options = array_merge($this->inputOptions, $options);
 
         $config['class'] = $editorType . 'Editor';
@@ -72,29 +80,4 @@ class TextEditor extends ActiveField
 
         return $this;
     }
-
-
-//    public function run()
-//    {
-//        $config = [
-//            'name' => Html::getAttributeName($this->attribute),
-////            'value' => Html::getAttributeValue($this->model, $this->attribute),
-//            'attribute' => $this->attribute,
-//            'model'     => $this->model,
-//            'options'   => $this->options,
-//        ];
-//
-////        /** @var Widget $editor */
-////        $editor = Yii::createObject(
-////            $this->type . 'Editor'
-////        );
-////        Yii::configure($editor, $config);
-//        $editor = Yii::$container->get($this->type . 'Editor', [], $config);
-//
-//        if (!$editor) {
-//            throw new \DomainException('Cannot create editor for type ' . $this->type);
-//        }
-//
-//        return $editor->run();
-//    }
 }

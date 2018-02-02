@@ -17,6 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'md' => 'Markdown',
+    'plain' => 'текст без форматирования',
+    'wysiwyg' => 'Wysiwyg-редактор',
     'About' => 'О программе',
     'Administration' => 'Настройка',
     'Are you sure you want to delete this item?' => 'Вы действительно готовы удалить?',

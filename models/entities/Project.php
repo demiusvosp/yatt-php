@@ -50,12 +50,6 @@ class Project extends ActiveRecord
     const STATUS_PUBLIC_AUTHED = 2;
 
 
-    const EDITOR_PLAIN = 'plain';
-    const EDITOR_WYSIWYG = 'wysiwyg';
-    const EDITOR_MD = 'md';
-    // const EDITOR_WIKI = 'wiki';
-
-
     /** @var array Конфигурация проекта (отдельная переменная, так как нельзя обращаться к вирутальному полю, как к массиву) */
     public $configuration = [];
 

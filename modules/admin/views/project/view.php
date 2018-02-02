@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\helpers\TextEditorHelper;
 use app\modules\admin\models\Project;
 
 /* @var $this yii\web\View */
@@ -74,8 +75,7 @@ $this->params['breadcrumbs'][] = $project->name;
                     'attribute' => 'editorType',
                     'value' => function($project) {
                         /** @var Project $project */
-                        //return $project->editorType;
-                        return Project::editorTypesLabels()[$project->editorType];
+                        return TextEditorHelper::getTextEditorsList()[$project->editorType];
                     }
                 ],
 

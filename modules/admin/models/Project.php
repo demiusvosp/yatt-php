@@ -28,8 +28,14 @@ class Project extends \app\models\entities\Project
     /** @var bool можно оставлять комментарии к закрытым задачам */
     public $enableCommentToClosed = false;
 
-    public $editorType = Project::EDITOR_MD;
+    public $editorType;
 
+
+    public function init()
+    {
+        $this->editorType = Yii::$app->params['defaultEditor'];
+        parent::init();
+    }
 
     /**
      * @return array
@@ -52,16 +58,6 @@ class Project extends \app\models\entities\Project
             'enableCommentToClosed' => Yii::t('project', 'Enable comment to closed tasks'),
             'editorType' => Yii::t('project', 'Text editor type'),
         ]);
-    }
-
-
-    public static function editorTypesLabels()
-    {
-        return [
-            Project::EDITOR_PLAIN => Yii::t('project', 'plain text'),
-            Project::EDITOR_WYSIWYG => Yii::t('project', 'Wysiwyg-editor'),
-            Project::EDITOR_MD => Yii::t('project', 'Markdown'),
-        ];
     }
 
 

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use app\helpers\TextEditorHelper;
 use app\widgets\UserSelect;
 use app\modules\admin\models\Project;
 
@@ -32,7 +33,7 @@ use app\modules\admin\models\Project;
     <?= $form->field($project, 'enableCommentProject')->checkbox() ?>
     <?= $form->field($project, 'enableCommentToClosed')->checkbox() ?>
 
-    <?= $form->field($project, 'editorType')->radioList(Project::editorTypesLabels()) ?>
+    <?= $form->field($project, 'editorType')->radioList(TextEditorHelper::getTextEditorsList()) ?>
     <div class="form-group">
         <?= Html::submitButton(
                 $project->isNewRecord ? Yii::t('common', 'Create') : Yii::t('common', 'Update'),

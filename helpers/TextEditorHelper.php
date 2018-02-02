@@ -12,9 +12,11 @@ use Yii;
 use app\components\textRenderers\ITextRenderer;
 use app\models\entities\IEditorType;
 
+
 class TextEditorHelper
 {
     /**
+     * Получить редактор текста
      * @param string $type
      * @param array $config
      * @return ATextEditor
@@ -31,6 +33,14 @@ class TextEditorHelper
         return Yii::createObject($config);
     }
 
+
+    /**
+     * Получить рендер текста
+     * @param $type
+     * @return ITextRenderer
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\di\NotInstantiableException
+     */
     public static function getTextRenderer($type)
     {
         if(!in_array($type, Yii::$app->params['editorList'])) {
@@ -42,18 +52,27 @@ class TextEditorHelper
         return Yii::$container->get($type);
     }
 
+
+    /**
+     * Получить список доступных редакторов
+     * @return array
+     */
     public static function getTextEditorsList()
     {
-        $list = Yii::$app->params['editorList'];
-
+        $list = [];
         // добавим переводы
-
+        foreach (Yii::$app->params['editorList'] as $item) {
+            $list[$item] = Yii::t('common', $item);
+        }
 
         return $list;
     }
 
 
     /**
+     * Отрендерить данные согласно редактору. которых их создал. Имеет два варианта использования:
+     *  - EditorType, renderedData
+     *  - Model implemented IEDitorType, modelField with data
      * @param string|IEditorType $type - editor type or model implemented IEditorType::getType
      * @param string|mixed $data - rendered value or model field who render
      * @return string

@@ -93,7 +93,7 @@ class Project extends \app\models\entities\Project
         parent::afterFind();
         $this->enableCommentProject = $this->getConfigItem('enableCommentProject');
         $this->enableCommentToClosed = $this->getConfigItem('enableCommentToClosed');
-        $this->editorType = $this->getConfigItem('editorType', Project::EDITOR_PLAIN);
+        $this->editorType = $this->getConfigItem('editorType', Yii::$app->params['defaultEditor']);
     }
 
 

@@ -13,6 +13,23 @@ return [
     'bootstrap' => ['log'],
     'language'  => 'ru-RU',
 
+    'components' => [
+        'db'             => require(__DIR__ . '/db.php'),
+        'i18n'           => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    //'basePath' => '@app\translations', немного логично, но не факт, что настолько, чтобы уходить от унификации
+                ],
+            ],
+        ],
+        'projectService' => [
+            'class' => 'app\components\ProjectService',
+        ],
+        'authManager' => [
+            'class' => 'app\components\AccessManager',
+        ],
+    ],
     'container'  => [
         'definitions' => [
             /* text Editors */
@@ -44,21 +61,8 @@ return [
 
         ],
     ],
-    'components' => [
-        'db'             => require(__DIR__ . '/db.php'),
-        'i18n'           => [
-            'translations' => [
-                '*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    //'basePath' => '@app\translations', немного логично, но не факт, что настолько, чтобы уходить от унификации
-                ],
-            ],
-        ],
-        'projectService' => [
-            'class' => 'app\components\ProjectService',
-        ],
-        'authManager' => [
-            'class' => 'app\components\AccessManager',
-        ],
+    'params' => [
+        'defaultEditor' => 'plain',
+        'editorList' => ['plain', 'wysiwyg', 'md'],
     ],
 ];

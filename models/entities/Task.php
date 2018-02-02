@@ -221,7 +221,7 @@ class Task extends ActiveRecord implements IEditorType
      */
     public function getEditorType($field)
     {
-        return $this->project->getConfigItem('editorType');
+        return $this->project->getConfigItem('editorType', Yii::$app->params['defaultEditor']);
     }
 
 

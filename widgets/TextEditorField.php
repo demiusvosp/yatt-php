@@ -7,6 +7,7 @@
 
 namespace app\widgets;
 
+use app\helpers\TextEditorHelper;
 use Yii;
 use yii\widgets\ActiveField;
 use app\components\textEditors\ATextEditor;
@@ -48,7 +49,6 @@ class TextEditorField extends ActiveField
         }
         $options = array_merge($this->inputOptions, $options);
 
-        $config['class'] = $editorType . 'Editor';
         $config['options'] = $options;
         $config['model'] = $this->model;
         $config['attribute'] = $this->attribute;
@@ -61,8 +61,8 @@ class TextEditorField extends ActiveField
         ob_implicit_flush(false);
         try {
             $out = '';
-            /** @var ATextEditor $editorClass */
-            $editorWidget = Yii::createObject($config);
+
+            $editorWidget = TextEditorHelper::getTextEditor($editorType, $config);
 
             if ($editorWidget->beforeRun()) {
                 $result = $editorWidget->run();

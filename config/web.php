@@ -1,9 +1,11 @@
 <?php
 
+use yii\helpers\ArrayHelper;
+
 $params = require(__DIR__ . '/params.php');
 $config = require(__DIR__ . '/main.php');
 
-$config = array_merge_recursive($config, [
+$config = ArrayHelper::merge($config, [
     'basePath' => dirname(__DIR__),
     'defaultRoute' => 'main/index',
     'layout' => 'default',

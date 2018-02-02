@@ -9,12 +9,12 @@ namespace app\components\textRenderers;
 
 
 use yii\base\Component;
-
+use yii\helpers\Html;
 
 class PlainRenderer extends Component implements ITextRenderer
 {
     public function render($data)
     {
-        return $data;
+        return '<pre>' . Html::encode($data) . '</pre>';
     }
 }

@@ -13,6 +13,7 @@ use app\widgets\CommentThread;
 use app\components\ProjectService;
 use app\helpers\Access;
 use app\helpers\HtmlBlock;
+use app\helpers\TextEditorHelper;
 
 
 /* @var $this yii\web\View */
@@ -183,7 +184,7 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK);
     <div class="col-md-9 task-text-block">
         <h2 class="task-header <?=$task->is_closed?'closed':''?>"><?=$task->getName()?> - <?=$task->caption?></h2>
         <div class="well">
-            <?=$task->description ?>
+            <?= TextEditorHelper::render($task, 'description'); ?>
         </div>
     </div>
 </div>

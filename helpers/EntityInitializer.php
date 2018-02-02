@@ -77,7 +77,6 @@ class EntityInitializer
         $task->difficulty = DictDifficultyQuery::getDefault($project);
 
         // Вопрос версии.
-var_dump(DictVersion::find()->andForOpen()->count());
         if(DictVersion::find()->andForOpen()->count() == 1) {
             // есть только одна версия, в которой задачу можно открыть. Её и установим
             $task->versionOpen = DictVersion::find()->andForOpen()->one();

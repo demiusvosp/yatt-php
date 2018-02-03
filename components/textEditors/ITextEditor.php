@@ -8,19 +8,14 @@
 namespace app\components\textEditors;
 
 
-//use yii\bootstrap\Widget;
-//use yii\base\Widget;
-use yii\widgets\InputWidget;
-
-
 /**
- * Class ATextEditor
+ * Class ITextEditor
  *
  * @package app\components\textEditors
  * @property string $name
  * @property mixed $value
  */
-abstract class ATextEditor extends InputWidget
+interface  ITextEditor
 {
 
 }

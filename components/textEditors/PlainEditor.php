@@ -8,15 +8,17 @@
 namespace app\components\textEditors;
 
 
+use yii\widgets\InputWidget;
 use yii\helpers\Html;
 
 
-class PlainEditor extends ATextEditor
+class PlainEditor extends InputWidget implements ITextEditor
 {
     public function init()
     {
         parent::init();
     }
+
 
     public function run()
     {

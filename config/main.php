@@ -37,7 +37,7 @@ return [
                 'class' => 'app\components\textEditors\PlainEditor',
             ],
             'wysiwygEditor' => [
-                'class' => 'app\components\textEditors\WysiwygEditor',
+                'class' => 'app\components\textEditors\CKEditor',
             ],
             'mdEditor' => [
                 'class' => 'app\components\textEditors\MdEditor',

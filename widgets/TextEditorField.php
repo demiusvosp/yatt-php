@@ -10,7 +10,6 @@ namespace app\widgets;
 use app\helpers\TextEditorHelper;
 use Yii;
 use yii\widgets\ActiveField;
-use app\components\textEditors\ATextEditor;
 use app\models\entities\IEditorType;
 
 
@@ -40,7 +39,7 @@ class TextEditorField extends ActiveField
             $options = $type;
         }
 
-        if(empty($editorType)) {
+        if($this->model) {
             if ($this->model instanceof IEditorType) {
                 $editorType = $this->model->getEditorType($this->attribute);
             } else {

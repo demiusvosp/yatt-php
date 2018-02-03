@@ -7,7 +7,7 @@
 
 namespace app\helpers;
 
-use app\components\textEditors\ATextEditor;
+use app\components\textEditors\ITextEditor;
 use Yii;
 use app\components\textRenderers\ITextRenderer;
 use app\models\entities\IEditorType;
@@ -17,9 +17,10 @@ class TextEditorHelper
 {
     /**
      * Получить редактор текста
+     *
      * @param string $type
      * @param array $config
-     * @return ATextEditor
+     * @return ITextEditor
      * @throws \yii\base\InvalidConfigException
      */
     public static function getTextEditor($type, $config = [])

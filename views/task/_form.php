@@ -10,6 +10,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\components\ProjectService;
 use app\models\entities\Task;
+use app\widgets\UserSelect;
 
 /** @var ProjectService $projectService */
 $projectService = Yii::$app->projectService;
@@ -56,9 +57,9 @@ for($i = 0; $i <= 100; $i += 10) {
             </div>
         <?php } ?>
         <div class="row-fluid">
-<!--            --><?//= $form->field($task, 'assigned_id')
-//                ->widget(UserSelect::className(), ['userField' => 'assigned'])
-//            ?>
+            <?= $form->field($task, 'assigned_id')
+                ->widget(UserSelect::className(), ['userField' => 'assigned'])
+            ?>
         </div>
         <div class="row-fluid">
             <?= $form->field($task, 'priority')

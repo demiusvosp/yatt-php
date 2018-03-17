@@ -69,6 +69,8 @@ return [
             ],
             'mdRenderer' => [
                 'class' => 'app\components\textRenderers\MdRenderer',
+                // на мой взгляд самый адекватный диалект. Отрабатывает переносы и довольно либерален к оформлению пунктов
+                'flavor' => 'gfm-comment',
             ],
             /* переопределения классов Yii */
             'yii\bootstrap\ActiveForm' => [

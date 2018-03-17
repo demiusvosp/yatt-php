@@ -14,8 +14,10 @@ use yii\helpers\Markdown;
 
 class MdRenderer extends Component implements ITextRenderer
 {
+    public $flavor = '';
+
     public function render($data)
     {
-        return Markdown::process($data);
+        return Markdown::process($data, $this->flavor);
     }
 }

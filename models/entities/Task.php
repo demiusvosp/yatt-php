@@ -43,7 +43,7 @@ use app\models\queries\DictStageQuery;
  * @property DictDifficulty $difficulty
  * @property DictCategory   $category
  */
-class Task extends ActiveRecord implements IEditorType
+class Task extends ActiveRecord implements IEditorType, IInProject
 {
     // Приоритеты задачи
     const PRIORITY_UNKNOWN = 0;

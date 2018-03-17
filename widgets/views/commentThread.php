@@ -8,6 +8,7 @@
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use app\helpers\HtmlBlock;
+use app\helpers\TextEditorHelper;
 use app\models\entities\Comment;
 
 
@@ -38,7 +39,7 @@ use app\models\entities\Comment;
                         </h3>
                     </div>
                     <div class="box-body">
-                        <?= $form->field($comment, 'text')->textarea(['rows' => 10]) ?>
+                        <?= $form->field($comment, 'text')->editor(['rows' => 5]) ?>
                     </div>
                     <div class="box-footer">
                         <div class="comment-author"><?= HtmlBlock::userItem($comment->author) ?></div>
@@ -62,7 +63,7 @@ use app\models\entities\Comment;
                     <div class="comment-date"><?= Yii::$app->formatter->asDatetime($comment->created_at) ?></div>
                 </div>
                 <div class="box-body">
-                    <?= $comment->text ?>
+                    <?= TextEditorHelper::render($comment, 'text') ?>
                 </div>
                 <div class="box-footer">
                     <?php if ($comment->created_at != $comment->updated_at) { ?>

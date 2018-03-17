@@ -192,7 +192,7 @@ class Project extends ActiveRecord implements IEditorType
      */
     public static function findOne($value)
     {
-        if (ctype_digit($value)) {// аналог regex:\d+
+        if (is_numeric($value)) {// аналог regex:\d+
             // поиск по id
             $field = 'id';
         } elseif (is_string($value)) {

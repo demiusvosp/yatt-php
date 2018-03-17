@@ -23,6 +23,7 @@ class m171120_000060_create_comment extends Migration
                 'id'           => $this->primaryKey(),
                 'object_class' => $this->string(80)->notNull()->comment('Объект к которому крепится тред'),
                 'object_id'    => $this->integer()->notNull()->comment('Id объекта'),
+                'project_id'   => $this->integer()->null()->comment('Id проекта'),
                 'author_id'    => $this->integer(),
                 'type'         => $this->integer()->unsigned()->notNull()->defaultValue(0),
                 'text'         => $this->text(),
@@ -32,6 +33,7 @@ class m171120_000060_create_comment extends Migration
         );
 
         $this->createIndex('idx-object', $this->tableName, ['object_class', 'object_id']);
+        $this->createIndex('idx-project', $this->tableName, ['project_id']);
         $this->createIndex('idx-type', $this->tableName, 'type');
 
         $this->addForeignKey(

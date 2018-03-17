@@ -17,6 +17,7 @@ use app\models\queries\CommentQuery;
  * @property string       $object_class
  * @property integer      $object_id
  * @property integer      $author_id
+ * @property integer      $project_id
  * @property integer      $type
  * @property string       $text
  * @property string       $created_at
@@ -24,11 +25,13 @@ use app\models\queries\CommentQuery;
  *
  * @property User         $author
  * @property ActiveRecord $object
+ * @property Project|null $project
  */
-class Comment extends ActiveRecord
+class Comment extends ActiveRecord implements IEditorType, IInProject
 {
     const TYPE_USUAL = 0; // стандартный тип
     const TYPE_CLOSE = 1; // комментарий к закрытию задачи
+
 
     /**
      * @inheritdoc
@@ -46,7 +49,7 @@ class Comment extends ActiveRecord
     {
         return [
             [['object_class', 'object_id'], 'required'],
-            [['object_id', 'author_id', 'type'], 'integer'],
+            [['object_id', 'author_id', 'project_id', 'type'], 'integer'],
             [['text'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['object_class'], 'string', 'max' => 80],
@@ -71,6 +74,7 @@ class Comment extends ActiveRecord
             'object_class' => Yii::t('comment', 'Object'),
             'object_id'    => Yii::t('comment', 'Object ID'),
             'author_id'    => Yii::t('comment', 'Author ID'),
+            'project_id'   => Yii::t('comment', 'Project'),
             'author'       => Yii::t('comment', 'Author'),
             'type'         => Yii::t('comment', 'Type'),
             'text'         => Yii::t('comment', 'Text'),
@@ -92,6 +96,22 @@ class Comment extends ActiveRecord
                 'value'      => new Expression('NOW()'),
             ],
         ];
+    }
+
+
+    /**
+     * Получить тип редактора поля
+     *
+     * @param string $field
+     * @return string
+     */
+    public function getEditorType($field)
+    {
+        if ($this->project_id) {
+            return $this->project->getEditorType(null);
+        } else {
+            return Yii::$app->params['defaultEditor'];
+        }
     }
 
 
@@ -131,6 +151,32 @@ class Comment extends ActiveRecord
     {
         $this->object_class = $object->className();
         $this->object_id    = $object->id;
+    }
+
+
+    /**
+     * @return Project|null
+     */
+    public function getProject()
+    {
+        if ($this->project_id) {
+            return Project::findOne($this->project_id);
+        } else {
+            return null;
+        }
+    }
+
+
+    /**
+     * @param Project $project
+     */
+    public function setProject($project)
+    {
+        if($project) {
+            $this->project_id = $project->id;
+        } else {
+            $this->project_id = null;
+        }
     }
 
 

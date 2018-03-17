@@ -79,6 +79,9 @@ class MdEditor extends InputWidget implements ITextEditor
         $varName = Inflector::classify('editor' . $this->id);
 
         $script = "var {$varName} = new Editor(" . $jsonOptions . "); {$varName}.render();";
+        if(isset($this->options['rows'])) {
+            $script .= "$('.CodeMirror').css('height', '" . $this->options['rows'] * 1.5 . "em');";
+        }
         $this->view->registerJs($script);
     }
 }

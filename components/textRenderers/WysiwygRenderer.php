@@ -9,12 +9,13 @@ namespace app\components\textRenderers;
 
 
 use yii\base\Component;
+use yii\helpers\HtmlPurifier;
 
 
 class WysiwygRenderer extends Component implements ITextRenderer
 {
     public function render($data)
     {
-        return $data;
+        return HtmlPurifier::process($data);
     }
 }

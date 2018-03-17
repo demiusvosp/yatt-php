@@ -10,6 +10,11 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use app\helpers\HtmlBlock;
 
+
+/**
+ * @var $project
+ */
+
 $this->title = HtmlBlock::titleString(
     Yii::t('project', 'Settings') . ' - ' . Yii::t('project/settings', 'Main'),
     $project
@@ -20,7 +25,7 @@ $this->params['project'] = $project;
 <div class="row-fluid">
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($project, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($project, 'description')->editor(['rows' => 6]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('common', 'Update'), ['class' => 'btn btn-primary']) ?>

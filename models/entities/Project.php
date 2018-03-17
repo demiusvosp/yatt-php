@@ -33,7 +33,7 @@ use app\helpers\EntityInitializer;
  *
  * @property User             $admin
  */
-class Project extends ActiveRecord
+class Project extends ActiveRecord implements IEditorType
 {
 
     /**
@@ -148,6 +148,17 @@ class Project extends ActiveRecord
                 'value'      => new Expression('NOW()'),
             ],
         ];
+    }
+
+
+    /**
+     * Получить тип редактора поля (возможно стоит вынести в трейт для всех сущностей завязанных на проект)
+     * @param string $field
+     * @return mixed|null
+     */
+    public function getEditorType($field)
+    {
+        return $this->getConfigItem('editorType', Yii::$app->params['defaultEditor']);
     }
 
 

@@ -8,6 +8,7 @@
 
 use app\models\entities\Project;
 use app\helpers\HtmlBlock;
+use app\helpers\TextEditorHelper;
 use app\widgets\ProjectTile;
 use app\widgets\CommentThread;
 
@@ -40,7 +41,7 @@ $this->params['project']       = $project;
                 </h3>
             </div>
             <div class="box-body">
-                <?= $project->description ?>
+                <?= TextEditorHelper::render($project, 'description') ?>
             </div>
         </div>
     </div>

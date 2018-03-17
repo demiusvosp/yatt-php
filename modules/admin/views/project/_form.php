@@ -24,7 +24,7 @@ use app\modules\admin\models\Project;
 
     <?= $form->field($project, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($project, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($project, 'description')->editor(['rows' => 6]) ?>
 
     <?= $form->field($project, 'public')->dropDownList($project->getPublicStatusesArray()) ?>
 

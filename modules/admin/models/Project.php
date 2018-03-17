@@ -54,6 +54,7 @@ class Project extends \app\models\entities\Project
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
+            'admin' => Yii::t('project', 'Project admin'),
             'enableCommentProject' => Yii::t('project', 'Enable comment to project'),
             'enableCommentToClosed' => Yii::t('project', 'Enable comment to closed tasks'),
             'editorType' => Yii::t('project', 'Text editor type'),

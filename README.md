@@ -149,3 +149,12 @@ composer exec codecept run functional,unit -- --coverage-html --coverage-xml
 ```
 
 You can see code coverage output under the `tests/_output` directory.
+
+
+# third-party libraries
+---------------------
+
+### md Editor
+
+
+Yii2 Lepture Markdown Editor widget](https://github.com/iJackUA/yii2-lepture-markdown-editor-widget) Yii2 intagration CodeMirror with markdown support

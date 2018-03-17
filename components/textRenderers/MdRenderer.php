@@ -9,12 +9,13 @@ namespace app\components\textRenderers;
 
 
 use yii\base\Component;
+use yii\helpers\Markdown;
 
 
 class MdRenderer extends Component implements ITextRenderer
 {
     public function render($data)
     {
-        return $data;
+        return Markdown::process($data);
     }
 }

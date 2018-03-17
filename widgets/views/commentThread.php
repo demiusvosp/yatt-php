@@ -34,7 +34,7 @@ use app\models\entities\Comment;
                 >
                     <div class="box-header">
                         <h3 class="box-title">
-                            <?= Yii::t('comment', 'Create coment') ?>
+                            <?= Yii::t('comment', 'Create comment') ?>
                         </h3>
                     </div>
                     <div class="box-body">

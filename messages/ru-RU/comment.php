@@ -23,7 +23,7 @@ return [
     'Edit' => '',
     'Author' => 'Автор',
     'Author ID' => 'ID автора',
-    'Create coment' => 'Написать комментарий',
+    'Create comment' => 'Написать комментарий',
     'Created At' => 'Создан',
     'ID' => 'ID',
     'Object' => 'Объект',

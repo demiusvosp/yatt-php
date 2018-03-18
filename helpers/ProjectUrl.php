@@ -17,6 +17,7 @@ use app\models\entities\Task;
 class ProjectUrl extends Url
 {
     /**
+     * Собрать урл с указанным проектом. Указать проект можно передав его или его суффикс
      * @param string $url
      * @param bool   $scheme
      * @return string
@@ -39,6 +40,23 @@ class ProjectUrl extends Url
         }
 
         return parent::to($url, $scheme);
+    }
+
+
+    /**
+     * Собрать урл к странице текущего проекта
+     * @param string $url
+     * @param bool   $scheme
+     * @return string
+     */
+    public static function toWithCurrent($url = '', $scheme = false)
+    {
+        if(!is_array($url)) {
+            $url[0] = $url;
+        }
+        $url['project'] = ProjectHelper::currentProject();
+
+        return self::to($url, $scheme);
     }
 
 

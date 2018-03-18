@@ -8,12 +8,10 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use app\components\ProjectService;
+use app\helpers\ProjectHelper;
 use app\models\entities\Task;
 use app\widgets\UserSelect;
 
-/** @var ProjectService $projectService */
-$projectService = Yii::$app->projectService;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -28,12 +26,12 @@ for($i = 0; $i <= 100; $i += 10) {
 <?php $form = ActiveForm::begin(); ?>
 <div class="row">
     <div class="col-md-4 task-dict-block">
-        <?php /* $this->renderFile('partial/dictSelect.twig', ['form'=>$form, 'task'=>$task, 'choices'=>$projectService->getStagesList()])
+        <?php /* $this->renderFile('partial/dictSelect.twig', ['form'=>$form, 'task'=>$task, 'choices'=>ProjectHelper::getStagesList()])
     чтобы подключить twig partial, необходимо и этот шаблон и create/update сделать twig'ом. Сейчас не до того. */ ?>
-        <?php if(count($projectService->getStagesList()) > 1) { ?>
+        <?php if(count(ProjectHelper::getStagesList()) > 1) { ?>
             <div class="row-fluid">
                 <?= $form->field($task, 'dict_stage_id')
-                    ->dropDownList($projectService->getStagesList())
+                    ->dropDownList(ProjectHelper::getStagesList())
                 ?>
             </div>
         <?php } ?>
@@ -42,17 +40,17 @@ for($i = 0; $i <= 100; $i += 10) {
                 ->dropDownList($progressList)
             ?>
         </div>
-        <?php if(count($projectService->getTypesList()) > 1) { ?>
+        <?php if(count(ProjectHelper::getTypesList()) > 1) { ?>
             <div class="row-fluid">
                 <?= $form->field($task, 'dict_type_id')
-                    ->dropDownList($projectService->getTypesList())
+                    ->dropDownList(ProjectHelper::getTypesList())
                 ?>
             </div>
         <?php } ?>
-        <?php if(count($projectService->getCategoryList()) > 1) { ?>
+        <?php if(count(ProjectHelper::getCategoryList()) > 1) { ?>
             <div class="row-fluid">
                 <?= $form->field($task, 'dict_category_id')
-                    ->dropDownList($projectService->getCategoryList())
+                    ->dropDownList(ProjectHelper::getCategoryList())
                 ?>
             </div>
         <?php } ?>
@@ -66,24 +64,24 @@ for($i = 0; $i <= 100; $i += 10) {
                 ->dropDownList(Task::priorityLabels())
             ?>
         </div>
-        <?php if(count($projectService->getDifficultyList()) > 1) { ?>
+        <?php if(count(ProjectHelper::getDifficultyList()) > 1) { ?>
             <div class="row-fluid">
                 <?= $form->field($task, 'dict_difficulty_id')
-                    ->dropDownList($projectService->getDifficultyList())
+                    ->dropDownList(ProjectHelper::getDifficultyList())
                 ?>
             </div>
         <?php } ?>
-        <?php if(count($projectService->getVersionList(true)) > 1) { ?>
+        <?php if(count(ProjectHelper::getVersionList(true)) > 1) { ?>
             <div class="row-fluid">
                 <?= $form->field($task, 'dict_version_open_id')
-                    ->dropDownList($projectService->getVersionList(true))
+                    ->dropDownList(ProjectHelper::getVersionList(true))
                 ?>
             </div>
         <?php } ?>
-        <?php if(count($projectService->getVersionList(false)) > 1) { ?>
+        <?php if(count(ProjectHelper::getVersionList(false)) > 1) { ?>
             <div class="row-fluid">
                 <?= $form->field($task, 'dict_version_close_id')
-                    ->dropDownList($projectService->getVersionList(false))
+                    ->dropDownList(ProjectHelper::getVersionList(false))
                 ?>
             </div>
         <?php } ?>

@@ -8,13 +8,16 @@
 
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use app\helpers\ProjectHelper;
+use app\helpers\ProjectListHelper;
 use app\helpers\ProjectUrl;
 use app\helpers\Access;
 
 
-if ($projectService->project) {
-    $brandLabel = $projectService->project->name;
-    $brandUrl = ProjectUrl::to(['project/overview', 'project' => $projectService->project]);
+$project = ProjectHelper::currentProject();
+if($project) {
+    $brandLabel = $project->name;
+    $brandUrl = ProjectUrl::to(['project/overview', 'project' => $project]);
 } else {
     $brandLabel = Yii::$app->name;
     $brandUrl = Yii::$app->homeUrl;
@@ -32,7 +35,7 @@ if ($projectService->project) {
         'innerContainerOptions' => ['class' => 'container-fluid'],
     ]);
 
-    $items = Yii::$app->projectService->projectMenu;
+    $items = ProjectListHelper::ProjectsMainMenu();
 
     $items = array_merge($items, [
         ['label' => Yii::t('common', 'About'), 'url' => ['/main/about']],

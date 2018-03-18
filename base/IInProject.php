@@ -5,7 +5,7 @@
  * Time: 18:03
  */
 
-namespace app\models\entities;
+namespace app\base;
 
 /**
  * Interface IInProject - поддерживается объектами, ассоциированными с проектом

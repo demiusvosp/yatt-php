@@ -8,6 +8,7 @@
 
 use yii\widgets\Breadcrumbs;
 use app\helpers\Access;
+use app\helpers\ProjectHelper;
 use app\helpers\ProjectUrl;
 use app\models\entities\Project;
 
@@ -16,7 +17,7 @@ use app\models\entities\Project;
 /* @var $project Project */
 /* @var $content string */
 
-$project = Yii::$app->projectService->project;
+$project = ProjectHelper::currentProject();
 
 if(!$this->title) {
     $this->title = $project->name;

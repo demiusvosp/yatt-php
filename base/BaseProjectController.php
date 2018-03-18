@@ -5,19 +5,17 @@
  * Time: 22:51
  */
 
-namespace app\controllers;
+namespace app\base;
 
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use app\components\ProjectService;
 use app\models\entities\Project;
 
 
 class BaseProjectController extends Controller
 {
-    /** @var  ProjectService */
-    public $projectService;
+
     /** @var  Project */
     public $project;
 
@@ -32,8 +30,10 @@ class BaseProjectController extends Controller
      */
     public function beforeAction($action)
     {
-        $this->projectService = Yii::$app->get('projectService');
-        $this->project = $this->projectService->project;
+        if (Yii::$app->request->get('suffix')) {
+            $this->project = Project::findOne(Yii::$app->request->get('suffix'));
+        }
+
         if (!$this->project) {
             throw new NotFoundHttpException(Yii::t('project', 'Project not found'));
         }

@@ -10,6 +10,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\StringHelper;
 use app\helpers\HtmlBlock;
+use app\helpers\ProjectUrl;
 use app\models\entities\Task;
 use app\models\entities\Project;
 
@@ -49,7 +50,7 @@ const COLUMN_MAX_LEN = 255;
                 'content'   => function ($task) {
                     return Html::a(
                         $task->name,
-                        ['task/view', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index]
+                        ProjectUrl::toWithCurrent(['task/view', 'index' => $task->index])
                     );
                 },
             ],
@@ -70,7 +71,7 @@ const COLUMN_MAX_LEN = 255;
                     /** @var Task $task */
                     return Html::a(
                         StringHelper::truncate($task->caption, COLUMN_MAX_LEN),
-                        ['task/view', 'suffix' => Yii::$app->projectService->getSuffixUrl(), 'index' => $task->index]
+                        ProjectUrl::toWithCurrent(['task/view', 'index' => $task->index])
                     );
                 },
             ],

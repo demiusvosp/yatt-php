@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use yii\filters\AccessControl;
+use app\base\BaseProjectController;
 use app\helpers\ProjectAccessRule;
 
 

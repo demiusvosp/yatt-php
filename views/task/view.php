@@ -10,7 +10,7 @@ use app\helpers\ProjectUrl;
 use app\models\entities\Task;
 use app\widgets\CloseTask;
 use app\widgets\CommentThread;
-use app\components\ProjectService;
+use app\helpers\ProjectHelper;
 use app\helpers\Access;
 use app\helpers\HtmlBlock;
 use app\helpers\TextEditorHelper;
@@ -20,8 +20,6 @@ use app\helpers\TextEditorHelper;
 /* @var $task Task */
 /* @var $project */
 
-/** @var ProjectService $projectService */
-$projectService = Yii::$app->get('projectService');
 
 $this->title = HtmlBlock::titleString($task->getFullName(), $project);
 $this->params['breadcrumbs'][] = $task->getFullName();
@@ -60,7 +58,7 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK);
                     <span class="fa fa-caret-down"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <?php foreach ($projectService->getStagesList() as $stageId => $stageName) { ?>
+                    <?php foreach (ProjectHelper::getStagesList() as $stageId => $stageName) { ?>
                         <li>
                             <a href="<?= ProjectUrl::to([
                                 'task/change-stage',

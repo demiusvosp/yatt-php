@@ -23,9 +23,6 @@ return [
                 ],
             ],
         ],
-        'projectService' => [
-            'class' => 'app\components\ProjectService',
-        ],
         'authManager' => [
             'class' => 'app\components\AccessManager',
         ],

@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\behaviors\TimestampBehavior;
+use app\base\IInProject;
 use app\models\queries\TaskQuery;
 use app\models\queries\DictStageQuery;
 

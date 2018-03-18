@@ -8,16 +8,17 @@ use yii\helpers\Html;
 use dmstr\helpers\AdminLteHelper;
 use dmstr\widgets\Alert;
 use app\assets\AppAsset;
-use app\components\ProjectService;
+use app\helpers\ProjectHelper;
+
 
 AppAsset::register($this);
-/** @var ProjectService $projectService */
-$projectService = Yii::$app->projectService;
+
 
 if(!$this->title) {
     $this->title = Yii::$app->name;
-    if ($projectService->project) {
-        $this->title .= ' :: ' . $projectService->project->name;
+    $project = ProjectHelper::currentProject();
+    if ($project) {
+        $this->title .= ' :: ' . $project->name;
     }
 }
 ?>
@@ -38,7 +39,7 @@ if(!$this->title) {
 
     <?= $this->render(
         'partial/topmenu.php',
-        ['projectService' => $projectService ]
+        []
     ) ?>
 
     <?php /*= $this->render(

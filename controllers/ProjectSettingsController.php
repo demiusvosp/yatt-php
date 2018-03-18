@@ -13,6 +13,7 @@ use yii\filters\AccessControl;
 use app\assets\ProjectSettingsAsset;
 use app\components\AccessManager;
 use app\components\access\Role;
+use app\base\BaseProjectController;
 use app\helpers\Access;
 use app\helpers\ProjectAccessRule;
 use app\models\entities\Task;

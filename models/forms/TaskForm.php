@@ -8,10 +8,10 @@
 
 namespace app\models\forms;
 
-use Yii;
 use app\helpers\EntityInitializer;
-use app\components\ProjectService;
+use app\helpers\ProjectHelper;
 use app\models\entities\Task;
+use yii\base\InvalidArgumentException;
 
 
 /**
@@ -21,8 +21,6 @@ use app\models\entities\Task;
  */
 class TaskForm extends Task
 {
-    /** @var ProjectService */
-    protected $_projectService;
 
     public function rules()
     {
@@ -33,19 +31,20 @@ class TaskForm extends Task
 
     public function init()
     {
-        $this->_projectService = Yii::$app->projectService;
         parent::init();
 
         if($this->isNewRecord) {
-            EntityInitializer::initializeTask($this, $this->_projectService->project);
+            EntityInitializer::initializeTask($this, ProjectHelper::currentProject());
         }
     }
 
 
     public function beforeSave($insert)
     {
-        $this->index = $this->project->generateNewTaskIndex();
-        $this->suffix = $this->_projectService->project->suffix;
+        if($insert) {
+            $this->index  = $this->project->generateNewTaskIndex();
+            $this->suffix = $this->project->suffix;
+        }
 
         return parent::beforeSave($insert);
     }

@@ -7,11 +7,11 @@
 
 namespace app\widgets;
 
-use app\models\entities\IInProject;
-use app\models\entities\Project;
 use Yii;
 use yii\base\Widget;
+use app\base\IInProject;
 use app\helpers\Access;
+use app\models\entities\Project;
 use app\models\entities\Comment;
 
 

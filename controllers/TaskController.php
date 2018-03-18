@@ -13,6 +13,7 @@ use yii\web\ForbiddenHttpException;
 use yii\data\ActiveDataProvider;
 use yii\web\Response;
 use yii\filters\AccessControl;
+use app\base\BaseProjectController;
 use app\helpers\ProjectAccessRule;
 use app\helpers\Access;
 use app\models\entities\Task;
@@ -76,7 +77,7 @@ class TaskController extends BaseProjectController
 
     public function actionList()
     {
-        $query = Task::find()->andProject(Yii::$app->projectService->project);
+        $query = Task::find()->andProject($this->project);
         $query->joinWith([
             'assigned' => function ($query) {
                 $query->from(['assigned' => 'user']);

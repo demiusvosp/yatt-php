@@ -8,13 +8,14 @@
 
 namespace app\controllers;
 
-use app\models\entities\DictVersion;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\Response;
 use yii\filters\AccessControl;
+use app\base\BaseProjectController;
 use app\helpers\Access;
 use app\helpers\ProjectAccessRule;
+use app\models\entities\DictVersion;
 use app\models\forms\DictForm;
 
 

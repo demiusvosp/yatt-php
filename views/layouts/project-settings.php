@@ -10,12 +10,13 @@
 use app\helpers\ProjectUrl;
 use app\models\entities\Project;
 use app\helpers\HtmlBlock;
+use app\helpers\ProjectHelper;
 
 /* @var $this yii\web\View */
 /* @var $project Project */
 /* @var $content string */
 
-$project = Yii::$app->projectService->project;
+$project = ProjectHelper::currentProject();
 
 if(!$this->title) {
     $this->title = HtmlBlock::titleString(Yii::t('project', 'Settings'), $project);

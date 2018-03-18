@@ -17,6 +17,7 @@ use yii\rbac\Role as BaseRole;
 use app\components\access\Role;
 use app\components\access\Permission;
 use app\helpers\Access;
+use app\helpers\ProjectHelper;
 use app\models\entities\Project;
 use app\models\entities\User as EntityUser;
 
@@ -24,19 +25,9 @@ use app\models\entities\User as EntityUser;
 /**
  * Class AccessManager
  *
- * @property ProjectService $projectService
  */
 class AccessManager extends DbManager implements CheckAccessInterface
 {
-    /** @var  ProjectService */
-    //public $projectService = null; будут получать только те кому надо, в момент когда надо
-
-
-    public function init()
-    {
-        parent::init();
-    }
-
 
     /**
      * Проверить разрешение на действие, в том числе действие в рамках проекта
@@ -48,9 +39,8 @@ class AccessManager extends DbManager implements CheckAccessInterface
      */
     public function checkAccess($userId, $permissionName, $params = [])
     {
-        $projectService = Yii::$app->get('projectService');
-        if ($projectService->project) {
-            $permissionName = Access::projectItem($permissionName, $projectService->project);
+        if (ProjectHelper::currentProject()) {
+            $permissionName = Access::projectItem($permissionName, ProjectHelper::currentProject());
         }
 
         $result = parent::checkAccess($userId, $permissionName, $params);

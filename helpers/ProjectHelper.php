@@ -10,7 +10,7 @@ namespace app\helpers;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use app\base\BaseProjectController;
+use app\base\IInProject;
 use app\models\entities\Project;
 use app\models\entities\DictStage;
 use app\models\queries\DictVersionQuery;
@@ -34,7 +34,7 @@ class ProjectHelper
             return self::$_project;
         }
 
-        if(Yii::$app->controller instanceof BaseProjectController) {
+        if(Yii::$app->controller instanceof IInProject) {
             self::$_project =  Yii::$app->controller->project;
 
             return self::$_project;

@@ -13,32 +13,31 @@ use yii\web\NotFoundHttpException;
 use app\models\entities\Project;
 
 
-class BaseProjectController extends Controller
+class BaseProjectController extends Controller implements IInProject
 {
 
-    /** @var  Project */
-    public $project;
+    /** @var  Project - текущий проект. Забират геттером*/
+    protected $_project = null;
 
     public $layout = 'project';
 
 
     /**
-     * Проверка и установка текущего проекта, с которым работают все страницы проекта
-     * @param \yii\base\Action $action
-     * @return bool
-     * @throws NotFoundHttpException
+     * получить текущий проект
      */
-    public function beforeAction($action)
+    public function getProject()
     {
-        if (Yii::$app->request->get('suffix')) {
-            $this->project = Project::findOne(Yii::$app->request->get('suffix'));
+        if(!$this->_project) {
+            if (Yii::$app->request->get('suffix')) {
+                $this->_project = Project::findOne(Yii::$app->request->get('suffix'));
+            }
+
+            if (!$this->_project) {
+                throw new NotFoundHttpException(Yii::t('project', 'Project not found'));
+            }
         }
 
-        if (!$this->project) {
-            throw new NotFoundHttpException(Yii::t('project', 'Project not found'));
-        }
-
-        return parent::beforeAction($action);
+        return $this->_project;
     }
 
 

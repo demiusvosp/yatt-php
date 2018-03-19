@@ -32,7 +32,7 @@ tests/_support/_generated
 composer.lock
 runtime/*
 
-/config/db.php
+#/config/settings.php
 
 Будет удалено assets/res/
 Будет удалено rbac/

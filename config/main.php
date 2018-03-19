@@ -5,6 +5,12 @@
  * Time: 15:20
  */
 
+
+use yii\helpers\ArrayHelper;
+
+
+$settings = require(__DIR__ . '/settings.php');
+
 return [
     'id'      => 'yatt',
     'name'    => 'Yatt',
@@ -14,30 +20,39 @@ return [
     'language'  => 'ru-RU',
 
     'components' => [
-        'db'             => require(__DIR__ . '/db.php'),
-        'i18n'           => [
+        'db'          => ArrayHelper::merge(
+            [
+                'enableSchemaCache' => true,
+            ],
+            $settings['db']
+        ),
+        'cache'       => ArrayHelper::merge(
+            [],
+            $settings['cache']
+        ),
+        'i18n'        => [
             'translations' => [
                 '*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
-                    //'basePath' => '@app\translations', немного логично, но не факт, что настолько, чтобы уходить от унификации
                 ],
             ],
         ],
         'authManager' => [
             'class' => 'app\components\AccessManager',
+            'cache' => 'cache',
         ],
     ],
     'container'  => [
         'definitions' => [
             /* text Editors */
-            'plainEditor' => [
+            'plainEditor'              => [
                 'class' => 'app\components\textEditors\PlainEditor',
             ],
-            'wysiwygEditor' => [
-                'class' => 'dosamigos\ckeditor\CKEditor',
-                'preset' => 'custom',
+            'wysiwygEditor'            => [
+                'class'         => 'dosamigos\ckeditor\CKEditor',
+                'preset'        => 'custom',
                 'clientOptions' => [
-                    'height' => 400,
+                    'height'        => 400,
                     'toolbarGroups' => [// здесь вырезаны кнопки цвета, изображений, поскольку нет соответствующих плагинов.
                         ['name' => 'document', 'groups' => ['mode', 'document', 'doctools']],
                         ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
@@ -47,39 +62,39 @@ return [
                         '/',
                         ['name' => 'others', 'groups' => ['others']],
                         ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
-                        ['name' => 'paragraph', 'groups' => [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']],
+                        ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']],
                         ['name' => 'styles', 'groups' => ['styles']],
                         ['name' => 'editing', 'groups' => ['find', 'selection', 'editing']],
                     ],
                     'removeButtons' => 'Scayt,Anchor,Image,Styles',
                 ],
             ],
-            'mdEditor' => [
+            'mdEditor'                 => [
                 'class' => 'app\components\textEditors\MdEditor',
             ],
             /* text Renderers */
-            'plainRenderer' => [
+            'plainRenderer'            => [
                 'class' => 'app\components\textRenderers\PlainRenderer',
             ],
-            'wysiwygRenderer' => [
+            'wysiwygRenderer'          => [
                 'class' => 'app\components\textRenderers\WysiwygRenderer',
             ],
-            'mdRenderer' => [
-                'class' => 'app\components\textRenderers\MdRenderer',
+            'mdRenderer'               => [
+                'class'  => 'app\components\textRenderers\MdRenderer',
                 // на мой взгляд самый адекватный диалект. Отрабатывает переносы и довольно либерален к оформлению пунктов
                 'flavor' => 'gfm-comment',
             ],
             /* переопределения классов Yii */
             'yii\bootstrap\ActiveForm' => [
-                'fieldClass' => 'app\widgets\TextEditorField'
+                'fieldClass' => 'app\widgets\TextEditorField',
             ],
         ],
         'singletons'  => [
 
         ],
     ],
-    'params' => [
+    'params'     => [
         'defaultEditor' => 'plain',
-        'editorList' => ['plain', 'wysiwyg', 'md'],
+        'editorList'    => ['plain', 'wysiwyg', 'md'],
     ],
 ];

@@ -3,7 +3,7 @@
 namespace app\models\entities;
 
 use Yii;
-
+use app\helpers\CacheTagHelper;
 use app\models\queries\DictVersionQuery;
 
 /**
@@ -84,6 +84,19 @@ class DictVersion extends DictBase
     public static function find()
     {
         return new DictVersionQuery(get_called_class());
+    }
+
+
+    /**
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+        // инвалидируем статистику задач
+        CacheTagHelper::invalidateTags([CacheTagHelper::taskStat($this->project->suffix)]);
+
+        return parent::beforeSave($insert);
     }
 
 

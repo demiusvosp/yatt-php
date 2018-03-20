@@ -7,6 +7,7 @@ use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\behaviors\TimestampBehavior;
 use app\base\IInProject;
+use app\helpers\CacheTagHelper;
 use app\models\queries\TaskQuery;
 use app\models\queries\DictStageQuery;
 
@@ -217,6 +218,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
 
     /**
      * Получить тип редактора поля (возможно стоит вынести в трейт для всех сущностей завязанных на проект)
+     *
      * @param string $field
      * @return mixed|null
      */
@@ -290,7 +292,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function setType($type)
     {
-        if($type) {
+        if ($type) {
             $this->dict_type_id = $type->id;
         } else {
             $this->dict_type_id = null;
@@ -312,7 +314,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function setVersionOpen($version)
     {
-        if($version) {
+        if ($version) {
             $this->dict_version_open_id = $version->id;
         } else {
             $this->dict_version_open_id = null;
@@ -334,7 +336,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function setVersionClose($version)
     {
-        if($version) {
+        if ($version) {
             $this->dict_version_close_id = $version->id;
         } else {
             $this->dict_version_close_id = null;
@@ -356,7 +358,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function setDifficulty($difficulty)
     {
-        if($difficulty) {
+        if ($difficulty) {
             $this->dict_difficulty_id = $difficulty->id;
             $this->difficulty_ratio   = $difficulty->ratio;
         } else {
@@ -380,13 +382,12 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function setCategory($category)
     {
-        if($category) {
+        if ($category) {
             $this->dict_category_id = $category->id;
         } else {
             $this->dict_category_id = null;
         }
     }
-
 
 
     /**
@@ -406,17 +407,22 @@ class Task extends ActiveRecord implements IEditorType, IInProject
     public function beforeSave($insert)
     {
         // обновим денормальзованную сложность из справочника
-        if($this->difficulty) {
+        if ($this->difficulty) {
             $this->difficulty_ratio = $this->difficulty->ratio;
         } else {
             $this->difficulty_ratio = 1;
         }
+
+        // инвалидируем связанные кеши
+        CacheTagHelper::invalidateTags([CacheTagHelper::taskStat($this->suffix)]);
+
         return parent::beforeSave($insert);
     }
 
 
     /**
      * имя(ID) задачи вида <project>#<index>
+     *
      * @return string
      */
     public function getName()
@@ -427,6 +433,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
 
     /**
      * Полное имя задачи
+     *
      * @return string
      */
     public function getFullName()

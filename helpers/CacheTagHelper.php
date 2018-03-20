@@ -34,7 +34,6 @@ class CacheTagHelper
      */
     public static function taskStat($suffix)
     {
-        Yii::error($suffix);
         return 'Project-' . $suffix . '-taskStats';
     }
 

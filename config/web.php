@@ -15,9 +15,6 @@ $config = ArrayHelper::merge($config, [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'uRXZ9FM2KwLW1e_a87yJ57G9LoDQUYJ8',
         ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
         'user' => [
             'class' => 'app\components\User',
             'identityClass' => 'app\models\entities\User',

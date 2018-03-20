@@ -22,12 +22,15 @@ return [
     'components' => [
         'db'          => ArrayHelper::merge(
             [
+                'class' => 'yii\db\Connection',
                 'enableSchemaCache' => true,
             ],
             $settings['db']
         ),
         'cache'       => ArrayHelper::merge(
-            [],
+            [
+                'class' => YII_DEBUG ? 'yii\caching\FileCache' : 'yii\caching\DummyCache',
+            ],
             $settings['cache']
         ),
         'i18n'        => [

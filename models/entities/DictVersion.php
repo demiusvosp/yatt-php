@@ -94,7 +94,10 @@ class DictVersion extends DictBase
     public function beforeSave($insert)
     {
         // инвалидируем статистику задач
-        CacheTagHelper::invalidateTags([CacheTagHelper::taskStat($this->project->suffix)]);
+        CacheTagHelper::invalidateTags([
+            CacheTagHelper::taskStat($this->project->suffix),
+            CacheTagHelper::projectVersions($this->project->suffix)
+        ]);
 
         return parent::beforeSave($insert);
     }

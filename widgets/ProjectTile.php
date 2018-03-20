@@ -9,6 +9,8 @@ namespace app\widgets;
 
 
 use yii\base\Widget;
+use yii\caching\TagDependency;
+use app\helpers\CacheTagHelper;
 use app\helpers\ProjectUrl;
 use app\models\entities\Project;
 use app\models\entities\Task;
@@ -57,8 +59,6 @@ class ProjectTile extends Widget
 
     public function run()
     {
-
-
         return $this->render('projectTile', [
             'project' => $this->project,
             'caption' => $this->caption,
@@ -93,6 +93,7 @@ class ProjectTile extends Widget
         if($this->closedVersionNum != 0) {
             // Прошедшие версии (чтобы не было обидно релизить и закрывтаь версию (а когда их много?)
             $query = $this->project->getVersions()->andPast();
+            $query->cache(0, new TagDependency(['tags' => CacheTagHelper::projectVersions($this->project->suffix)]));
             if($this->closedVersionNum >= 1) {
                 $query->limit($this->closedVersionNum);
             }
@@ -109,6 +110,7 @@ class ProjectTile extends Widget
         if($this->openVersionNum != 0) {
             // текущие и будующие версии, над которыми идет работа
             $query = $this->project->getVersions()->andForClose();
+            $query->cache(0, new TagDependency(['tags' => CacheTagHelper::projectVersions($this->project->suffix)]));
             if($this->openVersionNum >= 1) {
                 $query->limit($this->openVersionNum);
             }
@@ -134,6 +136,7 @@ class ProjectTile extends Widget
     {
         if($this->lastTasksNum != 0) {
             $query = Task::find()->andProject($this->project)->andOpen()->orderBy('updated_at DESC');
+            // это задачи по которым идет активнейшая работа, лучше не кешировать
             if($this->lastTasksNum >= 1) {
                 $query->limit($this->lastTasksNum);
             }

@@ -29,6 +29,7 @@ class CacheTagHelper
 
 
     /**
+     * Статистика задач в проекте
      * @param string $suffix - project suffix
      * @return string
      */
@@ -37,4 +38,13 @@ class CacheTagHelper
         return 'Project-' . $suffix . '-taskStats';
     }
 
+    /**
+     * Версии проекта
+     * @param string $suffix - project suffix
+     * @return string
+     */
+    public static function projectVersions($suffix)
+    {
+        return 'Project-' . $suffix . '-versions';
+    }
 }

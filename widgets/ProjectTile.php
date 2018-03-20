@@ -30,8 +30,14 @@ class ProjectTile extends Widget
     /** @var array дополнительные html-аттрибуты таге контейнера виджета */
     public $options = ['class' => 'box-bordered box-success'];
 
-    /** @var bool добавить блок последние задачи */
-    public $lastTasks = false;
+    /** @var int Количество последних задач 0 - не отображать, -1 - отображать все */
+    public $lastTasksNum = 0;
+
+    /** @var int Количество прошедших версий 0 - не отображать, -1 - отображать все */
+    public $closedVersionNum = -1;
+
+    /** @var int Количество будующих версий 0 - не отображать, -1 - отображать все */
+    public $openVersionNum = 4;
 
 
     public function init()
@@ -83,23 +89,37 @@ class ProjectTile extends Widget
             DictVersion::CURRENT => 'current',
             DictVersion::FUTURE => 'future'
         ];
-        // Прошедшие версии (чтобы не было обидно релизить и закрывтаь версию)
-        $versions = $this->project->getVersions()->andPast()->all();
-        foreach ($versions as $version) {
-            $taskStat['versions'][] = [
-                'name' => $version->name,
-                'type' => $versionTypes[$version->type],
-                'progress' => 100,
-            ];
+
+        if($this->closedVersionNum != 0) {
+            // Прошедшие версии (чтобы не было обидно релизить и закрывтаь версию (а когда их много?)
+            $query = $this->project->getVersions()->andPast();
+            if($this->closedVersionNum >= 1) {
+                $query->limit($this->closedVersionNum);
+            }
+
+            foreach ($query->all() as $version) {
+                $taskStat['versions'][] = [
+                    'name'     => $version->name,
+                    'type'     => $versionTypes[$version->type],
+                    'progress' => 100,
+                ];
+            }
         }
-        // текущие и будующие версии, над которыми идет работа
-        $versions = $this->project->getVersions()->andForClose()->limit(4)->all();
-        foreach ($versions as $version) {
-            $taskStat['versions'][] = [
-                'name' => $version->name,
-                'type' => $versionTypes[$version->type],
-                'progress' => round(TaskStatsQuery::statVersionProgress($version))
-            ];
+
+        if($this->openVersionNum != 0) {
+            // текущие и будующие версии, над которыми идет работа
+            $query = $this->project->getVersions()->andForClose();
+            if($this->openVersionNum >= 1) {
+                $query->limit($this->openVersionNum);
+            }
+
+            foreach ($query->all() as $version) {
+                $taskStat['versions'][] = [
+                    'name'     => $version->name,
+                    'type'     => $versionTypes[$version->type],
+                    'progress' => round(TaskStatsQuery::statVersionProgress($version))
+                ];
+            }
         }
 
         return $taskStat;
@@ -112,6 +132,14 @@ class ProjectTile extends Widget
      */
     public function getLastTasks()
     {
-        return Task::find()->andProject($this->project)->andOpen()->orderBy('updated_at DESC')->limit(5)->all();
+        if($this->lastTasksNum != 0) {
+            $query = Task::find()->andProject($this->project)->andOpen()->orderBy('updated_at DESC');
+            if($this->lastTasksNum >= 1) {
+                $query->limit($this->lastTasksNum);
+            }
+            return $query->all();
+        }
+
+        return [];
     }
 }

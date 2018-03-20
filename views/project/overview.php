@@ -30,7 +30,8 @@ $this->params['project']       = $project;
             'options'   => [
                 'class' => 'box-success',
             ],
-            'lastTasks' => true,
+            'lastTasksNum' => 8,
+            'openVersionNum' => -1,
         ]) ?>
     </div>
     <div class="col-md-7">

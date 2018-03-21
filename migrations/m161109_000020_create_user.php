@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 use app\models\entities\User;
-use app\components\AuthProjectManager;
+use app\components\auth\AuthProjectManager;
 
 class m161109_000020_create_user extends Migration
 {

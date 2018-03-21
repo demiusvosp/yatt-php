@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 use app\helpers\Access;
-use app\components\AuthProjectManager;
+use app\components\auth\AuthProjectManager;
 
 class m161109_000010_create_base_permissions extends Migration
 {

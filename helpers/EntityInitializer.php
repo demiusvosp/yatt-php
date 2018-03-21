@@ -10,7 +10,7 @@ namespace app\helpers;
 
 use Yii;
 use yii\helpers\Json;
-use app\components\AuthProjectManager;
+use app\components\auth\AuthProjectManager;
 use app\models\entities\Project;
 use app\models\entities\Task;
 use app\models\entities\DictStage;

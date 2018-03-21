@@ -5,7 +5,7 @@
  * Time: 0:37
  */
 
-namespace app\components;
+namespace app\components\auth;
 
 use Yii;
 use yii\rbac\CheckAccessInterface;
@@ -14,8 +14,6 @@ use yii\rbac\Assignment;
 use yii\db\Query;
 use yii\rbac\Item;
 use yii\rbac\Role as BaseRole;
-use app\components\access\Role;
-use app\components\access\Permission;
 use app\helpers\Access;
 use app\helpers\ProjectHelper;
 use app\models\entities\Project;

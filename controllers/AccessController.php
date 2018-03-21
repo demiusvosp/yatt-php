@@ -14,7 +14,7 @@ use yii\web\Response;
 use yii\filters\AccessControl;
 use yii\base\InvalidParamException;
 use yii\web\ForbiddenHttpException;
-use app\components\AuthProjectManager;
+use app\components\auth\AuthProjectManager;
 use app\helpers\RequestHelper;
 use app\helpers\Access;
 use app\helpers\HtmlBlock;

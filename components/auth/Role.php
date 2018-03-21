@@ -5,7 +5,7 @@
  * Time: 18:25
  */
 
-namespace app\components\access;
+namespace app\components\auth;
 
 
 /**

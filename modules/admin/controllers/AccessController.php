@@ -12,8 +12,8 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use app\helpers\Access;
-use app\components\AuthProjectManager;
-use app\components\access\Role;
+use app\components\auth\AuthProjectManager;
+use app\components\auth\Role;
 use app\models\queries\ProjectQuery;
 
 

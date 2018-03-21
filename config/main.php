@@ -41,7 +41,7 @@ return [
             ],
         ],
         'authManager' => [
-            'class' => 'app\components\AccessManager',
+            'class' => 'app\components\AuthProjectManager',
             'cache' => 'cache',
         ],
     ],

@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 use app\models\entities\User;
-use app\components\AccessManager;
+use app\components\AuthProjectManager;
 
 class m161109_000020_create_user extends Migration
 {
@@ -37,7 +37,7 @@ class m161109_000020_create_user extends Migration
         $root->setPassword('root');
 
         $root->save();
-        /** @var AccessManager */
+        /** @var AuthProjectManager */
         Yii::$app->get('authManager')->assign('root', $root->id);
     }
 

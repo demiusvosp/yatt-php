@@ -16,7 +16,7 @@ $config = ArrayHelper::merge($config, [
             'cookieValidationKey' => 'uRXZ9FM2KwLW1e_a87yJ57G9LoDQUYJ8',
         ],
         'user' => [
-            'class' => 'app\components\User',
+            'class' => 'app\base\User',
             'identityClass' => 'app\models\entities\User',
             'enableAutoLogin' => true,
             'loginUrl' => ['auth/login']

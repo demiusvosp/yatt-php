@@ -11,7 +11,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use app\assets\ProjectSettingsAsset;
-use app\components\AccessManager;
+use app\components\AuthProjectManager;
 use app\components\access\Role;
 use app\base\BaseProjectController;
 use app\helpers\Access;
@@ -186,7 +186,7 @@ class ProjectSettingsController extends BaseProjectController
 
     public function actionUsers()
     {
-        /** @var AccessManager $auth */
+        /** @var AuthProjectManager $auth */
         $auth  = Yii::$app->get('authManager');
         $roles = $auth->getRolesByProject($this->project);
         $items = [];

@@ -8,15 +8,14 @@
 
 namespace app\helpers;
 
-use app\models\entities\DictVersion;
-use app\models\queries\DictDifficultyQuery;
-use app\models\queries\DictVersionQuery;
 use Yii;
 use yii\helpers\Json;
-use app\components\AccessManager;
+use app\components\AuthProjectManager;
 use app\models\entities\Project;
 use app\models\entities\Task;
 use app\models\entities\DictStage;
+use app\models\entities\DictVersion;
+use app\models\queries\DictDifficultyQuery;
 use app\models\queries\DictStageQuery;
 
 
@@ -96,7 +95,7 @@ class EntityInitializer
      */
     public static function createProjectAccesses($project)
     {
-        /** @var AccessManager $auth */
+        /** @var AuthProjectManager $auth */
         $auth = Yii::$app->get('authManager');
 
         $root = $auth->getRole(Access::ROOT);
@@ -162,7 +161,7 @@ class EntityInitializer
      */
     public static function deinitializeProject($project)
     {
-        /** @var AccessManager $auth */
+        /** @var AuthProjectManager $auth */
         $auth = Yii::$app->authManager;
 
         // удалим связанные с проектом полномочия

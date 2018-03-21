@@ -29,7 +29,6 @@ trait ItemExtendInfo
      */
     public function getLabel()
     {
-
         return $this->data['label'];
     }
 

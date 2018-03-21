@@ -2,13 +2,13 @@
 
 use yii\db\Migration;
 use app\helpers\Access;
-use app\components\AccessManager;
+use app\components\AuthProjectManager;
 
-class m161109_000010_init_rbac extends Migration
+class m161109_000010_create_base_permissions extends Migration
 {
     public function safeUp()
     {
-        /** @var AccessManager $auth */
+        /** @var AuthProjectManager $auth */
         $auth = Yii::$app->get('authManager');
 
         // создаем роли
@@ -32,7 +32,7 @@ class m161109_000010_init_rbac extends Migration
 
     public function safeDown()
     {
-        /** @var AccessManager $auth */
+        /** @var AuthProjectManager $auth */
         $auth = Yii::$app->get('authManager');
 
         $auth->removeAll();

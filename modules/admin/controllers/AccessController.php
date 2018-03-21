@@ -12,23 +12,13 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use app\helpers\Access;
-use app\components\AccessManager;
+use app\components\AuthProjectManager;
 use app\components\access\Role;
 use app\models\queries\ProjectQuery;
 
 
 class AccessController extends Controller
 {
-    /** @var AccessManager */
-    public $accessManager = null;
-
-
-    public function init()
-    {
-        parent::init();
-        $this->accessManager = Yii::$app->authManager;
-    }
-
 
     /**
      * @inheritdoc
@@ -52,20 +42,20 @@ class AccessController extends Controller
 
     public function actionIndex()
     {
-        /** @var AccessManager $auth */
+        /** @var AuthProjectManager $auth */
         $auth = Yii::$app->authManager;
 
         $projects = ProjectQuery::allowProjectsList(true, 'suffix');
 
         // Поскольку роли получаются не из ar, здесь не будет выборок, а перебор полного списка
-        //   Возможно в будующем мы отрефакторим AccessManager, выбросив из него authManager
+        //   Возможно в будующем мы отрефакторим AuthProjectManager, выбросив из него authManager
         $list = [ -1 => [] ];
         foreach ($projects as $id => $project) {
             $list[$project['suffix']] = ['label' => $project['name']];
         }
 
         /** @var Role $role */
-        foreach ($this->accessManager->getRoles() as $role) {
+        foreach ($auth->getRoles() as $role) {
             $item = [
                 'role' => $role,
                 'users' => $auth->getUsersByRole($role->name)

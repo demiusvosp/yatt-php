@@ -23,10 +23,10 @@ use app\models\entities\User as EntityUser;
 
 
 /**
- * Class AccessManager
+ * Class AuthProjectManager
  *
  */
-class AccessManager extends DbManager implements CheckAccessInterface
+class AuthProjectManager extends DbManager implements CheckAccessInterface
 {
 
     /**

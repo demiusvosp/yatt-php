@@ -5,13 +5,12 @@
  * Time: 13:16
  */
 
-namespace app\components;
+namespace app\base;
 
 use Yii;
 
 class User extends \yii\web\User
 {
-
     public function init()
     {
         parent::init();

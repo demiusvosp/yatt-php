@@ -14,7 +14,7 @@ use yii\web\Response;
 use yii\filters\AccessControl;
 use yii\base\InvalidParamException;
 use yii\web\ForbiddenHttpException;
-use app\components\AccessManager;
+use app\components\AuthProjectManager;
 use app\helpers\RequestHelper;
 use app\helpers\Access;
 use app\helpers\HtmlBlock;
@@ -57,7 +57,7 @@ class AccessController extends Controller
         $projectSuffix = RequestHelper::post('project', false, null);
         $html = RequestHelper::post('html', false, false);
 
-        /** @var AccessManager $auth */
+        /** @var AuthProjectManager $auth */
         $auth = Yii::$app->authManager;
 
         // можно либо по полномочию редактирования полномочий, либо админу проекта
@@ -98,7 +98,7 @@ class AccessController extends Controller
         $role = RequestHelper::post('role');
         $projectSuffix = RequestHelper::post('project', false, null);
 
-        /** @var AccessManager $auth */
+        /** @var AuthProjectManager $auth */
         $auth = Yii::$app->authManager;
 
         // можно либо по полномочию редактирования полномочий, либо админу проекта

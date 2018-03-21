@@ -10,7 +10,7 @@ namespace tests\unit\fixtures;
 
 use Yii;
 use yii\test\ActiveFixture;
-use app\components\AccessManager;
+use app\components\AuthProjectManager;
 use app\helpers\Access;
 use app\models\entities\Project;
 use app\models\entities\User;
@@ -35,7 +35,7 @@ class PublicProjectFixture extends ActiveFixture
     public function load()
     {
         echo "create Project PUB \r\n";
-        /** @var AccessManager $auth */
+        /** @var AuthProjectManager $auth */
         $auth = Yii::$app->authManager;
 
         $bob   = User::findOne(['username' => 'bob']);

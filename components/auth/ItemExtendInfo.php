@@ -11,7 +11,8 @@ namespace app\components\auth;
 /**
  * Trait ItemExtendInfo - функционал вытаскивания дополнительных данных из ролей/полномочий yii\rbac
  *
- * @package Yatt\access
+ * @property string $label
+ * @property bool $is_project
  */
 trait ItemExtendInfo
 {

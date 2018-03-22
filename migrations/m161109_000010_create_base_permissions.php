@@ -13,7 +13,7 @@ class m161109_000010_create_base_permissions extends Migration
 
         // создаем роли
         $root = $auth->addRole(Accesses::ROOT);
-        $user = $auth->addRole(Accesses::USER, [$root]);
+        $auth->addRole(Accesses::USER, [$root]);
 
         // создаем пермишены
         $auth->addPermission(

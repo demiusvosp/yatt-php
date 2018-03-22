@@ -62,6 +62,18 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
 
 
     /**
+     * @inheritdoc
+     */
+    public function createPermission($name)
+    {
+        $permission = new Permission();
+        $permission->name = $name;
+
+        return $permission;
+    }
+
+
+    /**
      * Создать и добавить роль.
      *
      * @param         $roleName
@@ -89,18 +101,6 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
         }
 
         return $role;
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function createPermission($name)
-    {
-        $permission = new Permission();
-        $permission->name = $name;
-
-        return $permission;
     }
 
 

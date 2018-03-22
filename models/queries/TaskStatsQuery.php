@@ -57,9 +57,10 @@ class TaskStatsQuery extends TaskQuery
     public static function statTasksProgress($project)
     {
         $query = (new static(Task::className()))->andProject($project);
+        $query->select('SUM(progress * difficulty_ratio)/SUM(difficulty_ratio)');
         $query->addCacheTag($project);
 
-        return floatval($query->average('progress * difficulty_ratio'));
+        return floatval($query->scalar());
     }
 
 
@@ -74,9 +75,10 @@ class TaskStatsQuery extends TaskQuery
     {
         $query = (new static(Task::className()))->andProject($project);
         $query->where(['dict_version_close_id' => $versionId]);
+        $query->select('SUM(progress * difficulty_ratio)/SUM(difficulty_ratio)');
         $query->addCacheTag($project);
 
-        return floatval($query->average('progress * difficulty_ratio'));
+        return floatval($query->scalar());
     }
 
 

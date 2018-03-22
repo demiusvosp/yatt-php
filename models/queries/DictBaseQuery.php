@@ -19,8 +19,10 @@ use app\models\entities\Project;
 abstract class DictBaseQuery extends ActiveQuery
 {
     /**
+     * Получить последнюю позицию справочника.
+     * @TODO сделать сбор квери из наследников, которые могут дополнить условия. Пока не понятно как.
      * @param Project|integer $project
-     * @return false|null|string
+     * @return false|null
      */
     public function getLastPosition($project)
     {

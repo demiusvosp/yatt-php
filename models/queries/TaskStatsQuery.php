@@ -8,7 +8,6 @@
 namespace app\models\queries;
 
 use yii\caching\TagDependency;
-use app\models\entities\DictVersion;
 use app\models\entities\Project;
 use app\models\entities\Task;
 use app\helpers\CacheTagHelper;
@@ -65,14 +64,17 @@ class TaskStatsQuery extends TaskQuery
 
 
     /**
-     * @param DictVersion $version
+     * Получить прогресс задач по версии.
+     * Принимаем версию как $project, $versionId чтобы не породить лишних запросов в БД.
+     * @param Project $project
+     * @param integer $versionId
      * @return float
      */
-    public static function statVersionProgress($version)
+    public static function statVersionProgress($project, $versionId)
     {
-        $query = (new static(Task::className()))->andProject($version->project);
-        $query->where(['dict_version_close_id' => $version->id]);
-        $query->addCacheTag($version->project);
+        $query = (new static(Task::className()))->andProject($project);
+        $query->where(['dict_version_close_id' => $versionId]);
+        $query->addCacheTag($project);
 
         return floatval($query->average('progress * difficulty_ratio'));
     }

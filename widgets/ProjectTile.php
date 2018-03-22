@@ -119,7 +119,7 @@ class ProjectTile extends Widget
                 $taskStat['versions'][] = [
                     'name'     => $version->name,
                     'type'     => $versionTypes[$version->type],
-                    'progress' => round(TaskStatsQuery::statVersionProgress($version))
+                    'progress' => round(TaskStatsQuery::statVersionProgress($this->project, $version->id))
                 ];
             }
         }

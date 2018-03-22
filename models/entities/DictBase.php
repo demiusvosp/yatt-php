@@ -10,6 +10,8 @@ namespace app\models\entities;
 
 use Yii;
 use yii\db\ActiveRecord;
+use app\helpers\ProjectHelper;
+use app\models\queries\DictBaseQuery;
 
 
 /**
@@ -62,6 +64,7 @@ abstract class DictBase extends ActiveRecord
 
 
     /**
+     * @return DictBaseQuery
      * @throw \DomainException
      */
     public static function find()
@@ -75,10 +78,17 @@ abstract class DictBase extends ActiveRecord
 
 
     /**
-     * @return \yii\db\ActiveQuery
+     * Получить проект.
+     * Стоит подумать, а не вынести ли это в трейт
+     * @return \yii\db\ActiveQuery|Project|null
      */
     public function getProject()
     {
+        if(ProjectHelper::currentProject() && ProjectHelper::currentProject()->id == $this->project_id) {
+            // мы в текущем проекте, незачем его искать в БД
+            return ProjectHelper::currentProject();
+        }
+
         return $this->hasOne(Project::className(), ['id' => 'project_id']);
     }
 

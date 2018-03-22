@@ -2,6 +2,7 @@
 
 namespace app\models\entities;
 
+use app\helpers\ProjectHelper;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
@@ -229,10 +230,15 @@ class Task extends ActiveRecord implements IEditorType, IInProject
 
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|Project|null
      */
     public function getProject()
     {
+        if(ProjectHelper::currentProject() && ProjectHelper::currentProject()->suffix == $this->suffix) {
+            // мы в текущем проекте, незачем его искать в БД
+            return ProjectHelper::currentProject();
+        }
+
         return $this->hasOne(Project::className(), ['suffix' => 'suffix']);
     }
 

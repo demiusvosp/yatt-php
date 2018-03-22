@@ -20,10 +20,17 @@ class DictStageQuery extends DictBaseQuery
         $this->from(['stage' => DictStage::tableName()]);
     }
 
+
+    /**
+     * Получить последнюю позицию справочника.
+     * @param \app\models\entities\Project|int $project
+     * @return false|null
+     */
     public function getLastPosition($project)
     {
         return $this
             ->select('position')
+            ->andProject($project)
             ->andOpen()
             ->orderBy('position DESC')
             ->limit(1)

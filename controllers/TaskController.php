@@ -14,8 +14,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Response;
 use yii\filters\AccessControl;
 use app\base\BaseProjectController;
-use app\helpers\ProjectAccessRule;
-use app\helpers\Access;
+use app\components\auth\ProjectAccessRule;
+use app\components\auth\Accesses;
 use app\models\entities\Task;
 use app\models\forms\TaskForm;
 use app\models\forms\CloseTaskForm;
@@ -43,21 +43,21 @@ class TaskController extends BaseProjectController
                         'class'   => ProjectAccessRule::className(),
                         'project' => $this->project,
                         'actions' => ['open'],
-                        'roles'   => [Access::OPEN_TASK],
+                        'roles'   => [Accesses::OPEN_TASK],
                         'allow'   => true,
                     ],
                     [
                         'class'   => ProjectAccessRule::className(),
                         'project' => $this->project,
                         'actions' => ['edit'],
-                        'roles'   => [Access::EDIT_TASK],
+                        'roles'   => [Accesses::EDIT_TASK],
                         'allow'   => true,
                     ],
                     [
                         'class'   => ProjectAccessRule::className(),
                         'project' => $this->project,
                         'actions' => ['change-stage'],
-                        'roles'   => [Access::CHANGE_STAGE],
+                        'roles'   => [Accesses::CHANGE_STAGE],
                         'allow'   => true,
                         //'verbs'   => ['POST'],
                     ],
@@ -65,7 +65,7 @@ class TaskController extends BaseProjectController
                         'class'   => ProjectAccessRule::className(),
                         'project' => $this->project,
                         'actions' => ['close'],
-                        'roles'   => [Access::CLOSE_TASK],
+                        'roles'   => [Accesses::CLOSE_TASK],
                         'allow'   => true,
                         'verbs'   => ['POST'],
                     ],

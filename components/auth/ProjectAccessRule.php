@@ -5,7 +5,7 @@
  * Time: 23:24
  */
 
-namespace app\helpers;
+namespace app\components\auth;
 
 use Yii;
 use yii\filters\AccessRule;
@@ -37,7 +37,7 @@ class ProjectAccessRule extends AccessRule
             return true;
         }
         if ($this->project->public == Project::STATUS_PUBLIC_REGISTED
-            && Yii::$app->user->can(Access::VIEW)
+            && Yii::$app->user->can(Accesses::VIEW, $this->project)
         ) {
             // в этот проект могут только те, кому явно дан доступ
             return true;

@@ -16,7 +16,7 @@ use yii\base\InvalidParamException;
 use yii\web\ForbiddenHttpException;
 use app\components\auth\AuthProjectManager;
 use app\helpers\RequestHelper;
-use app\helpers\Access;
+use app\components\auth\Accesses;
 use app\helpers\HtmlBlock;
 use app\models\entities\User;
 use app\models\entities\Project;
@@ -37,7 +37,7 @@ class AccessController extends Controller
                     [
                         'actions' => ['assign-role', 'revoke-role'],
                         'allow'   => true,
-                        'roles'   => [Access::ACCESS_MANAGEMENT, Access::ADMIN],
+                        'roles'   => [Accesses::ACCESS_MANAGEMENT, Accesses::ADMIN],
                         'verbs'    => ['POST'],
                     ],
                 ],
@@ -61,8 +61,8 @@ class AccessController extends Controller
         $auth = Yii::$app->authManager;
 
         // можно либо по полномочию редактирования полномочий, либо админу проекта
-        if (!Yii::$app->user->can(Access::ACCESS_MANAGEMENT) &&
-            !Yii::$app->user->can(Access::projectItem(Access::ADMIN, $projectSuffix))
+        if (!Yii::$app->user->can(Accesses::ACCESS_MANAGEMENT) &&
+            !Yii::$app->user->can(Accesses::ADMIN, $projectSuffix)
         ) {
             throw new ForbiddenHttpException();
         }
@@ -102,8 +102,8 @@ class AccessController extends Controller
         $auth = Yii::$app->authManager;
 
         // можно либо по полномочию редактирования полномочий, либо админу проекта
-        if (!Yii::$app->user->can(Access::ACCESS_MANAGEMENT) &&
-            !Yii::$app->user->can(Access::projectItem(Access::ADMIN, $projectSuffix))
+        if (!Yii::$app->user->can(Accesses::ACCESS_MANAGEMENT) &&
+            !Yii::$app->user->can(Accesses::ADMIN, $projectSuffix)
         ) {
             throw new ForbiddenHttpException();
         }

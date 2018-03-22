@@ -11,7 +11,7 @@ namespace tests\unit\fixtures;
 use Yii;
 use yii\test\ActiveFixture;
 use app\components\auth\AuthProjectManager;
-use app\helpers\Access;
+use app\components\auth\Accesses;
 use app\models\entities\Project;
 use app\models\entities\User;
 use app\models\entities\DictCategory;
@@ -57,8 +57,8 @@ class PublicProjectFixture extends ActiveFixture
         }
 
         // работники проекта
-        $auth->assign(Access::projectItem(Access::EMPLOYEE), $ivan->id, $project);
-        $auth->assign(Access::projectItem(Access::EMPLOYEE), $alice->id, $project);
+        $auth->assign(Accesses::EMPLOYEE, $ivan->id, $project);
+        $auth->assign(Accesses::EMPLOYEE, $alice->id, $project);
 
         // разные справочники
         (new DictStage(['name' => 'Разработка']))->append($project);

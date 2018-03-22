@@ -13,8 +13,8 @@ use yii\base\InvalidParamException;
 use yii\web\Response;
 use yii\filters\AccessControl;
 use app\base\BaseProjectController;
-use app\helpers\Access;
-use app\helpers\ProjectAccessRule;
+use app\components\auth\Accesses;
+use app\components\auth\ProjectAccessRule;
 use app\models\entities\DictVersion;
 use app\models\forms\DictForm;
 
@@ -36,7 +36,7 @@ class DictController extends BaseProjectController
                         'project' => $this->project,
                         'actions' => ['delete'],
                         'allow'   => true,
-                        'roles'   => [Access::ADMIN],
+                        'roles'   => [Accesses::ADMIN],
                         'verbs'   => ['DELETE'],
                     ],
                     [
@@ -44,7 +44,7 @@ class DictController extends BaseProjectController
                         'project' => $this->project,
                         'actions' => ['past'],
                         'allow'   => true,
-                        'roles'   => [Access::ADMIN],
+                        'roles'   => [Accesses::ADMIN],
                         'verbs'   => ['POST'],
                     ],
                 ],

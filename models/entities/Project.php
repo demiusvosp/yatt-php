@@ -6,7 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\behaviors\TimestampBehavior;
-use app\helpers\Access;
+use app\components\auth\Accesses;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use app\models\queries\ProjectQuery;
@@ -249,9 +249,9 @@ class Project extends ActiveRecord implements IEditorType
             // у проекта поменялся админ. Меняем полномочия
             $auth = Yii::$app->get('authManager');
             if (isset($changedAttributes['admin_id'])) {
-                $auth->revoke(Access::ADMIN, $changedAttributes['admin_id'], $this);
+                $auth->revoke(Accesses::ADMIN, $changedAttributes['admin_id'], $this);
             }
-            $auth->assign(Access::ADMIN, $this->admin_id, $this);
+            $auth->assign(Accesses::ADMIN, $this->admin_id, $this);
         }
         parent::afterSave($insert, $changedAttributes);
     }

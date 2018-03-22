@@ -11,7 +11,7 @@ use app\models\entities\Task;
 use app\widgets\CloseTask;
 use app\widgets\CommentThread;
 use app\helpers\ProjectHelper;
-use app\helpers\Access;
+use app\components\auth\Accesses;
 use app\helpers\HtmlBlock;
 use app\helpers\TextEditorHelper;
 
@@ -24,11 +24,11 @@ use app\helpers\TextEditorHelper;
 $this->title = HtmlBlock::titleString($task->getFullName(), $project);
 $this->params['breadcrumbs'][] = $task->getFullName();
 
-$canClose = !$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK);
+$canClose = !$task->is_closed && Yii::$app->user->can(Accesses::CLOSE_TASK);
 ?>
 <div class="row-fluid">
     <div class="btn-group">
-        <?php if(Yii::$app->user->can(Access::EDIT_TASK)) { ?>
+        <?php if(Yii::$app->user->can(Accesses::EDIT_TASK)) { ?>
             <a
                 class="btn btn-app"
                 href="<?= ProjectUrl::to(['task/edit', 'suffix'=>$task->suffix, 'index'=>$task->index])?>"
@@ -48,7 +48,7 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Access::CLOSE_TASK);
             </button>
         <?php } ?>
 
-        <?php if(Yii::$app->user->can(Access::CHANGE_STAGE)) { ?>
+        <?php if(Yii::$app->user->can(Accesses::CHANGE_STAGE)) { ?>
             <div class="btn-group">
                 <button class="btn btn-app dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                     <span>

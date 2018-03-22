@@ -10,7 +10,7 @@ namespace app\controllers;
 
 use yii\filters\AccessControl;
 use app\base\BaseProjectController;
-use app\helpers\ProjectAccessRule;
+use app\components\auth\ProjectAccessRule;
 
 
 class ProjectController extends BaseProjectController

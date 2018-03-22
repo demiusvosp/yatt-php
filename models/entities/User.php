@@ -9,7 +9,7 @@ use yii\base\NotSupportedException;
 use yii\helpers\ArrayHelper;
 use yii\behaviors\TimestampBehavior;
 use app\models\queries\UserQuery;
-use app\helpers\Access;
+use app\components\auth\Accesses;
 
 
 /**
@@ -287,6 +287,6 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function activate()
     {
-        Yii::$app->get('authManager')->assign(Access::USER, $this->id);
+        Yii::$app->get('authManager')->assign(Accesses::USER, $this->id);
     }
 }

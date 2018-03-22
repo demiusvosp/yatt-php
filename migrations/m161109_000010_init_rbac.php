@@ -1,7 +1,7 @@
 <?php
 
 use yii\db\Migration;
-use app\helpers\Access;
+use app\components\auth\Accesses;
 use app\components\auth\AuthProjectManager;
 
 class m161109_000010_create_base_permissions extends Migration
@@ -12,20 +12,20 @@ class m161109_000010_create_base_permissions extends Migration
         $auth = Yii::$app->get('authManager');
 
         // создаем роли
-        $root = $auth->addRole(Access::ROOT);
-        $user = $auth->addRole(Access::USER, [$root]);
+        $root = $auth->addRole(Accesses::ROOT);
+        $user = $auth->addRole(Accesses::USER, [$root]);
 
         // создаем пермишены
         $auth->addPermission(
-            Access::USER_MANAGEMENT,
+            Accesses::USER_MANAGEMENT,
             [$root]
         );
         $auth->addPermission(
-            Access::PROJECT_MANAGEMENT,
+            Accesses::PROJECT_MANAGEMENT,
             [$root]
         );
         $auth->addPermission(
-            Access::ACCESS_MANAGEMENT,
+            Accesses::ACCESS_MANAGEMENT,
             [$root]
         );
     }

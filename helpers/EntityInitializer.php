@@ -8,6 +8,7 @@
 
 namespace app\helpers;
 
+use app\components\auth\Accesses;
 use Yii;
 use yii\helpers\Json;
 use app\components\auth\AuthProjectManager;
@@ -90,7 +91,7 @@ class EntityInitializer
     /**
      * Создать и настроить роли и полномочия для проекта.
      *
-     * @TODO а не забота ли это Access, это иерархия полномочий, а не особености инициализации
+     * @TODO а не забота ли это Accesses, это иерархия полномочий, а не особености инициализации
      * @param $project
      */
     public static function createProjectAccesses($project)
@@ -98,57 +99,57 @@ class EntityInitializer
         /** @var AuthProjectManager $auth */
         $auth = Yii::$app->get('authManager');
 
-        $root = $auth->getRole(Access::ROOT);
+        $root = $auth->getRole(Accesses::ROOT);
 
         $admin = $auth->addRole(
-            Access::ADMIN,
+            Accesses::ADMIN,
             [$root],
             $project
         );
         $employee = $auth->addRole(
-            Access::EMPLOYEE,
+            Accesses::EMPLOYEE,
             [$admin],
             $project
         );
         $view = $auth->addRole(
-            Access::VIEW,
+            Accesses::VIEW,
             [$employee],
             $project
         );
 
         $auth->addPermission(
-            Access::PROJECT_SETTINGS,
+            Accesses::PROJECT_SETTINGS,
             [$admin],
             $project
         );
         $auth->addPermission(
-            Access::OPEN_TASK,
+            Accesses::OPEN_TASK,
             [$employee],
             $project
         );
         $auth->addPermission(
-            Access::EDIT_TASK,
+            Accesses::EDIT_TASK,
             [$employee],
             $project
         );
         $auth->addPermission(
-            Access::CLOSE_TASK,
+            Accesses::CLOSE_TASK,
             [$employee],
             // пока будем считать, что работник может закрывать задачи. (но потом в админке это можно будет выключить)
             $project
         );
         $auth->addPermission(
-            Access::CHANGE_STAGE,
+            Accesses::CHANGE_STAGE,
             [$employee],
             $project
         );
         $auth->addPermission(
-            Access::CREATE_COMMENT,
+            Accesses::CREATE_COMMENT,
             [$employee],
             $project
         );
         $auth->addPermission(
-            Access::MANAGE_COMMENT,
+            Accesses::MANAGE_COMMENT,
             [$admin],
             $project
         );

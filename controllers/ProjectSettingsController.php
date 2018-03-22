@@ -14,8 +14,8 @@ use app\assets\ProjectSettingsAsset;
 use app\components\auth\AuthProjectManager;
 use app\components\auth\Role;
 use app\base\BaseProjectController;
-use app\helpers\Access;
-use app\helpers\ProjectAccessRule;
+use app\components\auth\Accesses;
+use app\components\auth\ProjectAccessRule;
 use app\models\entities\Task;
 use app\models\forms\DictEditForm;
 use app\models\forms\DictEditStagesForm;
@@ -48,7 +48,7 @@ class ProjectSettingsController extends BaseProjectController
                         'class'   => ProjectAccessRule::className(),
                         'project' => $this->project,
                         'actions' => ['main', 'stages', 'types', 'versions', 'difficulties', 'categories', 'users'],
-                        'roles'   => [Access::ADMIN],
+                        'roles'   => [Accesses::ADMIN],
                         'allow'   => true,
                     ],
                 ],

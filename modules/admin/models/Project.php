@@ -9,7 +9,7 @@ namespace app\modules\admin\models;
 
 
 use Yii;
-use app\helpers\Access;
+use app\components\auth\Accesses;
 use app\models\queries\ProjectQuery;
 
 
@@ -69,7 +69,7 @@ class Project extends \app\models\entities\Project
             'enableCommentProject', 'enableCommentToClosed', 'editorType'
         ];
 
-        if (Yii::$app->user->can(Access::ACCESS_MANAGEMENT)) {
+        if (Yii::$app->user->can(Accesses::ACCESS_MANAGEMENT)) {
             $fields[] = 'admin_id';
             $this->disableAdmin = false;
         }

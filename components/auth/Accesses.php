@@ -5,7 +5,7 @@
  * Time: 0:46
  */
 
-namespace app\helpers;
+namespace app\components\auth;
 
 
 use Yii;
@@ -13,11 +13,11 @@ use app\models\entities\Project;
 
 
 /**
- * Class Access - Хелпер работы с ролями и полномочиями.
+ * Class Accesses - Набор предустановленных ролей и полномочий
  *
  * @package app\helpers
  */
-class Access
+class Accesses
 {
     // глобальные роли
     const ROOT = 'root';
@@ -55,7 +55,7 @@ class Access
             static::USER               => Yii::t('access', 'user'),
             static::PROJECT_MANAGEMENT => Yii::t('access', 'Project management'),
             static::USER_MANAGEMENT    => Yii::t('access', 'User management'),
-            static::ACCESS_MANAGEMENT  => Yii::t('access', 'Access management'),
+            static::ACCESS_MANAGEMENT  => Yii::t('access', 'Accesses management'),
 
             static::ADMIN            => Yii::t('access', 'Project admin'),
             static::EMPLOYEE         => Yii::t('access', 'Project Employee'),
@@ -151,7 +151,12 @@ class Access
             return $accessItem;
         }
 
-        if (static::isProjectItem($accessItem) && $project) {
+        if (static::isProjectItem($accessItem)) {
+            if(!$project) {
+                // если эта единица полномочий относится к проекту, он должен быть передан
+                throw new \DomainException('Access item ' . $accessItem . ' only within project');
+            }
+
             if ($project instanceof Project) {
                 $project = $project->suffix;
             }

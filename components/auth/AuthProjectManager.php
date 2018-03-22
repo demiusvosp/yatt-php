@@ -14,7 +14,6 @@ use yii\rbac\Assignment;
 use yii\db\Query;
 use yii\rbac\Item;
 use yii\rbac\Role as BaseRole;
-use app\helpers\Access;
 use app\helpers\ProjectHelper;
 use app\models\entities\Project;
 use app\models\entities\User as EntityUser;
@@ -37,8 +36,9 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      */
     public function checkAccess($userId, $permissionName, $params = [])
     {
+        // вопрос, должен ли checkAccess знать о currentProject?
         if (ProjectHelper::currentProject()) {
-            $permissionName = Access::projectItem($permissionName, ProjectHelper::currentProject());
+            $permissionName = Accesses::projectItem($permissionName, ProjectHelper::currentProject());
         }
 
         $result = parent::checkAccess($userId, $permissionName, $params);
@@ -71,11 +71,13 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      */
     public function addRole($roleName, $parents = [], $project = null)
     {
-        $label = Access::itemLabels()[$roleName];
+        $label = Accesses::itemLabels()[$roleName];
+
+        $roleName = Accesses::projectItem($roleName, $project);
         if ($project) {
-            $roleName = Access::projectItem($roleName, $project);
             $label = $project->name . ': ' . $label;
         }
+
         $role = $this->createRole($roleName);
         $role->isProject = $project;
         $role->label = $label;
@@ -112,11 +114,12 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      */
     public function addPermission($permissionName, $parents = [], $project = null)
     {
-        $label = Access::itemLabels()[$permissionName];
+        $label = Accesses::itemLabels()[$permissionName];
+        $permissionName = Accesses::projectItem($permissionName, $project);
         if ($project) {
-            $permissionName = Access::projectItem($permissionName, $project);
             $label = $project->name . ': ' . $label;
         }
+
         $permission = $this->createPermission($permissionName);
         $permission->isProject = $project;
         $permission->label = $label;
@@ -147,20 +150,18 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
         ]);
 
         if (is_string($role)) {
-            $assignment->roleName = $role;
+            $assignment->roleName = Accesses::projectItem($role, $project);
 
         } else {
             if ($role instanceof BaseRole) {
-                $assignment->roleName = $role->name;
+                $assignment->roleName = Accesses::projectItem($role->name, $project);
 
             } else {
                 throw new \InvalidArgumentException('argument is not a Role');
             }
         }
         // реальное название роли проекта состоит из имени роли и суффикса проекта
-        if (Access::isProjectItem($assignment->roleName) && $project) {
-            $assignment->roleName = Access::projectItem($assignment->roleName, $project);
-        }
+        $assignment->roleName = Accesses::projectItem($assignment->roleName, $project);
 
         Yii::info('assign ' . $assignment->roleName . ' to ' . $assignment->userId, 'access');
         $this->db->createCommand()
@@ -200,9 +201,7 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
             }
         }
         // реальное название роли проекта состоит из имени роли и суффикса проекта
-        if ($project) {
-            $roleName = Access::projectItem($roleName, $project);
-        }
+        $roleName = Accesses::projectItem($roleName, $project);
 
 
         Yii::info('revoke ' . $roleName . ' from ' . $userId, 'access');

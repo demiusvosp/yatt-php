@@ -14,10 +14,10 @@ namespace app\components\auth;
  *
  * @package Yatt\access
  */
-class Permission extends \yii\rbac\Permission
+class Permission extends \yii\rbac\Permission implements IItem
 {
     const TYPE_GLOBAL = 0;
     const TYPE_PROJECT = 1;
 
-    use ItemExtendInfo;
+    use TItem;
 }

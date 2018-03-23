@@ -14,10 +14,10 @@ namespace app\components\auth;
  *
  * @package app\components\access
  */
-class Role extends \yii\rbac\Role
+class Role extends \yii\rbac\Role implements IItem
 {
     const TYPE_GLOBAL = 0;
     const TYPE_PROJECT = 1;
 
-    use ItemExtendInfo;
+    use TItem;
 }

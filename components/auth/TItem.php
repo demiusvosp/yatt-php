@@ -9,12 +9,12 @@ namespace app\components\auth;
 
 
 /**
- * Trait ItemExtendInfo - функционал вытаскивания дополнительных данных из ролей/полномочий yii\rbac
+ * Trait TItem - функционал вытаскивания дополнительных данных из ролей/полномочий yii\rbac
  *
  * @property string $label
  * @property bool $is_project
  */
-trait ItemExtendInfo
+trait TItem
 {
     /**
      * @param string $label

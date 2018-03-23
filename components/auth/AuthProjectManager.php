@@ -8,10 +8,10 @@
 namespace app\components\auth;
 
 use Yii;
+use yii\db\Query;
 use yii\rbac\CheckAccessInterface;
 use yii\rbac\DbManager;
 use yii\rbac\Assignment;
-use yii\db\Query;
 use yii\rbac\Item;
 use yii\rbac\Role as BaseRole;
 use app\helpers\ProjectHelper;
@@ -83,7 +83,7 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      */
     public function addRole($roleName, $parents = [], $project = null)
     {
-        $label = Accesses::itemLabels()[$roleName];
+        $label = Accesses::itemLabels()[$roleName];// перед projectItem, т.к. ам нужно абстрактное название, без проекта
 
         $roleName = Accesses::projectItem($roleName, $project);
         if ($project) {
@@ -94,7 +94,11 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
         $role->isProject = $project;
         $role->label = $label;
 
-        $this->add($role);
+        if(!$this->add($role)) {
+            Yii::error("error in add role " . $role . " to project");
+            return null;
+        }
+
         Yii::info('add Role ' . $role->name, 'access');
         foreach ($parents as $parent) {
             $this->addChild($parent, $role);
@@ -114,7 +118,8 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      */
     public function addPermission($permissionName, $parents = [], $project = null)
     {
-        $label = Accesses::itemLabels()[$permissionName];
+        $label = Accesses::itemLabels()[$permissionName];// перед projectItem, т.к. ам нужно абстрактное название, без проекта
+
         $permissionName = Accesses::projectItem($permissionName, $project);
         if ($project) {
             $label = $project->name . ': ' . $label;
@@ -124,8 +129,12 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
         $permission->isProject = $project;
         $permission->label = $label;
 
-        $this->add($permission);
-        Yii::info('add Permission ' . $permission->name, 'access');
+        if(!$this->add($permission)) {
+            Yii::error("error in add permission " . $permissionName . " to project");
+            return null;
+        }
+
+        Yii::info('add permission ' . $permission->name, 'access');
         foreach ($parents as $parent) {
             $this->addChild($parent, $permission);
         }
@@ -243,9 +252,10 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      * Получить роли проекта.
      *
      * @param Project|string $project - проект или его суффикс
+     * @param integer $itemType - тип доступа роль/полномочие
      * @return array
      */
-    public function getRolesByProject($project)
+    public function getRolesByProject($project, $itemType = Role::TYPE_ROLE)
     {
         if (is_string($project)) {
             $suffix = $project;
@@ -257,14 +267,15 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
             }
         }
 
-        $rbacRoles = (new Query())
+        $query = (new Query())
             ->from($this->itemTable)
-            ->andwhere(['=', 'type', Role::TYPE_ROLE])
-            ->andWhere(['like', 'name', '_' . $suffix])
-            ->all();
+            ->andWhere(['like', 'name', '_' . $suffix]);
+        if($itemType) {
+            $query->andwhere(['=', 'type', Role::TYPE_ROLE]);
+        }
 
         $roles = [];
-        foreach ($rbacRoles as $row) {
+        foreach ($query->all() as $row) {
             $roles[$row['name']] = $this->populateItem($row);
         }
 
@@ -349,5 +360,40 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
             ->execute();
 
         $this->invalidateCache();
+    }
+
+
+    /**
+     * Обновить полномочия проекта
+     * @param Project $project
+     * @return array[Permission|string] - Массив с добавленными полномочиями (или строками с ошибкой)
+     */
+    public function refreshProjectAccesses($project)
+    {
+        $existItems = $this->getRolesByProject($project, null);
+
+        // нам нужен массив абстрактных полномочий, без проекта
+        $existItems = array_map(
+            function($item) { list($name, ) = explode('_', $item->name); return $name; },
+            $existItems
+        );
+        $existItems = array_flip($existItems);
+
+        $result = [];
+        foreach (Accesses::projectItems() as $item) {
+            if(isset($existItems[$item])) {
+                // полномочие уже есть в проекте
+                continue;
+            }
+
+            $res = $this->addPermission($item, [], $project);
+            if($res) {
+                $result[$item] = $res;
+            } else {
+                $result[$item] = 'Error in adding ' . $item;
+            }
+        }
+
+        return $result;
     }
 }

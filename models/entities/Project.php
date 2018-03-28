@@ -21,7 +21,6 @@ use app\helpers\EntityInitializer;
  * @property string           $name
  * @property integer          $archived
  * @property string           $description
- * @property integer          $public
  * @property string           $config - json настроек, хранящеся в БД
  * @property integer          $admin_id
  * @property integer          $last_task_index
@@ -39,7 +38,7 @@ class Project extends ActiveRecord implements IEditorType
     /**
      * Публичность проекта
      *
-     * @TODO продумать, может не хранить тут, а выдавать роль <project>_VIEW кому надо
+     * @TODO продумать, может не хранить тут, а выдавать роль <project>_VIEW кому надо. А анонимам мы какую роль дадим?
      */
 
     /** Все. (в том числе гости) */
@@ -249,9 +248,9 @@ class Project extends ActiveRecord implements IEditorType
             // у проекта поменялся админ. Меняем полномочия
             $auth = Yii::$app->get('authManager');
             if (isset($changedAttributes['admin_id'])) {
-                $auth->revoke(Accesses::ADMIN, $changedAttributes['admin_id'], $this);
+                $auth->revoke(Accesses::PROJECT_SETTINGS, $changedAttributes['admin_id'], $this);
             }
-            $auth->assign(Accesses::ADMIN, $this->admin_id, $this);
+            $auth->assign(Accesses::PROJECT_SETTINGS, $this->admin_id, $this);
         }
         parent::afterSave($insert, $changedAttributes);
     }

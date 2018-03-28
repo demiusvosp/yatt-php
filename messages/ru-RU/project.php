@@ -17,9 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Roles and permissions template' => 'Шаблон набора ролей и полномочий',
     'All' => 'Все',
     'Are you sure you want to active this project?' => 'Сделать проект вновь активным?',
     'Are you sure you want to archive this project?' => 'Перенести этот проект в архив?',
+    'Cannot be edit' => 'Не может быть отредактированно',
     'Cannot change project archive status' => 'Ошибка при смене статуса архивности проекта',
     'Cannot delete project with tasks' => 'Невозможно удаить проект имеющий задачи',
     'Configuration' => 'Конфигурация',

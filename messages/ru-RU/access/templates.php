@@ -17,17 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Author' => 'Автор',
-    'Author ID' => 'ID автора',
-    'Cannot save comment' => 'Не удалось сохранить комментарий',
-    'Comment deleted' => 'Комментарий удален',
-    'Create comment' => 'Написать комментарий',
-    'Created At' => 'Создан',
-    'ID' => 'ID',
-    'Object' => 'Объект',
-    'Object ID' => 'ID объекта',
-    'Project' => 'Проект',
-    'Text' => 'Текст сообщения',
-    'Type' => 'тип сообщения',
-    'Updated At' => 'Обновлен',
+    'Admin-Employee-View' => 'Админ-Работник-Видящий',
+    'Personal project' => 'Персональный проект',
+    'Project employee' => 'Работник проекта',
+    'Project admin' => 'Админ проекта',
+    'Project watcher' => 'Просматривающий проект',
+    'Project owner' => 'Владелец проекта',
+    'Public project' => 'Публичный проект',
 ];

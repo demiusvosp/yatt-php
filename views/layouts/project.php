@@ -54,7 +54,7 @@ array_unshift($this->params['breadcrumbs'], $project->name);
                         </a>
                     </li>
                 <?php } ?>
-                <?php if(Yii::$app->user->can(Accesses::ADMIN)) { ?>
+                <?php if(Yii::$app->user->can(Accesses::PROJECT_SETTINGS)) { ?>
                     <li <?= strpos($this->context->route, 'project-settings') !== false ? $active : '' ?>>
                         <a href="<?= ProjectUrl::to(['project-settings/main', 'project' => $project]) ?>">
                             <i class="fa fa-gears"></i>

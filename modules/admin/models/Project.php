@@ -30,6 +30,8 @@ class Project extends \app\models\entities\Project
 
     public $editorType;
 
+    public $accessTemplate;
+
 
     public function init()
     {
@@ -56,6 +58,7 @@ class Project extends \app\models\entities\Project
     {
         return array_merge(parent::attributeLabels(), [
             'admin' => Yii::t('project', 'Project admin'),
+            'accessTemplate' => Yii::t('project', 'Roles and permissions template'),
             'enableCommentProject' => Yii::t('project', 'Enable comment to project'),
             'enableCommentToClosed' => Yii::t('project', 'Enable comment to closed tasks'),
             'editorType' => Yii::t('project', 'Text editor type'),
@@ -66,7 +69,7 @@ class Project extends \app\models\entities\Project
     public function scenarios()
     {
         $fields = [
-            'suffix', 'name', 'description', 'public',
+            'name', 'description',
             'enableCommentProject', 'enableCommentToClosed', 'editorType'
         ];
 
@@ -78,7 +81,7 @@ class Project extends \app\models\entities\Project
         return [
             static::SCENARIO_DEFAULT => [],
             static::SCENARIO_EDIT    => $fields,
-            static::SCENARIO_CREATE  => array_merge($fields, ['suffix']),
+            static::SCENARIO_CREATE  => ['suffix', 'name', 'admin_id', 'accessTemplate'],
         ];
     }
 

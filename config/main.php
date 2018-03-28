@@ -44,6 +44,19 @@ return [
             'class' => 'app\components\auth\AuthProjectManager',
             'cache' => 'cache',
         ],
+        'accessBuilder' => [
+            'class' => 'app\components\auth\AccessBuilder',
+            'templates' => [
+                /**
+                 * Список доступных шаблонов. Каждый шаблон может быть описан как.
+                 * 'EmployeeView' - если это встроенный шаблон в app\components\auth\templates
+                 * 'EmployeeView' => [ 'class' => 'another\repo\package\path\EmployeeView' ]
+                 */
+                'PublicProject',
+                'EmployeeView',
+                'PersonalProject'
+            ],
+        ],
     ],
     'container'  => [
         'definitions' => [

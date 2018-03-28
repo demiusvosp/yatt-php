@@ -1,8 +1,8 @@
 <?php
 /**
- * @link      http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license   http://www.yiiframework.com/license/
+ * User: demius
+ * Date: 23.03.17
+ * Time: 0:37
  */
 
 namespace app\commands;

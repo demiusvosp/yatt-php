@@ -36,7 +36,7 @@ class DictController extends BaseProjectController
                         'project' => $this->project,
                         'actions' => ['delete'],
                         'allow'   => true,
-                        'roles'   => [Accesses::ADMIN],
+                        'roles'   => [Accesses::PROJECT_SETTINGS],
                         'verbs'   => ['DELETE'],
                     ],
                     [
@@ -44,7 +44,7 @@ class DictController extends BaseProjectController
                         'project' => $this->project,
                         'actions' => ['past'],
                         'allow'   => true,
-                        'roles'   => [Accesses::ADMIN],
+                        'roles'   => [Accesses::PROJECT_SETTINGS],
                         'verbs'   => ['POST'],
                     ],
                 ],

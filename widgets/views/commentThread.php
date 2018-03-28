@@ -74,10 +74,10 @@ use app\models\entities\Comment;
                     <?php if($editAnything || $comment->author_id == Yii::$app->user->getId()) { ?>
                         <div class="comment-ctrl">
                             <a class="btn btn-default" href="?edit=<?= $comment->id ?>#comment-<?=$comment->id ?>">
-                                <i class="fa fa-edit"></i><?= Yii::t('comment', 'Edit') ?>
+                                <i class="fa fa-edit"></i><?= Yii::t('common', 'Edit') ?>
                             </a>
                             <a class="btn btn-default" href="?delete=<?= $comment->id ?>">
-                                <i class="glyphicon glyphicon-trash"></i><?= Yii::t('comment', 'Delete') ?>
+                                <i class="glyphicon glyphicon-trash"></i><?= Yii::t('common', 'Delete') ?>
                             </a>
                         </div>
                     <?php } ?>

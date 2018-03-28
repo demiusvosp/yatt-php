@@ -8,7 +8,6 @@
 
 namespace app\helpers;
 
-use app\components\auth\Accesses;
 use Yii;
 use yii\helpers\Json;
 use app\components\auth\AuthProjectManager;
@@ -52,9 +51,6 @@ class EntityInitializer
         );
         $close->link('project', $project);
 
-        // Создадим для проекта необходимые роли и полномочия
-        static::createProjectAccesses($project);
-
         if($andSave) {
             $project->save();
         }
@@ -85,74 +81,6 @@ class EntityInitializer
             // есть только одна версия, в которой задачу можно закрыть. Её и установим
             $task->versionClose = DictVersion::find()->andForClose()->one();
         }
-    }
-
-
-    /**
-     * Создать и настроить роли и полномочия для проекта.
-     *
-     * @TODO а не забота ли это Accesses, это иерархия полномочий, а не особености инициализации
-     * @param $project
-     */
-    public static function createProjectAccesses($project)
-    {
-        /** @var AuthProjectManager $auth */
-        $auth = Yii::$app->get('authManager');
-
-        $root = $auth->getRole(Accesses::ROOT);
-
-        $admin = $auth->addRole(
-            Accesses::ADMIN,
-            [$root],
-            $project
-        );
-        $employee = $auth->addRole(
-            Accesses::EMPLOYEE,
-            [$admin],
-            $project
-        );
-        $view = $auth->addRole(
-            Accesses::VIEW,
-            [$employee],
-            $project
-        );
-
-        $auth->addPermission(
-            Accesses::PROJECT_SETTINGS,
-            [$admin],
-            $project
-        );
-        $auth->addPermission(
-            Accesses::OPEN_TASK,
-            [$employee],
-            $project
-        );
-        $auth->addPermission(
-            Accesses::EDIT_TASK,
-            [$employee],
-            $project
-        );
-        $auth->addPermission(
-            Accesses::CLOSE_TASK,
-            [$employee],
-            // пока будем считать, что работник может закрывать задачи. (но потом в админке это можно будет выключить)
-            $project
-        );
-        $auth->addPermission(
-            Accesses::CHANGE_STAGE,
-            [$employee],
-            $project
-        );
-        $auth->addPermission(
-            Accesses::CREATE_COMMENT,
-            [$employee],
-            $project
-        );
-        $auth->addPermission(
-            Accesses::MANAGE_COMMENT,
-            [$admin],
-            $project
-        );
     }
 
 

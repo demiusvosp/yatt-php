@@ -17,18 +17,17 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'can create comment' => 'может создавать комментарии',
-    'can manage (edit/delete) comment' => 'может управлять комментариями',
+    'Accesses management' => 'Управление доступами',
+    'can see project' => 'Может просматривать проект',
     'Access management' => 'Управление доступами',
-    'Project Employee' => 'Работник проекта',
-    'Project admin' => 'Админ проекта',
     'Project management' => 'Управление проектами',
-    'Project watcher' => 'Просматривающий проект',
     'User management' => 'Управление пользователями',
     'can change setting' => 'может настраивать проект',
     'can change task stage' => 'может менять этап задачи',
     'can close task' => 'может закрывать задачи',
+    'can create comment' => 'может создавать комментарии',
     'can edit task' => 'может редактировать задачи',
+    'can manage (edit/delete) comment' => 'может управлять комментариями',
     'can open task' => 'может открывать задачи',
     'root' => 'Суперадмин (root)',
     'user' => 'Пользователь',

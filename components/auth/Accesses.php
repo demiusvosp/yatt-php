@@ -28,19 +28,17 @@ class Accesses
     const USER_MANAGEMENT = 'userManagement';
     const ACCESS_MANAGEMENT = 'accessManagement';
 
-    // роли в проекте
-    const ADMIN = 'projectAdmin';
-    const EMPLOYEE = 'projectEmployee';
-    const VIEW = 'projectView';
-
     // полномочия в проекте
+    const PROJECT_SETTINGS = 'projectSettings';
+    const PROJECT_VIEW = 'projectView';
+
     const OPEN_TASK = 'openTask';
     const EDIT_TASK = 'editTask';
     const CHANGE_STAGE = 'changeStage';
     const CLOSE_TASK = 'closeTask';
-    const PROJECT_SETTINGS = 'projectSettings';
-    const CREATE_COMMENT = 'createComment';
-    const MANAGE_COMMENT = 'manageComment'; // управление комментариями (редактирование/удаление)
+
+    const CREATE_COMMENT = 'createComment'; // создавать и редактировать свои коменты
+    const MANAGE_COMMENT = 'manageComment'; // редактировать чужие коменты
 
 
     /**
@@ -57,16 +55,14 @@ class Accesses
             static::USER_MANAGEMENT    => Yii::t('access', 'User management'),
             static::ACCESS_MANAGEMENT  => Yii::t('access', 'Accesses management'),
 
-            static::ADMIN            => Yii::t('access', 'Project admin'),
-            static::EMPLOYEE         => Yii::t('access', 'Project Employee'),
-            static::VIEW             => Yii::t('access', 'Project watcher'),
+            static::PROJECT_SETTINGS => Yii::t('access', 'can change setting'),
+            static::PROJECT_VIEW     => Yii::t('access', 'can see project'),
             static::OPEN_TASK        => Yii::t('access', 'can open task'),
             static::EDIT_TASK        => Yii::t('access', 'can edit task'),
             static::CHANGE_STAGE     => Yii::t('access', 'can change task stage'),
             static::CLOSE_TASK       => Yii::t('access', 'can close task'),
-            static::PROJECT_SETTINGS => Yii::t('access', 'can change setting'),
-            static::CREATE_COMMENT => Yii::t('access', 'can create comment'),
-            static::MANAGE_COMMENT => Yii::t('access', 'can manage (edit/delete) comment'),
+            static::CREATE_COMMENT   => Yii::t('access', 'can create comment'),
+            static::MANAGE_COMMENT   => Yii::t('access', 'can manage (edit/delete) comment'),
         ];
     }
 
@@ -78,7 +74,7 @@ class Accesses
      */
     public static function globalItems()
     {
-        $items = [
+        return [
             static::ROOT,
             static::USER,
 
@@ -86,8 +82,6 @@ class Accesses
             static::USER_MANAGEMENT,
             static::ACCESS_MANAGEMENT,
         ];
-
-        return array_combine($items, $items);
     }
 
 
@@ -98,21 +92,18 @@ class Accesses
      */
     public static function projectItems()
     {
-        $items = [
-            static::ADMIN,
-            static::EMPLOYEE,
-            static::VIEW,
+        return [
+            static::PROJECT_SETTINGS,
+            static::PROJECT_VIEW,
 
             static::OPEN_TASK,
             static::EDIT_TASK,
             static::CHANGE_STAGE,
             static::CLOSE_TASK,
-            static::PROJECT_SETTINGS,
+
             static::CREATE_COMMENT,
             static::MANAGE_COMMENT,
         ];
-
-        return array_combine($items, $items);
     }
 
 
@@ -133,7 +124,7 @@ class Accesses
             }
         }
 
-        return isset(static::projectItems()[$accessItem]);
+        return in_array($accessItem, static::projectItems());
     }
 
 
@@ -152,7 +143,7 @@ class Accesses
         }
 
         if (static::isProjectItem($accessItem)) {
-            if(!$project) {
+            if (!$project) {
                 // если эта единица полномочий относится к проекту, он должен быть передан
                 throw new \DomainException('Access item ' . $accessItem . ' only within project');
             }

@@ -48,7 +48,7 @@ class ProjectSettingsController extends BaseProjectController
                         'class'   => ProjectAccessRule::className(),
                         'project' => $this->project,
                         'actions' => ['main', 'stages', 'types', 'versions', 'difficulties', 'categories', 'users'],
-                        'roles'   => [Accesses::ADMIN],
+                        'roles'   => [Accesses::PROJECT_SETTINGS],
                         'allow'   => true,
                     ],
                 ],

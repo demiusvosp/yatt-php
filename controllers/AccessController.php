@@ -37,7 +37,7 @@ class AccessController extends Controller
                     [
                         'actions' => ['assign-role', 'revoke-role'],
                         'allow'   => true,
-                        'roles'   => [Accesses::ACCESS_MANAGEMENT, Accesses::ADMIN],
+                        'roles'   => [Accesses::ACCESS_MANAGEMENT, Accesses::PROJECT_SETTINGS],
                         'verbs'    => ['POST'],
                     ],
                 ],
@@ -62,7 +62,7 @@ class AccessController extends Controller
 
         // можно либо по полномочию редактирования полномочий, либо админу проекта
         if (!Yii::$app->user->can(Accesses::ACCESS_MANAGEMENT) &&
-            !Yii::$app->user->can(Accesses::ADMIN, $projectSuffix)
+            !Yii::$app->user->can(Accesses::PROJECT_SETTINGS, $projectSuffix)
         ) {
             throw new ForbiddenHttpException();
         }
@@ -103,7 +103,7 @@ class AccessController extends Controller
 
         // можно либо по полномочию редактирования полномочий, либо админу проекта
         if (!Yii::$app->user->can(Accesses::ACCESS_MANAGEMENT) &&
-            !Yii::$app->user->can(Accesses::ADMIN, $projectSuffix)
+            !Yii::$app->user->can(Accesses::PROJECT_SETTINGS, $projectSuffix)
         ) {
             throw new ForbiddenHttpException();
         }

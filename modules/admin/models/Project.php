@@ -43,7 +43,8 @@ class Project extends \app\models\entities\Project
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['enableCommentProject'], 'boolean'],
+            [['enableCommentProject', 'enableCommentToClosed'], 'boolean'],
+            [['editorType'], 'in', 'range' => Yii::$app->params['editorList']]
         ]);
     }
 

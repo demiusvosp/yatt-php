@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Admin-Employee-View' => 'Админ-Работник-Видящий',
+    'Admin-Employee-View' => 'Админ-Работник-Наблюдающий',
     'Personal project' => 'Персональный проект',
     'Project employee' => 'Работник проекта',
     'Project admin' => 'Админ проекта',

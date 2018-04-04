@@ -8,6 +8,7 @@
 namespace tests\unit\fixtures;
 
 
+use app\components\auth\AccessBuilder;
 use Yii;
 use yii\test\ActiveFixture;
 use app\components\auth\AuthProjectManager;
@@ -35,8 +36,6 @@ class PublicProjectFixture extends ActiveFixture
     public function load()
     {
         echo "create Project PUB \r\n";
-        /** @var AuthProjectManager $auth */
-        $auth = Yii::$app->authManager;
 
         $bob   = User::findOne(['username' => 'bob']);
         $ivan  = User::findOne(['username' => 'ivan']);
@@ -56,9 +55,10 @@ class PublicProjectFixture extends ActiveFixture
             throw new \DomainException('Cannot add project');
         }
 
-        // работники проекта
-        $auth->assign(Accesses::EMPLOYEE, $ivan->id, $project);
-        $auth->assign(Accesses::EMPLOYEE, $alice->id, $project);
+        // выдадим доступы
+        /** @var AccessBuilder $authBuilder */
+        $authBuilder = Yii::$app->get('accessBuilder');
+        $authBuilder->buildProjectAccesses($project, 'EmployeeView');
 
         // разные справочники
         (new DictStage(['name' => 'Разработка']))->append($project);

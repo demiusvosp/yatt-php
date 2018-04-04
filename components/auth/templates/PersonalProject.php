@@ -8,57 +8,25 @@
 namespace app\components\auth\templates;
 
 use Yii;
-use app\components\auth\Accesses;
+use app\components\auth\Permission;
 
 
-/**
- * Class PersonalProject - Персональный проект. Проект досутп к которому имеет только его владелец.
- *
- * @package app\components\auth\templates
- */
-class PersonalProject implements IAccessesTemplate
-{
-    const OWNER = 'projectAdmin';
+return [
+    'name'      => Yii::t('access/templates', 'Personal project'),
+    'roles'     => [
+        'projectOwner' => Yii::t('access/templates', 'Project owner'),
+    ],
+    'hierarchy' => [
+        'projectOwner' => [
+            Permission::PROJECT_SETTINGS,
+            Permission::MANAGE_COMMENT,
+            Permission::OPEN_TASK,
+            Permission::EDIT_TASK,
+            Permission::CHANGE_STAGE,
+            Permission::CLOSE_TASK,
+            Permission::PROJECT_VIEW,
+            Permission::CREATE_COMMENT,
+        ],
+    ],
+];
 
-    /**
-     * Получить имя шаблона полномочий
-     * @return string
-     */
-    public static function name()
-    {
-        return Yii::t('access/templates', 'Personal project');
-    }
-
-
-    /**
-     * Получить список названий ролей
-     * @return array - [roleName => roleLabel, ...]
-     */
-    public static function getRolesLabels()
-    {
-        return [
-            static::OWNER => Yii::t('access/templates', 'Project owner'),
-        ];
-    }
-
-
-    /**
-     * Получить иерархию полномочий
-     * @return array - [roleName => [permissionName, ...], ...]
-     */
-    public static function getRolesHierarchy()
-    {
-        return [
-            static::OWNER    => [
-                Accesses::PROJECT_SETTINGS,
-                Accesses::MANAGE_COMMENT,
-                Accesses::OPEN_TASK,
-                Accesses::EDIT_TASK,
-                Accesses::CHANGE_STAGE,
-                Accesses::CLOSE_TASK,
-                Accesses::PROJECT_VIEW,
-                Accesses::CREATE_COMMENT
-            ],
-        ];
-    }
-}

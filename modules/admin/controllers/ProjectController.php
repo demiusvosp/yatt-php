@@ -6,7 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
-use app\components\auth\Accesses;
+use app\components\auth\Permission;
 use yii\data\ActiveDataProvider;
 use app\modules\admin\models\Project;
 //use app\helpers\EntityInitializer;
@@ -29,12 +29,12 @@ class ProjectController extends Controller
                     [
                         'actions' => ['index', 'view', 'create', 'update'],
                         'allow' => true,
-                        'roles' => [Accesses::PROJECT_MANAGEMENT],
+                        'roles' => [Permission::MANAGEMENT_PROJECT],
                     ],
                     [
                         'actions' => ['delete', 'archive'],
                         'allow' => true,
-                        'roles' => [Accesses::PROJECT_MANAGEMENT],
+                        'roles' => [Permission::MANAGEMENT_PROJECT],
                         'verbs' => ['POST'],
                     ],
                 ],

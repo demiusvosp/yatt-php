@@ -28,7 +28,7 @@ $accessBuilder = Yii::$app->get('accessBuilder');
             <?php $form = ActiveForm::begin(); ?>
 
             <?= $form->field($project, 'suffix')
-                ->textInput(['maxlength' => true, 'disabled' => true])
+                ->textInput(['maxlength' => true])
                 ->hint(Yii::t('project' , 'Cannot be edit'));
             ?>
 
@@ -41,7 +41,7 @@ $accessBuilder = Yii::$app->get('accessBuilder');
             <?= $form->field($project, 'editorType')->radioList(TextEditorHelper::getTextEditorsList()) ?>
 
             <div class="form-group">
-                <?= Html::submitButton(Yii::t('common', 'Update'), ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton(Yii::t('common', 'Create'), ['class' => 'btn btn-primary']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

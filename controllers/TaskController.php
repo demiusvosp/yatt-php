@@ -15,7 +15,7 @@ use yii\web\Response;
 use yii\filters\AccessControl;
 use app\base\BaseProjectController;
 use app\components\auth\ProjectAccessRule;
-use app\components\auth\Accesses;
+use app\components\auth\Permission;
 use app\models\entities\Task;
 use app\models\forms\TaskForm;
 use app\models\forms\CloseTaskForm;
@@ -43,21 +43,21 @@ class TaskController extends BaseProjectController
                         'class'   => ProjectAccessRule::className(),
                         'project' => $this->project,
                         'actions' => ['open'],
-                        'roles'   => [Accesses::OPEN_TASK],
+                        'roles'   => [Permission::OPEN_TASK],
                         'allow'   => true,
                     ],
                     [
                         'class'   => ProjectAccessRule::className(),
                         'project' => $this->project,
                         'actions' => ['edit'],
-                        'roles'   => [Accesses::EDIT_TASK],
+                        'roles'   => [Permission::EDIT_TASK],
                         'allow'   => true,
                     ],
                     [
                         'class'   => ProjectAccessRule::className(),
                         'project' => $this->project,
                         'actions' => ['change-stage'],
-                        'roles'   => [Accesses::CHANGE_STAGE],
+                        'roles'   => [Permission::CHANGE_STAGE],
                         'allow'   => true,
                         //'verbs'   => ['POST'],
                     ],
@@ -65,7 +65,7 @@ class TaskController extends BaseProjectController
                         'class'   => ProjectAccessRule::className(),
                         'project' => $this->project,
                         'actions' => ['close'],
-                        'roles'   => [Accesses::CLOSE_TASK],
+                        'roles'   => [Permission::CLOSE_TASK],
                         'allow'   => true,
                         'verbs'   => ['POST'],
                     ],

@@ -36,12 +36,7 @@ class ProjectAccessRule extends AccessRule
             // в этот проект могут заходить все залогиненные
             return true;
         }
-        if ($this->project->public == Project::STATUS_PUBLIC_REGISTED
-            && Yii::$app->user->can(Accesses::VIEW, $this->project)
-        ) {
-            // в этот проект могут только те, кому явно дан доступ
-            return true;
-        }
+        //@TODO заменить public на rbac
 
         return null;
     }

@@ -11,10 +11,10 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use app\assets\ProjectSettingsAsset;
+use app\base\BaseProjectController;
 use app\components\auth\AuthProjectManager;
 use app\components\auth\Role;
-use app\base\BaseProjectController;
-use app\components\auth\Accesses;
+use app\components\auth\Permission;
 use app\components\auth\ProjectAccessRule;
 use app\models\entities\Task;
 use app\models\forms\DictEditForm;
@@ -48,7 +48,7 @@ class ProjectSettingsController extends BaseProjectController
                         'class'   => ProjectAccessRule::className(),
                         'project' => $this->project,
                         'actions' => ['main', 'stages', 'types', 'versions', 'difficulties', 'categories', 'users'],
-                        'roles'   => [Accesses::PROJECT_SETTINGS],
+                        'roles'   => [Permission::PROJECT_SETTINGS],
                         'allow'   => true,
                     ],
                 ],

@@ -6,7 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
-use app\components\auth\Accesses;
+use app\components\auth\Permission;
 use yii\data\ActiveDataProvider;
 use app\modules\admin\models\User;
 
@@ -28,12 +28,12 @@ class UserController extends Controller
                     [
                         'actions' => ['index', 'view', 'create', 'update'],
                         'allow' => true,
-                        'roles' => [Accesses::USER_MANAGEMENT],
+                        'roles' => [Permission::MANAGEMENT_USER],
                     ],
                     [
                         'actions' => ['delete'],
                         'allow' => true,
-                        'roles' => [Accesses::USER_MANAGEMENT],
+                        'roles' => [Permission::MANAGEMENT_USER],
                         'verbs' => ['POST'],
                     ],
                 ],

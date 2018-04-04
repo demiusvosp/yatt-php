@@ -9,7 +9,8 @@ namespace app\modules\admin\models;
 
 
 use Yii;
-use app\components\auth\Accesses;
+use app\components\auth\AccessBuilder;
+use app\components\auth\Permission;
 use app\models\queries\ProjectQuery;
 
 
@@ -73,7 +74,7 @@ class Project extends \app\models\entities\Project
             'enableCommentProject', 'enableCommentToClosed', 'editorType'
         ];
 
-        if (Yii::$app->user->can(Accesses::ACCESS_MANAGEMENT)) {
+        if (Yii::$app->user->can(Permission::MANAGEMENT_ACCESS)) {
             $fields[] = 'admin_id';
             $this->disableAdmin = false;
         }
@@ -110,6 +111,24 @@ class Project extends \app\models\entities\Project
         $this->setConfigItem('editorType', $this->editorType);
 
         return parent::beforeSave($insert);
+    }
+
+
+    /**
+     * Строим полномочия и сопутствующее
+     * @param bool  $insert
+     * @param array $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($insert) {
+            // инициаизуем полномочия проекта
+            /** @var AccessBuilder $accessBuilder */
+            $accessBuilder = Yii::$app->get('accessBuilder');
+            $accessBuilder->buildProjectAccesses($this, $this->accessTemplate);
+        }
+
+        parent::afterSave($insert, $changedAttributes);
     }
 
 

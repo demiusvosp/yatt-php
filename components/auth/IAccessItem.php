@@ -8,24 +8,13 @@
 namespace app\components\auth;
 
 
-interface IItem
+interface IAccessItem
 {
-    /**
-     * @param string $label
-     */
-    public function setLabel($label);
-
 
     /**
      * @return string
      */
     public function getLabel();
-
-
-    /**
-     * @param bool $is_project
-     */
-    public function setIsProject($is_project);
 
 
     /**

@@ -11,7 +11,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
-use app\components\auth\Accesses;
+use app\components\auth\Permission;
 use app\components\auth\AuthProjectManager;
 use app\components\auth\Role;
 use app\models\queries\ProjectQuery;
@@ -32,7 +32,7 @@ class AccessController extends Controller
                     [
                         'actions' => ['index'],
                         'allow' => true,
-                        'roles' => [Accesses::ACCESS_MANAGEMENT],
+                        'roles' => [Permission::MANAGEMENT_ACCESS],
                     ],
                 ],
             ],

@@ -10,7 +10,7 @@ namespace app\widgets;
 use Yii;
 use yii\base\Widget;
 use app\base\IInProject;
-use app\components\auth\Accesses;
+use app\components\auth\Permission;
 use app\models\entities\Project;
 use app\models\entities\Comment;
 
@@ -52,10 +52,10 @@ class CommentThread extends Widget
         $deleteCommentId = Yii::$app->request->get('delete');
 
         // полномочия менеджмента комментов
-        $editAnything = Yii::$app->user->can(Accesses::MANAGE_COMMENT, $project);
+        $editAnything = Yii::$app->user->can(Permission::MANAGE_COMMENT, $project);
 
         if ($this->enableNewComment &&
-            Yii::$app->user->can(Accesses::CREATE_COMMENT, $project) &&
+            Yii::$app->user->can(Permission::CREATE_COMMENT, $project) &&
             !$editCommentId
         ) {
             // Коменты можно создавать и сейчас не редактируем, создаем новый под фрму.

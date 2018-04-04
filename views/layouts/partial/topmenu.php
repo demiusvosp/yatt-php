@@ -8,7 +8,7 @@
 
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
-use app\components\auth\Accesses;
+use app\components\auth\Permission;
 use app\helpers\ProjectHelper;
 use app\helpers\ProjectListHelper;
 use app\helpers\ProjectUrl;
@@ -48,19 +48,19 @@ if($project) {
         ]);
     } else {
         $adminItems = [];
-        if(Yii::$app->user->can(Accesses::USER_MANAGEMENT)) {
+        if(Yii::$app->user->can(Permission::MANAGEMENT_USER)) {
             $adminItems[] = [
                 'label'   => Yii::t('user', 'User Manager'),
                 'url'     => ['/admin/user/list'],
             ];
         }
-        if(Yii::$app->user->can(Accesses::ACCESS_MANAGEMENT)) {
+        if(Yii::$app->user->can(Permission::MANAGEMENT_ACCESS)) {
             $adminItems[] = [
                 'label'   => Yii::t('access', 'Access management'),
                 'url'     => ['/admin/access/index'],
             ];
         }
-        if(Yii::$app->user->can(Accesses::PROJECT_MANAGEMENT)) {
+        if(Yii::$app->user->can(Permission::MANAGEMENT_PROJECT)) {
             $adminItems[] = [
                 'label'   => Yii::t('project', 'Project Manager'),
                 'url'     => ['/admin/project/list'],

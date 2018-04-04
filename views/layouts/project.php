@@ -7,7 +7,7 @@
  */
 
 use yii\widgets\Breadcrumbs;
-use app\components\auth\Accesses;
+use app\components\auth\Permission;
 use app\helpers\ProjectHelper;
 use app\helpers\ProjectUrl;
 use app\models\entities\Project;
@@ -46,7 +46,7 @@ array_unshift($this->params['breadcrumbs'], $project->name);
                         <?= Yii::t('task', 'Tasks') ?>
                     </a>
                 </li>
-                <?php if (Yii::$app->user->can(Accesses::OPEN_TASK)) { ?>
+                <?php if (Yii::$app->user->can(Permission::OPEN_TASK)) { ?>
                     <li <?=$this->context->route == 'task/open' ? $active : '' ?>>
                         <a href="<?= ProjectUrl::to(['task/open', 'project' => $project]) ?>">
                             <i class="fa fa-file-o"></i>
@@ -54,7 +54,7 @@ array_unshift($this->params['breadcrumbs'], $project->name);
                         </a>
                     </li>
                 <?php } ?>
-                <?php if(Yii::$app->user->can(Accesses::PROJECT_SETTINGS)) { ?>
+                <?php if(Yii::$app->user->can(Permission::PROJECT_SETTINGS)) { ?>
                     <li <?= strpos($this->context->route, 'project-settings') !== false ? $active : '' ?>>
                         <a href="<?= ProjectUrl::to(['project-settings/main', 'project' => $project]) ?>">
                             <i class="fa fa-gears"></i>

@@ -8,6 +8,7 @@
 namespace app\components\auth;
 
 use Yii;
+use yii\base\InvalidArgumentException;
 use yii\db\Query;
 use yii\rbac\CheckAccessInterface;
 use yii\rbac\DbManager;
@@ -41,6 +42,11 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
             $permissionName = Accesses::projectItem($permissionName, ProjectHelper::currentProject());
         }
 
+        if(parent::checkAccess($userId, Role::ROOT)) {
+            // это root, ему можно все.
+            return true;
+        }
+
         $result = parent::checkAccess($userId, $permissionName, $params);
         Yii::info('checkAccess ' . $userId . ' to ' . $permissionName, 'access = ' . $result);
         return $result;
@@ -50,24 +56,26 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
     /**
      * Создать роль.
      *
-     * @inheritdoc
+     * @param string $name
+     * @param Project|string|null $project
+     * @return Role
      */
-    public function createRole($name)
+    public function createRole($name, $project = null)
     {
-        $role = new Role();
-        $role->name = $name;
+        $role = new Role($name, $project);
 
         return $role;
     }
 
 
     /**
-     * @inheritdoc
+     * Создает полномочие
+     *
+     * @return  Permission
      */
-    public function createPermission($name)
+    public function createPermission($name, $project = null)
     {
-        $permission = new Permission();
-        $permission->name = $name;
+        $permission = new Permission($name, $project);
 
         return $permission;
     }
@@ -77,22 +85,16 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      * Создать и добавить роль.
      *
      * @param         $roleName
-     * @param Item[]  $parents - те, кто наследуют права роли
      * @param Project $project - если указан, создается роль ассоциированная с проектом
+     * @param Item[]  $parents  - элементы, чьи полномочия наследуются
      * @return \yii\rbac\Role
      */
-    public function addRole($roleName, $parents = [], $project = null)
+    public function addRole($roleName, $project = null, $parents = [])
     {
-        $label = Accesses::itemLabels()[$roleName];// перед projectItem, т.к. ам нужно абстрактное название, без проекта
-
-        $roleName = Accesses::projectItem($roleName, $project);
-        if ($project) {
-            $label = $project->name . ': ' . $label;
+        if(!isset(Role::itemLabels()[$roleName])) {
+            throw new InvalidArgumentException('addRole only for built-in roles. Another use add(new Role()).');
         }
-
-        $role = $this->createRole($roleName);
-        $role->isProject = $project;
-        $role->label = $label;
+        $role = Role::create($roleName, $project);
 
         if(!$this->add($role)) {
             Yii::error("error in add role " . $role . " to project");
@@ -112,22 +114,17 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      * Создать и добавить полномочие
      *
      * @param         $permissionName
-     * @param Item[]  $parents - те, кто наследуют права полномочия
      * @param Project $project - если указан, создается полномочие ассоциированная с проектом
+     * @param Item[]  $parents  - элементы, чьи полномочия наследуются
      * @return \yii\rbac\Permission
      */
-    public function addPermission($permissionName, $parents = [], $project = null)
+    public function addPermission($permissionName, $project = null, $parents = [])
     {
-        $label = Accesses::itemLabels()[$permissionName];// перед projectItem, т.к. ам нужно абстрактное название, без проекта
-
-        $permissionName = Accesses::projectItem($permissionName, $project);
-        if ($project) {
-            $label = $project->name . ': ' . $label;
+        if(!isset(Permission::itemLabels()[$permissionName])) {
+            throw new InvalidArgumentException('addPermission only for built-in permissions.');
         }
 
-        $permission = $this->createPermission($permissionName);
-        $permission->isProject = $project;
-        $permission->label = $label;
+        $permission = Permission::create($permissionName, $project);
 
         if(!$this->add($permission)) {
             Yii::error("error in add permission " . $permissionName . " to project");
@@ -380,13 +377,13 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
         $existItems = array_flip($existItems);
 
         $result = [];
-        foreach (Accesses::projectItems() as $item) {
+        foreach (Permission::getProjectPermissions() as $item) {
             if(isset($existItems[$item])) {
                 // полномочие уже есть в проекте
                 continue;
             }
 
-            $res = $this->addPermission($item, [], $project);
+            $res = $this->addPermission($item, $project);
             if($res) {
                 $result[$item] = $res;
             } else {

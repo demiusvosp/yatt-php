@@ -12,9 +12,8 @@ use yii\console\Controller;
 use yii\console\ExitCode;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Console;
-use app\components\auth\IItem;
+use app\components\auth\IAccessItem;
 use app\components\auth\AuthProjectManager;
-use app\components\auth\Accesses;
 use app\components\auth\Role;
 use app\models\entities\Project;
 use yii\rbac\Item;
@@ -79,7 +78,7 @@ class AccessController extends Controller
 
         if ($view == 'tree') {
             // хз какая роль главная в проекте, идем от рута
-            $root = $this->authManager->getRole(Accesses::ROOT);
+            $root = $this->authManager->getRole(Role::ROOT);
 
             $this->buildAccessTree($root, $project);
 
@@ -159,7 +158,7 @@ class AccessController extends Controller
     {
         $childs = $this->authManager->getChildren($item->name);
         ArrayHelper::multisort($childs, ['type', 'name'], SORT_ASC);
-        /** @var IItem $child */
+        /** @var IAccessItem $child */
         foreach ($childs as $child) {
             if ($project && $project->suffix != $child->getProject()) {
                 // если строим дерево только для одного проекта

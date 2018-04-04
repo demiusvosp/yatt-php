@@ -7,70 +7,34 @@
 
 namespace app\components\auth\templates;
 
-use app\components\auth\Accesses;
+
 use Yii;
+use app\components\auth\Permission;
 
 
-/**
- * Class EmployeeView - Стандартный рабочий. Есть кто смотрит, есть, кто работает в проекте.
- *
- * @package app\components\auth\templates
- */
-class EmployeeView implements IAccessesTemplate
-{
-    const ADMIN = 'projectAdmin';
-    const EMPLOYEE = 'projectEmployee';
-    const VIEW = 'projectView';
-
-
-    /**
-     * Получить имя шаблона полномочий
-     * @return string
-     */
-    public static function name()
-    {
-        return Yii::t('access/templates', 'Admin-Employee-View');
-    }
-
-
-    /**
-     * Получить список названий ролей
-     * @return array - [roleName => roleLabel, ...]
-     */
-    public static function getRolesLabels()
-    {
-        return [
-            static::ADMIN            => Yii::t('access/templates', 'Project admin'),
-            static::EMPLOYEE         => Yii::t('access/templates', 'Project employee'),
-            static::VIEW             => Yii::t('access/templates', 'Project watcher'),
-        ];
-    }
-
-
-    /**
-     * Получить иерархию полномочий
-     * @return array - [roleName => [permissionName, ...], ...]
-     */
-    public static function getRolesHierarchy()
-    {
-        return [
-            static::ADMIN => [
-                Accesses::PROJECT_SETTINGS,
-                static::EMPLOYEE,
-                Accesses::MANAGE_COMMENT,
-            ],
-            static::EMPLOYEE => [
-                static::VIEW,
-                Accesses::OPEN_TASK,
-                Accesses::EDIT_TASK,
-                Accesses::CHANGE_STAGE,
-                Accesses::CLOSE_TASK
-            ],
-            static::VIEW => [
-                Accesses::PROJECT_VIEW,
-                Accesses::CREATE_COMMENT
-            ],
-        ];
-    }
-
-}
+return [
+    'name'      => Yii::t('access/templates', 'Admin-Employee-View'),
+    'roles'     => [
+        'Admin'    => Yii::t('access/templates', 'Project admin'),
+        'Employee' => Yii::t('access/templates', 'Project employee'),
+        'View'     => Yii::t('access/templates', 'Project watcher'),
+    ],
+    'hierarchy' => [
+        'Admin'    => [
+            Permission::PROJECT_SETTINGS,
+            'Employee',
+            Permission::MANAGE_COMMENT,
+        ],
+        'Employee' => [
+            'View',
+            Permission::OPEN_TASK,
+            Permission::EDIT_TASK,
+            Permission::CHANGE_STAGE,
+            Permission::CLOSE_TASK,
+        ],
+        'View'     => [
+            Permission::PROJECT_VIEW,
+            Permission::CREATE_COMMENT,
+        ],
+    ],
+];

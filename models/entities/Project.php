@@ -6,7 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\behaviors\TimestampBehavior;
-use app\components\auth\Accesses;
+use app\components\auth\Permission;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use app\models\queries\ProjectQuery;
@@ -244,13 +244,14 @@ class Project extends ActiveRecord implements IEditorType
             EntityInitializer::initializeProject($this, false);
         }
 
+        //@TODO выкинуть из проекта admin_id, и сделать исключительно на rbac'е
         if (array_key_exists('admin_id', $changedAttributes)) {
             // у проекта поменялся админ. Меняем полномочия
             $auth = Yii::$app->get('authManager');
             if (isset($changedAttributes['admin_id'])) {
-                $auth->revoke(Accesses::PROJECT_SETTINGS, $changedAttributes['admin_id'], $this);
+                $auth->revoke(Permission::PROJECT_SETTINGS, $changedAttributes['admin_id'], $this);
             }
-            $auth->assign(Accesses::PROJECT_SETTINGS, $this->admin_id, $this);
+            $auth->assign(Permission::PROJECT_SETTINGS, $this->admin_id, $this);
         }
         parent::afterSave($insert, $changedAttributes);
     }

@@ -2,38 +2,24 @@
 /**
  * User: demius
  * Date: 29.10.17
- * Time: 18:25
+ * Time: 19:23
  */
 
 namespace app\components\auth;
 
 
-use Yii;
 use app\models\entities\Project;
 
 
 /**
- * Class Role - обертка над yii\rbac\Role, позволяющая сохранить в ней дополнительную необходимую инфу.
- * Не модель!
+ * Trait TItem - функционал вытаскивания дополнительных данных из ролей/полномочий yii\rbac
  *
- * @package app\components\access
+ * @property string  $label
+ * @property string  $project
+ * @property boolean $embed - является роль встроенной или созданной пользователем
  */
-class Role extends \yii\rbac\Role implements IAccessItem
+trait TAccessItem
 {
-    const TYPE_GLOBAL = 0;
-    const TYPE_PROJECT = 1;
-
-    const BUILT_IN = 2;
-    const CUSTOM = 3;
-
-    // глобальные роли
-    const ROOT = 'root';
-    const USER = 'user';
-    const GUEST = 'guest';
-
-
-    use TAccessItem;
-
 
     /**
      * Создать элемент доступа
@@ -71,33 +57,88 @@ class Role extends \yii\rbac\Role implements IAccessItem
 
 
     /**
-     * Переводы ролей и полномочий
-     *
-     * @return array
+     * @return string
      */
-    public static function itemLabels()
+    public function __toString()
     {
-        return [
-            static::ROOT               => Yii::t('access', 'root'),
-            static::USER               => Yii::t('access', 'user'),
-            static::GUEST              => Yii::t('access', 'guest'),
-        ];
+        return $this->name;
     }
 
+
     /**
-     * Получить полное имя роли
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->description;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isProject()
+    {
+        return (bool)!empty($this->data['project']);
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isGlobal()
+    {
+        return (bool)empty($this->data['project']);
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isEmbed()
+    {
+        return (bool)$this->data['embed'];
+    }
+
+
+    /**
+     * Получить суффикс проекта, ассоциированного с элементом доступа
      *
+     * @return null|string
+     */
+    public function getProject()
+    {
+        if ($this->isGlobal()) {
+            return null;
+        }
+
+        return $this->data['project'];
+    }
+
+
+    /**
+     * Получить идентификатор элемента доступа
+     * @return mixed
+     */
+    public function getId()
+    {
+        if ($this->isGlobal()) {
+            return $this->name;
+        }
+
+        list( , $id) = explode('_', $this->name);
+        return $id;
+    }
+
+
+    /**
+     * Получить полное имя полномочия
      * @param $id
      * @param Project $project
      * @return string
      */
     public static function getFullName($id, $project)
     {
-        if(Accesses::isGlobal($id)) {
-            // это глобальная роль
-            return $id;
-        }
-
         if(count(explode('_', $id)) > 1) {
             // уже полное имя
             return $id;
@@ -111,18 +152,12 @@ class Role extends \yii\rbac\Role implements IAccessItem
 
 
     /**
-     * Проверить является ли роль относящейся к проекту
-     *
+     * Проверить является ои элемент доступа относящимся к проекту
      * @param $id
      * @return bool
      */
     public static function isProjectItem($id)
     {
-        if(Accesses::isGlobal($id)) {
-            // это глобальная роль
-            return false;
-        }
-
         if(count(explode('_', $id)) > 1) {
             // Да в имени есть проект
             return true;

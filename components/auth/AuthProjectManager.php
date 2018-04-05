@@ -15,7 +15,6 @@ use yii\rbac\DbManager;
 use yii\rbac\Assignment;
 use yii\rbac\Item;
 use yii\rbac\Role as BaseRole;
-use app\helpers\ProjectHelper;
 use app\models\entities\Project;
 use app\models\entities\User as EntityUser;
 
@@ -37,11 +36,6 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      */
     public function checkAccess($userId, $permissionName, $params = [])
     {
-        // вопрос, должен ли checkAccess знать о currentProject?
-        if (ProjectHelper::currentProject()) {
-            $permissionName = Accesses::projectItem($permissionName, ProjectHelper::currentProject());
-        }
-
         if(parent::checkAccess($userId, Role::ROOT)) {
             // это root, ему можно все.
             return true;
@@ -156,16 +150,15 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
         ]);
 
         if (is_string($role)) {
-            $assignment->roleName = Accesses::projectItem($role, $project);
-
+            $assignment->roleName = $role;
         } else {
             if ($role instanceof BaseRole) {
-                $assignment->roleName = Accesses::projectItem($role->name, $project);
-
+                $assignment->roleName = $role->name;
             } else {
                 throw new \InvalidArgumentException('argument is not a Role');
             }
         }
+
         // реальное название роли проекта состоит из имени роли и суффикса проекта
         $assignment->roleName = Accesses::projectItem($assignment->roleName, $project);
 

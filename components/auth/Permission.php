@@ -89,49 +89,51 @@ class Permission extends \yii\rbac\Permission implements IAccessItem
 
     /**
      * Получить полное имя полномочия
-     * @param $id
+     *
+     * @param         $name
      * @param Project $project
      * @return string
      */
-    public static function getFullName($id, $project)
+    public static function getFullName($name, $project)
     {
-        if(Accesses::isGlobal($id)) {
+        if(Accesses::isGlobal($name)) {
             // это глобальное полномочие
-            return $id;
+            return $name;
         }
 
-        if(count(explode('_', $id)) > 1) {
+        if(strpos($name, '_') !== false) {
             // уже полное имя
-            return $id;
+            return $name;
         }
 
-        if(in_array($id, static::getProjectPermissions())) {
+        if(in_array($name, static::getProjectPermissions())) {
             if(!$project) {
-                throw new \InvalidArgumentException('Project permission '.$id.' without project');
+                throw new \InvalidArgumentException('Project permission '.$name.' without project');
             }
             // полномочие проекта
-            return $project->suffix . '_' . $id;
+            return $project->suffix . '_' . $name;
 
         }
 
         // глобальное полномочие
-        return $id;
+        return $name;
     }
 
 
     /**
      * Проверить является ои элемент доступа относящимся к проекту
-     * @param $id
+     *
+     * @param $name
      * @return bool
      */
-    public static function isProjectItem($id)
+    public static function isProjectItem($name)
     {
-        if(Accesses::isGlobal($id)) {
+        if(Accesses::isGlobal($name)) {
             // это глобальная роль
             return false;
         }
 
-        if(count(explode('_', $id)) > 1) {
+        if(strpos($name, '_') !== false) {
             // Да в имени есть проект
             return true;
         }

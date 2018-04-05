@@ -36,41 +36,6 @@ class Role extends \yii\rbac\Role implements IAccessItem
 
 
     /**
-     * Создать элемент доступа
-     *
-     * @param string       $name
-     * @param Project|null $project
-     * @param              $label - описание
-     * @return Role|Permission
-     */
-    public static function create($name, $project = null, $label = '')
-    {
-        $item = new static();
-
-        // если доступ встроенный берем описание через хелпер
-        if (isset(static::itemLabels()[$name])) {
-            $label               = static::itemLabels()[$name];
-            $item->name          = static::getFullName($name, $project);
-            $item->data['embed'] = true;
-        } else {
-            $item->data['embed'] = false;
-        }
-
-        if ($project) {
-            $item->name            = $project->suffix . '_' . $name;
-            $item->data['project'] = $project->suffix;
-            $item->description     = $project->name . ': ' . $label;
-        } else {
-            $item->name            = $name;
-            $item->data['project'] = null;
-            $item->description     = $label;
-        }
-
-        return $item;
-    }
-
-
-    /**
      * Переводы ролей и полномочий
      *
      * @return array
@@ -78,52 +43,54 @@ class Role extends \yii\rbac\Role implements IAccessItem
     public static function itemLabels()
     {
         return [
-            static::ROOT               => Yii::t('access', 'root'),
-            static::USER               => Yii::t('access', 'user'),
-            static::GUEST              => Yii::t('access', 'guest'),
+            static::ROOT  => Yii::t('access', 'root'),
+            static::USER  => Yii::t('access', 'user'),
+            static::GUEST => Yii::t('access', 'guest'),
         ];
     }
+
 
     /**
      * Получить полное имя роли
      *
-     * @param $id
+     * @param         $name
      * @param Project $project
      * @return string
      */
-    public static function getFullName($id, $project)
+    public static function getFullName($name, $project)
     {
-        if(Accesses::isGlobal($id)) {
+        if (Accesses::isGlobal($name)) {
             // это глобальная роль
-            return $id;
+            return $name;
         }
 
-        if(count(explode('_', $id)) > 1) {
+        if (strpos($name, '_') !== false) {
             // уже полное имя
-            return $id;
+            return $name;
         }
 
-        if($project) {
-            return $project->suffix . '_' . $id;
+        if ($project) {
+            return $project->suffix . '_' . $name;
         }
-        return $id;
+
+        return $name;
     }
 
 
     /**
      * Проверить является ли роль относящейся к проекту
      *
-     * @param $id
+     * @param $name
      * @return bool
      */
-    public static function isProjectItem($id)
+    public static function isProjectItem($name)
     {
-        if(Accesses::isGlobal($id)) {
+        if (Accesses::isGlobal($name)) {
             // это глобальная роль
             return false;
         }
 
-        if(count(explode('_', $id)) > 1) {
+        if (strpos($name, '_') !== false) {
             // Да в имени есть проект
             return true;
         }

@@ -32,6 +32,7 @@ trait TAccessItem
     public static function create($name, $project = null, $label = '')
     {
         $item = new static();
+        $name = static::getItemName($name);
 
         // если доступ встроенный берем описание через хелпер
         if (isset(static::itemLabels()[$name])) {
@@ -133,32 +134,49 @@ trait TAccessItem
 
     /**
      * Получить полное имя полномочия
-     * @param $id
+     *
+     * @param         $name
      * @param Project $project
      * @return string
      */
-    public static function getFullName($id, $project)
+    public static function getFullName($name, $project)
     {
-        if(count(explode('_', $id)) > 1) {
+        if(strpos($name, '_') !== false) {
             // уже полное имя
-            return $id;
+            return $name;
         }
 
         if($project) {
-            return $project->suffix . '_' . $id;
+            return $project->suffix . '_' . $name;
         }
-        return $id;
+        return $name;
+    }
+
+
+    /**
+     * Получить имя элемента доступа, без указания проекта.
+     * @param $name
+     * @return mixed
+     */
+    public static function getItemName($name)
+    {
+        if(strpos($name, '_') !== false) {
+            list( ,$name) = explode('_', $name);
+        }
+
+        return $name;
     }
 
 
     /**
      * Проверить является ои элемент доступа относящимся к проекту
-     * @param $id
+     *
+     * @param $name
      * @return bool
      */
-    public static function isProjectItem($id)
+    public static function isProjectItem($name)
     {
-        if(count(explode('_', $id)) > 1) {
+        if(strpos($name, '_') !== false) {
             // Да в имени есть проект
             return true;
         }

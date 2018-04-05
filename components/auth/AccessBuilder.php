@@ -93,7 +93,7 @@ class AccessBuilder extends Component
     public function buildProjectAccesses($project, $templateName)
     {
         $template = $this->loadTemplate($templateName);
-var_dump($template);
+
         foreach ($template['hierarchy'] as $itemName => $parents) {
             $this->buildRole($project, $templateName, $itemName, $parents);
         }
@@ -118,44 +118,33 @@ var_dump($template);
         if($item == '?') {
             $item = Role::GUEST;
         }
-        $item = Accesses::projectItem($item, $project);
+        $item = Role::getFullName($item, $project);
 
         if(isset($buildedItems[$item])) {
             // Эту роль уже обрабатывали (например при создании других ролей)
-var_dump('role '.$item.' already builded');
             return $buildedItems[$item];
         }
 
-var_dump('build '.$item);
-
         foreach ($parents as $parent) {
-var_dump('parent:'.$parent);
             if(isset(Permission::itemLabels()[$parent])) {
                 // это полномочие, его и включаем
-var_dump($parent . ' is permission. build');
                 $doneParents[$parent] = $this->buildPermission($project, $parent);
             } elseif(isset($template['hierarchy'][$parent])) {
-var_dump($parent . ' is role.');
                 // это другая роль проекта, которая включается в текущую
                 if(!isset($doneParents[$parent])) {
                     // и она еще не обработанна
-var_dump('role not declared. build');
                     $doneParents[$parent] = $this->buildRole($project, $templateName, $parent, $template['hierarchy'][$parent]);
-var_dump('role builded.');
                 }
             } else {
-var_dump('Cannot build item '.$item.', error in '.$parent);      die();
                 throw new \DomainException('Cannot build item '.$item.', error in '.$parent);
             }
         }
 
         if(Accesses::isGlobal($item)) {
-var_dump($item . ' is global role. add project permissons to one');ob_flush();
             // это глобальная роль, просто на неё нужно навешать полномочий проекта
             $role = $this->authManager->getRole($item);
 
         } else {
-var_dump($item . ' is project role - create');ob_flush();
             // это собственая роль проекта
             $role = Role::create(
                 $item,
@@ -164,14 +153,12 @@ var_dump($item . ' is project role - create');ob_flush();
             );
             $this->authManager->add($role);
         }
-var_dump('add childs');
+
         foreach ($doneParents as $child) {
             $this->authManager->addChild($role, $child);
         }
 
         $buildedItems[$role->name] = $role;
-var_dump('builded:');
-var_dump($buildedItems);
         return $role;
     }
 
@@ -183,7 +170,7 @@ var_dump($buildedItems);
      */
     protected function buildPermission($project, $item)
     {
-        $permission = $this->authManager->getPermission(Accesses::projectItem($item, $project));
+        $permission = $this->authManager->getPermission(Permission::getFullName($item, $project));
 
         if(!$permission) {
             $permission = $this->authManager->addPermission($item, $project);

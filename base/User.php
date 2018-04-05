@@ -32,9 +32,11 @@ class User extends \yii\web\User
         $project = null;
         if(is_array($params) && isset($params['project'])) {
             $project = $params['project'];
+            unset($params['project']);
         }
         if(is_string($params)) {
             $project = $params;
+            $params = [];
         }
 
         // может проверяют в текущем проекте

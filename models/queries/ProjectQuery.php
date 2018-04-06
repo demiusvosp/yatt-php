@@ -4,8 +4,10 @@ namespace app\models\queries;
 
 use Yii;
 use yii\db\ActiveQuery;
+use yii\caching\TagDependency;
 use app\components\auth\AuthProjectManager;
 use app\components\auth\Permission;
+use app\helpers\CacheTagHelper;
 use app\models\entities\Project;
 
 
@@ -67,6 +69,7 @@ class ProjectQuery extends ActiveQuery
 
         $suffixes = $auth->getProjectsByUser(Yii::$app->user->id, Permission::PROJECT_VIEW);
         $query->andWhere(['in', 'suffix', $suffixes]);
+        $query->cache(0, new TagDependency(['tags' => CacheTagHelper::auth()]));
 
         return $query;
     }

@@ -12,7 +12,7 @@ use Yii;
 use app\models\entities\User;
 use yii\helpers\Html;
 use app\models\entities\Project;
-use app\components\access\Role;
+use app\components\auth\Role;
 
 
 /**
@@ -64,7 +64,7 @@ class HtmlBlock
     public static function roleBadge($role)
     {
         return Html::a(
-            $role->label,
+            $role->description,
             '',
             ['class' => 'sign ' . ($role->isGlobal() ? 'sign-global-role' : 'sign-project-role')]
         );

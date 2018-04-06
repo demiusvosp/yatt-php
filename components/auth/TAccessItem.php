@@ -27,7 +27,7 @@ trait TAccessItem
      * @param string       $name
      * @param Project|null $project
      * @param              $label - описание
-     * @return Role|Permission
+     * @return TAccessItem
      */
     public static function create($name, $project = null, $label = '')
     {
@@ -165,6 +165,22 @@ trait TAccessItem
         }
 
         return $name;
+    }
+
+
+    /**
+     * Получить суффикс проекта по полному имени доступа
+     * @param $name
+     * @return string|null
+     */
+    public static function getProjectByName($name)
+    {
+        if(strpos($name, '_') !== false) {
+            list($project , ) = explode('_', $name);
+            return $project;
+        }
+
+        return null;
     }
 
 

@@ -47,4 +47,9 @@ class CacheTagHelper
     {
         return 'Project-' . $suffix . '-versions';
     }
+
+    public static function auth()
+    {
+        return 'Auth';
+    }
 }

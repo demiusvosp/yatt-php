@@ -109,7 +109,7 @@ class AccessController extends Controller
             } elseif ($view == 'list-all') {
                 $this->stdout("[Permission] ", Console::BOLD);
             }
-            $this->stdout($item->name . ' - ' . $item->label . ",\n");
+            $this->stdout($item->name . ' - ' . $item->description . ",\n");
 
         }
 
@@ -171,7 +171,7 @@ class AccessController extends Controller
             } else {
                 $this->stdout($indent . "[Permission] ", Console::BOLD);
             }
-            $this->stdout($child->name . ' - ' . $child->label . "\n");
+            $this->stdout($child->name . ' - ' . $child->description . "\n");
             $this->buildAccessTree($child, $project, $level + 1);
         }
     }

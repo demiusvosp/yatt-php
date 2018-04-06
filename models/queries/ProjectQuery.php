@@ -3,8 +3,10 @@
 namespace app\models\queries;
 
 use Yii;
-use app\models\entities\Project;
 use yii\db\ActiveQuery;
+use app\components\auth\AuthProjectManager;
+use app\components\auth\Permission;
+use app\models\entities\Project;
 
 
 /**
@@ -36,18 +38,6 @@ class ProjectQuery extends ActiveQuery
 
 
     /**
-     * Только имеющие указанный статус или более строгий
-     *
-     * @param int $publicStatus
-     * @return $this
-     */
-    public function andPublic($publicStatus = Project::STATUS_PUBLIC_ALL)
-    {
-        return $this->andWhere(['<=', 'public', $publicStatus]);
-    }
-
-
-    /**
      * Жадно загрузить вместе со справочниками
      *
      * @param bool $dicts
@@ -70,20 +60,22 @@ class ProjectQuery extends ActiveQuery
      */
     static function allowProjectsQuery()
     {
-        $query = Project::find(); // довольно странно получать базовое квери от ентити
+        $query = Project::find();
 
-        if (Yii::$app->user->identity == null) {
-            // доступные только гостям.
-            return $query->andPublic();
-        } else {
-            return $query->andPublic(Project::STATUS_PUBLIC_AUTHED);
-            //@TODO пользователю должны найтись и проекты в которых его лично пустили полномочиями.
-        }
+        /** @var AuthProjectManager $auth */
+        $auth = Yii::$app->get('authManager');
+
+        $suffixes = $auth->getProjectsByUser(Yii::$app->user->id, Permission::PROJECT_VIEW);
+        $query->andWhere(['in', 'suffix', $suffixes]);
+
+        return $query;
     }
 
 
     /**
      * Количество проектов доступных текущему пользователю
+     *
+     * @TODO второй раз запускать тяжелый запрос?
      *
      * @return int
      */

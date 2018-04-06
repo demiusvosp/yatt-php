@@ -118,7 +118,6 @@ class AccessBuilder extends Component
         if($item == '?') {
             $item = Role::GUEST;
         }
-        $item = Role::getFullName($item, $project);
 
         if(isset($buildedItems[$item])) {
             // Эту роль уже обрабатывали (например при создании других ролей)
@@ -143,13 +142,12 @@ class AccessBuilder extends Component
         if(Accesses::isGlobal($item)) {
             // это глобальная роль, просто на неё нужно навешать полномочий проекта
             $role = $this->authManager->getRole($item);
-
         } else {
             // это собственая роль проекта
             $role = Role::create(
                 $item,
                 $project,
-                isset($template['labels'][$item]) ? $template['labels'][$item] : $item
+                isset($template['roles'][$item]) ? $template['roles'][$item] : $item
             );
             $this->authManager->add($role);
         }
@@ -158,7 +156,7 @@ class AccessBuilder extends Component
             $this->authManager->addChild($role, $child);
         }
 
-        $buildedItems[$role->name] = $role;
+        $buildedItems[$role->getId()] = $role;
         return $role;
     }
 

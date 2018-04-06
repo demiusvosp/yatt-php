@@ -9,12 +9,14 @@ namespace app\components\auth;
 
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\caching\TagDependency;
 use yii\db\Query;
-use yii\rbac\CheckAccessInterface;
-use yii\rbac\DbManager;
 use yii\rbac\Assignment;
+use yii\rbac\DbManager;
+use yii\rbac\CheckAccessInterface;
 use yii\rbac\Item;
 use yii\rbac\Role as BaseRole;
+use app\helpers\CacheTagHelper;
 use app\models\entities\Project;
 use app\models\entities\User as EntityUser;
 
@@ -36,13 +38,14 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      */
     public function checkAccess($userId, $permissionName, $params = [])
     {
-        if(parent::checkAccess($userId, Role::ROOT)) {
+        if (parent::checkAccess($userId, Role::ROOT)) {
             // это root, ему можно все.
             return true;
         }
 
         $result = parent::checkAccess($userId, $permissionName, $params);
         Yii::info('checkAccess ' . $userId . ' to ' . $permissionName, 'access = ' . $result);
+
         return $result;
     }
 
@@ -50,7 +53,7 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
     /**
      * Создать роль.
      *
-     * @param string $name
+     * @param string              $name
      * @param Project|string|null $project
      * @return Role
      */
@@ -80,18 +83,19 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      *
      * @param         $roleName
      * @param Project $project - если указан, создается роль ассоциированная с проектом
-     * @param Item[]  $parents  - элементы, чьи полномочия наследуются
+     * @param Item[]  $parents - элементы, чьи полномочия наследуются
      * @return \yii\rbac\Role
      */
     public function addRole($roleName, $project = null, $parents = [])
     {
-        if(!isset(Role::itemLabels()[$roleName])) {
+        if (!isset(Role::itemLabels()[$roleName])) {
             throw new InvalidArgumentException('addRole only for built-in roles. Another use add(new Role()).');
         }
         $role = Role::create($roleName, $project);
 
-        if(!$this->add($role)) {
+        if (!$this->add($role)) {
             Yii::error("error in add role " . $role . " to project");
+
             return null;
         }
 
@@ -109,19 +113,20 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      *
      * @param         $permissionName
      * @param Project $project - если указан, создается полномочие ассоциированная с проектом
-     * @param Item[]  $parents  - элементы, чьи полномочия наследуются
+     * @param Item[]  $parents - элементы, чьи полномочия наследуются
      * @return \yii\rbac\Permission
      */
     public function addPermission($permissionName, $project = null, $parents = [])
     {
-        if(!isset(Permission::itemLabels()[$permissionName])) {
+        if (!isset(Permission::itemLabels()[$permissionName])) {
             throw new InvalidArgumentException('addPermission only for built-in permissions.');
         }
 
         $permission = Permission::create($permissionName, $project);
 
-        if(!$this->add($permission)) {
+        if (!$this->add($permission)) {
             Yii::error("error in add permission " . $permissionName . " to project");
+
             return null;
         }
 
@@ -216,7 +221,7 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      * Переопределяем из yii\rbac\DbManager для инстанцирования своих классов ролей и полномочий
      *
      * @param array $row the data from the auth item table
-     * @return Item the populated auth item instance (either Role or Permission)
+     * @return Permission|Role the populated auth item instance (either Role or Permission)
      */
     protected function populateItem($row)
     {
@@ -239,10 +244,20 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
 
 
     /**
+     *
+     */
+    public function invalidateCache()
+    {
+        CacheTagHelper::invalidateTags(CacheTagHelper::auth());
+        parent::invalidateCache();
+    }
+
+
+    /**
      * Получить роли проекта.
      *
-     * @param Project|string $project - проект или его суффикс
-     * @param integer $itemType - тип доступа роль/полномочие
+     * @param Project|string $project  - проект или его суффикс
+     * @param integer        $itemType - тип доступа роль/полномочие
      * @return array
      */
     public function getRolesByProject($project, $itemType = Role::TYPE_ROLE)
@@ -260,7 +275,7 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
         $query = (new Query())
             ->from($this->itemTable)
             ->andWhere(['like', 'name', '_' . $suffix]);
-        if($itemType) {
+        if ($itemType) {
             $query->andwhere(['=', 'type', Role::TYPE_ROLE]);
         }
 
@@ -274,9 +289,11 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
 
 
     /**
-     * @inheritdoc
+     * @param int|string $userId
+     * @param int $itemType - тип контроля доступа. 0 - все типы
+     * @return array|BaseRole[Permission|Role]
      */
-    public function getRolesByUser($userId)
+    public function getRolesByUser($userId, $itemType = Item::TYPE_ROLE)
     {
         if (!isset($userId) || $userId === '') {
             return [];
@@ -288,8 +305,10 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
         $query = (new Query)->select('b.*')
             ->from(['a' => $this->assignmentTable, 'b' => $this->itemTable])
             ->where('{{a}}.[[item_name]]={{b}}.[[name]]')
-            ->andWhere(['a.user_id' => (string)$userId])
-            ->andWhere(['b.type' => Item::TYPE_ROLE]);
+            ->andWhere(['a.user_id' => (string)$userId]);
+        if($itemType) {
+            $query->andWhere(['b.type' => $itemType]);
+        }
 
         $roles = $this->getDefaultRoleInstances();
         foreach ($query->all($this->db) as $row) {
@@ -302,6 +321,7 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
 
     /**
      * аналог ManagerInterface::getUsersByRole(), но возвращающий сущности, а не id'ы
+     *
      * @param $roleName
      * @return Project[]|array
      */
@@ -328,7 +348,7 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
         $names = (new Query())
             ->select(['name'])
             ->from($this->itemTable)
-            ->where(['like', 'name', '_'.$project->suffix])
+            ->where(['like', 'name', $project->suffix . '_'])
             ->column($this->db);
         if (empty($names)) {
             return;
@@ -355,6 +375,7 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
 
     /**
      * Обновить полномочия проекта
+     *
      * @param Project $project
      * @return array[Permission|string] - Массив с добавленными полномочиями (или строками с ошибкой)
      */
@@ -364,20 +385,24 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
 
         // нам нужен массив абстрактных полномочий, без проекта
         $existItems = array_map(
-            function($item) { list($name, ) = explode('_', $item->name); return $name; },
+            function ($item) {
+                list($name,) = explode('_', $item->name);
+
+                return $name;
+            },
             $existItems
         );
         $existItems = array_flip($existItems);
 
         $result = [];
         foreach (Permission::getProjectPermissions() as $item) {
-            if(isset($existItems[$item])) {
+            if (isset($existItems[$item])) {
                 // полномочие уже есть в проекте
                 continue;
             }
 
             $res = $this->addPermission($item, $project);
-            if($res) {
+            if ($res) {
                 $result[$item] = $res;
             } else {
                 $result[$item] = 'Error in adding ' . $item;
@@ -386,4 +411,82 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
 
         return $result;
     }
+
+
+    /**
+     * Получить проекты, к которым у юзера есть полномочие
+     *
+     * @param integer|EntityUser $userId
+     * @param string  $permission
+     * @return array - массив суффиксов проектов
+     */
+    public function getProjectsByUser($userId, $permission)
+    {
+        $cacheKey = $this->cacheKey.'_ProjectsByUser:'.$userId.':'.$permission;
+
+        $projects = $this->cache->get($cacheKey);
+        if(is_array($projects)) {
+            return $projects;
+        }
+
+        if($this->checkAccess($userId, Role::ROOT)) {
+            // руту доступны все проекты
+            $projects = Project::find()->select(['suffix'])->asArray()->all();
+            $this->cache->set($cacheKey, $projects, 0, new TagDependency(['tags' => CacheTagHelper::auth()]));
+            return $projects;
+        }
+
+        // дерево полномочий
+        $childrenList = $this->getChildrenList();
+
+        if($userId) {
+            // юзер
+            if ($userId instanceof EntityUser) {
+                $userId = $userId->id;
+            }
+
+            // роли пользователя
+            $userRoles = $this->getRolesByUser($userId, 0);
+            foreach ($userRoles as $userRole) {
+                if($userRole->isProject()) {
+                    // эта роль уже ассоциирована с проектом
+                    $projects[$userRole->getProject()] = true;
+
+                } else {
+                    // роль глобальна, но может к ней привязаны локальные полномочия?
+                    $result = [];
+                    $this->getChildrenRecursive($userRole->name, $childrenList, $result);
+                    foreach ($result as $item => $v) {
+                        // наберем проекты с интересующим нас полномочием
+                        if(Permission::getItemName($item) != $permission) {
+                            continue;
+                        }
+                        $projects[Permission::getProjectByName($item)] = true;
+                    }
+                }
+            }
+        }
+
+        // Соберем полномочия гостя
+        $result = [];
+        // все полномочия гостя
+        $this->getChildrenRecursive(Role::GUEST, $childrenList, $result);
+        if (empty($result)) {
+            return [];
+        }
+
+        // наберем проекты с интересующим нас полномочием
+        foreach ($result as $item => $v) {
+            if(Permission::getItemName($item) != $permission) {
+                continue;
+            }
+            $projects[Permission::getProjectByName($item)] = true;
+        }
+
+        $projects = array_keys($projects);
+
+        $this->cache->set($cacheKey, $projects, 0, new TagDependency(['tags' => CacheTagHelper::auth()]));
+        return $projects;
+    }
+
 }

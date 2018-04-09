@@ -107,12 +107,15 @@ class Permission extends \yii\rbac\Permission implements IAccessItem
         }
 
         if(in_array($name, static::getProjectPermissions())) {
-            if(!$project) {
-                throw new \InvalidArgumentException('Project permission '.$name.' without project');
-            }
             // полномочие проекта
-            return $project->suffix . '_' . $name;
-
+            if($project instanceof Project) {
+                $project = $project->suffix;
+            }
+            if (is_string($project)) {
+                return $project . '_' . $name;
+            } else {
+                    throw new \InvalidArgumentException('Project permission '.$name.' without project');
+            }
         }
 
         // глобальное полномочие

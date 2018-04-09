@@ -274,7 +274,7 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
 
         $query = (new Query())
             ->from($this->itemTable)
-            ->andWhere(['like', 'name', '_' . $suffix]);
+            ->andWhere(['like', 'name',  $suffix . '_']);
         if ($itemType) {
             $query->andwhere(['=', 'type', Role::TYPE_ROLE]);
         }

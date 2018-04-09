@@ -15,8 +15,9 @@ use yii\filters\AccessControl;
 use yii\base\InvalidParamException;
 use yii\web\ForbiddenHttpException;
 use app\components\auth\AuthProjectManager;
-use app\helpers\RequestHelper;
 use app\components\auth\Permission;
+use app\components\auth\ProjectAccessRule;
+use app\helpers\RequestHelper;
 use app\helpers\HtmlBlock;
 use app\models\entities\User;
 use app\models\entities\Project;
@@ -35,10 +36,12 @@ class AccessController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
+                        'class'   => ProjectAccessRule::className(),
+                        'project' => RequestHelper::post('project', false, null),
                         'actions' => ['assign-role', 'revoke-role'],
                         'allow'   => true,
                         'roles'   => [Permission::MANAGEMENT_ACCESS, Permission::PROJECT_SETTINGS],
-                        'verbs'    => ['POST'],
+                        'verbs'   => ['POST'],
                     ],
                 ],
             ],

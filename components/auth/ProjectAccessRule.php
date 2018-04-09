@@ -8,6 +8,7 @@
 namespace app\components\auth;
 
 use Yii;
+use yii\base\InvalidArgumentException;
 use yii\filters\AccessRule;
 use app\models\entities\Project;
 
@@ -20,24 +21,8 @@ class ProjectAccessRule extends AccessRule
 
     public function allows($action, $user, $request)
     {
-        if (!parent::allows($action, $user, $request)) {
+        $this->roleParams = ['project' => $this->project];
 
-            // запретили, например по роли или методу
-            return null;
-        }
-
-        if ($this->project->public == Project::STATUS_PUBLIC_ALL) {
-            // в этот проект могут ходить все
-            return true;
-        }
-        if ($this->project->public == Project::STATUS_PUBLIC_AUTHED
-            && !Yii::$app->user->isGuest
-        ) {
-            // в этот проект могут заходить все залогиненные
-            return true;
-        }
-        //@TODO заменить public на rbac
-
-        return null;
+        return parent::allows($action, $user, $request);
     }
 }

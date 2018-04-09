@@ -29,6 +29,7 @@ class User extends \yii\web\User
      */
     public function can($permissionName, $params = [], $allowCaching = true)
     {
+
         $project = null;
         if(is_array($params) && isset($params['project'])) {
             $project = $params['project'];

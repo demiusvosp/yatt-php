@@ -11,19 +11,25 @@ use app\modules\admin\models\Project;
 /* @var $this yii\web\View */
 /* @var $project Project */
 
-$this->title                   = Yii::$app->name . ' :: ' . Yii::t('project',
-        'Project Manager') . ': ' . $project->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('project', 'Project Manager'), 'url' => ['index']];
+$this->title                   = Yii::$app->name . ' :: ' . Yii::t(
+        'admin/project',
+        'Project Manager'
+    ) . ': ' . $project->name;
+$this->params['breadcrumbs'][] = [
+        'label' => Yii::t('admin/project', 'Project Manager'),
+        'url' => ['index']
+];
 $this->params['breadcrumbs'][] = $project->name;
 ?>
 <div class="box box-solid box-default"><!-- box-solid box-default альтернатива-->
     <div class="box-header">
-        <h1 class="box-title"><?= Html::encode(Yii::t('project', 'Project Manager') . ': ' . $project->name) ?></h1>
+        <h1 class="box-title"><?= Html::encode(Yii::t('admin/project', 'Project Manager') . ': ' . $project->name) ?></h1>
     </div>
 
     <div class="box-body">
         <p>
-            <?= Html::a(Yii::t('common', 'Edit'), ['update', 'id' => $project->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('admin/project', 'Administrate'), ['update', 'id' => $project->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('project/settings', 'Main settings'), ['update', 'id' => $project->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('common', 'Delete'), ['delete', 'id' => $project->id], [
                 'class' => 'btn btn-danger ' . ($project->canDelete() ? '' : 'disabled'),
                 'data'  => [
@@ -31,17 +37,17 @@ $this->params['breadcrumbs'][] = $project->name;
                     'method'  => 'post',
                     'toggle'  => 'tooltip',
                 ],
-                'title' => ($project->canDelete() ? Yii::t('project', 'Delete project') : Yii::t('project',
+                'title' => ($project->canDelete() ? Yii::t('admin/project', 'Delete project') : Yii::t('admin/project',
                     'Cannot delete project with tasks')),
             ]) ?>
             <?= Html::a(
-                ($project->archived) ? Yii::t('project', 'From archive') : Yii::t('project', 'To archive'),
+                ($project->archived) ? Yii::t('admin/project', 'From archive') : Yii::t('admin/project', 'To archive'),
                 ['archive', 'id' => $project->id],
                 [
                     'class' => 'btn btn-default',
                     'data'  => [
-                        'confirm' => ($project->archived) ? Yii::t('project',
-                            'Are you sure you want to active this project?') : Yii::t('project',
+                        'confirm' => ($project->archived) ? Yii::t('admin/project',
+                            'Are you sure you want to active this project?') : Yii::t('admin/project',
                             'Are you sure you want to archive this project?'),
                         'method'  => 'post',
                     ],

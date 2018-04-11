@@ -54,18 +54,18 @@ class Permission extends \yii\rbac\Permission implements IAccessItem
     public static function itemLabels()
     {
         return [
-            static::MANAGEMENT_PROJECT => Yii::t('access', 'Project management'),
-            static::MANAGEMENT_USER    => Yii::t('access', 'User management'),
-            static::MANAGEMENT_ACCESS  => Yii::t('access', 'Accesses management'),
+            static::MANAGEMENT_PROJECT => Yii::t('access/items', 'Project management'),
+            static::MANAGEMENT_USER    => Yii::t('access/items', 'User management'),
+            static::MANAGEMENT_ACCESS  => Yii::t('access/items', 'Accesses management'),
 
-            static::PROJECT_SETTINGS => Yii::t('access', 'can change setting'),
-            static::PROJECT_VIEW     => Yii::t('access', 'can see project'),
-            static::OPEN_TASK        => Yii::t('access', 'can open task'),
-            static::EDIT_TASK        => Yii::t('access', 'can edit task'),
-            static::CHANGE_STAGE     => Yii::t('access', 'can change task stage'),
-            static::CLOSE_TASK       => Yii::t('access', 'can close task'),
-            static::CREATE_COMMENT   => Yii::t('access', 'can create comment'),
-            static::MANAGE_COMMENT   => Yii::t('access', 'can manage (edit/delete) comment'),
+            static::PROJECT_SETTINGS => Yii::t('access/items', 'can change setting'),
+            static::PROJECT_VIEW     => Yii::t('access/items', 'can see project'),
+            static::OPEN_TASK        => Yii::t('access/items', 'can open task'),
+            static::EDIT_TASK        => Yii::t('access/items', 'can edit task'),
+            static::CHANGE_STAGE     => Yii::t('access/items', 'can change task stage'),
+            static::CLOSE_TASK       => Yii::t('access/items', 'can close task'),
+            static::CREATE_COMMENT   => Yii::t('access/items', 'can create comment'),
+            static::MANAGE_COMMENT   => Yii::t('access/items', 'can manage (edit/delete) comment'),
         ];
     }
 

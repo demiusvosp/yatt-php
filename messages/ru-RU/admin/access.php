@@ -17,12 +17,5 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Main settings' => 'Основные настройки',
-    'Categories' => 'Категории',
-    'Difficulty levels' => 'Уровни сложности',
-    'Main' => 'Основные',
-    'Stages' => 'Этапы',
-    'Types' => 'Типы задач',
-    'Users' => 'Пользователи',
-    'Versions' => 'Версии',
+    'Access management' => 'Управление доступами',
 ];

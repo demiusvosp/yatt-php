@@ -50,19 +50,19 @@ if($project) {
         $adminItems = [];
         if(Yii::$app->user->can(Permission::MANAGEMENT_USER)) {
             $adminItems[] = [
-                'label'   => Yii::t('user', 'User Manager'),
+                'label'   => Yii::t('admin/user', 'User Manager'),
                 'url'     => ['/admin/user/list'],
             ];
         }
         if(Yii::$app->user->can(Permission::MANAGEMENT_ACCESS)) {
             $adminItems[] = [
-                'label'   => Yii::t('access', 'Access management'),
+                'label'   => Yii::t('admin/access', 'Access management'),
                 'url'     => ['/admin/access/index'],
             ];
         }
         if(Yii::$app->user->can(Permission::MANAGEMENT_PROJECT)) {
             $adminItems[] = [
-                'label'   => Yii::t('project', 'Project Manager'),
+                'label'   => Yii::t('admin/project', 'Project Manager'),
                 'url'     => ['/admin/project/list'],
             ];
         }

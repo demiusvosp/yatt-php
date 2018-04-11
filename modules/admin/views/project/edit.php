@@ -8,10 +8,10 @@ use app\helpers\TextEditorHelper;
 /* @var $this yii\web\View */
 /* @var $project app\models\entities\Project */
 
-$this->title = Yii::$app->name . ' :: ' . Yii::t('project', 'Update Project') . ': ' . $project->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('project', 'Project Manager'), 'url' => ['index']];
+$this->title = Yii::$app->name . ' :: ' . Yii::t('admin/project', 'Administrate') . ': ' . $project->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('admin/project', 'Project Manager'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $project->name, 'url' => ['view', 'id' => $project->id]];
-$this->params['breadcrumbs'][] = Yii::t('common', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('admin/project', 'Administrate');
 ?>
 <div class="box box-solid box-default"><!-- box-solid box-default альтернатива-->
     <div class="box-header">

@@ -17,8 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'guest' => 'Гость',
-    'Access management' => 'Управление доступами',
     'Accesses management' => 'Управление доступами',
     'Project management' => 'Управление проектами',
     'User management' => 'Управление пользователями',
@@ -30,6 +28,7 @@ return [
     'can manage (edit/delete) comment' => 'может управлять комментариями',
     'can open task' => 'может открывать задачи',
     'can see project' => 'может просматривать проект',
+    'guest' => 'Гость',
     'root' => 'Суперадмин (root)',
     'user' => 'Пользователь',
 ];

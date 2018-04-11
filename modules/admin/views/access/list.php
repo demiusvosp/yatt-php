@@ -11,8 +11,8 @@ use app\helpers\HtmlBlock;
 /* @var $this yii\web\View */
 /** @var array $list */
 
-$this->title = Yii::$app->name . ' :: ' . Yii::t('access', 'Access management');
-$this->params['breadcrumbs'][] = Yii::t('access', 'Access management');
+$this->title = Yii::$app->name . ' :: ' . Yii::t('admin/access', 'Access management');
+$this->params['breadcrumbs'][] = Yii::t('admin/access', 'Access management');
 ?>
 <div class="box box-solid box-default"><!-- box-solid box-default альтернатива-->
     <div class="box-header">

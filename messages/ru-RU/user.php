@@ -24,7 +24,6 @@ return [
     'Change password:' => 'Изменить пароль:',
     'Change username or email:' => 'Изменить имя или email',
     'Confirmation wait' => 'Ожидает подтверждения',
-    'Create User' => 'Создать пользователя',
     'Created at' => 'Создан',
     'Email' => 'Email',
     'Email Confirmation Token' => 'Токен подтверждения Email',
@@ -40,10 +39,7 @@ return [
     'The installation creates superadmin user <strong>admin</strong> with password <strong>root</strong>.
 It is strongly recommended to change it immediately' => 'При установке создается суперадмин <strong>root</strong> с паролем <strong>root</strong>.
         Настоятельно рекомендуется его сразу изменить',
-    'Update' => 'Редактировать',
-    'Update User' => 'Редактировать пользователя',
     'Updated at' => 'Обновлен',
-    'User Manager' => 'Управление пользователями',
     'User roles' => 'Роли пользователя',
     'User token' => 'Токен пользователя',
     'Username' => 'Имя',

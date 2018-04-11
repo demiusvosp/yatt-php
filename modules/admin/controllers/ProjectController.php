@@ -135,7 +135,7 @@ class ProjectController extends Controller
             $project->delete();
         } else {
             Yii::$app->session->addFlash('error',
-                Yii::t('project', 'Cannot delete project with tasks')
+                Yii::t('admin/project', 'Cannot delete project with tasks')
             );
         }
 
@@ -157,12 +157,12 @@ class ProjectController extends Controller
         if($project->save()) {
             Yii::$app->session->addFlash('success',
                 $project->archived ?
-                    Yii::t('project', 'Project archived') :
-                    Yii::t('project', 'Project activate')
+                    Yii::t('admin/project', 'Project archived') :
+                    Yii::t('admin/project', 'Project activate')
             );
         } else {
             Yii::$app->session->addFlash('error',
-                Yii::t('project', 'Cannot change project archive status')
+                Yii::t('admin/project', 'Cannot change project archive status')
             );
         }
 

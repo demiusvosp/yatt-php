@@ -43,9 +43,9 @@ class Role extends \yii\rbac\Role implements IAccessItem
     public static function itemLabels()
     {
         return [
-            static::ROOT  => Yii::t('access', 'root'),
-            static::USER  => Yii::t('access', 'user'),
-            static::GUEST => Yii::t('access', 'guest'),
+            static::ROOT  => Yii::t('access/items', 'root'),
+            static::USER  => Yii::t('access/items', 'user'),
+            static::GUEST => Yii::t('access/items', 'guest'),
         ];
     }
 

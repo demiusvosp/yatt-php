@@ -25,7 +25,6 @@ return [
     'Are you sure you want to delete this item?' => 'Вы действительно готовы удалить?',
     'Choose user' => 'Выбрать пользователя',
     'Create' => 'Создать',
-    'Create User' => 'Создать пользователя',
     'Delete' => 'Удалить',
     'Design:' => 'Дизайн:',
     'Edit' => 'Редактировать',

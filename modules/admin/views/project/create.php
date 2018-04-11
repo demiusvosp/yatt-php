@@ -10,7 +10,7 @@ use app\helpers\TextEditorHelper;
 /* @var $project app\models\entities\Project */
 
 $this->title = Yii::$app->name . ' :: ' . Yii::t('project', 'Create Project');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('project', 'Project Manager'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('admin/project', 'Project Manager'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('project', 'Create Project');
 
 /** @var AccessBuilder $accessBuilder */

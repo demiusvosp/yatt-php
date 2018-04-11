@@ -12,12 +12,12 @@ use app\models\entities\Project;
 
 const DESCRIPTION_MAX_LEN = 255;
 
-$this->title = Yii::$app->name . ' :: ' . Yii::t('project', 'Project Manager');
-$this->params['breadcrumbs'][] = Yii::t('project', 'Project Manager');
+$this->title = Yii::$app->name . ' :: ' . Yii::t('admin/project', 'Project Manager');
+$this->params['breadcrumbs'][] = Yii::t('admin/project', 'Project Manager');
 ?>
 <div class="box box-solid box-default"><!-- box-solid box-default альтернатива-->
     <div class="box-header">
-        <h1 class="box-title"><?= Html::encode(Yii::t('project', 'Project Manager')) ?></h1>
+        <h1 class="box-title"><?= Html::encode(Yii::t('admin/project', 'Project Manager')) ?></h1>
     </div>
 
     <div class="box-body">

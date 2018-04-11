@@ -96,8 +96,6 @@ class Project extends ActiveRecord implements IEditorType
             'suffix'      => Yii::t('project', 'Suffix'),
             'name'        => Yii::t('project', 'Name'),
             'description' => Yii::t('project', 'Description'),
-            'public'      => Yii::t('project', 'Public'),
-            'admin_id'    => Yii::t('project', 'Project admin'),
             'created_at'  => Yii::t('project', 'Created'),
             'updated_at'  => Yii::t('project', 'Updated'),
             'config'      => Yii::t('project', 'Configuration'),

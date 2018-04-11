@@ -10,6 +10,7 @@ namespace app\components\auth;
 use Yii;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
+use app\models\entities\Project;
 
 
 /**
@@ -21,6 +22,7 @@ class AccessBuilder extends Component
 {
     /**
      * Массив шаблонов наборов доступа
+     *
      * @var array
      */
     public $templates = [];
@@ -31,13 +33,21 @@ class AccessBuilder extends Component
     public $authManager = 'authManager';
 
 
+    /**
+     * Промежуточные итоги построения ролей
+     *
+     * @var array
+     */
+    protected $_buildedItems = [];
+
+
     public function init()
     {
         // нормализуем список шаблонов
         $this->templates = array_flip($this->templates);
 
         // Получим менеджер авторизации
-        if(is_string($this->authManager)) {
+        if (is_string($this->authManager)) {
             $this->authManager = Yii::$app->authManager;
         }
 
@@ -54,14 +64,14 @@ class AccessBuilder extends Component
      */
     protected function loadTemplate($templateName)
     {
-        if(!is_array($this->templates[$templateName])) {
+        if (!is_array($this->templates[$templateName])) {
             // пробуем загрузить шаблон по стандартному пути
-            $this->templates[$templateName] = require(__DIR__.'/templates/' . $templateName.'.php');
-            if($this->templates[$templateName] === false) {
+            $this->templates[$templateName] = require(__DIR__ . '/templates/' . $templateName . '.php');
+            if ($this->templates[$templateName] === false) {
                 // нет, поищем по указанному
-                $this->templates[$templateName] = require(Yii::$app->basePath . $templateName.'php');
-                if($this->templates[$templateName] === false) {
-                    throw new InvalidConfigException('Access template '.$templateName.'not found');
+                $this->templates[$templateName] = require(Yii::$app->basePath . $templateName . 'php');
+                if ($this->templates[$templateName] === false) {
+                    throw new InvalidConfigException('Access template ' . $templateName . 'not found');
                 }
                 // надо ли нормализовывать такой идентификатор шаблона?
             }
@@ -70,15 +80,17 @@ class AccessBuilder extends Component
         return $this->templates[$templateName];
     }
 
+
     /**
      * Получить список шаблонов доступа
+     *
      * @return array
      */
     public function getTemplatesList()
     {
         $list = [];
         foreach ($this->templates as $name => $template) {
-            $template = $this->loadTemplate($name);
+            $template    = $this->loadTemplate($name);
             $list[$name] = $template['name'];
         }
 
@@ -87,12 +99,13 @@ class AccessBuilder extends Component
 
 
     /**
-     * @param $project
-     * @param string $templateName
+     * @param Project $project
+     * @param string  $templateName
      */
     public function buildProjectAccesses($project, $templateName)
     {
-        $template = $this->loadTemplate($templateName);
+        $this->_buildedItems = [];
+        $template            = $this->loadTemplate($templateName);
 
         foreach ($template['hierarchy'] as $itemName => $parents) {
             $this->buildRole($project, $templateName, $itemName, $parents);
@@ -101,45 +114,43 @@ class AccessBuilder extends Component
 
 
     /**
-     * @param $project
-     * @param $templateName
-     * @param $item
-     * @param $parents - полномочия, наследуемые ролью
+     * @param Project $project
+     * @param         $templateName
+     * @param         $item
+     * @param         $parents - полномочия, наследуемые ролью
      * @return \yii\rbac\Role
      */
     protected function buildRole($project, $templateName, $item, $parents)
     {
-        // роли уже построеные в предыдущие этапы.
-        static $buildedItems = [];
-
         // роли/полномочия, которые наследует эта роль
         $doneParents = [];
-        $template = $this->templates[$templateName];
-        if($item == '?') {
+        $template    = $this->templates[$templateName];
+        if ($item == '?') {
             $item = Role::GUEST;
         }
 
-        if(isset($buildedItems[$item])) {
+        if (isset($this->_buildedItems[$item])) {
             // Эту роль уже обрабатывали (например при создании других ролей)
-            return $buildedItems[$item];
+            return $this->_buildedItems[$item];
         }
 
         foreach ($parents as $parent) {
-            if(isset(Permission::itemLabels()[$parent])) {
+            if (isset(Permission::itemLabels()[$parent])) {
                 // это полномочие, его и включаем
                 $doneParents[$parent] = $this->buildPermission($project, $parent);
-            } elseif(isset($template['hierarchy'][$parent])) {
+            } elseif (isset($template['hierarchy'][$parent])) {
                 // это другая роль проекта, которая включается в текущую
-                if(!isset($doneParents[$parent])) {
+                if (!isset($doneParents[$parent])) {
                     // и она еще не обработанна
-                    $doneParents[$parent] = $this->buildRole($project, $templateName, $parent, $template['hierarchy'][$parent]);
+                    $doneParents[$parent] = $this->buildRole($project, $templateName, $parent,
+                        $template['hierarchy'][$parent]);
                 }
             } else {
-                throw new \DomainException('Cannot build item '.$item.', error in '.$parent);
+                throw new \DomainException('Cannot build item ' . $item . ', error in ' . $parent);
             }
         }
 
-        if(Accesses::isGlobal($item)) {
+        if (Accesses::isGlobal($item)) {
             // это глобальная роль, просто на неё нужно навешать полномочий проекта
             $role = $this->authManager->getRole($item);
         } else {
@@ -156,21 +167,22 @@ class AccessBuilder extends Component
             $this->authManager->addChild($role, $child);
         }
 
-        $buildedItems[$role->getId()] = $role;
+        $this->_buildedItems[$role->getId()] = $role;
+
         return $role;
     }
 
 
     /**
-     * @param $project
-     * @param $item
+     * @param Project $project
+     * @param         $item
      * @return \yii\rbac\Permission
      */
     protected function buildPermission($project, $item)
     {
         $permission = $this->authManager->getPermission(Permission::getFullName($item, $project));
 
-        if(!$permission) {
+        if (!$permission) {
             $permission = $this->authManager->addPermission($item, $project);
         }
 

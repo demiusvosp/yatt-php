@@ -30,7 +30,7 @@ class TaskFixture extends ActiveFixture
 
     public $depends = [
         //'tests\unit\fixtures\UserFixture',
-        'tests\unit\fixtures\PublicProjectFixture',
+        //'tests\unit\fixtures\ProjectFixture',
     ];
 
 
@@ -43,6 +43,7 @@ class TaskFixture extends ActiveFixture
             User::findOne(['username' => 'alice']),
             //User::findOne(['username' => 'petr']), петра в публичном проекте нет.
         ];
+
         $faker         = Faker\Factory::create('ru_RU');
         $project       = Project::findOne(self::PROJECT);
         $closedStage   = DictStageQuery::closed($project);
@@ -54,6 +55,8 @@ class TaskFixture extends ActiveFixture
 
             $task = new Task();
             $task->setAttributes($row);
+            $task->caption = $faker->title;
+            $task->description = $faker->paragraphs(4);
             $task->suffix = $project->suffix;
             $task->index  = $project->generateNewTaskIndex();
 

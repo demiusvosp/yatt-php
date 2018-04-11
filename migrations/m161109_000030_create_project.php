@@ -12,7 +12,6 @@ class m161109_000030_create_project extends Migration
             'name'   => $this->string(255)->comment('Имя'),
             'archived' => $this->boolean()->defaultValue(false)->comment('В архиве'),
             'description' => $this->text()->comment('Описание'),
-            'public'      => $this->integer(255)->comment('0-всем, 1-только зарегистрированным, 2-только уполномоченным'),
             'created_at'  => $this->dateTime()->comment('Создана'),
             'updated_at'  => $this->dateTime()->comment('Оновленна'),
             'admin_id'    => $this->integer()->comment('основной админ проекта'),

@@ -35,38 +35,8 @@ use app\helpers\EntityInitializer;
 class Project extends ActiveRecord implements IEditorType
 {
 
-    /**
-     * Публичность проекта
-     *
-     * @TODO продумать, может не хранить тут, а выдавать роль <project>_VIEW кому надо. А анонимам мы какую роль дадим?
-     */
-
-    /** Все. (в том числе гости) */
-    const STATUS_PUBLIC_ALL = 0;
-    /** Все зарегистрированные */
-    const STATUS_PUBLIC_REGISTED = 1;
-    /** Уполномоченные */
-    const STATUS_PUBLIC_AUTHED = 2;
-
-
     /** @var array Конфигурация проекта (отдельная переменная, так как нельзя обращаться к вирутальному полю, как к массиву) */
     public $configuration = [];
-
-
-    public function getPublicStatusName()
-    {
-        return ArrayHelper::getValue(self::getPublicStatusesArray(), $this->public);
-    }
-
-
-    public static function getPublicStatusesArray()
-    {
-        return [
-            self::STATUS_PUBLIC_AUTHED   => Yii::t('project', 'Empowered'),// 'Уполномоченные',
-            self::STATUS_PUBLIC_REGISTED => Yii::t('project', 'Registered'),
-            self::STATUS_PUBLIC_ALL      => Yii::t('project', 'All'),
-        ];
-    }
 
 
     /**

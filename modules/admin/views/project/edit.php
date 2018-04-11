@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\helpers\TextEditorHelper;
-use app\widgets\UserSelect;
 
 
 /* @var $this yii\web\View */
@@ -31,10 +30,6 @@ $this->params['breadcrumbs'][] = Yii::t('common', 'Update');
             <?= $form->field($project, 'name')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($project, 'description')->editor(['rows' => 6]) ?>
-
-            <?= $form->field($project, 'public')->dropDownList($project->getPublicStatusesArray()) ?>
-
-            <?= $form->field($project, 'admin_id')->widget(UserSelect::className(), ['userField' => 'admin']) ?>
 
             <?= $form->field($project, 'enableCommentProject')->checkbox() ?>
             <?= $form->field($project, 'enableCommentToClosed')->checkbox() ?>

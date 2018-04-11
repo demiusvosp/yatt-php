@@ -10,7 +10,6 @@ namespace app\modules\admin\models;
 
 use Yii;
 use app\components\auth\AccessBuilder;
-use app\components\auth\Permission;
 use app\models\queries\ProjectQuery;
 
 
@@ -19,9 +18,6 @@ class Project extends \app\models\entities\Project
     const SCENARIO_CREATE = 'create';
     const SCENARIO_EDIT = 'edit';
 
-    // К сожалению я не нашел простого способа узнать во вьюхе, что аттрибут небезопасный.
-    // Придется передавать это туда вот так
-    public $disableAdmin = true;
 
     /** @var bool можно оставлять комментарии к проекту */
     public $enableCommentProject = false;
@@ -73,11 +69,6 @@ class Project extends \app\models\entities\Project
             'name', 'description',
             'enableCommentProject', 'enableCommentToClosed', 'editorType'
         ];
-
-        if (Yii::$app->user->can(Permission::MANAGEMENT_ACCESS)) {
-            $fields[] = 'admin_id';
-            $this->disableAdmin = false;
-        }
 
         return [
             static::SCENARIO_DEFAULT => [],

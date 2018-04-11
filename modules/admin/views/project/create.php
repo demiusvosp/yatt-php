@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\components\auth\AccessBuilder;
 use app\helpers\TextEditorHelper;
-use app\widgets\UserSelect;
 
 
 /* @var $this yii\web\View */
@@ -35,8 +34,6 @@ $accessBuilder = Yii::$app->get('accessBuilder');
             <?= $form->field($project, 'name')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($project, 'accessTemplate')->dropDownList($accessBuilder->getTemplatesList()); ?>
-
-            <?= $form->field($project, 'admin_id')->widget(UserSelect::className(), ['userField' => 'admin']) ?>
 
             <?= $form->field($project, 'editorType')->radioList(TextEditorHelper::getTextEditorsList()) ?>
 

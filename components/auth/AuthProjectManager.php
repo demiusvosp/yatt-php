@@ -59,7 +59,7 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
      */
     public function createRole($name, $project = null)
     {
-        $role = new Role($name, $project);
+        $role = Role::create($name, $project);
 
         return $role;
     }
@@ -68,11 +68,13 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
     /**
      * Создает полномочие
      *
+     * @param string              $name
+     * @param Project|string|null $project
      * @return  Permission
      */
     public function createPermission($name, $project = null)
     {
-        $permission = new Permission($name, $project);
+        $permission = Permission::create($name, $project);
 
         return $permission;
     }
@@ -289,6 +291,7 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
 
 
     /**
+     * Получить роли пользователя
      * @param int|string $userId
      * @param int        $itemType - тип контроля доступа. 0 - все типы
      * @param bool       $distinct - не упоминать полномочия, входящие в роль

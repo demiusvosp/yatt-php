@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\StringHelper;
-
+use app\components\auth\Permission;
+use app\helpers\HtmlBlock;
 use app\models\entities\Project;
 
 /* @var $this yii\web\View */
@@ -58,18 +59,15 @@ $this->params['breadcrumbs'][] = Yii::t('project', 'Project Manager');
                 ],
                 [
                     'attribute' => 'admin',
-                    'label' => Yii::t('project', 'Project admin'),// вобще хорошо бы это доставать из модели, чтобы все названия полей в одном месте
-                    'value' => function($project) {
-                        /** @var Project $project */
-                        return $project->admin ? $project->admin->username : Yii::t('common', 'Not set');
-                        //return $user ? $user instanceof User ? $user->username : Yii::t('common', 'Unknow') : Yii::t('common', 'Not set');
-                    }
-                ],
-                [
-                    'attribute' => 'public',
-                    'value' => function($project) {
-                        /** @var Project $project */
-                        return $project->getPublicStatusName();
+                    'label' => Yii::t('project', 'Project managers'),
+                    'content' => function($project) {
+                        $value = [];
+                        $admins = Yii::$app->get('authManager')
+                            ->getUsersByRole(Permission::getFullName(Permission::PROJECT_SETTINGS, $project));
+                        foreach ($admins as $admin) {
+                            $value[] = HtmlBlock::userItem($admin);
+                        }
+                        return implode(', ', $value);
                     }
                 ],
                 'created_at:datetime',

@@ -17,8 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Roles and permissions template' => 'Шаблон набора ролей и полномочий',
-    'All' => 'Все',
+    'Project managers' => 'Управляющие проектом',
     'Are you sure you want to active this project?' => 'Сделать проект вновь активным?',
     'Are you sure you want to archive this project?' => 'Перенести этот проект в архив?',
     'Cannot be edit' => 'Не может быть отредактированно',
@@ -29,7 +28,6 @@ return [
     'Created' => 'Создан',
     'Delete project' => 'Удалить проект',
     'Description' => 'Описание',
-    'Empowered' => 'Уполномоченные',
     'Enable comment to closed tasks' => 'Разрешить комментирование закрытых задач',
     'Enable comment to project' => 'Разрешить комментирование проекта',
     'From archive' => 'Из архива',
@@ -43,7 +41,7 @@ return [
     'Project settings' => 'Настройки проекта',
     'Projects' => 'Проекты',
     'Public' => 'Виден для',
-    'Registered' => 'Зарегистрированные',
+    'Roles and permissions template' => 'Шаблон набора ролей и полномочий',
     'Settings' => 'Настройки',
     'Statistics' => 'Статистика',
     'Suffix' => 'Суффикс',

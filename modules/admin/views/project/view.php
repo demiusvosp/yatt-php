@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\components\auth\Permission;
+use app\helpers\HtmlBlock;
 use app\helpers\TextEditorHelper;
 use app\modules\admin\models\Project;
 
@@ -61,21 +63,20 @@ $this->params['breadcrumbs'][] = $project->name;
                         return TextEditorHelper::render($project, 'description');
                     },
                 ],
-                [
-                    'attribute' => 'public',
-                    'value'     => function ($project) {
-                        /** @var Project $project */
-                        return $project->getPublicStatusName();
-                    },
-                ],
                 'created_at:datetime',
                 'updated_at:datetime',
                 [
                     'attribute' => 'admin',
-                    'value'     => function ($project) {
-                        /** @var Project $project */
-                        return $project->admin ? $project->admin->username : Yii::t('common', 'Not set');
-                    },
+                    'format' => 'raw',
+                    'value' => function($project) {
+                        $value = [];
+                        $admins = Yii::$app->get('authManager')
+                            ->getUsersByRole(Permission::getFullName(Permission::PROJECT_SETTINGS, $project));
+                        foreach ($admins as $admin) {
+                            $value[] = HtmlBlock::userItem($admin);
+                        }
+                        return implode(', ', $value);
+                    }
                 ],
 
                 'enableCommentProject:boolean',

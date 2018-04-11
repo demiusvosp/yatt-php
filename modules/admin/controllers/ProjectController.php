@@ -83,14 +83,10 @@ class ProjectController extends Controller
     public function actionCreate()
     {
         $project = new Project(['scenario'=>Project::SCENARIO_CREATE]);
-        $project->admin_id = Yii::$app->user->identity->getId();
 
         if ($project->load(Yii::$app->request->post()) && $project->save()) {
-            // Проект должен быть инициализирован в момент назначения админа, которое происходит в afterSave для
-            //   поддержки консистентности admin_id и прав админа на проект
-            //EntityInitializer::initializeProject($project);
-
             return $this->redirect(['view', 'id' => $project->id]);
+
         } else {
             return $this->render('create', [
                 'project' => $project,
@@ -115,6 +111,7 @@ class ProjectController extends Controller
 
         if ($project->load(Yii::$app->request->post()) && $project->save()) {
             return $this->redirect(['view', 'id' => $project->id]);
+
         } else {
             return $this->render('edit', [
                 'project' => $project,

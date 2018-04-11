@@ -27,7 +27,7 @@ trait TAccessItem
      * @param string       $name
      * @param Project|null $project
      * @param              $label - описание
-     * @return TAccessItem
+     * @return Role|Permission
      */
     public static function create($name, $project = null, $label = '')
     {

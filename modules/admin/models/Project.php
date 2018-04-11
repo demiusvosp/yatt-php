@@ -54,6 +54,7 @@ class Project extends \app\models\entities\Project
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
+            'admin' => Yii::t('project', 'Project managers'),
             'accessTemplate' => Yii::t('admin/project', 'Roles and permissions template'),
             'enableCommentProject' => Yii::t('admin/project', 'Enable comment to project'),
             'enableCommentToClosed' => Yii::t('admin/project', 'Enable comment to closed tasks'),
@@ -72,7 +73,7 @@ class Project extends \app\models\entities\Project
         return [
             static::SCENARIO_DEFAULT => [],
             static::SCENARIO_EDIT    => $fields,
-            static::SCENARIO_CREATE  => ['suffix', 'name', 'admin_id', 'accessTemplate'],
+            static::SCENARIO_CREATE  => ['suffix', 'name', 'accessTemplate'],
         ];
     }
 

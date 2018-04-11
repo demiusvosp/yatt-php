@@ -42,7 +42,6 @@ $this->params['breadcrumbs'][] = Yii::t('admin/project', 'Project Manager');
                 'name',
                 [
                     'attribute' => 'name',
-                    //'label'  => Yii::t('user', 'ID'),
                     'content' => function($project) {
                         return Html::a(
                             $project->name,
@@ -59,7 +58,6 @@ $this->params['breadcrumbs'][] = Yii::t('admin/project', 'Project Manager');
                 ],
                 [
                     'attribute' => 'admin',
-                    'label' => Yii::t('project', 'Project managers'),
                     'content' => function($project) {
                         $value = [];
                         $admins = Yii::$app->get('authManager')

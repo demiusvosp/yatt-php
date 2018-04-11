@@ -34,10 +34,10 @@ class ProjectFixture extends ActiveFixture
             $project = new Project();
             $project->setAttributes($row);
             if ($alias == 'priv') {
-                $project->admin_id = $bob->id;
+                //$project->admin_id = $bob->id;
             }
             if ($alias == 'oth') {
-                $project->admin_id = $ivan->id;
+                //$project->admin_id = $ivan->id;
             }
 
             if (!$project->save()) {

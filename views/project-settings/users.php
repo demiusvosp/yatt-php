@@ -35,7 +35,9 @@ $this->params['project'] = $project;
                 </td>
                 <td class="value" data-role="<?= $item['role']->name ?>">
                     <?php foreach ($item['users'] as $i => $user) { ?>
-                        <?php $disabled = ($user->id == $project->admin_id);?>
+                        <?php $disabled = false;/* тут стоило бы проверить, что это роль админа,
+                            и из неё нельзя удалить последнего пользователя если ту не root конечно,
+                            но пусть уж стреляют себе в ногу, если хотят. Root поправит. */ ?>
                         <div class="user_wrapper" data-id="<?=$user->id ?>">
                             <?= HtmlBlock::userItem($user, $disabled) ?>
                             <?php if(!$disabled) { ?>

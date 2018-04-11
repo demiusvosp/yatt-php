@@ -27,7 +27,6 @@ $this->params['breadcrumbs'][] = Yii::t('admin/user', 'User Manager');
                 //'id',
                 [
                     'attribute' => 'username',
-                    //'label'  => Yii::t('user', 'ID'),
                     'content' => function($user) {
                         return Html::a(
                             $user->username,

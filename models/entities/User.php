@@ -8,8 +8,9 @@ use yii\db\ActiveRecord;
 use yii\base\NotSupportedException;
 use yii\helpers\ArrayHelper;
 use yii\behaviors\TimestampBehavior;
-use app\models\queries\UserQuery;
 use app\components\auth\Role;
+use app\models\queries\ProjectQuery;
+use app\models\queries\UserQuery;
 
 
 /**
@@ -274,11 +275,11 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Проекты, в которых юзер админ
      *
-     * @return \yii\db\ActiveQuery
+     * @return Project[]
      */
     public function getProjects()
     {
-        return $this->hasMany(Project::className(), ['admin_id' => 'id']);
+        return ProjectQuery::allowProjectsQuery($this->id)->all();
     }
 
 

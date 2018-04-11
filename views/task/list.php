@@ -115,8 +115,6 @@ const COLUMN_MAX_LEN = 255;
                 'attribute' => 'versionClose.name',
                 'label'     => Yii::t('dicts', 'Сoming in version'),
             ],
-            // 'admin_id',
-
         ],
     ]); ?>
 </div>

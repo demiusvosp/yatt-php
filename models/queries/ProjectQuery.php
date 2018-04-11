@@ -56,18 +56,22 @@ class ProjectQuery extends ActiveQuery
 
 
     /**
-     * Query проектов доступных текущему пользователю
+     * Query проектов доступных пользователю (если не указанно - текущему)
      *
      * @return ProjectQuery
      */
-    static function allowProjectsQuery()
+    static function allowProjectsQuery($userId = null)
     {
+        if(!$userId) {
+            $userId = Yii::$app->user->id;
+        }
+
         $query = Project::find();
 
         /** @var AuthProjectManager $auth */
         $auth = Yii::$app->get('authManager');
 
-        $suffixes = $auth->getProjectsByUser(Yii::$app->user->id, Permission::PROJECT_VIEW);
+        $suffixes = $auth->getProjectsByUser($userId, Permission::PROJECT_VIEW);
         $query->andWhere(['in', 'suffix', $suffixes]);
         $query->cache(0, new TagDependency(['tags' => CacheTagHelper::auth()]));
 

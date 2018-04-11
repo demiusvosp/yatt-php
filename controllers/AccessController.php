@@ -115,9 +115,6 @@ class AccessController extends Controller
         if (!$project) {
             throw new InvalidParamException('Cannot find project');
         }
-        if ($project->admin_id == $userId) {
-            throw new \DomainException('Cannot remove project admin access. Use project admin');
-        }
 
         if (!$auth->revoke($role, $userId, $projectSuffix)) {
             return $this->asJson(['success' => false])->setStatusCode(406);

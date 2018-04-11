@@ -6,11 +6,9 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\behaviors\TimestampBehavior;
-use app\components\auth\Permission;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
-use app\models\queries\ProjectQuery;
 use app\helpers\EntityInitializer;
+use app\models\queries\ProjectQuery;
 
 
 /**
@@ -22,7 +20,6 @@ use app\helpers\EntityInitializer;
  * @property integer          $archived
  * @property string           $description
  * @property string           $config - json настроек, хранящеся в БД
- * @property integer          $admin_id
  * @property integer          $last_task_index
  * @property DictStage[]      $stages
  * @property DictType[]       $types
@@ -54,11 +51,10 @@ class Project extends ActiveRecord implements IEditorType
     public function rules()
     {
         return [
-            [['suffix', 'admin_id'], 'required'], // обязательные
+            [['suffix', 'name'], 'required'], // обязательные
 
             [['name'], 'string', 'max' => 255],
             [['description'], 'string'],
-            [['public', 'admin_id'], 'integer'],
 
             // ограничения суффикса
             [['suffix'], 'string', 'min' => 1, 'max' => 8],
@@ -72,15 +68,6 @@ class Project extends ActiveRecord implements IEditorType
                 ['suffix'],
                 'unique',
                 'message' => Yii::t('project', 'suffix must be unique'),
-            ],
-
-            // связь админ проекта
-            [
-                ['admin_id'],
-                'exist',
-                'skipOnError'     => true,
-                'targetClass'     => User::className(),
-                'targetAttribute' => ['admin_id' => 'id'],
             ],
         ];
     }
@@ -126,15 +113,6 @@ class Project extends ActiveRecord implements IEditorType
     public function getEditorType($field)
     {
         return $this->getConfigItem('editorType', Yii::$app->params['defaultEditor']);
-    }
-
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAdmin()
-    {
-        return $this->hasOne(User::className(), ['id' => 'admin_id']);
     }
 
 
@@ -212,15 +190,6 @@ class Project extends ActiveRecord implements IEditorType
             EntityInitializer::initializeProject($this, false);
         }
 
-        //@TODO выкинуть из проекта admin_id, и сделать исключительно на rbac'е
-        if (array_key_exists('admin_id', $changedAttributes)) {
-            // у проекта поменялся админ. Меняем полномочия
-            $auth = Yii::$app->get('authManager');
-            if (isset($changedAttributes['admin_id'])) {
-                $auth->revoke(Permission::PROJECT_SETTINGS, $changedAttributes['admin_id'], $this);
-            }
-            $auth->assign(Permission::PROJECT_SETTINGS, $this->admin_id, $this);
-        }
         parent::afterSave($insert, $changedAttributes);
     }
 

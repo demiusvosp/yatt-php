@@ -46,8 +46,8 @@ class PublicProjectFixture extends ActiveFixture
             'suffix'      => self::PROJECT,
             'name'        => 'Публичный проект',
             'description' => 'Видный всем проект, где больше всего всяких фич. Для разработки и отладки',
-            'public'      => Project::STATUS_PUBLIC_ALL,
-            'admin_id'    => $bob->id,
+            //'public'      => Project::STATUS_PUBLIC_ALL,
+            //'admin_id'    => $bob->id,
         ]);
 
         if (!$project->save()) {

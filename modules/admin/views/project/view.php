@@ -90,7 +90,7 @@ $this->params['breadcrumbs'][] = $project->name;
                     'value' => function($project) {
                         $value = [];
                         $admins = Yii::$app->get('authManager')
-                            ->getUsersByRole(Permission::getFullName(Permission::PROJECT_SETTINGS, $project));
+                            ->getUsersByPermission(Permission::getFullName(Permission::PROJECT_SETTINGS, $project));
                         foreach ($admins as $admin) {
                             $value[] = HtmlBlock::userItem($admin);
                         }

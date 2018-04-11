@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = Yii::t('admin/project', 'Project Manager');
         </p>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
-            'rowOptions'     => function ($model, $key, $index, $grid) {
+            'rowOptions'     => function ($model) {
                 /** @var Project $model */
                 if ($model->archived) {
                     return ['class' => 'archived'];
@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = Yii::t('admin/project', 'Project Manager');
                     'content' => function($project) {
                         $value = [];
                         $admins = Yii::$app->get('authManager')
-                            ->getUsersByRole(Permission::getFullName(Permission::PROJECT_SETTINGS, $project));
+                            ->getUsersByPermission(Permission::getFullName(Permission::PROJECT_SETTINGS, $project));
                         foreach ($admins as $admin) {
                             $value[] = HtmlBlock::userItem($admin);
                         }

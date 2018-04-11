@@ -11,6 +11,7 @@ use Yii;
 use yii\base\InvalidArgumentException;
 use yii\caching\TagDependency;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
 use yii\rbac\Assignment;
 use yii\rbac\DbManager;
 use yii\rbac\CheckAccessInterface;
@@ -352,6 +353,53 @@ class AuthProjectManager extends DbManager implements CheckAccessInterface
             ->andStatus()
             ->andWhere([$this->assignmentTable . '.item_name' => $roleName])
             ->all();
+    }
+
+
+    /**
+     * Получить всех юзеров имеющих даное полномочие
+     *
+     * @param $permissionName
+     * @return Project[]|array
+     */
+    public function getUsersByPermission($permissionName)
+    {
+        if (empty($permissionName)) {
+            return [];
+        }
+
+        // дерево полномочий
+        $childrenList = $this->getChildrenList();
+        $roles = $this->getParentsItemByChild($permissionName, $childrenList);
+        $roles = array_keys($roles);
+        $roles = array_merge($roles, [$permissionName]);
+
+        return EntityUser::find()
+            ->leftJoin($this->assignmentTable, $this->assignmentTable . '.user_id = user.id')
+            ->andStatus()
+            ->andWhere(['in', $this->assignmentTable . '.item_name', $roles])
+            ->all();
+    }
+
+
+    protected function getParentsItemByChild($item, $childrenList)
+    {
+        $parents = [];
+        foreach ($childrenList as $parent => $childs) {
+            foreach ($childs as $child) {
+                if($child == $item) {
+                    // нашли
+                    $parents = ArrayHelper::merge(
+                        $parents,
+                        [$parent => $parent],
+                        $this->getParentsItemByChild($parent, $childrenList)
+                    );
+
+                    break;
+                }
+            }
+        }
+        return $parents;
     }
 
 

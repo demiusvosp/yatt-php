@@ -2,6 +2,7 @@
 
 namespace app\models\entities;
 
+use app\helpers\ProjectHelper;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -161,6 +162,10 @@ class Comment extends ActiveRecord implements IEditorType, IInProject
     public function getProject()
     {
         if ($this->project_id) {
+            if(ProjectHelper::isCurrent($this->project_id)) {
+                return ProjectHelper::currentProject();
+            }
+
             return Project::findOne($this->project_id);
         } else {
             return null;

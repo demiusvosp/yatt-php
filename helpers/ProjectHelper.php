@@ -44,6 +44,26 @@ class ProjectHelper
         }
     }
 
+
+    /**
+     * Является ли указаный проект текущим
+     *
+     * @param int|string|Project $project
+     * @return bool
+     */
+    public static function isCurrent($project)
+    {
+        if(is_numeric($project)) {
+            return $project == static::currentProject()->id;
+        }
+        if(is_string($project)) {
+            return $project == static::currentProject()->suffix;
+        }
+
+        return $project->id == static::currentProject()->id;
+    }
+
+
     /**
      * Получить справочники этапов задачи
      * @return array

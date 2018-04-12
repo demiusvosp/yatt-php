@@ -234,7 +234,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function getProject()
     {
-        if(ProjectHelper::currentProject() && ProjectHelper::currentProject()->suffix == $this->suffix) {
+        if(ProjectHelper::isCurrent($this->suffix)) {
             // мы в текущем проекте, незачем его искать в БД
             return ProjectHelper::currentProject();
         }

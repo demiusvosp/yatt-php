@@ -78,6 +78,15 @@ abstract class DictBase extends ActiveRecord
 
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+
+    /**
      * Получить проект.
      * Стоит подумать, а не вынести ли это в трейт
      * @return \yii\db\ActiveQuery|Project|null

@@ -84,7 +84,7 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Permission::CLOSE_TASK);
                     <?=$task->getAttributeLabel('stage') ?>
                 </td>
                 <td class="value">
-                    <?=$task->stage->name ?>
+                    <?=$task->stage ?>
                 </td>
             </tr>
             <tr>
@@ -101,7 +101,7 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Permission::CLOSE_TASK);
                     <?=$task->getAttributeLabel('type') ?>
                 </td>
                 <td class="value">
-                    <?=$task->type->name ?>
+                    <?=$task->type ?>
                 </td>
             </tr>
         <?php } ?>
@@ -111,7 +111,7 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Permission::CLOSE_TASK);
                     <?=$task->getAttributeLabel('category') ?>
                 </td>
                 <td class="value">
-                    <?=$task->category->name ?>
+                    <?=$task->category ?>
                 </td>
             </tr>
         <?php } ?>
@@ -120,7 +120,7 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Permission::CLOSE_TASK);
                     <?=$task->getAttributeLabel('assigned') ?>
                 </td>
                 <td class="value">
-                    <?=$task->assigned ? $task->assigned->username : Yii::t('common', 'Not set') ?>
+                    <?=$task->assigned ? HtmlBlock::userItem($task->assigned) : Yii::t('common', 'Not set') ?>
                 </td>
             </tr>
             <tr>
@@ -137,7 +137,7 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Permission::CLOSE_TASK);
                     <?=$task->getAttributeLabel('difficulty') ?>
                 </td>
                 <td class="value">
-                    <?=$task->difficulty->name ?>
+                    <?=$task->difficulty ?>
                 </td>
             </tr>
         <?php } ?>
@@ -146,7 +146,7 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Permission::CLOSE_TASK);
                     <?=$task->getAttributeLabel('versionOpen') ?>
                 </td>
                 <td class="value">
-                    <?=$task->versionOpen ? $task->versionOpen->name : Yii::t('common', 'Not set')  ?>
+                    <?=$task->versionOpen ? $task->versionOpen : Yii::t('common', 'Not set')  ?>
                 </td>
             </tr>
             <tr>
@@ -162,7 +162,7 @@ $canClose = !$task->is_closed && Yii::$app->user->can(Permission::CLOSE_TASK);
                     <?=$task->getAttributeLabel('versionClose') ?>
                 </td>
                 <td class="value">
-                    <?=$task->versionClose ? $task->versionClose->name : Yii::t('common', 'Not set') ?>
+                    <?=$task->versionClose ? $task->versionClose : Yii::t('common', 'Not set') ?>
                 </td>
             </tr>
             <?php if($task->created_at != $task->updated_at) { ?>

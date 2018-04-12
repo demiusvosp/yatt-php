@@ -248,6 +248,10 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function getAssigned()
     {
+        if($this->assigned_id === null) {
+            return null;
+        }
+
         return $this->hasOne(User::className(), ['id' => 'assigned_id']);
     }
 
@@ -289,6 +293,10 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function getType()
     {
+        if($this->dict_type_id === null) {
+            return null;
+        }
+
         return $this->hasOne(DictType::className(), ['id' => 'dict_type_id']);
     }
 
@@ -311,6 +319,10 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function getVersionOpen()
     {
+        if($this->dict_version_open_id === null) {
+            return null;
+        }
+
         return $this->hasOne(DictVersion::className(), ['id' => 'dict_version_open_id']);
     }
 
@@ -333,6 +345,10 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function getVersionClose()
     {
+        if($this->dict_version_close_id === null) {
+            return null;
+        }
+
         return $this->hasOne(DictVersion::className(), ['id' => 'dict_version_close_id']);
     }
 
@@ -355,6 +371,10 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function getDifficulty()
     {
+        if($this->dict_difficulty_id === null) {
+            return null;
+        }
+
         return $this->hasOne(DictDifficulty::className(), ['id' => 'dict_difficulty_id']);
     }
 
@@ -379,6 +399,10 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function getCategory()
     {
+        if($this->dict_category_id === null) {
+            return null;
+        }
+
         return $this->hasOne(DictCategory::className(), ['id' => 'dict_category_id']);
     }
 

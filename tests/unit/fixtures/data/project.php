@@ -8,10 +8,17 @@ return [
         'editorType' => 'md',
         'access_template' => 'PublicProject',
     ],
-    'priv' => [
-        'suffix' => 'PRIV',
-        'name' => 'Приватный проект',
-        'description' => 'Приватный проект.',
+    'std' => [
+        'suffix' => 'STD',
+        'name' => 'Стандартный проект',
+        'description' => 'Проект со стандартной сеткой ролей.',
+        'editorType' => 'md',
+        'access_template' => 'EmployeeView',
+    ],
+    'petr' => [
+        'suffix' => 'PETR',
+        'name' => 'Личный проект Петра',
+        'description' => 'Личный проект Петра.',
         'editorType' => 'md',
         'access_template' => 'EmployeeView',
     ],

@@ -26,7 +26,6 @@ return [
             Permission::MANAGE_COMMENT,
         ],
         'Employee'      => [
-            Role::GUEST,
             Permission::OPEN_TASK,
             Permission::EDIT_TASK,
             Permission::CHANGE_STAGE,

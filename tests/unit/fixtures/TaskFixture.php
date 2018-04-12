@@ -24,7 +24,8 @@ use app\models\queries\DictStageQuery;
  */
 class TaskFixture extends ActiveFixture
 {
-    const PROJECT = 'PUB';
+    const PROJECT = 'STD';
+    const TASK_COUNT = 20;
 
     public $modelClass = 'app\models\entities\Task';
 
@@ -50,13 +51,12 @@ class TaskFixture extends ActiveFixture
         $versionsClose = $project->getVersions()->andForClose()->all();
         $versionsOpen  = $project->getVersions()->andForOpen()->all();
 
-        foreach ($this->getData() as $alias => $row) {
-            echo 'add task ' . $alias . "\r\n";
+        for($i = 1; $i <= self::TASK_COUNT; $i++) {
+            echo 'add task ' . $i . "\r\n";
 
             $task = new Task();
-            $task->setAttributes($row);
-            $task->caption = $faker->title;
-            $task->description = $faker->paragraphs(4);
+            $task->caption = $faker->realText(rand(10, 50));
+            $task->description = $faker->realText(rand(10, 300));
             $task->suffix = $project->suffix;
             $task->index  = $project->generateNewTaskIndex();
 
@@ -87,9 +87,10 @@ class TaskFixture extends ActiveFixture
             }
 
             if (!$task->save()) {
-                echo 'Error in save task ' . $alias;
+                echo 'Error in save task ' . $i . "\n";
+                var_dump($task->getErrors());
             }
-            $this->data[$alias] = array_merge($row, ['id' => $task->id]);
+
         }
     }
 

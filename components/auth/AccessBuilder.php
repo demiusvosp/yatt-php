@@ -9,6 +9,7 @@ namespace app\components\auth;
 
 use Yii;
 use yii\base\Component;
+use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use app\models\entities\Project;
 
@@ -138,6 +139,10 @@ class AccessBuilder extends Component
             if (isset(Permission::itemLabels()[$parent])) {
                 // это полномочие, его и включаем
                 $doneParents[$parent] = $this->buildPermission($project, $parent);
+            } elseif(Accesses::isGlobal($parent)) {
+                // локальная роль наследует все полномочия глобальной? Это как-то неправильно
+                throw new InvalidArgumentException('Local role can not inherits global role accesses');
+
             } elseif (isset($template['hierarchy'][$parent])) {
                 // это другая роль проекта, которая включается в текущую
                 if (!isset($doneParents[$parent])) {

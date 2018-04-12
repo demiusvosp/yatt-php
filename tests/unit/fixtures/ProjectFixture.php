@@ -53,10 +53,10 @@ class ProjectFixture extends ActiveFixture
             }
             $this->data[$alias] = array_merge($row, ['id' => $project->id]);
 
-            echo 'build accesses roles';
+            echo "\n build accesses roles";
             $accessBuilder->buildProjectAccesses($project, $row['access_template']);
 
-            echo 'build dictionaries';
+            echo "\n build dictionaries";
             // разные справочники
             (new DictStage(['name' => 'Разработка']))->append($project);
             (new DictStage(['name' => 'Тестирование']))->append($project);

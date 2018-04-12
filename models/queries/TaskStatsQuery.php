@@ -87,6 +87,9 @@ class TaskStatsQuery extends TaskQuery
      */
     protected function addCacheTag($project)
     {
+        /* кеширование не произойдет, если запросу нечего было считать. Это, видимо, нормальное поведение Query
+         * Довольно странно, но наверное не страшно.
+         */
         $this->cache(0, new TagDependency(['tags' => CacheTagHelper::taskStat($project->suffix)]));
     }
 

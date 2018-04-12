@@ -61,7 +61,7 @@ use app\helpers\ProjectUrl;
                     ?>
                         <li>
                             <a href="<?=ProjectUrl::toTask($task)?>">
-                                <?=$task->name . '-' . $task->caption ?>
+                                <?=$task->name . ' - ' . $task->caption ?>
                             </a>
                         </li>
                     <?php } ?>

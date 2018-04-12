@@ -66,7 +66,7 @@ class ProjectTile extends Widget
             'options' => $this->options,
 
             'taskStat' => $this->getTasksStats(),
-            'lastTasks' => ($this->lastTasks) ? $this->getLastTasks() : null,
+            'lastTasks' => ($this->lastTasksNum) ? $this->getLastTasks() : null,
         ]);
     }
 

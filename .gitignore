@@ -32,9 +32,11 @@ tests/_support/_generated
 composer.lock
 runtime/*
 
-#/config/settings.php
+/config/settings*.php
+!/config/settings-sample.php
 
 Будет удалено assets/res/
 Будет удалено rbac/
 Будет удалено tests/fixtures/dev/data/
 Будет удалено tests/unit/fixtures/data/
+

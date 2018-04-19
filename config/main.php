@@ -23,7 +23,9 @@ return [
         'db'          => ArrayHelper::merge(
             [
                 'class' => 'yii\db\Connection',
-                'enableSchemaCache' => true,
+                'tablePrefix'         => '',
+                'enableSchemaCache'   => true,
+                'schemaCacheDuration' => 0,
             ],
             $settings['db']
         ),

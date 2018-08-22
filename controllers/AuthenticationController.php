@@ -60,14 +60,33 @@ class AuthenticationController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
+            if(Yii::$app->request->isAjax) {
+                return $this->asJson(['success' => true]);
+            }
+
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($model->login()) {
+                if(Yii::$app->request->isAjax) {
+                    return $this->asJson(['success' => true]);
+                }
+
                 return $this->goBack();
             }
+        }
+
+        if(Yii::$app->request->isAjax) {
+            return $this->asJson([
+                'form' => $this->renderAjax(
+                    'login',
+                    [
+                        'model' => $model,
+                    ]
+                )
+            ]);
         }
 
         return $this->render('login', [

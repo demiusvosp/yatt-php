@@ -42,10 +42,11 @@ if($project) {
     ]);
 
     if (Yii::$app->user->isGuest) {
-        $items = array_merge($items, [
-            ['label' => Yii::t('user', 'Login'), 'url' => ['/auth/login']],
-            ['label' => Yii::t('user', 'Registration'), 'url' => ['/auth/registration']],
-        ]);
+        $items[] = ['label' => Yii::t('user', 'Login'), 'url' => ['/auth/login']];
+        if(Yii::$app->params['enableRegistration']) {
+            $items[] = ['label' => Yii::t('user', 'Registration'), 'url' => ['/auth/registration']];
+        }
+
     } else {
         $adminItems = [];
         if(Yii::$app->user->can(Permission::MANAGEMENT_USER)) {

@@ -9,8 +9,9 @@
 namespace app\controllers;
 
 use Yii;
-use yii\web\ForbiddenHttpException;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
+use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 use yii\filters\AccessControl;
 use app\base\BaseProjectController;
@@ -31,30 +32,30 @@ class TaskController extends BaseProjectController
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'class'   => ProjectAccessRule::className(),
+                        'class'   => ProjectAccessRule::class,
                         'project' => $this->project,
                         'actions' => ['list', 'view'],
                         'allow'   => true,
                     ],
                     [
-                        'class'   => ProjectAccessRule::className(),
+                        'class'   => ProjectAccessRule::class,
                         'project' => $this->project,
                         'actions' => ['open'],
                         'roles'   => [Permission::OPEN_TASK],
                         'allow'   => true,
                     ],
                     [
-                        'class'   => ProjectAccessRule::className(),
+                        'class'   => ProjectAccessRule::class,
                         'project' => $this->project,
                         'actions' => ['edit'],
                         'roles'   => [Permission::EDIT_TASK],
                         'allow'   => true,
                     ],
                     [
-                        'class'   => ProjectAccessRule::className(),
+                        'class'   => ProjectAccessRule::class,
                         'project' => $this->project,
                         'actions' => ['change-stage'],
                         'roles'   => [Permission::CHANGE_STAGE],
@@ -62,7 +63,7 @@ class TaskController extends BaseProjectController
                         //'verbs'   => ['POST'],
                     ],
                     [
-                        'class'   => ProjectAccessRule::className(),
+                        'class'   => ProjectAccessRule::class,
                         'project' => $this->project,
                         'actions' => ['close'],
                         'roles'   => [Permission::CLOSE_TASK],
@@ -79,32 +80,32 @@ class TaskController extends BaseProjectController
     {
         $query = Task::find()->andProject($this->project);
         $query->joinWith([
-            'assigned' => function ($query) {
+            'assigned' => function (ActiveQuery $query) {
                 $query->from(['assigned' => 'user']);
             },
         ]);
         $query->joinWith([
-            'stage' => function ($query) {
+            'stage' => function (ActiveQuery $query) {
                 $query->from(['stage' => 'dict_stage']);
             },
         ]);
         $query->joinWith([
-            'type' => function ($query) {
+            'type' => function (ActiveQuery $query) {
                 $query->from(['type' => 'dict_type']);
             },
         ]);
         $query->joinWith([
-            'category' => function ($query) {
+            'category' => function (ActiveQuery $query) {
                 $query->from(['category' => 'dict_category']);
             },
         ]);
         $query->joinWith([
-            'versionOpen' => function ($query) {
+            'versionOpen' => function (ActiveQuery $query) {
                 $query->from(['versionOpen' => 'dict_version']);
             },
         ]);
         $query->joinWith([
-            'versionClose' => function ($query) {
+            'versionClose' => function (ActiveQuery $query) {
                 $query->from(['versionClose' => 'dict_version']);
             },
         ]);

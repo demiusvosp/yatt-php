@@ -136,3 +136,14 @@ ul.table.table-striped li:nth-child(even) {
     color:#999;
     margin-top: 1.2em;
 }
+.login-box {
+    border: 1px solid #00a65a;
+    border-radius: 3px;
+    border-top: 2px solid #00a65a;
+}
+.login-box-body .button-row {
+    margin-top: 1em;
+}
+.login-box-body .field-loginform-rememberme {
+    margin-top: 0.5em;
+}

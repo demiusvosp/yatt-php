@@ -40,12 +40,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ->passwordInput(['placeholder' => true])
         ?>
 
-        <div class="row">
+        <div class="row button-row">
             <div class="col-xs-8">
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
             </div>
             <div class="col-xs-4">
-                <?= Html::submitButton(Yii::t('user', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton(
+                    Yii::t('user', 'Login'),
+                    ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']
+                ) ?>
             </div>
         </div>
 

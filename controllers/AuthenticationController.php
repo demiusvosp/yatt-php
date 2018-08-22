@@ -64,29 +64,32 @@ class AuthenticationController extends Controller
                 return $this->asJson(['success' => true]);
             }
 
-            return $this->goHome();
+            return $this->goBack();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->login()) {
-                if(Yii::$app->request->isAjax) {
-                    return $this->asJson(['success' => true]);
-                }
+            if(Yii::$app->request->isAjax) {
 
-                return $this->goBack();
+                if (!$model->validate()) {
+                    return false;
+                }
+                return $model->login();
+            }
+
+            if($model->validate()) {
+                $model->login();
+                return $this->goHome();
             }
         }
 
         if(Yii::$app->request->isAjax) {
-            return $this->asJson([
-                'form' => $this->renderAjax(
-                    'login',
-                    [
-                        'model' => $model,
-                    ]
-                )
-            ]);
+            return $this->renderPartial(
+                'login',
+                [
+                    'model' => $model,
+                ]
+            );
         }
 
         $this->layout = 'login-page';

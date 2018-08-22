@@ -132,6 +132,10 @@ ul.table.table-striped li:nth-child(even) {
 }
 
 /* Форма входа */
+#login-dialog .modal-content {
+    width: 360px; /* равен размеру бокса диалога входа admin lte  */
+    background: #d2d6de;
+}
 .login-box-msg {
     color:#999;
     margin-top: 1.2em;

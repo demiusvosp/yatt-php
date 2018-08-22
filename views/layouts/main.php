@@ -9,6 +9,7 @@ use dmstr\helpers\AdminLteHelper;
 use dmstr\widgets\Alert;
 use app\assets\AppAsset;
 use app\helpers\ProjectHelper;
+use app\widgets\LoginWidget;
 
 
 AppAsset::register($this);
@@ -59,6 +60,18 @@ if(!$this->title) {
     ) ?>
 </div>
 
+<?php
+    if(Yii::$app->user->isGuest) {
+?>
+    <div class="modal fade" id="login-dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+<?php
+    }
+?>
 <?php $this->endBody() ?>
 </body>
 </html>

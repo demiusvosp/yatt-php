@@ -22,6 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php $form = ActiveForm::begin([
             'id' => 'login-form',
+            'enableClientValidation' => true,
+            'enableAjaxValidation' => true,
+            'enableClientScript' => true,
         ]); ?>
 
         <?= $form
@@ -53,6 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <?php ActiveForm::end(); ?>
+
 
         <div class="login-box-msg">
             <?= Yii::t('user', 'The installation creates superadmin user <strong>admin</strong> with password <strong>root</strong>.

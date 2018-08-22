@@ -103,14 +103,14 @@ class Task extends ActiveRecord implements IEditorType, IInProject
                 ['suffix'],
                 'exist',
                 'skipOnError'     => true,
-                'targetClass'     => Project::className(),
+                'targetClass'     => Project::class,
                 'targetAttribute' => ['suffix' => 'suffix'],
             ],
             [
                 ['assigned_id'],
                 'exist',
                 'skipOnError'     => true,
-                'targetClass'     => User::className(),
+                'targetClass'     => User::class,
                 'targetAttribute' => ['assigned_id' => 'id'],
             ],
         ];
@@ -206,7 +206,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
     {
         return [
             [
-                'class'      => TimestampBehavior::className(),
+                'class'      => TimestampBehavior::class,
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
@@ -239,20 +239,16 @@ class Task extends ActiveRecord implements IEditorType, IInProject
             return ProjectHelper::currentProject();
         }
 
-        return $this->hasOne(Project::className(), ['suffix' => 'suffix']);
+        return $this->hasOne(Project::class, ['suffix' => 'suffix']);
     }
 
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|User|null
      */
     public function getAssigned()
     {
-        if($this->assigned_id === null) {
-            return null;
-        }
-
-        return $this->hasOne(User::className(), ['id' => 'assigned_id']);
+        return $this->hasOne(User::class, ['id' => 'assigned_id']);
     }
 
 
@@ -270,7 +266,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function getStage()
     {
-        return $this->hasOne(DictStage::className(), ['id' => 'dict_stage_id']);
+        return $this->hasOne(DictStage::class, ['id' => 'dict_stage_id']);
     }
 
 
@@ -289,15 +285,11 @@ class Task extends ActiveRecord implements IEditorType, IInProject
 
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|DictType|null
      */
     public function getType()
     {
-        if($this->dict_type_id === null) {
-            return null;
-        }
-
-        return $this->hasOne(DictType::className(), ['id' => 'dict_type_id']);
+        return $this->hasOne(DictType::class, ['id' => 'dict_type_id']);
     }
 
 
@@ -319,11 +311,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function getVersionOpen()
     {
-        if($this->dict_version_open_id === null) {
-            return null;
-        }
-
-        return $this->hasOne(DictVersion::className(), ['id' => 'dict_version_open_id']);
+        return $this->hasOne(DictVersion::class, ['id' => 'dict_version_open_id']);
     }
 
 
@@ -345,11 +333,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function getVersionClose()
     {
-        if($this->dict_version_close_id === null) {
-            return null;
-        }
-
-        return $this->hasOne(DictVersion::className(), ['id' => 'dict_version_close_id']);
+        return $this->hasOne(DictVersion::class, ['id' => 'dict_version_close_id']);
     }
 
 
@@ -371,11 +355,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function getDifficulty()
     {
-        if($this->dict_difficulty_id === null) {
-            return null;
-        }
-
-        return $this->hasOne(DictDifficulty::className(), ['id' => 'dict_difficulty_id']);
+        return $this->hasOne(DictDifficulty::class, ['id' => 'dict_difficulty_id']);
     }
 
 
@@ -399,11 +379,7 @@ class Task extends ActiveRecord implements IEditorType, IInProject
      */
     public function getCategory()
     {
-        if($this->dict_category_id === null) {
-            return null;
-        }
-
-        return $this->hasOne(DictCategory::className(), ['id' => 'dict_category_id']);
+        return $this->hasOne(DictCategory::class, ['id' => 'dict_category_id']);
     }
 
 

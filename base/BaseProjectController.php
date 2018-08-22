@@ -13,6 +13,11 @@ use yii\web\NotFoundHttpException;
 use app\models\entities\Project;
 
 
+/**
+ * Class BaseProjectController
+ *
+ * @property Project $project - текущий проект
+ */
 class BaseProjectController extends Controller implements IInProject
 {
 
@@ -24,6 +29,9 @@ class BaseProjectController extends Controller implements IInProject
 
     /**
      * получить текущий проект
+     *
+     * @return Project
+     * @throws NotFoundHttpException
      */
     public function getProject()
     {
@@ -41,6 +49,11 @@ class BaseProjectController extends Controller implements IInProject
     }
 
 
+    /**
+     * @param string $view
+     * @param array  $params
+     * @return string
+     */
     public function render($view, $params = [])
     {
         if(!isset($params['project'])) {

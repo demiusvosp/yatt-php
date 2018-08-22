@@ -253,7 +253,7 @@ class User extends ActiveRecord implements IdentityInterface
         if (empty($token) || !is_string($token)) {
             return false;
         }
-        $expire = Yii::$app->params['user.torenExpire'];
+        $expire = Yii::$app->params['user.tokenExpire'];
         $parts = explode('_', $token);
         $timestamp = (int)end($parts);
 

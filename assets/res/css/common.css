@@ -130,3 +130,9 @@ ul.table.table-striped li:nth-child(even) {
 .centered {
     text-align: center;
 }
+
+/* Форма входа */
+.login-box-msg {
+    color:#999;
+    margin-top: 1.2em;
+}

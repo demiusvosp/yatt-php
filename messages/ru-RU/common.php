@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Login page' => 'Войти',
     'md' => 'Markdown',
     'plain' => 'текст без форматирования',
     'wysiwyg' => 'Wysiwyg-редактор',

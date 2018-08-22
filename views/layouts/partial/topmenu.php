@@ -42,7 +42,11 @@ if($project) {
     ]);
 
     if (Yii::$app->user->isGuest) {
-        $items[] = ['label' => Yii::t('user', 'Login'), 'url' => ['/auth/login']];
+        $items[] = [
+            'label' => Yii::t('user', 'Login'),
+            'url' => ['/auth/login'],
+            'linkOptions' => ['data-toggle' => 'login-dialog']
+        ];
         if(Yii::$app->params['enableRegistration']) {
             $items[] = ['label' => Yii::t('user', 'Registration'), 'url' => ['/auth/registration']];
         }

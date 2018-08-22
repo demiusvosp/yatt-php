@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Remember me' => 'Запомнить меня',
+    'Sign in to start your session' => 'Войдите для начала работы',
     'Active' => 'Активен',
     'Admin in projects' => 'Админ в проектах',
     'Auth key' => 'Auth key',

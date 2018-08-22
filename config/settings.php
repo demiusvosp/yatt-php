@@ -6,6 +6,7 @@
  */
 
 return [
+    'name' => 'Test Yatt',
     'db' => [
         'dsn' => 'mysql:host=localhost;dbname=yatt',
         'username' => 'yatt',

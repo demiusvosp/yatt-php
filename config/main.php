@@ -13,7 +13,7 @@ $settings = require(__DIR__ . '/settings.php');
 
 return [
     'id'      => 'yatt',
-    'name'    => 'Yatt',
+    'name'    => isset($settings['name']) ? $settings['name'] : 'Yatt/PHP',
     'version' => '0.2a',
 
     'bootstrap' => ['log'],

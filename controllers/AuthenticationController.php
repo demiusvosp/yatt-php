@@ -89,6 +89,7 @@ class AuthenticationController extends Controller
             ]);
         }
 
+        $this->layout = 'login-page';
         return $this->render('login', [
             'model' => $model,
         ]);

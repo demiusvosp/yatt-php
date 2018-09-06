@@ -45,7 +45,7 @@ if($project) {
         $items[] = [
             'label' => Yii::t('user', 'Login'),
             'url' => ['/auth/login'],
-            'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#login-dialog']
+            'linkOptions' => ['id' => 'login_button', 'data-toggle' => 'modal']
         ];
         if(Yii::$app->params['enableRegistration']) {
             $items[] = ['label' => Yii::t('user', 'Registration'), 'url' => ['/auth/registration']];

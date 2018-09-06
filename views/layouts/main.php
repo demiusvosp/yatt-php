@@ -60,18 +60,7 @@ if(!$this->title) {
     ) ?>
 </div>
 
-<?php
-    if(Yii::$app->user->isGuest) {
-?>
-    <div class="modal fade" id="login-dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            </div>
-        </div>
-    </div>
-<?php
-    }
-?>
+<?= (Yii::$app->user->isGuest) ? LoginWidget::widget([]) : '' ?>
 <?php $this->endBody() ?>
 </body>
 </html>

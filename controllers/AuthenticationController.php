@@ -3,8 +3,9 @@
 namespace app\controllers;
 
 use Yii;
-use yii\web\Controller;
+use yii\helpers\Html;
 use yii\filters\AccessControl;
+use yii\web\Controller;
 use app\models\entities\User;
 use app\models\forms\LoginForm;
 use app\models\forms\RegistrationForm;
@@ -63,39 +64,38 @@ class AuthenticationController extends Controller
             if(Yii::$app->request->isAjax) {
                 return $this->asJson(['success' => true]);
             }
-
             return $this->goBack();
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if(Yii::$app->request->isAjax) {
-
-                if (!$model->validate()) {
-                    return false;
-                }
-                return $model->login();
-            }
-
-            if($model->validate()) {
-                $model->login();
-                return $this->goHome();
-            }
-        }
-
         if(Yii::$app->request->isAjax) {
-            return $this->renderPartial(
-                'login',
-                [
-                    'model' => $model,
-                ]
-            );
-        }
 
-        $this->layout = 'login-page';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                return $this->asJson(['success' =>$model->login()]);
+            }
+            $result = [];
+            foreach ($model->getErrors() as $attribute => $errors) {
+                $result[Html::getInputId($model, $attribute)] = $errors;
+            }
+
+            return $this->asJson(['success' => false, 'errors' => $result]);
+
+        } else {
+            if ($model->load(Yii::$app->request->post())) {
+
+                if ($model->validate()) {
+                    $model->login();
+
+                    return $this->goHome();
+                }
+            }
+
+            $this->layout = 'login-page';
+
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
     }
 
 

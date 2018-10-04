@@ -9,8 +9,6 @@
 namespace app\controllers;
 
 use Yii;
-use yii\data\ActiveDataProvider;
-use yii\db\ActiveQuery;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 use yii\filters\AccessControl;
@@ -19,6 +17,7 @@ use app\components\auth\ProjectAccessRule;
 use app\components\auth\Permission;
 use app\models\entities\Task;
 use app\models\forms\TaskForm;
+use app\models\forms\TaskListForm;
 use app\models\forms\CloseTaskForm;
 use app\models\queries\TaskQuery;
 
@@ -78,73 +77,9 @@ class TaskController extends BaseProjectController
 
     public function actionList()
     {
-        $query = Task::find()->andProject($this->project);
-        $query->joinWith([
-            'assigned' => function (ActiveQuery $query) {
-                $query->from(['assigned' => 'user']);
-            },
-        ]);
-        $query->joinWith([
-            'stage' => function (ActiveQuery $query) {
-                $query->from(['stage' => 'dict_stage']);
-            },
-        ]);
-        $query->joinWith([
-            'type' => function (ActiveQuery $query) {
-                $query->from(['type' => 'dict_type']);
-            },
-        ]);
-        $query->joinWith([
-            'category' => function (ActiveQuery $query) {
-                $query->from(['category' => 'dict_category']);
-            },
-        ]);
-        $query->joinWith([
-            'versionOpen' => function (ActiveQuery $query) {
-                $query->from(['versionOpen' => 'dict_version']);
-            },
-        ]);
-        $query->joinWith([
-            'versionClose' => function (ActiveQuery $query) {
-                $query->from(['versionClose' => 'dict_version']);
-            },
-        ]);
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $dataProvider->sort->attributes['name'] = [
-            'asc'  => ['suffix' => SORT_ASC, 'index' => SORT_ASC],
-            'desc' => ['suffix' => SORT_DESC, 'index' => SORT_DESC],
-        ];
-        $dataProvider->sort->attributes['assigned'] = [
-            'asc'  => ['assigned.username' => SORT_ASC],
-            'desc' => ['assigned.username' => SORT_DESC],
-        ];
-        $dataProvider->sort->attributes['stage.name'] = [
-            'asc'  => ['stage.position' => SORT_ASC],
-            'desc' => ['stage.position' => SORT_DESC],
-        ];
-        $dataProvider->sort->attributes['type.name'] = [
-            'asc'  => ['type.position' => SORT_ASC],
-            'desc' => ['type.position' => SORT_DESC],
-        ];
-        $dataProvider->sort->attributes['category.name'] = [
-            'asc'  => ['category.position' => SORT_ASC],
-            'desc' => ['category.position' => SORT_DESC],
-        ];
-        $dataProvider->sort->attributes['versionOpen.name'] = [
-            'asc'  => ['versionOpen.position' => SORT_ASC],
-            'desc' => ['versionOpen.position' => SORT_DESC],
-        ];
-        $dataProvider->sort->attributes['versionClose.name'] = [
-            'asc'  => ['versionClose.position' => SORT_ASC],
-            'desc' => ['versionClose.position' => SORT_DESC],
-        ];
-
+        $taskListForm = new TaskListForm();
         return $this->render('list', [
-            'dataProvider' => $dataProvider,
+            'taskListForm' => $taskListForm
         ]);
     }
 
